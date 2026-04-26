@@ -13,6 +13,13 @@
     *{box-sizing:border-box}
     body{font-family:system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);max-width:900px;margin:20px auto;line-height:1.6;padding:0 10px}
     h1{font-size:1.4rem;margin:0 0 10px}
+    #quizApp[hidden], #unlock-panel[hidden]{display:none}
+    .unlock-panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin:40px auto;max-width:520px;box-shadow:0 14px 40px rgba(15,23,42,.08)}
+    .unlock-panel h1{margin-bottom:8px}
+    .unlock-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .unlock-input{flex:1;min-width:240px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;background:#fff}
+    .unlock-error{margin-top:10px;color:var(--danger);font-weight:600;display:none}
+    .unlock-error.visible{display:block}
 
     .btn{padding:8px 12px;border:1px solid var(--border);background:#fff;border-radius:6px;cursor:pointer;font-size:14px;color:inherit}
     .btn:hover{background:var(--hover)}
@@ -126,6 +133,18 @@
   </style>
 </head>
 <body>
+  <section id="unlock-panel" class="unlock-panel" hidden>
+    <p class="meta">Protected Question Bank</p>
+    <h1>Enter password</h1>
+    <p class="meta">This compatible HTML file is encrypted. Enter the password provided by the owner to start practicing.</p>
+    <div class="unlock-row">
+      <input id="legacy-password" class="unlock-input" type="password" autocomplete="current-password" placeholder="Question bank password">
+      <button id="legacy-unlock-btn" class="btn submit-btn" type="button">Unlock</button>
+    </div>
+    <div id="legacy-unlock-error" class="unlock-error"></div>
+  </section>
+
+  <main id="quizApp" hidden>
   <h1>AMT 题库练习（选择题 + 填空题，可打乱）</h1>
   <p>先在“筛选题库”里选择要练习的范围，然后点 <strong>Randomize + Reset</strong>。答题后点击 <strong>Submit</strong> 查看结果。</p>
   <p class="meta">
@@ -157,6 +176,7 @@
   </div>
 
   <div id="quiz"></div>
+  </main>
 
   <script>
     const STAR_KEY="amt_starred_questions";
@@ -165,578 +185,30 @@
     const ATTEMPT_COUNT_KEY="amt_attempt_count_map_v1";
 
     /* ------------------ 数据区 ------------------ */
-    const RAW_QUESTION_BANK = [
-  {
-    "id": "hw_2_205-1",
-    "question": "The moisture content for aircraft wood is preferred to be",
-    "choices": [
-      "12 to 20%.",
-      "8 to 12%.",
-      "10 to 16%."
-    ],
-    "answer": 1,
-    "source": [
-      "AMT205 – Homework – #2 – Q1"
-    ]
-  },
-  {
-    "id": "hw_2_205-2",
-    "question": "According to AC 43.13-1B, what species of wood is considered a Standard for aircraft construction?",
-    "choices": [
-      "Douglas Fir.",
-      "Port Orford Cedar.",
-      "Sitka Spruce."
-    ],
-    "source": [
-      "AMT205 – Homework – #2 – Q2",
-      "AMT205 – Assignment – #3 – Q4",
-      "AMT205 – Quiz – Woods Review – Q19"
-    ],
-    "answer": 2
-  },
-  {
-    "id": "hw_2_205-3",
-    "question": "Wood shrinkage in wood occurs the most in a",
-    "choices": [
-      "radial direction.",
-      "tangential direction",
-      "longitudinal direction"
-    ],
-    "answer": 1,
-    "source": [
-      "AMT205 – Homework – #2 – Q3"
-    ]
-  },
-  {
-    "id": "hw_2_205-4",
-    "question": "What type of trees produce hardwood?",
-    "choices": [
-      "Deciduous",
-      "Conifer"
-    ],
-    "source": [
-      "AMT205 – Homework – #2 – Q4",
-      "AMT205 – Quiz – Woods Review – Q6"
-    ],
-    "answer": 0
-  },
-  {
-    "id": "hw_2_205-5",
-    "question": "Pin knot clusters are permitted in wood aircraft structure provided",
-    "choices": [
-      "no pitch pockets are within 12 inches.",
-      "they have no mineral streaks.",
-      "they produce a small effect on grain direction."
-    ],
-    "source": [
-      "AMT205 – Homework – #2 – Q5",
-      "AMT205 – Quiz – Woods Review – Q14"
-    ],
-    "answer": 2
-  },
-  {
-    "id": "hw_2_205-6",
-    "question": "Fungal growth can occur in aircraft wood structure when the moisture content is at or above:",
-    "choices": [
-      "12%.",
-      "15%.",
-      "20%."
-    ],
-    "source": [
-      "AMT205 – Homework – #2 – Q6",
-      "AMT205 – Quiz – Woods Review – Q16"
-    ],
-    "answer": 2
-  },
-  {
-    "id": "hw_2_205-7",
-    "question": "Which of the following conditions will determine acceptance of wood with mineral streaks?",
-    "choices": [
-      "Local irregularities do not exceed limitations specified for spiral and diagonal grain.",
-      "Careful inspection fails to reveal any decay.",
-      "They produce only a small effect on grain direction."
-    ],
-    "source": [
-      "AMT205 – Homework – #2 – Q7",
-      "AMT205 – Quiz – Woods Review – Q17"
-    ],
-    "answer": 1
-  },
-  {
-    "id": "hw_2_205-8",
-    "question": "A faint line running across the grain of a wood spar generally indicates",
-    "choices": [
-      "shear failure.",
-      "decay.",
-      "compression failure."
-    ],
-    "source": [
-      "AMT205 – Homework – #2 – Q8",
-      "AMT205 – Quiz – Woods Review – Q20"
-    ],
-    "answer": 2
-  },
-  {
-    "id": "hw_2_205-9",
-    "question": "Which statement about wood decay is correct?",
-    "choices": [
-      "Decay is not acceptable in any form or amount.",
-      "Decay that occurs before the wood is seasoned, does not affect the strength of the finished piece.",
-      "A limited amount of certain kinds of decay is acceptance in aircraft woods since decay affects the binding between the fibers and not the fibers themselves."
-    ],
-    "source": [
-      "AMT205 – Homework – #2 – Q9",
-      "AMT205 – Quiz – Woods Review – Q2"
-    ],
-    "answer": 0
-  },
-  {
-    "id": "hw_2_205-10",
-    "question": "What type of trees produce softwood?",
-    "choices": [
-      "Conifer",
-      "Balsa",
-      "Deciduous"
-    ],
-    "answer": 0,
-    "source": [
-      "AMT205 – Homework – #2 – Q10"
-    ]
-  },
-  {
-    "id": "ass_3_205-1",
-    "question": "The I beam wooden spar is routed to",
-    "choices": [
-      "reduce weight.",
-      "increase strength.",
-      "obtain uniform strength."
-    ],
-    "answer": 0,
-    "source": [
-      "AMT205 – Assignment – #3 – Q1"
-    ]
-  },
-  {
-    "id": "ass_3_205-2",
-    "question": "Laminated wood is sometimes used in the construction of highly stressed aircraft components. This wood can be identified by its",
-    "choices": [
-      "parallel grain construction.",
-      "similarity to standard plywood construction.",
-      "perpendicular grain construction."
-    ],
-    "source": [
-      "AMT205 – Assignment – #3 – Q2",
-      "AMT205 – Quiz – Woods Review – Q4"
-    ],
-    "answer": 0
-  },
-  {
-    "id": "ass_3_205-3",
-    "question": "According to AC 43.13-1B, for Sitka spruce, the maximum permitted grain deviation (grain slope) is:",
-    "choices": [
-      "1:15.",
-      "1:10.",
-      "1:20."
-    ],
-    "source": [
-      "AMT205 – Assignment – #3 – Q3",
-      "AMT205 – Quiz – Woods Review – Q21"
-    ],
-    "answer": 0
-  },
-  {
-    "id": "ass_3_205-5",
-    "question": "The defect in a section of aircraft wood that is NOT permitted is:",
-    "choices": [
-      "Spike knots",
-      "Cross grain",
-      "Pitch pockets"
-    ],
-    "answer": 0,
-    "source": [
-      "AMT205 – Assignment – #3 – Q5"
-    ]
-  },
-  {
-    "id": "ass_3_205-6",
-    "question": "What is the purpose of a gusset or gusset plate used in the constrution and repair of aircraft structures?",
-    "choices": [
-      "To join and reinforce intersecting structural members.",
-      "To provide access for inspecton of structural attachments.",
-      "To hold structrual members in position temporarily until the permanent attachment has been completed."
-    ],
-    "answer": 0,
-    "source": [
-      "AMT205 – Assignment – #3 – Q6"
-    ]
-  },
-  {
-    "id": "ass_4_205-1",
-    "question": "The strength of a well designed and properly prepared wood splice joint is provided by the",
-    "choices": [
-      "bearing surface of the wood fibers.",
-      "glue.",
-      "reinforcement plates."
-    ],
-    "answer": 1,
-    "source": [
-      "AMT205 – Assignment – #4 – Q1"
-    ]
-  },
-  {
-    "id": "ass_4_205-2",
-    "question": "Glue deterioration in wood aircraft structure is indicated",
-    "choices": [
-      "when a joint has separated and the glue surface shows only the imprint of the wood with no wood fibers clinging to the glue.",
-      "when a joint has separated and the glue surface shows pieces of wood and/or wood fibers clinging to the glue.",
-      "by any joint separation."
-    ],
-    "source": [
-      "AMT205 – Assignment – #4 – Q2",
-      "AMT205 – Quiz – Wood Structures – Q7"
-    ],
-    "answer": 0
-  },
-  {
-    "id": "ass_4_205-3",
-    "question": "When cold setting glues are coated on wood parts and left exposed to the atmosphere for a predetermined time, the procedure is termed:",
-    "choices": [
-      "closed assembly.",
-      "free exposure.",
-      "open assembly."
-    ],
-    "source": [
-      "AMT205 – Assignment – #4 – Q3",
-      "AMT205 – Quiz – Woods Review – Q1"
-    ],
-    "answer": 2
-  },
-  {
-    "id": "ass_4_205-4",
-    "question": "Pressure is to be used to squeeze the glue out into a continuous film between wood layers and to force air from the joints; the amount of pressure for soft woods is:",
-    "choices": [
-      "150 to 200 pounds.",
-      "125 to 175 pounds.",
-      "125 to 150 pounds."
-    ],
-    "source": [
-      "AMT205 – Assignment – #4 – Q4",
-      "AMT205 – Quiz – Wood Structures – Q8"
-    ],
-    "answer": 2
-  },
-  {
-    "id": "ass_4_205-5",
-    "question": "(1) Sandpaper should not be used to smooth softwoods prior to bonding.\n(2) Wood surfaces ready for bonding must be free from oil, wax, varnish and dust. Regarding these statements:",
-    "choices": [
-      "only #2 is true.",
-      "both #1 and #2 are true.",
-      "only #1 is true."
-    ],
-    "answer": 1,
-    "source": [
-      "AMT205 – Assignment – #4 – Q5"
-    ]
-  },
-  {
-    "id": "ass_4_205-6",
-    "question": "Pot life is a term that best describes:",
-    "choices": [
-      "the period when the adhesive is spread, until the parts are clamped together.",
-      "usable life of adhesive while in storage.",
-      "usable life of adhesive from the time it is mixed."
-    ],
-    "answer": 2,
-    "source": [
-      "AMT205 – Assignment – #4 – Q6"
-    ]
-  },
-  {
-    "id": "ass_4_205-7",
-    "question": "In order to determine if a surface is free to contaminants (such as waxes or oils) a test should be performed. It is called",
-    "choices": [
-      "wetting test.",
-      "moisture content test.",
-      "punch test."
-    ],
-    "source": [
-      "AMT205 – Assignment – #4 – Q7",
-      "AMT205 – Quiz – Wood Structures – Q6"
-    ],
-    "answer": 0
-  },
-  {
-    "id": "ass_4_205-8",
-    "question": "To ensure reliability of a glue joint, what procedure should be used?",
-    "choices": [
-      "A small sample of glue should be mixed and applied to a similar wood joint and tested before the production repair is made.",
-      "If the glue mixes properly, it is always acceptable.",
-      "A full prototype of the joint or repair must be build and destructively tested."
-    ],
-    "source": [
-      "AMT205 – Assignment – #4 – Q8",
-      "AMT205 – Quiz – Wood Structures – Q10",
-      "AMT205 – Quiz – Woods Review – Q18"
-    ],
-    "answer": 0
-  },
-  {
-    "id": "ass_4_205-9",
-    "question": "Wood joints to be glued should:",
-    "choices": [
-      "be planed and then sanded.",
-      "be completely sanded.",
-      "be planed smooth and straight."
-    ],
-    "answer": 2,
-    "source": [
-      "AMT205 – Assignment – #4 – Q9"
-    ]
-  },
-  {
-    "id": "ass_4_205-10",
-    "question": "What kind of glue is recommended for making a repair to a wooden aircraft structure?",
-    "choices": [
-      "Synthetic resin glue",
-      "Phenol-formaldehyde adhesive",
-      "Casein glue"
-    ],
-    "source": [
-      "AMT205 – Assignment – #4 – Q10",
-      "AMT205 – Quiz – Wood Structures – Q3"
-    ],
-    "answer": 0
-  },
-  {
-    "id": "quiz_205-1",
-    "question": "Maximum grain deviation in wood for a scarf splice is:",
-    "choices": [
-      "no deviation steeper than 1 inch in 15 inches.",
-      "no deviation steeper than 1 inch in 10 inches.",
-      "no deviation requirements, per AC 43:13-1A."
-    ],
-    "answer": 0,
-    "source": [
-      "AMT205 – Quiz – Wood Structures – Q1"
-    ]
-  },
-  {
-    "id": "quiz_205-2",
-    "question": "Nail spacing in a small area on aircraft wood repairs should be:",
-    "choices": [
-      "¾ inch maximum spacing.",
-      "2 inch maximum spacing.",
-      "¾ inch minimum spacing."
-    ],
-    "source": [
-      "AMT205 – Quiz – Wood Structures – Q2",
-      "AMT205 – Quiz – Woods Review – Q11"
-    ],
-    "answer": 0
-  },
-  {
-    "id": "quiz_205-4",
-    "question": "According to AC 43.13-1B figure 1-11, in repairing wood wing ribs, the minimum length of the scarf joint cut must be:",
-    "choices": [
-      "12 times the thickness of the cap strip.",
-      "10 times the thickness of the cap strip.",
-      "15 times the thickness of the cap strip."
-    ],
-    "answer": 1,
-    "source": [
-      "AMT205 – Quiz – Wood Structures – Q4"
-    ]
-  },
-  {
-    "id": "quiz_205-5",
-    "question": "The strongest wood joint is obtained by the use of:",
-    "choices": [
-      "glue only.",
-      "glue and brass nails.",
-      "glue and screws."
-    ],
-    "answer": 0,
-    "source": [
-      "AMT205 – Quiz – Wood Structures – Q5"
-    ]
-  },
-  {
-    "id": "quiz_205-9",
-    "question": "The length of the nails used in aircraft structures should be such that they penetrate the wood below the joint at least",
-    "choices": [
-      "3/4 inch.",
-      "3/16 inch",
-      "3/8 inch."
-    ],
-    "source": [
-      "AMT205 – Quiz – Wood Structures – Q9",
-      "AMT205 – Quiz – Woods Review – Q5"
-    ],
-    "answer": 2
-  },
-  {
-    "id": "review_205-3",
-    "question": "You would recognize laminated wood by the grain of each layer:",
-    "choices": [
-      "set at 45 degrees angle to each other.",
-      "being parallel to each other.",
-      "running 90 degrees to each other."
-    ],
-    "answer": 1,
-    "source": [
-      "AMT205 – Quiz – Woods Review – Q3"
-    ]
-  },
-  {
-    "id": "review_205-7",
-    "question": "Laminated wood spars may be substituted for solid rectangular wood spars",
-    "choices": [
-      "if the same quality wood is used in both.",
-      "only in certain instances where the primary load is shared by one or more other original structural member.",
-      "only upon specific approval by the manufacturer or the FAA."
-    ],
-    "answer": 0,
-    "source": [
-      "AMT205 – Quiz – Woods Review – Q7"
-    ]
-  },
-  {
-    "id": "review_205-8",
-    "question": "Mineral stains around gusset nails would indicate:",
-    "choices": [
-      "entrance of moisture and possible decay.",
-      "poor bonding technique.",
-      "a bonding failure."
-    ],
-    "answer": 0,
-    "source": [
-      "AMT205 – Quiz – Woods Review – Q8"
-    ]
-  },
-  {
-    "id": "review_205-9",
-    "question": "Varnish or finish failure can be the result of prolonged water exposure, wood splitting, surface abrasion, and:",
-    "choices": [
-      "Excessive coats of spar varnish",
-      "Ultraviolet light exposure",
-      "Too much Clamping pressure"
-    ],
-    "answer": 1,
-    "source": [
-      "AMT205 – Quiz – Woods Review – Q9"
-    ]
-  },
-  {
-    "id": "review_205-10",
-    "question": "A wood rib requires replacing and spruce is not available. In which document could information about a substitute be found?",
-    "choices": [
-      "FAR 145.",
-      "FAR 165.",
-      "AC 43:13-1B."
-    ],
-    "answer": 2,
-    "source": [
-      "AMT205 – Quiz – Woods Review – Q10"
-    ]
-  },
-  {
-    "id": "review_205-12",
-    "question": "Why is a scarf joint made with considerable length?",
-    "choices": [
-      "To give the spar more flexibility.",
-      "To provide more gluing area.",
-      "To allow use of longer reinforcing plates."
-    ],
-    "answer": 1,
-    "source": [
-      "AMT205 – Quiz – Woods Review – Q12"
-    ]
-  },
-  {
-    "id": "review_205-13",
-    "question": "What is the recommended taper for a splayed patch in a plywood aircraft skin?",
-    "choices": [
-      "5 : 1",
-      "10 :1",
-      "12 : 1"
-    ],
-    "answer": 0,
-    "source": [
-      "AMT205 – Quiz – Woods Review – Q13"
-    ]
-  },
-  {
-    "id": "review_205-15",
-    "question": "According to Fig. 5-1, if a thickness of a wood spar is “A”, what is the minimum slope of the scarf to be cut for a spar splice?",
-    "choices": [
-      "10 A\t.",
-      "15 A.",
-      "12 A."
-    ],
-    "answer": 1,
-    "source": [
-      "AMT205 – Quiz – Woods Review – Q15"
-    ]
-  },
-  {
-    "id": "review_205-22",
-    "question": "Where is information found concerning acceptable species substitutions for wood materials used in aircraft repair?",
-    "choices": [
-      "AC 43.13-1B.",
-      "Aircraft Specifications or Type Certificate Data Sheets.",
-      "Technical Standard Orders."
-    ],
-    "answer": 0,
-    "source": [
-      "AMT205 – Quiz – Woods Review – Q22"
-    ]
-  },
-  {
-    "id": "review_205-23",
-    "question": "Which of the following type patches is recommended and the most structurally sound repair on most stressed wood skins.",
-    "choices": [
-      "Plug patch.",
-      "Splayed patch.",
-      "Scarf patch."
-    ],
-    "answer": 2,
-    "source": [
-      "AMT205 – Quiz – Woods Review – Q23"
-    ]
-  },
-  {
-    "id": "review_205-24",
-    "question": "Which is an appropriate method for bending and forming aircraft wood for construction?",
-    "choices": [
-      "Both A and B.",
-      "Steaming.",
-      "Relief cuts."
-    ],
-    "answer": 1,
-    "source": [
-      "AMT205 – Quiz – Woods Review – Q24"
-    ]
-  },
-  {
-    "id": "review_205-25",
-    "question": "What is the largest hole in a plywood wing skin that can be repaired with a fabric patch?",
-    "choices": [
-      "2 inches",
-      "1 ½ inch",
-      "1 inch"
-    ],
-    "answer": 2,
-    "source": [
-      "AMT205 – Quiz – Woods Review – Q25"
-    ]
+    const LEGACY_BANK_PAYLOAD = {
+  "mode": "protected",
+  "envelope": {
+    "format": "qbpack-v1",
+    "cipher": "AES-GCM-256",
+    "kdf": {
+      "name": "PBKDF2",
+      "hash": "SHA-256",
+      "iterations": 250000
+    },
+    "compression": "gzip",
+    "salt_b64": "mP3MdSxzKInsmXx2ZY2bQw==",
+    "iv_b64": "RwJCMZDEBzOEOyy/",
+    "ciphertext_b64": "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"
   }
-];
-    const { bank: QUESTION_BANK, alias: ID_ALIAS } = dedupeQuestionBank(RAW_QUESTION_BANK);
+};
+    let RAW_QUESTION_BANK = [];
+    let QUESTION_BANK = [];
+    let ID_ALIAS = {};
 
     /* ------------------ 状态区 ------------------ */
-    let starred=mapIds(loadSet(STAR_KEY));
-    let wrongSet=mapIds(loadSet(WRONG_KEY));
-    let attemptCountMap=mapCountMap(loadCountMap(ATTEMPT_COUNT_KEY));
+    let starred=new Set();
+    let wrongSet=new Set();
+    let attemptCountMap={};
     let answeredOnce=new Set();
     let uiState={}; // { qId: { selectedIndex, selectedSet, fillInputs, submitted, feedbackHTML, showKeys } }
     let currentQuestions=[];
@@ -770,6 +242,69 @@
     }
     function saveBool(key, val){
       try{ localStorage.setItem(key, val ? "1" : "0"); }catch{}
+    }
+
+    function bytesFromBase64(value){
+      const binary = atob(String(value || "").trim());
+      const bytes = new Uint8Array(binary.length);
+      for(let i=0;i<binary.length;i++) bytes[i] = binary.charCodeAt(i);
+      return bytes;
+    }
+    function textToBytes(value){ return new TextEncoder().encode(String(value ?? "")); }
+    function bytesToText(bytes){ return new TextDecoder().decode(bytes); }
+    async function deriveLegacyKey(password, salt, kdf){
+      if(!(globalThis.crypto && crypto.subtle)) throw new Error("This browser does not support Web Crypto.");
+      const baseKey = await crypto.subtle.importKey("raw", textToBytes(password), { name:"PBKDF2" }, false, ["deriveKey"]);
+      return crypto.subtle.deriveKey(
+        {
+          name:"PBKDF2",
+          salt,
+          iterations:Number(kdf && kdf.iterations) || 250000,
+          hash:String(kdf && kdf.hash || "SHA-256"),
+        },
+        baseKey,
+        { name:"AES-GCM", length:256 },
+        false,
+        ["decrypt"],
+      );
+    }
+    async function gunzipLegacyPayload(bytes){
+      if(typeof DecompressionStream !== "function"){
+        throw new Error("This browser does not support gzip decompression for encrypted banks.");
+      }
+      const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
+      return new Uint8Array(await new Response(stream).arrayBuffer());
+    }
+    async function decryptLegacyBank(envelope, password){
+      if(!envelope || envelope.format !== "qbpack-v1" || envelope.cipher !== "AES-GCM-256"){
+        throw new Error("Unsupported encrypted bank format.");
+      }
+      if(envelope.compression !== "gzip") throw new Error("Unsupported encrypted bank compression.");
+      const salt = bytesFromBase64(envelope.salt_b64);
+      const iv = bytesFromBase64(envelope.iv_b64);
+      const ciphertext = bytesFromBase64(envelope.ciphertext_b64);
+      const key = await deriveLegacyKey(password, salt, envelope.kdf || {});
+      let decrypted;
+      try{
+        decrypted = await crypto.subtle.decrypt({ name:"AES-GCM", iv }, key, ciphertext);
+      }catch(_e){
+        throw new Error("Password is incorrect, or this file is damaged.");
+      }
+      const jsonText = bytesToText(await gunzipLegacyPayload(new Uint8Array(decrypted)));
+      const parsed = JSON.parse(jsonText);
+      return Array.isArray(parsed) ? parsed : [];
+    }
+    function setUnlockError(message){
+      const err = document.getElementById("legacy-unlock-error");
+      if(!err) return;
+      err.textContent = message || "";
+      err.classList.toggle("visible", !!message);
+    }
+    function setUnlockBusy(isBusy){
+      const btn = document.getElementById("legacy-unlock-btn");
+      const input = document.getElementById("legacy-password");
+      if(btn) btn.disabled = !!isBusy;
+      if(input) input.disabled = !!isBusy;
     }
 
     function mapIds(set){
@@ -1722,10 +1257,95 @@
     }
 
     /* ------------------ 启动 ------------------ */
-    initFilters();
-    sanitizeSavedSets();
-    updateAutoBtn();
-    shuffleAndRender();
+    function startQuiz(rawQuestions){
+      RAW_QUESTION_BANK = Array.isArray(rawQuestions) ? rawQuestions : [];
+      const deduped = dedupeQuestionBank(RAW_QUESTION_BANK);
+      QUESTION_BANK = Array.isArray(deduped && deduped.bank) ? deduped.bank : [];
+      ID_ALIAS = (deduped && deduped.alias) || {};
+
+      starred=mapIds(loadSet(STAR_KEY));
+      wrongSet=mapIds(loadSet(WRONG_KEY));
+      attemptCountMap=mapCountMap(loadCountMap(ATTEMPT_COUNT_KEY));
+      answeredOnce=new Set();
+      uiState={};
+      currentQuestions=[];
+      baseQuestions=[];
+      activeRandom150Questions=null;
+      activeRandom150SourcePool=null;
+      totalAttempts=0;
+      totalCorrect=0;
+      viewMode='all';
+      specialFilterSource='base';
+      autoSubmit = loadBool(AUTO_KEY, false);
+
+      initFilters();
+      sanitizeSavedSets();
+      updateAutoBtn();
+      shuffleAndRender();
+    }
+
+    function showQuizApp(){
+      const app = document.getElementById("quizApp");
+      const unlock = document.getElementById("unlock-panel");
+      if(app) app.hidden = false;
+      if(unlock) unlock.hidden = true;
+    }
+
+    function showUnlockPanel(){
+      const app = document.getElementById("quizApp");
+      const unlock = document.getElementById("unlock-panel");
+      if(app) app.hidden = true;
+      if(unlock) unlock.hidden = false;
+      queueMicrotask(() => {
+        const input = document.getElementById("legacy-password");
+        if(input) input.focus();
+      });
+    }
+
+    async function unlockProtectedLegacyBank(){
+      const input = document.getElementById("legacy-password");
+      const password = input ? input.value : "";
+      if(!String(password || "").trim()){
+        setUnlockError("Enter the question bank password.");
+        return;
+      }
+      setUnlockBusy(true);
+      setUnlockError("");
+      try{
+        const rawQuestions = await decryptLegacyBank(LEGACY_BANK_PAYLOAD && LEGACY_BANK_PAYLOAD.envelope, password);
+        showQuizApp();
+        startQuiz(rawQuestions);
+      }catch(e){
+        setUnlockError(e && e.message ? e.message : "Unable to unlock this question bank.");
+      }finally{
+        setUnlockBusy(false);
+      }
+    }
+
+    function bootstrapLegacyBank(){
+      const payload = LEGACY_BANK_PAYLOAD;
+      const unlockBtn = document.getElementById("legacy-unlock-btn");
+      const passwordInput = document.getElementById("legacy-password");
+      if(unlockBtn) unlockBtn.addEventListener("click", unlockProtectedLegacyBank);
+      if(passwordInput){
+        passwordInput.addEventListener("keydown", event => {
+          if(event.key === "Enter"){
+            event.preventDefault();
+            unlockProtectedLegacyBank();
+          }
+        });
+      }
+
+      if(payload && payload.mode === "protected"){
+        showUnlockPanel();
+        return;
+      }
+
+      showQuizApp();
+      startQuiz(Array.isArray(payload) ? payload : (Array.isArray(payload && payload.questions) ? payload.questions : []));
+    }
+
+    bootstrapLegacyBank();
   </script>
 </body>
 </html>
