@@ -1,0 +1,1352 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AMT 题库练习</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root {
+      --ink:#2d3b45; --muted:#6b7280; --border:#e5e7eb; --bg:#f9fafb;
+      --brand:#2563eb; --success:#047857; --danger:#b91c1c; --card:#fff;
+      --hover:#f3f4f6; --selected-bg:#f0f5ff;
+    }
+    *{box-sizing:border-box}
+    body{font-family:system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);max-width:900px;margin:20px auto;line-height:1.6;padding:0 10px}
+    h1{font-size:1.4rem;margin:0 0 10px}
+    #quizApp[hidden], #unlock-panel[hidden]{display:none}
+    .unlock-panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin:40px auto;max-width:520px;box-shadow:0 14px 40px rgba(15,23,42,.08)}
+    .unlock-panel h1{margin-bottom:8px}
+    .unlock-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .unlock-input{flex:1;min-width:240px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;background:#fff}
+    .unlock-error{margin-top:10px;color:var(--danger);font-weight:600;display:none}
+    .unlock-error.visible{display:block}
+
+    .btn{padding:8px 12px;border:1px solid var(--border);background:#fff;border-radius:6px;cursor:pointer;font-size:14px;color:inherit}
+    .btn:hover{background:var(--hover)}
+    .btn-sm{padding:4px 8px;font-size:12px}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .submit-btn{background:var(--brand);color:#fff;border:none;font-weight:600}
+    .submit-btn:hover{background:#1d4ed8}
+    .submit-btn:disabled{background:#9ca3af;color:#f3f4f6}
+    .confirm-btn{background:var(--brand);color:#fff;border:none;font-weight:600}
+    .confirm-btn:hover{background:#1d4ed8}
+    .redo-btn{border:1px solid var(--border);background:#fff}
+    .redo-btn:hover{background:#f3f4f6}
+
+    .toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0 14px}
+    #stats{margin-left:12px;font-weight:600}
+    .mt-2{margin-top:8px}
+
+    details.filter-panel{width:100%;margin-bottom:10px;border:1px solid var(--border);border-radius:8px;background:#fff;overflow:hidden}
+    summary.btn{border:none;border-radius:0;background:#f9fafb;width:100%;text-align:left;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center}
+    summary.btn::after{content:"▼";font-size:12px;margin-left:10px}
+    details[open] summary.btn::after{content:"▲"}
+    .filter-content{padding:12px;border-top:1px solid var(--border)}
+    .filter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:12px}
+    .filter-label{display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;user-select:none;padding:4px;border-radius:4px}
+    .filter-label:hover{background:var(--hover)}
+    .filter-label input{accent-color:var(--brand);margin:0}
+
+    .question-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+    .question-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+    .header-left{display:flex;align-items:center;gap:8px}
+    .q-badge{display:inline-block;font-weight:600;font-size:14px;background:#eef2ff;color:#3730a3;border:1px solid #e0e7ff;padding:2px 8px;border-radius:999px}
+    .question-text{font-size:16px;font-weight:600;margin:6px 0 8px;flex:1}
+    .meta{font-size:12px;color:var(--muted);margin-top:8px}
+    img{max-width:100%;height:auto;border-radius:6px;border:1px solid var(--border)}
+    .img-wrap{margin:8px 0}
+
+    /* Star Button (SVG, fixed size) */
+    .star-btn{
+      border:none;background:transparent;cursor:pointer;padding:4px;
+      width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;
+      border-radius:999px;line-height:0;
+    }
+    .star-btn svg{width:18px;height:18px;fill:transparent;stroke:#9ca3af;transition:transform .12s ease}
+    .star-btn:hover svg{transform:scale(1.08)}
+    .star-btn.starred svg{fill:#ffb400;stroke:#ffb400}
+
+    .choices{list-style:none;padding:0;margin:8px 0}
+    .choice-item{margin:6px 0}
+    .choice-btn{width:100%;text-align:left;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;align-items:flex-start;gap:10px;font-size:15px;cursor:pointer;transition:all .2s}
+    .choice-btn:hover{background:#f8fafc}
+    .choice-btn.selected{border-color:var(--brand);box-shadow:0 0 0 3px rgba(37,99,235,.15);background:var(--selected-bg)}
+    .choice-btn.disabled{cursor:default;opacity:.8}
+    .choice-btn.disabled:hover{background:#fff}
+
+    /* Inline blanks (in question_html) */
+    .qb-blank{
+      display:inline-block;
+      min-width:140px;
+      max-width:260px;
+      width:clamp(140px, 22vw, 260px);
+      padding:8px 10px;
+      margin:0 6px 4px 6px;
+      border:1px solid var(--border);
+      border-radius:8px;
+      font-size:15px;
+      font-weight:500;
+      background:#fff;
+      vertical-align:baseline;
+    }
+    .qb-blank:disabled{background:#f9fafb;opacity:.9}
+
+    /* fallback fill area (if no question_html) */
+    .fill-area{margin:8px 0;display:flex;flex-direction:column;gap:8px}
+    .fill-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .fill-label{font-size:12px;color:var(--muted);min-width:64px}
+    .fill-input{
+      flex:1;min-width:240px;
+      padding:10px 12px;border:1px solid var(--border);border-radius:8px;
+      font-size:15px;background:#fff;
+    }
+    .fill-input:disabled{background:#f9fafb;opacity:.9}
+
+    .action-bar{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .feedback{margin-top:8px;font-weight:600;padding:8px;border-radius:6px;display:none}
+    .feedback.visible{display:block}
+    .correct{color:var(--success);background:#d1fae5}
+    .wrong{color:var(--danger);background:#fee2e2}
+
+    .keys-panel{
+      margin-top:10px;
+      padding:10px 12px;
+      border:1px dashed var(--border);
+      border-radius:8px;
+      background:#fafafa;
+      display:none;
+    }
+    .keys-title{font-weight:700;margin-bottom:6px}
+    .keys-row{font-size:12px;color:var(--muted);margin:4px 0}
+    .keys-chip{
+      display:inline-block;
+      padding:2px 6px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#fff;
+      font-size:12px;
+      color:var(--ink);
+      margin:2px 6px 2px 0;
+    }
+
+    code{background:#f3f4f6;border:1px solid var(--border);padding:1px 4px;border-radius:4px}
+  </style>
+</head>
+<body>
+  <section id="unlock-panel" class="unlock-panel" hidden>
+    <p class="meta">Protected Question Bank</p>
+    <h1>Enter password</h1>
+    <p class="meta">This compatible HTML file is encrypted. Enter the password provided by the owner to start practicing.</p>
+    <div class="unlock-row">
+      <input id="legacy-password" class="unlock-input" type="password" autocomplete="current-password" placeholder="Question bank password">
+      <button id="legacy-unlock-btn" class="btn submit-btn" type="button">Unlock</button>
+    </div>
+    <div id="legacy-unlock-error" class="unlock-error"></div>
+  </section>
+
+  <main id="quizApp" hidden>
+  <h1>AMT 题库练习（选择题 + 填空题，可打乱）</h1>
+  <p>先在“筛选题库”里选择要练习的范围，然后点 <strong>Randomize + Reset</strong>。答题后点击 <strong>Submit</strong> 查看结果。</p>
+  <p class="meta">
+    填空题判分：忽略大小写；允许多空格；也会忽略“空格有/无”的差异（例如 <code>check list</code> 与 <code>checklist</code> 视为相同）。
+    填空题提交后，你可以点 <strong>Show Correct Answers</strong> 选择性显示答案。
+  </p>
+
+  <details class="filter-panel">
+    <summary class="btn">筛选题库 / Filter Question Banks</summary>
+    <div class="filter-content">
+      <div class="filter-grid" id="filter-container"></div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn btn-sm" onclick="toggleFilters(true)">Select All</button>
+        <button class="btn btn-sm" onclick="toggleFilters(false)">Select None</button>
+        <button class="btn btn-sm confirm-btn" onclick="confirmFilters()">Confirm</button>
+      </div>
+    </div>
+  </details>
+
+  <div class="toolbar">
+    <button class="btn" id="btn-random" onclick="shuffleAndRender()">Randomize + Reset</button>
+    <button class="btn" id="btn-auto"  onclick="toggleAutoSubmit()">Auto Submit: OFF</button>
+    <button class="btn" id="btn-random150" onclick="showRandom150()" disabled>Random Choose 150</button>
+    <button class="btn" id="btn-back150" onclick="showCurrent150()" disabled>Back to Current 150</button>
+    <button class="btn" id="btn-wrong" onclick="showWrongOnly()">Wrong Only (0)</button>
+    <button class="btn" id="btn-star"  onclick="showStarOnly()">Star Only (0)</button>
+    <button class="btn" id="btn-back"  onclick="showAll()" disabled>Back to All</button>
+    <span id="stats"></span>
+  </div>
+
+  <div id="quiz"></div>
+  </main>
+
+  <script>
+    const STAR_KEY="amt_starred_questions";
+    const WRONG_KEY="amt_wrong_questions";
+    const AUTO_KEY="amt_auto_submit";
+    const ATTEMPT_COUNT_KEY="amt_attempt_count_map_v1";
+
+    /* ------------------ 数据区 ------------------ */
+    const LEGACY_BANK_PAYLOAD = {
+  "mode": "protected",
+  "envelope": {
+    "format": "qbpack-v1",
+    "cipher": "AES-GCM-256",
+    "kdf": {
+      "name": "PBKDF2",
+      "hash": "SHA-256",
+      "iterations": 250000
+    },
+    "compression": "gzip",
+    "salt_b64": "mP3MdSxzKInsmXx2ZY2bQw==",
+    "iv_b64": "RwJCMZDEBzOEOyy/",
+    "ciphertext_b64": "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"
+  }
+};
+    let RAW_QUESTION_BANK = [];
+    let QUESTION_BANK = [];
+    let ID_ALIAS = {};
+
+    /* ------------------ 状态区 ------------------ */
+    let starred=new Set();
+    let wrongSet=new Set();
+    let attemptCountMap={};
+    let answeredOnce=new Set();
+    let uiState={}; // { qId: { selectedIndex, selectedSet, fillInputs, submitted, feedbackHTML, showKeys } }
+    let currentQuestions=[];
+    let baseQuestions=[];
+    let activeRandom150Questions=null;
+    let activeRandom150SourcePool=null;
+    let totalAttempts=0,totalCorrect=0;
+    let viewMode='all';
+    let specialFilterSource='base';
+    let autoSubmit = loadBool(AUTO_KEY, false);
+
+    /* ------------------ 工具函数 ------------------ */
+    function loadSet(key){try{return new Set(JSON.parse(localStorage.getItem(key)||"[]"))}catch{return new Set()}}
+    function saveSet(key,set){localStorage.setItem(key,JSON.stringify([...set]))}
+    function loadCountMap(key){
+      try{
+        const raw = JSON.parse(localStorage.getItem(key) || '{}');
+        return (raw && typeof raw === 'object' && !Array.isArray(raw)) ? raw : {};
+      }catch{return {}}
+    }
+    function saveCountMap(key,obj){
+      try{ localStorage.setItem(key, JSON.stringify(obj || {})); }catch{}
+    }
+
+    function loadBool(key, defaultVal){
+      try{
+        const v = localStorage.getItem(key);
+        if(v===null || v===undefined) return !!defaultVal;
+        return v === "1" || v === "true";
+      }catch{return !!defaultVal}
+    }
+    function saveBool(key, val){
+      try{ localStorage.setItem(key, val ? "1" : "0"); }catch{}
+    }
+
+    function bytesFromBase64(value){
+      const binary = atob(String(value || "").trim());
+      const bytes = new Uint8Array(binary.length);
+      for(let i=0;i<binary.length;i++) bytes[i] = binary.charCodeAt(i);
+      return bytes;
+    }
+    function textToBytes(value){ return new TextEncoder().encode(String(value ?? "")); }
+    function bytesToText(bytes){ return new TextDecoder().decode(bytes); }
+    async function deriveLegacyKey(password, salt, kdf){
+      if(!(globalThis.crypto && crypto.subtle)) throw new Error("This browser does not support Web Crypto.");
+      const baseKey = await crypto.subtle.importKey("raw", textToBytes(password), { name:"PBKDF2" }, false, ["deriveKey"]);
+      return crypto.subtle.deriveKey(
+        {
+          name:"PBKDF2",
+          salt,
+          iterations:Number(kdf && kdf.iterations) || 250000,
+          hash:String(kdf && kdf.hash || "SHA-256"),
+        },
+        baseKey,
+        { name:"AES-GCM", length:256 },
+        false,
+        ["decrypt"],
+      );
+    }
+    async function gunzipLegacyPayload(bytes){
+      if(typeof DecompressionStream !== "function"){
+        throw new Error("This browser does not support gzip decompression for encrypted banks.");
+      }
+      const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
+      return new Uint8Array(await new Response(stream).arrayBuffer());
+    }
+    async function decryptLegacyBank(envelope, password){
+      if(!envelope || envelope.format !== "qbpack-v1" || envelope.cipher !== "AES-GCM-256"){
+        throw new Error("Unsupported encrypted bank format.");
+      }
+      if(envelope.compression !== "gzip") throw new Error("Unsupported encrypted bank compression.");
+      const salt = bytesFromBase64(envelope.salt_b64);
+      const iv = bytesFromBase64(envelope.iv_b64);
+      const ciphertext = bytesFromBase64(envelope.ciphertext_b64);
+      const key = await deriveLegacyKey(password, salt, envelope.kdf || {});
+      let decrypted;
+      try{
+        decrypted = await crypto.subtle.decrypt({ name:"AES-GCM", iv }, key, ciphertext);
+      }catch(_e){
+        throw new Error("Password is incorrect, or this file is damaged.");
+      }
+      const jsonText = bytesToText(await gunzipLegacyPayload(new Uint8Array(decrypted)));
+      const parsed = JSON.parse(jsonText);
+      return Array.isArray(parsed) ? parsed : [];
+    }
+    function setUnlockError(message){
+      const err = document.getElementById("legacy-unlock-error");
+      if(!err) return;
+      err.textContent = message || "";
+      err.classList.toggle("visible", !!message);
+    }
+    function setUnlockBusy(isBusy){
+      const btn = document.getElementById("legacy-unlock-btn");
+      const input = document.getElementById("legacy-password");
+      if(btn) btn.disabled = !!isBusy;
+      if(input) input.disabled = !!isBusy;
+    }
+
+    function mapIds(set){
+      const out = new Set();
+      for(const id of set){
+        out.add((ID_ALIAS && ID_ALIAS[id]) ? ID_ALIAS[id] : id);
+      }
+      return out;
+    }
+    function canonicalId(id){
+      return (ID_ALIAS && ID_ALIAS[id]) ? ID_ALIAS[id] : id;
+    }
+    function mapCountMap(obj){
+      const src = (obj && typeof obj === 'object' && !Array.isArray(obj)) ? obj : {};
+      const out = {};
+      for(const [rawId, rawCount] of Object.entries(src)){
+        const id = canonicalId(rawId);
+        const count = Number(rawCount || 0);
+        if(!id || !Number.isFinite(count) || count <= 0) continue;
+        out[id] = (out[id] || 0) + count;
+      }
+      return out;
+    }
+    function getAttemptCount(id){
+      const key = canonicalId(id);
+      return Math.max(0, Number((attemptCountMap && attemptCountMap[key]) || 0));
+    }
+    function bumpAttemptCount(id){
+      const key = canonicalId(id);
+      if(!key) return;
+      attemptCountMap[key] = getAttemptCount(key) + 1;
+      saveCountMap(ATTEMPT_COUNT_KEY, attemptCountMap);
+    }
+
+    function escHTML(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#39;");
+    }
+
+    function renderSource(q){
+      const s = (q && (q.source ?? q.sources)) ?? "";
+      const arr = Array.isArray(s) ? s : (s ? [s] : []);
+      // use text join; keep compact
+      return escHTML(arr.filter(Boolean).join(" | "));
+    }
+
+    function getBanks(q){
+      const out = [];
+      if(q && Array.isArray(q.banks)) out.push(...q.banks);
+      const id = String(q && q.id ? q.id : "");
+      if(id.includes("-")) out.push(id.split("-")[0]);
+      return Array.from(new Set(out.filter(Boolean)));
+    }
+
+    function normText(s){
+      return String(s ?? "")
+        .replace(/\u00a0/g, " ")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " ");
+    }
+
+    function fnv1a64(str){
+      let h = 0xcbf29ce484222325n;
+      const prime = 0x100000001b3n;
+      for(let i=0;i<str.length;i++){
+        h ^= BigInt(str.charCodeAt(i));
+        h = (h * prime) & 0xffffffffffffffffn;
+      }
+      return h.toString(16).padStart(16,"0");
+    }
+
+    function makeQuestionKey(q){
+      const isFillQ = (q && (q.type === "fill" || Array.isArray(q.blanks)));
+      const isEssayQ = (q && q.type === "essay");
+      const isMultiQ = (q && Array.isArray(q.answers));
+      const type = isFillQ ? "fill" : (isEssayQ ? "essay" : (isMultiQ ? "multi" : "single"));
+      let key = type + "|" + normText(q && q.question);
+
+      if(type === "fill"){
+        const blanks = Array.isArray(q.blanks) ? q.blanks : [];
+        const bParts = blanks.map(arr=>{
+          const list = (Array.isArray(arr)?arr:[arr]).map(normText).filter(Boolean).sort();
+          return list.join("/");
+        });
+        key += "|blanks:" + bParts.join("||");
+      }else if(type === "essay"){
+        // only question text
+      }else{
+        const choices = Array.isArray(q.choices) ? q.choices : [];
+        const normChoices = choices.map(normText);
+
+        // Order-insensitive: treat choices as a multiset (sorted bag)
+        const bag = [...normChoices].sort().join("||");
+        key += "|choicebag:" + bag;
+
+        // Safety: also require the *correct choice text(s)* to match; prevents merging
+        // same stem+choices but different answer keys.
+        if(type === "multi"){
+          const idxs = (Array.isArray(q.answers)?q.answers:[])
+            .map(x=>Number(x))
+            .filter(x=>Number.isFinite(x) && x>=0 && x<normChoices.length)
+            .sort((a,b)=>a-b);
+          const correct = idxs.map(i=>normChoices[i]).filter(Boolean).sort();
+          key += "|correct:" + correct.join("||");
+        }else{
+          const ai = Number(q.answer);
+          const correct = (Number.isFinite(ai) && ai>=0 && ai<normChoices.length) ? normChoices[ai] : "";
+          key += "|correct:" + correct;
+        }
+      }
+
+      // Prevent silent merging of visually distinct questions that reuse the same
+      // stem/choices/answer but carry different reference images.
+      const imgList = collectImageList(q);
+      if(imgList.length){
+        key += "|images:" + imgList.map(img=>fnv1a64(String(img))).join(",");
+      }
+      return key;
+    }
+
+    function mergeUnique(a,b){
+      const out = [];
+      const push = (x)=>{ if(x===null||x===undefined) return; const s=String(x); if(!s) return; if(!out.includes(s)) out.push(s); };
+      (a||[]).forEach(push); (b||[]).forEach(push);
+      return out;
+    }
+
+    function collectImageList(q){
+      const img = q && q.image;
+      if(!img) return [];
+      const arr = Array.isArray(img) ? img : [img];
+      return arr.filter(Boolean);
+    }
+
+    function setImageField(obj, list){
+      const uniq = [];
+      for(const s of list){
+        if(!s) continue;
+        if(!uniq.includes(s)) uniq.push(s);
+      }
+      if(!uniq.length){ delete obj.image; return; }
+      obj.image = (uniq.length===1) ? uniq[0] : uniq;
+    }
+
+    // Dedupe identical questions, merge sources + banks, and build id alias mapping.
+    function dedupeQuestionBank(raw){
+      const byKey = new Map(); // key -> canonical question object
+      const alias = {};
+      const out = [];
+      const list = Array.isArray(raw) ? raw : (raw ? [raw] : []);
+
+      for(const q0 of list){
+        if(!q0) continue;
+        const key = makeQuestionKey(q0);
+        let canon = byKey.get(key);
+
+        if(!canon){
+          const id = "q_" + fnv1a64(key);
+          canon = { ...q0, id };
+          // banks + source (start as arrays)
+          canon.banks = getBanks(q0);
+          const srcArr = Array.isArray(q0.source) ? q0.source : (q0.source ? [q0.source] : []);
+          canon.source = mergeUnique([], srcArr);
+
+          // merge images (keep union)
+          setImageField(canon, collectImageList(q0));
+
+          // keep one question_html if available
+          if(q0.question_html) canon.question_html = q0.question_html;
+
+          byKey.set(key, canon);
+          out.push(canon);
+        }else{
+          // banks
+          canon.banks = mergeUnique(canon.banks, getBanks(q0));
+
+          // sources
+          const srcArr = Array.isArray(q0.source) ? q0.source : (q0.source ? [q0.source] : []);
+          canon.source = mergeUnique(canon.source, srcArr);
+
+          // images
+          setImageField(canon, mergeUnique(collectImageList(canon), collectImageList(q0)));
+
+          // prefer having question_html
+          if(!canon.question_html && q0.question_html) canon.question_html = q0.question_html;
+        }
+
+        // alias for old ids
+        if(q0.id) alias[String(q0.id)] = canon.id;
+      }
+
+      // Normalize: if only one source, keep as string (backward friendly)
+      out.forEach(q=>{
+        if(Array.isArray(q.source)){
+          q.source = q.source.length <= 1 ? (q.source[0] || "") : q.source;
+        }
+        if(Array.isArray(q.banks)){
+          q.banks = q.banks.filter(Boolean);
+        }
+      });
+
+      return { bank: out, alias };
+    }
+
+    function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}}
+    function getQ(qId){ return currentQuestions.find(q=>q.id===qId) || QUESTION_BANK.find(q=>q.id===qId) }
+
+    function isMulti(q){ return Array.isArray(q?.answers) }
+    function isFill(q){ return (q?.type === 'fill') || Array.isArray(q?.blanks) }
+    function isEssay(q){ return (q?.type === 'essay') }
+
+    function setEqualsArray(setObj, arr){
+      if (setObj.size !== arr.length) return false;
+      for (const x of arr) if (!setObj.has(x)) return false;
+      return true;
+    }
+
+    // --- Fill answer normalization & match ---
+    function normKeepSpace(s){
+      return String(s ?? "")
+        .replace(/\u00a0/g, " ")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " ");
+    }
+    function normNoSpace(s){
+      return normKeepSpace(s).replace(/\s+/g, "");
+    }
+    function eqLoose(a,b){
+      // ignore case, allow multi spaces, and treat "with/without spaces" as same
+      const a1 = normKeepSpace(a), b1 = normKeepSpace(b);
+      if (a1 === b1) return true;
+      return normNoSpace(a) === normNoSpace(b);
+    }
+
+    // multiple answer-set matching support:
+    // If q.answer_sets exists: array of sets, each set = [ans1, ans2, ...] for each blank.
+    // Otherwise use q.blanks: blanks[i] = [acceptable answers...]
+    function checkFill(q, inputs){
+      const n = Array.isArray(q.blanks) ? q.blanks.length : 0;
+      if (!n) return { ok:false, detail:"No blanks defined." };
+      if (!Array.isArray(inputs) || inputs.length !== n) return { ok:false, detail:"Inputs length mismatch." };
+
+      // require all filled
+      for (let i=0;i<n;i++){
+        if (!String(inputs[i] ?? "").trim()) return { ok:false, detail:"Please fill all blanks." };
+      }
+
+      // If multiple answer sets exist, OR-match by set
+      if (Array.isArray(q.answer_sets) && q.answer_sets.length){
+        const sets = q.answer_sets;
+        const ok = sets.some(set => {
+          if (!Array.isArray(set) || set.length !== n) return false;
+          for (let i=0;i<n;i++){
+            const expected = set[i];
+            if (Array.isArray(expected)){
+              const hit = expected.some(x => eqLoose(inputs[i], x));
+              if (!hit) return false;
+            }else{
+              if (!eqLoose(inputs[i], expected)) return false;
+            }
+          }
+          return true;
+        });
+        return { ok, detail: ok ? "" : "Not matching any accepted answer set." };
+      }
+
+      // Per-blank matching
+      for (let i=0;i<n;i++){
+        const expectedList = Array.isArray(q.blanks[i]) ? q.blanks[i] : [];
+        const hit = expectedList.some(ans => eqLoose(inputs[i], ans));
+        if (!hit) return { ok:false, detail:`Blank ${i+1} incorrect.` };
+      }
+      return { ok:true, detail:"" };
+    }
+
+    function sanitizeSavedSets(){
+      const valid=new Set(QUESTION_BANK.map(q=>q.id));
+      let changed=false;
+      for(const id of [...starred]) if(!valid.has(id)){starred.delete(id); changed=true;}
+      for(const id of [...wrongSet]) if(!valid.has(id)){wrongSet.delete(id); changed=true;}
+
+      const nextCountMap = {};
+      for(const [id, count] of Object.entries(mapCountMap(attemptCountMap))){
+        if(valid.has(id) && Number(count) > 0) nextCountMap[id] = Number(count);
+      }
+      if(JSON.stringify(nextCountMap) !== JSON.stringify(attemptCountMap)){
+        attemptCountMap = nextCountMap;
+        saveCountMap(ATTEMPT_COUNT_KEY, attemptCountMap);
+      }
+
+      if(changed){saveSet(STAR_KEY,starred); saveSet(WRONG_KEY,wrongSet);}
+    }
+
+    /* ---- 自动生成筛选（统一按前缀） ---- */
+    function prettifyPrefix(p){if(/^quiz\d+$/i.test(p))return p.replace(/quiz(\d+)/i,"Quiz $1");if(/^day\d+$/i.test(p))return p.replace(/day(\d+)/i,"Day $1");return p.replace(/_/g," ").replace(/\b\w/g,s=>s.toUpperCase())}
+    function deriveCategoriesFromQuestions(){
+      const map=new Map();
+      for(const q of QUESTION_BANK){
+        const banks = Array.isArray(q.banks) ? q.banks : getBanks(q);
+        for(const prefix of banks){
+          if(!prefix || map.has(prefix)) continue;
+          map.set(prefix, prettifyPrefix(prefix));
+        }
+      }
+      return Array.from(map,([id,label])=>({id,label}));
+    }
+    function initFilters(){
+      const cats=deriveCategoriesFromQuestions();
+      const container=document.getElementById("filter-container");
+      container.innerHTML=cats.map(c=>`<label class="filter-label"><input type="checkbox" class="bank-filter" value="${c.id}" checked>${c.label}</label>`).join("");
+    }
+    function toggleFilters(check){document.querySelectorAll(".bank-filter").forEach(cb=>cb.checked=check)}
+    function getSelectedPrefixes(){return Array.from(document.querySelectorAll(".bank-filter:checked")).map(cb=>cb.value)}
+
+    /* ------------------ 图片渲染（支持多图/单图） ------------------ */
+    function renderImgs(img){
+      if(!img) return '';
+      const arr = Array.isArray(img) ? img : [img];
+      return arr.map(src => `<div class="img-wrap"><img src="${src}" alt="figure"></div>`).join('');
+    }
+
+    /* ------------------ 渲染与交互 ------------------ */
+    function ensureState(q){
+      return uiState[q.id] || (uiState[q.id] = {
+        selectedIndex:null,
+        selectedSet:new Set(),
+        fillInputs: Array.isArray(q.blanks) ? Array(q.blanks.length).fill("") : [],
+        submitted:false,
+        feedbackHTML:"",
+        showKeys:false
+      });
+    }
+
+    function escapeAttr(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#39;");
+    }
+
+    function render(questions){
+      currentQuestions=questions;
+      const wrap=document.getElementById("quiz");
+      if(!questions.length){
+        wrap.innerHTML=`<div style="padding:20px;text-align:center;color:var(--muted);">没有符合条件的题目，请检查筛选条件。</div>`;
+        updateStats();
+        return;
+      }
+      let html="";
+      if(viewMode!=='all'){html+=`<div class="toolbar"><button class="btn" onclick="clearCurrentSelections()">Clear choices for this list</button></div>`}
+
+      for(let i=0;i<questions.length;i++){
+        const q=questions[i];
+        const isStar = starred.has(q.id);
+        const st = ensureState(q);
+
+        const showKeyBtn = isFill(q)
+          ? `<button class="btn" id="keysbtn-${q.id}" onclick="toggleKeys('${q.id}')" ${st.submitted ? "" : "disabled"}>
+              ${st.showKeys ? "Hide" : "Show"} Correct Answers
+            </button>`
+          : ``;
+
+        html+=`
+        <div class="question-card">
+          <div class="question-header">
+            <div class="header-left">
+              <span class="q-badge">Question ${i+1}</span>
+              <button class="star-btn ${isStar ? "starred" : ""}"
+                      onclick="toggleStar('${q.id}')"
+                      aria-label="${isStar ? 'Unstar' : 'Star'}"
+                      title="${isStar ? 'Unstar' : 'Star'}">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="question-text" id="qtext-${q.id}"></div>
+          ${renderImgs(q.image)}
+
+          <div id="answer-${q.id}"></div>
+
+          <div class="action-bar">
+            <button class="btn submit-btn" id="submit-${q.id}" onclick="submitAnswer('${q.id}')" ${st.submitted?'disabled':''}>${st.submitted?'Submitted':'Submit Answer'}</button>
+            <button class="btn redo-btn" id="redo-${q.id}" onclick="redoQuestion('${q.id}')" style="display:${st.submitted?'block':'none'}">Redo</button>
+            ${showKeyBtn}
+          </div>
+
+          <div class="feedback ${(st.submitted || st.feedbackHTML)?'visible':''}" id="feedback-${q.id}">${st.feedbackHTML||""}</div>
+
+          <div class="keys-panel" id="keys-${q.id}" style="display:${(st.submitted && st.showKeys) ? "block" : "none"}"></div>
+
+          <div class="meta">${renderSource(q)}</div>
+          ${viewMode==='wrong'?`<div class="mt-2"><button class="btn" onclick="removeFromWrong('${q.id}')">Remove from wrong</button></div>`:""}
+        </div>`;
+      }
+      wrap.innerHTML=html;
+
+      // Hydrate question text + answers
+      for(const q of questions){
+        const st = ensureState(q);
+        hydrateQuestionText(q, st);
+        renderAnswerArea(q, st);
+        if (st.submitted && isFill(q) && st.showKeys) {
+          renderKeysPanel(q.id);
+        }
+      }
+
+      updateStats();
+    }
+
+    function hydrateQuestionText(q, st){
+      const el = document.getElementById(`qtext-${q.id}`);
+      if (!el) return;
+
+      if (isFill(q) && typeof q.question_html === "string" && q.question_html.trim()){
+        el.innerHTML = q.question_html;
+      } else {
+        el.textContent = q.question || "";
+      }
+
+      if (isFill(q)){
+        hydrateInlineBlanks(q, st, el);
+      }
+    }
+
+    function hydrateInlineBlanks(q, st, scopeEl){
+      const n = Array.isArray(q.blanks) ? q.blanks.length : 0;
+      if (!n) return;
+
+      if (!Array.isArray(st.fillInputs) || st.fillInputs.length !== n){
+        st.fillInputs = Array(n).fill("");
+      }
+
+      const blanks = Array.from(scopeEl.querySelectorAll("input.qb-blank, input[data-blank].qb-blank, input[data-blank]"));
+      if (!blanks.length){
+        // no inline blanks; we'll fallback to answer-area later
+        return;
+      }
+
+      blanks.forEach((inp, i) => {
+        // ensure class
+        inp.classList.add("qb-blank");
+
+        // map index by data-blank (1-based) if present
+        let bi = i;
+        const db = inp.getAttribute("data-blank");
+        if (db && /^\d+$/.test(db)) bi = Math.max(0, parseInt(db,10)-1);
+
+        if (bi >= n) return; // ignore extra inputs
+
+        inp.value = st.fillInputs[bi] ?? "";
+        inp.disabled = !!st.submitted;
+        inp.placeholder = "Type…";
+
+        inp.addEventListener("input", () => {
+          if (st.submitted) return;
+          st.fillInputs[bi] = inp.value;
+          maybeAutoSubmit(q.id);
+        });
+      });
+    }
+
+    function renderAnswerArea(q, st){
+      const box = document.getElementById(`answer-${q.id}`);
+      if (!box) return;
+
+      if (isFill(q)) {
+        // If question_html has blanks, no separate area needed.
+        const qtext = document.getElementById(`qtext-${q.id}`);
+        const hasInline = qtext && qtext.querySelector("input.qb-blank, input[data-blank]");
+        if (hasInline) { box.innerHTML = ""; return; }
+
+        // Fallback: render fill inputs below
+        const n = Array.isArray(q.blanks) ? q.blanks.length : 0;
+        if (!Array.isArray(st.fillInputs) || st.fillInputs.length !== n){
+          st.fillInputs = Array(n).fill("");
+        }
+        const disabled = st.submitted ? "disabled" : "";
+        let inner = `<div class="fill-area" id="fill-${q.id}">`;
+        for (let i=0;i<n;i++){
+          const v = (st.fillInputs[i] ?? "");
+          inner += `
+            <div class="fill-row">
+              <div class="fill-label">Blank ${i+1}</div>
+              <input class="fill-input" ${disabled}
+                     value="${escapeAttr(v)}"
+                     oninput="onFillInput('${q.id}', ${i}, this.value)"
+                     placeholder="Type your answer...">
+            </div>`;
+        }
+        inner += `</div>`;
+        box.innerHTML = inner;
+        return;
+      }
+
+      if (isEssay(q)) {
+        box.innerHTML = `<div class="meta">（问答题：此框架不判分）</div>`;
+        return;
+      }
+
+      // choice question
+      const ul = document.createElement('ul');
+      ul.className = 'choices';
+      const disabled = st.submitted ? 'disabled' : '';
+      for(let i=0;i<(q.choices||[]).length;i++){
+        ul.insertAdjacentHTML('beforeend',
+          `<li class="choice-item"><button class="choice-btn ${disabled}" onclick="selectChoice('${q.id}',${i})">${String.fromCharCode(65+i)}. ${q.choices[i]}</button></li>`
+        );
+      }
+      box.innerHTML = "";
+      box.appendChild(ul);
+
+      // restore selected state
+      const btns = ul.querySelectorAll('.choice-btn');
+      if (isMulti(q)) {
+        const sel = st.selectedSet || new Set();
+        btns.forEach((b, idx) => { if (sel.has(idx)) b.classList.add('selected'); });
+      } else if (st.selectedIndex !== null) {
+        if (btns[st.selectedIndex]) btns[st.selectedIndex].classList.add('selected');
+      }
+    }
+
+    function onFillInput(qId, blankIndex, value){
+      const q = getQ(qId);
+      const st = ensureState(q);
+      if (st.submitted) return;
+      if (!Array.isArray(st.fillInputs)) st.fillInputs = [];
+      st.fillInputs[blankIndex] = value;
+      maybeAutoSubmit(qId);
+    }
+
+    function selectChoice(qId, index){
+      const q = getQ(qId);
+      const st = ensureState(q);
+      if (st.submitted) return;
+      if (isFill(q) || isEssay(q)) return;
+
+      const btns = document.getElementById(`answer-${qId}`).querySelectorAll('.choice-btn');
+
+      if (isMulti(q)) {
+        if (st.selectedSet.has(index)) { st.selectedSet.delete(index); }
+        else { st.selectedSet.add(index); }
+        btns[index].classList.toggle('selected');
+      } else {
+        st.selectedIndex = index;
+        btns.forEach(b => b.classList.remove('selected'));
+        btns[index].classList.add('selected');
+      }
+      maybeAutoSubmit(qId);
+    }
+
+    function syncQuestionUI(qId){
+      const q = getQ(qId);
+      if(!q) return;
+      const st = ensureState(q);
+      hydrateQuestionText(q, st);
+      renderAnswerArea(q, st);
+
+      const fb=document.getElementById(`feedback-${qId}`);
+      if(fb){
+        fb.innerHTML = st.feedbackHTML || '';
+        fb.classList.toggle('visible', !!st.feedbackHTML || !!st.submitted);
+      }
+
+      const sub=document.getElementById(`submit-${qId}`);
+      if(sub){
+        sub.textContent = st.submitted ? 'Submitted' : 'Submit Answer';
+        sub.disabled = !!st.submitted;
+      }
+
+      const redo=document.getElementById(`redo-${qId}`);
+      if(redo) redo.style.display = st.submitted ? 'block' : 'none';
+
+      const kp = document.getElementById(`keys-${qId}`);
+      if (kp) {
+        kp.style.display = (st.submitted && st.showKeys) ? 'block' : 'none';
+        if (st.submitted && st.showKeys && isFill(q)) renderKeysPanel(qId);
+        else kp.innerHTML = '';
+      }
+      const kb = document.getElementById(`keysbtn-${qId}`);
+      if (kb) {
+        kb.disabled = !st.submitted;
+        kb.textContent = (st.showKeys ? 'Hide' : 'Show') + ' Correct Answers';
+      }
+    }
+
+    function resetQuestionStateForRedo(qId, opts={}){
+      const q = getQ(qId);
+      const st = ensureState(q);
+      st.submitted = false;
+      st.selectedIndex = null;
+      st.selectedSet = new Set();
+      st.showKeys = false;
+      st.feedbackHTML = opts.keepFeedback ? String(opts.keepFeedback) : '';
+      if (isFill(q)) {
+        const n = Array.isArray(q.blanks) ? q.blanks.length : 0;
+        st.fillInputs = Array(n).fill('');
+      }
+      syncQuestionUI(qId);
+      return st;
+    }
+
+    function submitAnswer(qId){
+      const q = getQ(qId);
+      const st = ensureState(q);
+      if(st.submitted) return;
+
+      // 校验是否填写/选择
+      if (isFill(q)) {
+        const n = Array.isArray(q.blanks) ? q.blanks.length : 0;
+        if (!n) { alert("This fill question has no blanks defined."); return; }
+        if (!Array.isArray(st.fillInputs) || st.fillInputs.length !== n) { alert("Please fill all blanks!"); return; }
+        for (let i=0;i<n;i++){
+          if (!String(st.fillInputs[i] ?? "").trim()) { alert("Please fill all blanks!"); return; }
+        }
+      } else if (isEssay(q)) {
+        alert("Essay question: no auto grading in this frame.");
+        return;
+      } else {
+        if (isMulti(q)) {
+          if (!st.selectedSet || st.selectedSet.size === 0) { alert("Please select at least one answer!"); return; }
+        } else {
+          if (st.selectedIndex === null) { alert("Please select an answer first!"); return; }
+        }
+      }
+
+      let ok=false;
+      if (isFill(q)) {
+        const res = checkFill(q, st.fillInputs);
+        ok = !!res.ok;
+      } else if (isMulti(q)) {
+        const expected = q.answers.slice().sort((a,b)=>a-b);
+        ok = setEqualsArray(st.selectedSet, expected);
+      } else {
+        ok = (st.selectedIndex === q.answer);
+      }
+
+      const firstScoredAttempt = !answeredOnce.has(qId);
+      if(firstScoredAttempt){
+        answeredOnce.add(qId);
+        totalAttempts++;
+        bumpAttemptCount(qId);
+        if(ok) totalCorrect++;
+        else { wrongSet.add(qId); saveSet(WRONG_KEY,wrongSet); }
+      }
+      const html=ok ? `<div class="correct">✅ Correct!</div>` : `<div class="wrong">❌ Wrong</div>`;
+      st.submitted=true;
+      st.feedbackHTML=html;
+      syncQuestionUI(qId);
+      updateStats();
+    }
+
+    function toggleKeys(qId){
+      const q = getQ(qId);
+      const st = ensureState(q);
+      if (!isFill(q)) return;
+      if (!st.submitted) return;
+
+      st.showKeys = !st.showKeys;
+
+      const panel = document.getElementById(`keys-${qId}`);
+      const btn = document.getElementById(`keysbtn-${qId}`);
+      if (btn) btn.textContent = (st.showKeys ? "Hide" : "Show") + " Correct Answers";
+
+      if (!panel) return;
+      panel.style.display = st.showKeys ? "block" : "none";
+      if (st.showKeys) renderKeysPanel(qId);
+    }
+
+    function renderKeysPanel(qId){
+      const q = getQ(qId);
+      const panel = document.getElementById(`keys-${qId}`);
+      if (!panel || !isFill(q)) return;
+
+      let html = `<div class="keys-title">Correct Answers</div>`;
+
+      // Prefer answer_sets if present (multiple combinations)
+      if (Array.isArray(q.answer_sets) && q.answer_sets.length){
+        html += `<div class="keys-row">Accepted answer sets (any ONE set matches):</div>`;
+        q.answer_sets.forEach((set, si) => {
+          const parts = (set || []).map((v, i) => {
+            if (Array.isArray(v)) {
+              const chips = v.map(x=>`<span class="keys-chip">${escapeAttr(x)}</span>`).join("");
+              return `<div class="keys-row"><strong>Set ${si+1} · Blank ${i+1}:</strong> ${chips}</div>`;
+            }
+            return `<div class="keys-row"><strong>Set ${si+1} · Blank ${i+1}:</strong> <span class="keys-chip">${escapeAttr(v)}</span></div>`;
+          }).join("");
+          html += parts;
+        });
+        panel.innerHTML = html;
+        return;
+      }
+
+      const blanks = Array.isArray(q.blanks) ? q.blanks : [];
+      blanks.forEach((arr, i) => {
+        const list = (Array.isArray(arr) ? arr : []).filter(Boolean);
+        const chips = list.length
+          ? list.map(x=>`<span class="keys-chip">${escapeAttr(x)}</span>`).join("")
+          : `<span class="keys-chip">(no key)</span>`;
+        html += `<div class="keys-row"><strong>Blank ${i+1}:</strong> ${chips}</div>`;
+      });
+
+      panel.innerHTML = html;
+    }
+
+    function redoQuestion(qId, opts={}){
+      resetQuestionStateForRedo(qId, opts);
+    }
+
+    function toggleStar(id){
+      starred.has(id)?starred.delete(id):starred.add(id);
+      saveSet(STAR_KEY,starred);
+      rerenderCurrentView();
+    }
+
+    function getBaseQuestions(){
+      return Array.isArray(baseQuestions) ? [...baseQuestions] : [];
+    }
+    function getScopeQuestions(scopeName){
+      if(scopeName==='random150' && Array.isArray(activeRandom150Questions) && activeRandom150Questions.length){
+        return [...activeRandom150Questions];
+      }
+      return getBaseQuestions();
+    }
+    function getCurrentScopeQuestions(){
+      if(viewMode==='random150') return getScopeQuestions('random150');
+      if(viewMode==='wrong' || viewMode==='star') return getScopeQuestions(specialFilterSource);
+      return getScopeQuestions('base');
+    }
+    function getPreferredSpecialSource(){
+      if(viewMode==='random150') return 'random150';
+      if((viewMode==='wrong' || viewMode==='star') && specialFilterSource==='random150' && Array.isArray(activeRandom150Questions) && activeRandom150Questions.length){
+        return 'random150';
+      }
+      return 'base';
+    }
+    function getStarQuestions(){
+      return getCurrentScopeQuestions().filter(q=>starred.has(q.id));
+    }
+    function getWrongQuestions(){
+      return getCurrentScopeQuestions().filter(q=>wrongSet.has(q.id));
+    }
+    function getQuestionsForView(mode){
+      if(mode==='random150') return Array.isArray(activeRandom150Questions) ? [...activeRandom150Questions] : [];
+      if(mode==='wrong') return getWrongQuestions();
+      if(mode==='star') return getStarQuestions();
+      return getBaseQuestions();
+    }
+    function rerenderCurrentView(){
+      render(getQuestionsForView(viewMode));
+      updateButtons();
+    }
+    function clearCurrentSelections(){
+      currentQuestions.forEach(q=>delete uiState[q.id]);
+      const prev=document.getElementById("stats").textContent;
+      rerenderCurrentView();
+      document.getElementById("stats").textContent=prev;
+    }
+    function getRandom150SourcePool(){
+      if(viewMode === 'random150' && Array.isArray(activeRandom150SourcePool) && activeRandom150SourcePool.length){
+        return [...activeRandom150SourcePool];
+      }
+      return Array.isArray(currentQuestions) ? [...currentQuestions] : [];
+    }
+    function computePracticeWeight(q){
+      const answered = getAttemptCount(q && q.id);
+      return 1 / (1 + answered);
+    }
+    function weightedSampleWithoutReplacement(pool, limit){
+      const items = Array.isArray(pool) ? pool.slice() : [];
+      const scored = items.map(q => {
+        const weight = Math.max(0.0001, Number(computePracticeWeight(q) || 0.0001));
+        const u = Math.random() || 1e-9;
+        const key = Math.log(u) / weight;
+        return { q, key };
+      });
+      scored.sort((a,b) => b.key - a.key);
+      return scored.slice(0, Math.max(0, limit|0)).map(x => x.q);
+    }
+    function resetSessionScoreState(opts={}){
+      totalAttempts = 0;
+      totalCorrect = 0;
+      answeredOnce = new Set();
+      uiState = {};
+      if(opts.clearWrong){
+        wrongSet = new Set();
+        saveSet(WRONG_KEY, wrongSet);
+      }
+    }
+
+    function showRandom150(){
+      const pool = getRandom150SourcePool();
+      if(pool.length <= 150) return;
+      activeRandom150SourcePool = [...pool];
+      activeRandom150Questions = weightedSampleWithoutReplacement(activeRandom150SourcePool, 150);
+      resetSessionScoreState();
+      viewMode = 'random150';
+      specialFilterSource = 'random150';
+      render(activeRandom150Questions);
+      updateButtons();
+    }
+    function showCurrent150(){
+      if(!Array.isArray(activeRandom150Questions) || !activeRandom150Questions.length) return;
+      viewMode = 'random150';
+      specialFilterSource = 'random150';
+      render(activeRandom150Questions);
+      updateButtons();
+    }
+    function showStarOnly(){
+      specialFilterSource = getPreferredSpecialSource();
+      viewMode='star';
+      render(getStarQuestions());
+      updateButtons();
+    }
+    function showWrongOnly(){
+      specialFilterSource = getPreferredSpecialSource();
+      viewMode='wrong';
+      render(getWrongQuestions());
+      updateButtons();
+    }
+    function showAll(){
+      viewMode='all';
+      render(getBaseQuestions());
+      updateButtons();
+    }
+    function removeFromWrong(id){ wrongSet.delete(id); saveSet(WRONG_KEY,wrongSet); rerenderCurrentView(); }
+
+    function updateButtons(){
+      const bw=document.getElementById('btn-wrong'), bs=document.getElementById('btn-star'), bb=document.getElementById('btn-back'), br=document.getElementById('btn-random150'), br150=document.getElementById('btn-back150');
+      const scopeQuestions = getCurrentScopeQuestions();
+      const currentPageCount = Array.isArray(currentQuestions) ? currentQuestions.length : 0;
+      const randomPoolCount = (viewMode === 'random150' && Array.isArray(activeRandom150SourcePool) && activeRandom150SourcePool.length)
+        ? activeRandom150SourcePool.length
+        : currentPageCount;
+      const wrongScopeCount = scopeQuestions.reduce((n,q)=> n + (wrongSet.has(q.id)?1:0), 0);
+      const wrongTotalCount = QUESTION_BANK.reduce((n,q)=> n + (wrongSet.has(q.id)?1:0), 0);
+      const starScopeCount  = scopeQuestions.reduce((n,q)=> n + (starred.has(q.id)?1:0), 0);
+      const starTotalCount  = QUESTION_BANK.reduce((n,q)=> n + (starred.has(q.id)?1:0), 0);
+      if(bw){
+        bw.textContent=`Wrong Only (${wrongScopeCount})`;
+        bw.disabled = wrongScopeCount === 0;
+        bw.title = wrongTotalCount === wrongScopeCount
+          ? `当前练习范围内错题 ${wrongScopeCount} 题`
+          : `当前练习范围内错题 ${wrongScopeCount} 题；全题库累计 ${wrongTotalCount} 题（未勾选题套中的记录仍已保留）`;
+      }
+      if(bs){
+        bs.textContent=`Star Only (${starScopeCount})`;
+        bs.disabled = starScopeCount === 0;
+        bs.title = starTotalCount === starScopeCount
+          ? `当前练习范围内收藏题 ${starScopeCount} 题`
+          : `当前练习范围内收藏题 ${starScopeCount} 题；全题库累计 ${starTotalCount} 题（未勾选题套中的记录仍已保留）`;
+      }
+      if(bb){
+        bb.disabled = (viewMode==='all');
+        bb.title = '返回当前筛选范围的完整题目列表';
+      }
+      if(br150){
+        const has150 = Array.isArray(activeRandom150Questions) && activeRandom150Questions.length > 0;
+        br150.disabled = !has150 || viewMode === 'random150';
+        br150.title = has150 ? '返回当前这轮抽中的 150 题' : '当前还没有抽中的 150 题';
+      }
+      if(br){
+        br.disabled = !(randomPoolCount > 150);
+        br.textContent = viewMode === 'random150' ? `Random Choose 150 · Reroll` : `Random Choose 150`;
+        br.title = randomPoolCount > 150 ? `从当前页面 ${randomPoolCount} 题里按历史权重随机抽 150 题` : `当前页面只有 ${randomPoolCount} 题，需大于 150 题才可用`;
+      }
+    }
+    function updateStats(){
+      const el=document.getElementById("stats");
+      const scopeQuestions = getCurrentScopeQuestions();
+      const wrongScopeCount = scopeQuestions.reduce((n,q)=> n + (wrongSet.has(q.id)?1:0), 0);
+      const totalNow = (currentQuestions && currentQuestions.length) ? currentQuestions.length : 0;
+      if(totalAttempts===0){el.textContent=`Total:${totalNow} | No attempts yet | Wrong in scope: ${wrongScopeCount}`;}
+      else{const acc=((totalCorrect/totalAttempts)*100).toFixed(1); el.textContent=`Total:${totalNow} | Score: ${totalCorrect}/${totalAttempts} (${acc}%) | Wrong in scope: ${wrongScopeCount}`;}
+      updateButtons();
+    }
+
+    function updateAutoBtn(){
+      const b = document.getElementById("btn-auto");
+      if(!b) return;
+      b.textContent = autoSubmit ? "Auto Submit: ON" : "Auto Submit: OFF";
+      b.classList.toggle("confirm-btn", !!autoSubmit);
+    }
+
+    function toggleAutoSubmit(){
+      autoSubmit = !autoSubmit;
+      saveBool(AUTO_KEY, autoSubmit);
+      updateAutoBtn();
+    }
+
+    function maybeAutoSubmit(qId){
+      if(!autoSubmit) return;
+      const q = getQ(qId);
+      const st = ensureState(q);
+      if(st.submitted) return;
+      if(isEssay(q)) return;
+
+      // Fill: auto-submit when all blanks are filled (debounced).
+      if(isFill(q)){
+        const n = Array.isArray(q.blanks) ? q.blanks.length : 0;
+        if(!n) return;
+        if(!Array.isArray(st.fillInputs) || st.fillInputs.length !== n) return;
+        if(st.fillInputs.some(v=>!String(v ?? "").trim())) return;
+
+        if(st._autoTimer) clearTimeout(st._autoTimer);
+        st._autoTimer = setTimeout(() => {
+          if(autoSubmit && !st.submitted) submitAnswer(qId);
+        }, 350);
+        return;
+      }
+
+      // Choice:
+      if(isMulti(q)){
+        const expected = Array.isArray(q.answers) ? q.answers.length : 0;
+        if(!expected) return;
+        if(!st.selectedSet || st.selectedSet.size !== expected) return;
+        submitAnswer(qId);
+        return;
+      }
+
+      if(st.selectedIndex === null) return;
+      submitAnswer(qId);
+    }
+
+
+    function confirmFilters(){ shuffleAndRender(); const panel=document.querySelector('details.filter-panel'); if(panel) panel.open=false; }
+
+    function shuffleAndRender(){
+      resetSessionScoreState();
+      viewMode='all';
+      specialFilterSource='base';
+      activeRandom150Questions=null;
+      activeRandom150SourcePool=null;
+      const prefixes=getSelectedPrefixes();
+      const subset=QUESTION_BANK.filter(q=>prefixes.some(p=> (Array.isArray(q.banks)?q.banks.includes(p):getBanks(q).includes(p)) ));
+      shuffle(subset);
+      baseQuestions = subset.slice();
+      render(baseQuestions);
+      updateButtons();
+    }
+
+    /* ------------------ 启动 ------------------ */
+    function startQuiz(rawQuestions){
+      RAW_QUESTION_BANK = Array.isArray(rawQuestions) ? rawQuestions : [];
+      const deduped = dedupeQuestionBank(RAW_QUESTION_BANK);
+      QUESTION_BANK = Array.isArray(deduped && deduped.bank) ? deduped.bank : [];
+      ID_ALIAS = (deduped && deduped.alias) || {};
+
+      starred=mapIds(loadSet(STAR_KEY));
+      wrongSet=mapIds(loadSet(WRONG_KEY));
+      attemptCountMap=mapCountMap(loadCountMap(ATTEMPT_COUNT_KEY));
+      answeredOnce=new Set();
+      uiState={};
+      currentQuestions=[];
+      baseQuestions=[];
+      activeRandom150Questions=null;
+      activeRandom150SourcePool=null;
+      totalAttempts=0;
+      totalCorrect=0;
+      viewMode='all';
+      specialFilterSource='base';
+      autoSubmit = loadBool(AUTO_KEY, false);
+
+      initFilters();
+      sanitizeSavedSets();
+      updateAutoBtn();
+      shuffleAndRender();
+    }
+
+    function showQuizApp(){
+      const app = document.getElementById("quizApp");
+      const unlock = document.getElementById("unlock-panel");
+      if(app) app.hidden = false;
+      if(unlock) unlock.hidden = true;
+    }
+
+    function showUnlockPanel(){
+      const app = document.getElementById("quizApp");
+      const unlock = document.getElementById("unlock-panel");
+      if(app) app.hidden = true;
+      if(unlock) unlock.hidden = false;
+      queueMicrotask(() => {
+        const input = document.getElementById("legacy-password");
+        if(input) input.focus();
+      });
+    }
+
+    async function unlockProtectedLegacyBank(){
+      const input = document.getElementById("legacy-password");
+      const password = input ? input.value : "";
+      if(!String(password || "").trim()){
+        setUnlockError("Enter the question bank password.");
+        return;
+      }
+      setUnlockBusy(true);
+      setUnlockError("");
+      try{
+        const rawQuestions = await decryptLegacyBank(LEGACY_BANK_PAYLOAD && LEGACY_BANK_PAYLOAD.envelope, password);
+        showQuizApp();
+        startQuiz(rawQuestions);
+      }catch(e){
+        setUnlockError(e && e.message ? e.message : "Unable to unlock this question bank.");
+      }finally{
+        setUnlockBusy(false);
+      }
+    }
+
+    function bootstrapLegacyBank(){
+      const payload = LEGACY_BANK_PAYLOAD;
+      const unlockBtn = document.getElementById("legacy-unlock-btn");
+      const passwordInput = document.getElementById("legacy-password");
+      if(unlockBtn) unlockBtn.addEventListener("click", unlockProtectedLegacyBank);
+      if(passwordInput){
+        passwordInput.addEventListener("keydown", event => {
+          if(event.key === "Enter"){
+            event.preventDefault();
+            unlockProtectedLegacyBank();
+          }
+        });
+      }
+
+      if(payload && payload.mode === "protected"){
+        showUnlockPanel();
+        return;
+      }
+
+      showQuizApp();
+      startQuiz(Array.isArray(payload) ? payload : (Array.isArray(payload && payload.questions) ? payload.questions : []));
+    }
+
+    bootstrapLegacyBank();
+  </script>
+</body>
+</html>
+
