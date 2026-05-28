@@ -600,7 +600,9 @@
           map.set(prefix, prettifyPrefix(prefix));
         }
       }
-      return Array.from(map,([id,label])=>({id,label}));
+      const cats = Array.from(map,([id,label])=>({id,label}));
+      cats.sort((a,b)=>a.id.localeCompare(b.id, undefined, {numeric:true, sensitivity:'base'}));
+      return cats;
     }
     function initFilters(){
       const cats=deriveCategoriesFromQuestions();
