@@ -134,6 +134,7 @@
 </head>
 <body>
   <section id="unlock-panel" class="unlock-panel" hidden>
+    <a class="btn" id="back-catalog-unlock" href="./" hidden data-i18n="back_catalog" style="margin-bottom:10px;display:inline-block">← Catalog</a>
     <p class="meta" data-i18n="unlock_eyebrow">Protected Question Bank</p>
     <h1 data-i18n="unlock_title">Enter password</h1>
     <p class="meta" data-i18n="unlock_desc">This HTML file is encrypted. Enter the password provided by the owner to start practicing.</p>
@@ -146,7 +147,10 @@
 
   <main id="quizApp" hidden>
   <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-    <h1 data-i18n="title_h1">AMT Question Bank Practice</h1>
+    <div style="display:flex;align-items:center;gap:12px;min-width:0">
+      <a class="btn" id="back-catalog" href="./" hidden data-i18n="back_catalog" data-testid="back-catalog-link">← Catalog</a>
+      <h1 data-i18n="title_h1" style="margin:0">AMT Question Bank Practice</h1>
+    </div>
     <label class="meta" style="display:flex;align-items:center;gap:6px">
       🌐
       <select id="ui-lang" onchange="setUiLang(this.value)" data-testid="ui-lang-select" style="padding:6px 8px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:13px">
@@ -264,6 +268,7 @@
     const I18N = {
       en: {
         title_h1: "AMT Question Bank Practice",
+        back_catalog: "← Catalog",
         guide_summary: "Button Guide",
         filter_summary: "Filter Question Banks",
         select_all: "Select All", select_none: "Select None", confirm: "Confirm",
@@ -314,6 +319,7 @@
       },
       zh: {
         title_h1: "AMT 题库练习",
+        back_catalog: "← 返回目录",
         guide_summary: "页面按钮说明",
         filter_summary: "筛选题库",
         select_all: "全选", select_none: "全不选", confirm: "确认",
@@ -364,6 +370,7 @@
       },
       es: {
         title_h1: "Práctica del banco de preguntas AMT",
+        back_catalog: "← Catálogo",
         guide_summary: "Guía de botones",
         filter_summary: "Filtrar bancos de preguntas",
         select_all: "Seleccionar todo", select_none: "Ninguno", confirm: "Confirmar",
@@ -1860,6 +1867,13 @@
 
     function bootstrapLegacyBank(){
       const payload = LEGACY_BANK_PAYLOAD;
+      // 站点模式（player.html / local.html）显示「返回目录」；提取器导出的独立单文件没有目录，保持隐藏
+      if (payload && (payload.mode === "remote" || payload.mode === "local-bank")){
+        const b1 = document.getElementById("back-catalog");
+        const b2 = document.getElementById("back-catalog-unlock");
+        if (b1) b1.hidden = false;
+        if (b2) b2.hidden = false;
+      }
       const unlockBtn = document.getElementById("legacy-unlock-btn");
       const passwordInput = document.getElementById("legacy-password");
       if(unlockBtn) unlockBtn.addEventListener("click", unlockProtectedLegacyBank);
