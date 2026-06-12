@@ -1817,6 +1817,14 @@
       }
     }
 
+    // 站点模式：页面大标题 = 题库名（与目录卡片一致）。摘掉 data-i18n，语言切换不再覆盖它。
+    function setPageHeading(text){
+      const h1 = document.querySelector('#quizApp h1');
+      if (!h1 || !text) return;
+      h1.removeAttribute('data-i18n');
+      h1.textContent = text;
+    }
+
     // 通用播放器（remote 模式）的数据装载：banks/index.json 找条目 → 拉对应文件
     let REMOTE_ENVELOPE = null; // 密码库的密文信封（解锁函数读它）
     async function bootstrapRemoteBank(){
@@ -1838,7 +1846,10 @@
       }catch(_e){}
       if(!entry){ fail("Bank not found: " + id); return; }
       setStorageNamespace(id);
-      if(entry.title) document.title = entry.title;
+      if(entry.title){
+        document.title = entry.title;
+        setPageHeading(entry.title);
+      }
       try{
         // 合并练习页（虚拟入口，无预生成数据）：先弹「选择题库」，按所选集合现场拉取合并
         if (id === "all-banks"){
@@ -1910,7 +1921,10 @@
         showQuizApp();
         if (bank && Array.isArray(bank.questions) && bank.questions.length){
           setStorageNamespace("local-" + localId.replace(/[^A-Za-z0-9_-]/g, "-").slice(0, 48));
-          if (bank.title) document.title = bank.title + " · Local";
+          if (bank.title){
+            document.title = bank.title + " · Local";
+            setPageHeading(bank.title);
+          }
           startQuiz(bank.questions);
         } else {
           document.getElementById("quiz").innerHTML =
