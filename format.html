@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Question Bank JSON Format / 题库 JSON 格式说明</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{--ink:#2d3b45;--muted:#6b7280;--border:#e5e7eb;--bg:#f9fafb;--brand:#2563eb;--card:#fff}
+    *{box-sizing:border-box}
+    body{font-family:system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);max-width:860px;margin:20px auto;line-height:1.7;padding:0 12px}
+    h1{font-size:1.4rem;margin:8px 0}
+    h2{font-size:1.15rem;margin:28px 0 8px;border-bottom:1px solid var(--border);padding-bottom:6px}
+    h3{font-size:1rem;margin:18px 0 6px}
+    code{background:#eef2ff;border:1px solid #e0e7ff;border-radius:4px;padding:1px 5px;font-size:13px}
+    pre{background:#0f172a;color:#e2e8f0;border-radius:10px;padding:16px;overflow-x:auto;font-size:13px;line-height:1.6}
+    pre code{background:none;border:none;color:inherit;padding:0}
+    table{border-collapse:collapse;width:100%;font-size:14px}
+    th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+    th{background:#f3f4f6}
+    .muted{color:var(--muted)}
+    .back{display:inline-block;margin-bottom:10px;color:var(--brand);font-weight:600;text-decoration:none}
+    .pill{display:inline-block;font-weight:600;font-size:12px;background:#eef2ff;color:#3730a3;border:1px solid #e0e7ff;padding:2px 10px;border-radius:999px}
+  </style>
+</head>
+<body>
+  <a class="back" href="./">← Back to catalog / 返回目录</a>
+  <h1>Question Bank JSON Format <span class="muted">/ 题库 JSON 格式说明</span></h1>
+  <p class="muted">Write your own bank as a <code>.json</code> file (UTF-8), then use “Import your own bank” on the catalog page to practice it — nothing is uploaded; it stays in your browser.</p>
+
+  <h2>English</h2>
+  <p>A bank is a <strong>JSON array of question objects</strong>. Three question types are supported: single-choice, multiple-answer, and fill-in-the-blank.</p>
+
+  <h3>Fields</h3>
+  <table>
+    <tr><th>Field</th><th>Required</th><th>Meaning</th></tr>
+    <tr><td><code>id</code></td><td>✅ every question</td><td>Unique string within the file, e.g. <code>"ch3-12"</code>. Progress (wrong/star records) is keyed on it.</td></tr>
+    <tr><td><code>question</code></td><td>✅ (unless <code>image</code> present)</td><td>The stem, plain text. <code>\n</code> makes a line break.</td></tr>
+    <tr><td><code>choices</code></td><td>✅ for choice questions</td><td>Array of <strong>at least 2</strong> strings.</td></tr>
+    <tr><td><code>answer</code></td><td>single-choice</td><td><strong>0-based</strong> index into <code>choices</code> (first choice = 0).</td></tr>
+    <tr><td><code>answers</code></td><td>multiple-answer</td><td>Array of 0-based indexes, e.g. <code>[0,2]</code>. Player switches to checkboxes automatically; all must match.</td></tr>
+    <tr><td><code>type</code></td><td>fill-in only</td><td>Set <code>"fill"</code> (or just provide <code>blanks</code>).</td></tr>
+    <tr><td><code>blanks</code></td><td>fill-in</td><td>One array per blank, each listing the accepted answers: <code>[["8","eight"]]</code> = 1 blank with 2 accepted spellings; <code>[["a"],["b"]]</code> = 2 blanks.</td></tr>
+    <tr><td><code>question_html</code></td><td>optional (fill-in)</td><td>HTML stem with <code>&lt;input data-blank="1"&gt;</code> placed where blanks belong (1-based). Omit it and inputs are appended below the stem.</td></tr>
+    <tr><td><code>answer_sets</code></td><td>optional (fill-in)</td><td>Alternative whole-row combinations; any ONE set matching counts as correct.</td></tr>
+    <tr><td><code>image</code></td><td>optional</td><td>Image URL or base64 <code>data:image/...</code> string — or an array of them. Shown above the choices.</td></tr>
+    <tr><td><code>source</code></td><td>optional</td><td>Where the question came from; shown small under the card.</td></tr>
+  </table>
+
+  <h3>Grading rules</h3>
+  <ul>
+    <li>Fill-in answers ignore case, extra spaces, and spacing differences (<code>check list</code> = <code>checklist</code>).</li>
+    <li>Multiple-answer questions require the exact set — no partial credit.</li>
+    <li>Files are validated on import; invalid records are skipped with a reason (missing <code>id</code>, fewer than 2 choices, out-of-range <code>answer</code>, fill-in without accepted answers…).</li>
+  </ul>
+
+  <h2>中文</h2>
+  <p>题库就是一个 <strong>JSON 数组</strong>，每个元素是一道题。支持三种题型：单选、多选、填空。</p>
+  <ul>
+    <li><code>id</code>：每题必填、文件内唯一（错题/收藏记录靠它存）。</li>
+    <li><code>question</code>：题干纯文本（有 <code>image</code> 时可留空）；<code>\n</code> 换行。</li>
+    <li>单选：<code>choices</code>（≥2 个选项）+ <code>answer</code>（正确选项的下标，<strong>从 0 开始</strong>）。</li>
+    <li>多选：用 <code>answers: [0,2]</code> 数组代替 <code>answer</code>，播放器自动变复选框，需全对。</li>
+    <li>填空：<code>type:"fill"</code> + <code>blanks</code>——每个空一个数组，列出全部可接受答案，如 <code>[["8","eight"]]</code>；判分忽略大小写、多余空格、空格有无（<code>check list</code> = <code>checklist</code>）。</li>
+    <li>可选：<code>image</code>（图片 URL 或 base64 data-URI，可数组）、<code>source</code>（来源标注）、<code>question_html</code>（题干内嵌输入框 <code>&lt;input data-blank="1"&gt;</code>）、<code>answer_sets</code>（多组合答案，任一组全匹配即对）。</li>
+    <li>导入时自动校验，不合格的题会被跳过并提示原因（缺 id / 选项不足 2 个 / answer 越界 / 填空没有可接受答案等）。</li>
+  </ul>
+
+  <h2>Complete example / 完整示例</h2>
+  <pre><code>[
+  {
+    "id": "demo-1",
+    "question": "Which fabric is approved for aircraft covering?",
+    "choices": ["Polyester", "Cotton bedsheet", "Nylon tarp", "Canvas drop cloth"],
+    "answer": 0,
+    "source": "Chapter 3 – Coverings"
+  },
+  {
+    "id": "demo-2",
+    "question": "Select ALL tools required for fabric testing. (multiple answers)",
+    "choices": ["Punch tester", "Hammer", "Maule tester", "Torque wrench"],
+    "answers": [0, 2]
+  },
+  {
+    "id": "demo-3",
+    "type": "fill",
+    "question": "A hole smaller than ____ inches may be repaired with a doped-on patch.",
+    "blanks": [["8", "eight"]]
+  },
+  {
+    "id": "demo-4",
+    "question": "Identify the part shown in the image.",
+    "image": "https://example.com/part-diagram.png",
+    "choices": ["Rib", "Spar", "Longeron"],
+    "answer": 1
+  }
+]</code></pre>
+  <p class="muted">Save as e.g. <code>my-bank.json</code> → catalog page → “Import your own bank”. The Extractor's “导出全部合并 JSON” produces exactly this format. / 保存为 <code>.json</code> 后到目录页导入即可；提取器导出的合并 JSON 就是这个格式。</p>
+</body>
+</html>

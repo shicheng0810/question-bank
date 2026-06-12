@@ -1,0 +1,1458 @@
+[
+  {
+    "id": "ass_7_205_finishes-1",
+    "question": "Which of the following combinations of coatings is compatible?",
+    "choices": [
+      "Acrylic finish over nitrocellulose coating.",
+      "Neither, nitrocellulose and acrylic finishes are not compatible with each other.",
+      "Nitrocellulose coating over acrylic finish."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #7 – Q1"
+    ]
+  },
+  {
+    "id": "ass_7_205_finishes-2",
+    "question": "What will happen if you wipe a rag soaked in MEK on an acrylic finish?",
+    "choices": [
+      "The rag will pick up the paint pigment.",
+      "The epoxy coating underneath will be damaged.",
+      "The MEK will have no effect."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #7 – Q2"
+    ]
+  },
+  {
+    "id": "ass_7_205_finishes-3",
+    "question": "An advantage of using EFS-2500 for stripping paint from aircraft?",
+    "choices": [
+      "It is less expensive than traditional methods.",
+      "It is an environmentally friendly product.",
+      "It dissolves the paint itself."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #7 – Q3"
+    ]
+  },
+  {
+    "id": "ass_7_205_finishes-4",
+    "question": "What is the advantage of refinishing a whole panel or section during a touch-up repair?",
+    "choices": [
+      "It requires less sanding compared to blending the paint.",
+      "It ensures the new paint will adhere better to the repaired area.",
+      "It eliminates the need to match and blend the paint to the existing finish."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #7 – Q4"
+    ]
+  },
+  {
+    "id": "ass_7_205_finishes-5",
+    "question": "What is a suitable application for old type zinc chromate primer?",
+    "choices": [
+      "As a topcoat for interior surfaces.",
+      "For touch-up on bare metal areas and on interior surfaces.",
+      "As a primer for acrylic lacquer finishes."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #7 – Q5"
+    ]
+  },
+  {
+    "id": "ass_7_205_finishes-6",
+    "question": "How should aircraft paint components be stored due to their flammability?",
+    "choices": [
+      "In a well-lit area, for easy identification during use.",
+      "In any type of container, in a cool and dry place.",
+      "Away from heat or flames, ideally in fireproof metal cabinets."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #7 – Q6"
+    ]
+  },
+  {
+    "id": "ass_7_205_finishes-7",
+    "question": "What is NOT a recommended surface for directly applying acrylic nitrocellulose lacquer?",
+    "choices": [
+      "Fresh epoxy coating.",
+      "Wash primer.",
+      "Bare metal."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #7 – Q7"
+    ]
+  },
+  {
+    "id": "ass_7_205_finishes-8",
+    "question": "Which of the following is a method under development for stripping paint from composite materials?",
+    "choices": [
+      "Plastic media blasting (PMB).",
+      "Laser stripping process.",
+      "Chemical strippers like EFS-2500."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #7 – Q8"
+    ]
+  },
+  {
+    "id": "ass_7_205_finishes-9",
+    "question": "What is the observed effect on compatible finishes (acrylic and epoxy)?",
+    "choices": [
+      "The paint will soften slightly.",
+      "There will be no noticeable effects.",
+      "The color of the paint will change."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #7 – Q9"
+    ]
+  },
+  {
+    "id": "ass_7_205_finishes-10",
+    "question": "On what type of surfaces is plastic media blasting (PMB) most effective for removing paint?",
+    "choices": [
+      "Metal surfaces.",
+      "Composite surfaces only.",
+      "Any surface, regardless of material."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #7 – Q10"
+    ]
+  },
+  {
+    "id": "ass_7_205_finishes-11",
+    "question": "Paint finishes might not be compatible with each other. What does this imply for repairs?",
+    "choices": [
+      "It may be difficult to ensure the new paint adheres properly to the existing layers.",
+      "Specialised knowledge or testing might be required to choose compatible paints for repairs.",
+      "It's usually easy to repaint over the existing paint with a different type."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #7 – Q11"
+    ]
+  },
+  {
+    "id": "ass_7_205_finishes-12",
+    "question": "What is the main point about achieving a desired finish on an aircraft during repainting?",
+    "choices": [
+      "The experience of the painter is the most important factor.",
+      "Proper surface preparation, including paint removal, is crucial.",
+      "Using the newest and most expensive paints is essential."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #7 – Q12"
+    ]
+  },
+  {
+    "id": "ass_7_205_finishes-13",
+    "question": "What organization sets regulations regarding safety hazards in the workplace?",
+    "choices": [
+      "The National Institute for Occupational Safety and Health (NIOSH).",
+      "The Occupational Safety and Health Administration (OSHA).",
+      "The Federal Aviation Administration (FAA)."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #7 – Q13"
+    ]
+  },
+  {
+    "id": "ass_7_205_finishes-14",
+    "question": "What is one important consideration besides the work involved when removing paint from an aircraft?",
+    "choices": [
+      "The environmental impact of the paint removal process.",
+      "The cost of the paint stripper.",
+      "The type of aircraft being painted."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #7 – Q14"
+    ]
+  },
+  {
+    "id": "ass_7_205_finishes-15",
+    "question": "What should you do to the surface before sanding or abrading it in preparation for painting?",
+    "choices": [
+      "Apply masking tape to protect surrounding areas.",
+      "Apply a primer coat.",
+      "Wash and wipe it down with a degreaser and silicone wax remover."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #7 – Q15"
+    ]
+  },
+  {
+    "id": "ass_6_205_finishes-1",
+    "question": "There are four key requirements for aircraft identification markings. Which of the following is NOT requirement?",
+    "choices": [
+      "Applied permanently to the aircraft.",
+      "Clearly visible and readable (legible)",
+      "Made from a reflective material"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #6 – Q1"
+    ]
+  },
+  {
+    "id": "ass_6_205_finishes-2",
+    "question": "What is the first step to remove a vinyl film decal?",
+    "choices": [
+      "Wipe the area with a dry-cleaning solvent.",
+      "Apply heat with a heat gun.",
+      "Scrape the decal with a plastic scraper."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #6 – Q2"
+    ]
+  },
+  {
+    "id": "ass_6_205_finishes-3",
+    "question": "What is used to remove any remaining adhesive after scraping the vinyl film decal?",
+    "choices": [
+      "More vinyl film decal remover.",
+      "MEK (Methyl Ethyl Ketone)",
+      "Water with soap."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #6 – Q3"
+    ]
+  },
+  {
+    "id": "ass_6_205_finishes-4",
+    "question": "Where are the two acceptable locations for displaying aircraft identification markings on fixed-wing aircraft?",
+    "choices": [
+      "On the vertical tail surfaces or the sides of the fuselage.",
+      "On the top and bottom of the aircraft.",
+      "On the wings and the nose cone."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #6 – Q4"
+    ]
+  },
+  {
+    "id": "ass_6_205_finishes-5",
+    "question": "What is the purpose of cleaning the surface before applying a decal?",
+    "choices": [
+      "To ensure proper adhesion of the decal.",
+      "To leave any dirt or debris that might scratch the decal.",
+      "To improve the drying time of the decal adhesive."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #6 – Q5"
+    ]
+  },
+  {
+    "id": "ass_6_205_finishes-6",
+    "question": "What is the ideal soaking time for paper decals before applying them?",
+    "choices": [
+      "More than 3 minutes.",
+      "Between 1 and 3 minutes.",
+      "Less than 1 minute."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #6 – Q6"
+    ]
+  },
+  {
+    "id": "ass_6_205_finishes-7",
+    "question": "A specific part of the Code of Federal Regulations (CFR) related to aircraft identification and marking. What is the part number?",
+    "choices": [
+      "Part 91.",
+      "Part 65.",
+      "Part 45."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #6 – Q7"
+    ]
+  },
+  {
+    "id": "ass_6_205_finishes-8",
+    "question": "An exception to the width-to-height ratio for some letters. Which of the following letters can be as wide as they are high?",
+    "choices": [
+      "Only the letter \"W\"",
+      "Only the letter \"M\"",
+      "Both \"M\" and \"W\""
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #6 – Q8"
+    ]
+  },
+  {
+    "id": "ass_6_205_finishes-9",
+    "question": "If registration numbers are to be applied to an aircraft with a letter height of 12 inches, what is the minimum space required for the registration mark N1707D?",
+    "choices": [
+      "57 inches.",
+      "48 inches.",
+      "52 inches."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #6 – Q9"
+    ]
+  },
+  {
+    "id": "ass_6_205_finishes-10",
+    "question": "Where must identification markings be displayed on rotorcraft (helicopters)?",
+    "choices": [
+      "Horizontally on designated surfaces like the cabin, fuselage, boom, or tail.",
+      "Vertically on the front and rear of the rotorcraft.",
+      "On the landing gear and the nose."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #6 – Q10"
+    ]
+  },
+  {
+    "id": "ass_6_205_finishes-11",
+    "question": "What is the standard width-to-height ratio for the characters in aircraft identification markings (except for \"M\" and \"W\")?",
+    "choices": [
+      "2:3 (two-thirds as wide as they are high).",
+      "1:6 (one-sixth as wide as they are high)",
+      "1:1 (as wide as they are high)"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #6 – Q11"
+    ]
+  },
+  {
+    "id": "ass_5_205_finishes-1",
+    "question": "If masking tape is applied to an aircraft such as for trim spraying, and is left on for several days and/or exposed to heat, it is likely that the tape will",
+    "choices": [
+      "not seal out the finishing material if the delay or heating occurs before spraying.",
+      "cure to the finish and be very difficult to remove.",
+      "be weakened in its ability to adhere to the surface."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #5 – Q1"
+    ]
+  },
+  {
+    "id": "ass_5_205_finishes-2",
+    "question": "What is the most likely cause of an \"orange peel\" texture on a painted surface?",
+    "choices": [
+      "Not enough paint applied.",
+      "Improper spray gun adjustment.",
+      "Using the wrong color paint."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #5 – Q2"
+    ]
+  },
+  {
+    "id": "ass_5_205_finishes-3",
+    "question": "What is the main cause of wrinkling in a painted surface?",
+    "choices": [
+      "Applying paint coats that are too thin.",
+      "Using the wrong type of paint thinner.",
+      "Trapped solvents due to thick coats or improper drying."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #5 – Q3"
+    ]
+  },
+  {
+    "id": "ass_5_205_finishes-4",
+    "question": "What causes spray dust when using a paint sprayer?",
+    "choices": [
+      "The paint not being mixed properly.",
+      "The paint particles drying before reaching the surface.",
+      "Using the wrong type of paint."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #5 – Q4"
+    ]
+  },
+  {
+    "id": "ass_5_205_finishes-5",
+    "question": "What is used to slow the drying time of some finishes and to prevent blush?",
+    "choices": [
+      "Rejuvenator.",
+      "Retarder.",
+      "Reducer."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #5 – Q5"
+    ]
+  },
+  {
+    "id": "ass_5_205_finishes-6",
+    "question": "What steps are required to fix poor paint adhesion on an aircraft?",
+    "choices": [
+      "Apply a new coat of paint directly over the existing one.",
+      "Sand down the existing finish and reapply the topcoat.",
+      "Completely remove the existing finish, identify the cause of the problem, and then repaint the area."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #5 – Q6"
+    ]
+  },
+  {
+    "id": "ass_5_205_finishes-7",
+    "question": "Which defect in aircraft finishes may be caused by adverse humidity, drafts, or sudden changes in temperature?",
+    "choices": [
+      "Orange peel.",
+      "Pinholes.",
+      "Blushing."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #5 – Q7"
+    ]
+  },
+  {
+    "id": "ass_5_205_finishes-8",
+    "question": "Why is newspaper not recommended for masking when painting?",
+    "choices": [
+      "It is not available in wide widths.",
+      "Paint penetrates newspaper.",
+      "It is solvent-proof."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #5 – Q8"
+    ]
+  },
+  {
+    "id": "ass_5_205_finishes-9",
+    "question": "What is the main cause of sanding scratches appearing in the final paint job?",
+    "choices": [
+      "Using the wrong type of paint.",
+      "Applying the paint coats too thick.",
+      "Improper sanding and/or sealing of the surface before painting."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #5 – Q9"
+    ]
+  },
+  {
+    "id": "ass_5_205_finishes-10",
+    "question": "What are the most common causes of sags and runs in a painted surface?",
+    "choices": [
+      "Using the wrong type of paint.",
+      "Improper drying time between coats.",
+      "Applying too much paint, holding the gun too close, or moving it too slowly."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #5 – Q10"
+    ]
+  },
+  {
+    "id": "ass_5_205_finishes-11",
+    "question": "What is the most common cause of fisheyes appearing in a painted surface?",
+    "choices": [
+      "The paint not being mixed properly.",
+      "Using the wrong type of paint.",
+      "The surface not being completely cleaned of silicone wax."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #5 – Q11"
+    ]
+  },
+  {
+    "id": "ass_5_205_finishes-12",
+    "question": "What are some of the reasons pinholes can appear in a painted surface?",
+    "choices": [
+      "Trapped solvents, air, or moisture.",
+      "Not enough coats of paint applied.",
+      "Improper paint mixing or using the wrong color."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #5 – Q12"
+    ]
+  },
+  {
+    "id": "ass_5_205_finishes-13",
+    "question": "What is one of the main reasons for poor paint adhesion when painting an aircraft?",
+    "choices": [
+      "Not spending enough time on each coat.",
+      "Using the wrong type of spray gun.",
+      "Improper cleaning and preparation of the aircraft surface."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #5 – Q13"
+    ]
+  },
+  {
+    "id": "ass_5_205_finishes-14",
+    "question": "It is recommended to use 3M® Fine Line tape for masking trim lines. What are some of its advantages?",
+    "choices": [
+      "It is solvent-proof and creates sharp paint lines",
+      "It comes in a wider range of widths than most masking tapes.",
+      "It is specifically designed for use with newspaper masking."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #5 – Q14"
+    ]
+  },
+  {
+    "id": "ass_5_205_finishes-15",
+    "question": "What is the recommended course of action if you only see a few fisheyes while applying the first coat of paint?",
+    "choices": [
+      "Add fisheye eliminator to the first coat.",
+      "Wait for the first coat to dry and then add fisheye eliminator to the following coats.",
+      "Stop spraying and clean off all the paint."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #5 – Q15"
+    ]
+  },
+  {
+    "id": "ass_5_205_finishes-16",
+    "question": "What should you do before masking the airplane for the trim paint?",
+    "choices": [
+      "Ensure the base color has completely dried and cured according to the paint manufacturer's instructions.",
+      "Sand down any imperfections on the base coat.",
+      "Apply a light coat of primer to the base coat."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #5 – Q16"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-1",
+    "question": "What is the biggest challenge when spray painting an aircraft?",
+    "choices": [
+      "Mixing the paint properly.",
+      "Finding the right air pressure setting.",
+      "Controlling overspray and maintaining a wet paint line."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q1"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-2",
+    "question": "How does the lower knob on a spray gun function?",
+    "choices": [
+      "It proportions the amount of paint delivered.",
+      "It controls the air pressure.",
+      "It adjusts the spray pattern width."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q2"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-3",
+    "question": "a spray pattern that is heavy on the top or bottom. What steps should you take?",
+    "choices": [
+      "Rotate the air cap 180 degrees. If the pattern reverses, replace the air cap. If it stays the same, replace the fluid tip or needle.",
+      "Replace the spray nozzle with a different size.",
+      "Adjust the air pressure or material reduction."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q3"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-4",
+    "question": "In what order should you paint the wings of an aircraft with a spray gun?",
+    "choices": [
+      "Paint both sides simultaneously.",
+      "Underside of wings first, then top.",
+      "Top of wings first, then underside."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q4"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-5",
+    "question": "What is the recommended order for painting an aircraft when using a spray gun?",
+    "choices": [
+      "Paint the entire fuselage first, then landing gear and control surfaces.",
+      "Start with control surfaces and leading/trailing edges, then fuselage and landing gear.",
+      "Paint the landing gear and wheel wells first, then everything else."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q5"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-6",
+    "question": "What can cause a pulsating or spitting spray pattern from a paint spray gun?",
+    "choices": [
+      "Incorrect air pressure.",
+      "Clogged fluid tip or passage.",
+      "One of the following: loose nozzle, clogged vent hole on the supply cup, or leaking packing around the needle."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q6"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-7",
+    "question": "How can you test the spray pattern of a conventional spray gun?",
+    "choices": [
+      "By spraying directly on the surface, you want to paint.",
+      "By spraying a piece of masking paper taped to a wall at a distance of 8 to 10 inches.",
+      "By measuring the air pressure coming out of the gun."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q7"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-8",
+    "question": "What does the upper control knob on a spray gun adjust?",
+    "choices": [
+      "The spray pattern width.",
+      "It proportions the amount of paint delivered.",
+      "The spray pattern of paint delivered."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q8"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-9",
+    "question": "how does adjusting the lower knob on the spray gun affect the amount of paint delivered?",
+    "choices": [
+      "Turning it to the right reduces the amount of paint.",
+      "It reduces the spray pattern to a cone shape.",
+      "It widens the spray pattern."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q9"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-10",
+    "question": "What is the main difference between primer and topcoat for an aircraft?",
+    "choices": [
+      "The topcoat has a glossy finish, while the primer is flat.",
+      "The topcoat is thicker than the primer.",
+      "The primer is a different color."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q10"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-11",
+    "question": "How should you control the trigger while spray painting a panel with the finish coat?",
+    "choices": [
+      "Release the trigger completely at the end of the pass.",
+      "Squeeze the trigger fully back for the entire pass.",
+      "Start by partially squeezing the trigger, then fully squeeze it as you begin painting, and release slightly at the end of the pass."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q11"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-12",
+    "question": "When should you move from the practice panel to the actual project?",
+    "choices": [
+      "When you can consistently apply a smooth, glossy finish with no runs on the practice panel.",
+      "Once you've used up all the paint on the practice panel.",
+      "After a set amount of practice time."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q12"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-13",
+    "question": "What spray pattern is typically recommended for applying primer to an aircraft?",
+    "choices": [
+      "A single, continuous pass (left to right or up and down)",
+      "A cross-coat pattern (one left-to-right pass followed by an up-and-down pass).",
+      "A circular pattern"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q13"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-14",
+    "question": "How much overlap should each pass of the spray gun have with the previous pass when applying a finish coat?",
+    "choices": [
+      "No overlap is necessary.",
+      "There should be a 50% overlap.",
+      "There should be a 25% overlap."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q14"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-15",
+    "question": "Why is applying primer less likely to result in runs compared to applying a gloss finish?",
+    "choices": [
+      "Primer is applied in light coats.",
+      "Primer is a different color.",
+      "Primer is applied in thicker coats."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q15"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-16",
+    "question": "What should a painter do before spray painting an aircraft for the first time?",
+    "choices": [
+      "They should skip practice and begin painting.",
+      "They should read a book or instruction manual.",
+      "They should only observe someone else paint."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q16"
+    ]
+  },
+  {
+    "id": "ass_4_205_finishes-17",
+    "question": "What is the recommended air pressure for a conventional spray gun to achieve a correct spray pattern?",
+    "choices": [
+      "60 to 80 psi",
+      "10 to 20 psi",
+      "40 to 50 psi."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #4 – Q17"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-1",
+    "question": "Which of the following is a hazard associated with sanding on fabric covered surfaces during the finishing process?",
+    "choices": [
+      "Static electricity buildup.",
+      "Embedding of particles in the finish.",
+      "Overheating of the fabric/finish, especially with the use of power tools."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q1"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-2",
+    "question": "Why is it important to thoroughly mix paint before using it for priming or painting?",
+    "choices": [
+      "To ensure all the pigment is evenly distributed throughout the paint for a consistent color and application.",
+      "It activates hidden chemicals in the paint for faster drying.",
+      "Mixing adds air bubbles to the paint, which helps it adhere better to the surface."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q2"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-3",
+    "question": "HVLP guns are known for high material transfer efficiency. What does this mean?",
+    "choices": [
+      "A larger percentage of the paint actually reaches and sticks to the surface being sprayed.",
+      "The paint dries much faster due to the lower pressure.",
+      "HVLP guns can handle a wider range of paint viscosities."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q3"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-4",
+    "question": "What information is required to choose the correct Zahn cup for measuring paint viscosity?",
+    "choices": [
+      "The orifice number listed on the paint manufacturer's product data sheet.",
+      "The paint color and desired finish of the project.",
+      "The size of the painting project and the amount of paint being used."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q4"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-5",
+    "question": "What is the most important reason to read the manufacturer's data sheets for the paint products you are using on an aircraft painting project?",
+    "choices": [
+      "To ensure you follow the proper mixing ratios, application techniques, and safety precautions for a successful and safe painting job.",
+      "To learn interesting facts about the paint colors and their history.",
+      "It is only necessary if you are unsure about the color compatibility of different products."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q5"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-6",
+    "question": "What's the importance of thoroughly rinsing both the acid etch solution and the Alodine® conversion coating. Why is this crucial?",
+    "choices": [
+      "Incomplete rinsing can leave behind residues that can cause future corrosion.",
+      "The solution needs to be diluted before applying the conversion coating.",
+      "The solution will reactivate later and damage the aluminum."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q6"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-7",
+    "question": "What is the most important factor to consider when choosing a primer for aircraft painting?",
+    "choices": [
+      "Compatibility with the topcoat finish.",
+      "The drying time of the primer itself.",
+      "The brand name or manufacturer of the primer."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q7"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-8",
+    "question": "What is a key advantage of using epoxy sanding primers?",
+    "choices": [
+      "hey can be sanded smooth with a 320 grit sanding disc before applying a topcoat.",
+      "They are very quick to dry and require minimal curing time.",
+      "They are the most affordable option compared to other primers."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q8"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-9",
+    "question": "Why is surface preparation considered the most critical step in any aircraft painting project?",
+    "choices": [
+      "It ensures a long-lasting, corrosion-free finish and overall success of the painting.",
+      "It requires the most expensive materials and specialized equipment.",
+      "It allows for the application of a wider variety of paint colors."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q9"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-10",
+    "question": "Why is it important to shake or stir paint before using it for spraying?",
+    "choices": [
+      "To ensure all the components of the paint are thoroughly mixed for even color and proper application.",
+      "To add water and thin the paint to the desired consistency.",
+      "To remove any air bubbles that may have formed in the paint."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q10"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-11",
+    "question": "Why is it important to use aircraft paint specifically formulated for aviation projects?",
+    "choices": [
+      "It is designed for the harsher environment that aircraft experience, such as flexibility and chemical resistance.",
+      "It comes in a wider variety of colors than automotive paint.",
+      "It is required by law for any aircraft maintenance project."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q11"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-12",
+    "question": "What is especially important when choosing a spray gun for painting an aircraft?",
+    "choices": [
+      "It must be the right size to handle large areas and varied surfaces.",
+      "It must be very affordable to fit a large budget.",
+      "It should prioritize a very fast application speed."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q12"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-13",
+    "question": "What is the main way a siphon-feed spray gun draws paint up into the gun for spraying?",
+    "choices": [
+      "Compressed air creates a siphon effect to draw paint from the cup.",
+      "A built-in pump forces the paint up.",
+      "The paint is manually fed into the gun from the cup."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q13"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-14",
+    "question": "What cleaning method is recommended for an aluminum aircraft surface in the passage?",
+    "choices": [
+      "Scrubbing with Scotch-Brite® pads and an alkaline aviation cleaner, followed by rinsing with clean water until water breaks free.",
+      "Using a degreaser only, without rinsing.",
+      "Wiping down the surface with a solvent-based cleaner and a rag."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q14"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-15",
+    "question": "What is the primary purpose of using a viscosity cup when working with paint?",
+    "choices": [
+      "To measure the viscosity (thickness) of the paint and ensure it meets the recommended spraying consistency.",
+      "To ensure the paint has the right color for the project.",
+      "To accurately mix different paint colors together."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q15"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-16",
+    "question": "How does a gravity-feed spray gun differ from a siphon-feed spray gun in terms of paint supply?",
+    "choices": [
+      "Siphon-feed has the paint cup below the gun, while gravity-feed has it on top.",
+      "Siphon-feed uses a pump, while gravity-feed relies on a built-in pressurized container.",
+      "Siphon-feed can only handle small amounts of paint, while gravity-feed can handle larger volumes."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q16"
+    ]
+  },
+  {
+    "id": "ass_3_205_finishes-17",
+    "question": "Unlike conventional spray systems, how does airless spraying achieve atomization of the paint material?",
+    "choices": [
+      "It forces the paint at high pressure through a small orifice in the spray gun.",
+      "It uses compressed air directed through a nozzle.",
+      "It uses a spinning disc to break up the paint particles."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #3 – Q17"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-1",
+    "question": "What is one requirement for using fabric to cover an aircraft?",
+    "choices": [
+      "The fabric must meet FAA regulations.",
+      "The fabric must be fireproof.",
+      "The fabric must be brightly colored."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q1"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-2",
+    "question": "What was the standard finish used to protect and color fabric on early aircraft?",
+    "choices": [
+      "Dope",
+      "Paint",
+      "Varnish"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q2"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-3",
+    "question": "How does lacquer compare to other paints in terms of durability?",
+    "choices": [
+      "Lacquer is difficult to apply and requires more maintenance.",
+      "Lacquer is less durable and susceptible to damage from everyday elements.",
+      "Lacquer is more durable and provides long-lasting protection."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q3"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-4",
+    "question": "Which properly applied finish topcoat is the most durable and chemical resistant?",
+    "choices": [
+      "Acrylic lacquer",
+      "Polyurethane",
+      "Synthetic enamel"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q4"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-5",
+    "question": "How does acrylic compare to polyurethane in terms of chemical resistance?",
+    "choices": [
+      "They offer similar resistance to harsh chemicals.",
+      "Acrylic is more resistant to harsh chemicals than polyurethane.",
+      "Acrylic is not as resistant to harsh chemicals as polyurethane."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q5"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-6",
+    "question": "How can you ensure a clean air supply for the spray gun?",
+    "choices": [
+      "By keeping the spray gun nozzle clean after each use.",
+      "By using only the highest quality paint.",
+      "By installing and regularly servicing water traps and oil filters in the air supply line."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q6"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-7",
+    "question": "What properties make polyurethane a preferred choice for coating corporate and commercial aircraft?",
+    "choices": [
+      "A matte, non-reflective finish.",
+      "A strong odor that deters pests.",
+      "t offers high resistance to abrasion, stains, chemicals, and UV rays."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q7"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-8",
+    "question": "What are some of the benefits of using synthetic enamel paint?",
+    "choices": [
+      "Only economical and protective",
+      "All the answers listed.",
+      "Only durable and protective"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q8"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-9",
+    "question": "What type of finish is dip coating particularly suited for?",
+    "choices": [
+      "Clear coats requiring a high level of detail",
+      "Primer coats that need even coverage",
+      "Textured finishes"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q9"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-10",
+    "question": "What is the primary function of a paint booth for aircraft?",
+    "choices": [
+      "To protect the aircraft from the elements and ensure a clean painting environment.",
+      "To provide a designated workspace for painting.",
+      "To create a soundproof environment for noise reduction during painting."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q10"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-11",
+    "question": "What are some of the challenges of achieving a smooth finish with a brush?",
+    "choices": [
+      "Brushes are not suitable for applying water-based finishes.",
+      "The finish may appear uneven if the material is too thick or thin, or if brush marks aren't properly flowed out.",
+      "Brushes don't offer a wide range of bristle stiffness."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q11"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-12",
+    "question": "When using a conventional siphon feed spray gun with a regular compressor, what is the minimum recommended air pressure and volume delivered to the spray gun?",
+    "choices": [
+      "5 horsepower (hp) and 20 CFM",
+      "90 psi and 10 CFM",
+      "90 psi and 5 CFM"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q12"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-13",
+    "question": "What is the main advantage of using a spray application for finishes?",
+    "choices": [
+      "It provides a uniform layer of material over large surfaces, making it cost-effective.",
+      "It requires less skill and practice compared to brushing.",
+      "It's the most effective method for small repairs and detailed work."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q13"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-14",
+    "question": "Where is the best place to inquire about local air quality regulations for painting an aircraft at an airport?",
+    "choices": [
+      "Researching online forums for aircraft maintenance.",
+      "By contacting the Environmental Protection Agency (EPA).",
+      "By checking with the local airport authority."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q14"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-15",
+    "question": "What are some of the disadvantages of nitrocellulose lacquer as a finish?",
+    "choices": [
+      "Difficult to spot repair and dries very slowly.",
+      "Provides a poor shine and is not very hard.",
+      "Yellows with age, can crack, but easy to spot repair."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q15"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-16",
+    "question": "How does urethane typically achieve its durable and high-gloss finish?",
+    "choices": [
+      "It's a two-part system with a base and catalyst that cure when mixed.",
+      "It is pre-mixed and requires no additional steps.",
+      "It needs to be exposed to high heat for activation."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q16"
+    ]
+  },
+  {
+    "id": "ass_2_205_finishes-17",
+    "question": "When covering an aircraft with a Standard Airworthiness Certificate and Ceconite® polyester fabric, following which requirements is mandatory?",
+    "choices": [
+      "Using the specific Ceconite® covering procedures and materials as outlined in the STC.",
+      "Using brightly colored topcoats.",
+      "Applying a specific brand of fire retardant."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #2 – Q17"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-1",
+    "question": "What is the main difference between traditional resin varnish and polyurethane or epoxy varnishes in terms of drying?",
+    "choices": [
+      "Traditional varnish dries faster because it has more resin content.",
+      "Polyurethane and epoxy varnishes dry much slower due to the presence of solvents.",
+      "Traditional varnish dries slower but doesn't require any chemical reaction."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q1"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-2",
+    "question": "Turpentine is a solvent commonly used with:",
+    "choices": [
+      "Latex paints.",
+      "Oil-based paints.",
+      "Water-based paints."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q2"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-3",
+    "question": "What property does Methylene Chloride NOT possess?",
+    "choices": [
+      "It can be used as a degreaser for metal parts.",
+      "It ignites readily at normal temperatures (Flash point).",
+      "It is a volatile liquid, meaning it evaporates easily."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q3"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-4",
+    "question": "What safety precaution is mentioned in the text regarding urethane primer?",
+    "choices": [
+      "It is flammable and should be kept away from sparks.",
+      "The activators contain isocyanates, requiring special precautions during spraying.",
+      "It requires special handling due to strong odors."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q4"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-5",
+    "question": "What property of acetone makes it useful as a degreaser?",
+    "choices": [
+      "It removes grease from fabric.",
+      "It thins dope.",
+      "It thins zinc chromate primer."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q5"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-6",
+    "question": "In which of the following applications is MEK NOT typically used?",
+    "choices": [
+      "As a paint and varnish remover",
+      "As a degreaser for metal surfaces",
+      "As a base for water-based paints."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q6"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-7",
+    "question": "What is a key advantage of mineral spirits compared to turpentine?",
+    "choices": [
+      "It is more effective at removing water-based paints.",
+      "It evaporates much faster for quicker drying.",
+      "It has a lower odor, is less flammable, and less toxic."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q7"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-8",
+    "question": "Naphtha is derived from which of the following sources?",
+    "choices": [
+      "Petroleum only.",
+      "Either coal tar or petroleum.",
+      "Coal tar only."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q8"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-9",
+    "question": "Why does linseed oil packaging come with a warning about spontaneous combustion?",
+    "choices": [
+      "Heat generated during drying can ignite oily rags if not disposed of properly.",
+      "The oil itself is highly flammable.",
+      "It evaporates quickly and can create flammable vapors."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q9"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-10",
+    "question": "What property of zinc chromate makes it useful as a primer pigment?",
+    "choices": [
+      "It creates a bright yellow or light green colored finish.",
+      "It is compatible with various resin types in primers.",
+      "It reacts with moisture to form a protective layer against corrosion."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q10"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-11",
+    "question": "What health risk is associated with prolonged exposure to toluene vapors?",
+    "choices": [
+      "Brain damage.",
+      "Eye irritation.",
+      "Skin rash."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q11"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-12",
+    "question": "What is likely to occur if hydrated wash primer is applied to unpainted aluminum and then about 30 to 40 minutes later a finish topcoat, when the humidity is low?",
+    "choices": [
+      "Corrosion.",
+      "A dull finish due to the topcoat \"sinking in\" to primer that is still too soft.",
+      "A glossy, blush-free finish."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q12"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-13",
+    "question": "What is the main reason to add butanol to aircraft dope?",
+    "choices": [
+      "To improve the drying speed of the dope film.",
+      "To make the dope film thicker and more durable.",
+      "To slow down drying and prevent blushing in humid conditions."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q13"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-14",
+    "question": "Which statement is true regarding paint system compatibility?",
+    "choices": [
+      "Acrylic nitrocellulose lacquers may be used over old nitrocellulose finishes.",
+      "Old type zinc chromate primer may not be used directly for touch up of bare metal surfaces.",
+      "Old wash primer coats may be over coated directly with epoxy finishes."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q14"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-15",
+    "question": "Red oxide primer is primarily designed for use on which material?",
+    "choices": [
+      "Iron and steel.",
+      "Wood.",
+      "Aluminum."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q15"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-16",
+    "question": "What is the primary purpose of finishing internal structures and unexposed components of an aircraft?",
+    "choices": [
+      "To make them lighter and more aerodynamic.",
+      "To improve their appearance for passengers.",
+      "To protect them from corrosion and deterioration."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q16"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-17",
+    "question": "What property of benzene led to its regulation by the Environmental Protection Agency (EPA)?",
+    "choices": [
+      "It is colorless.",
+      "It is a liquid at room temperature.",
+      "It is highly toxic when inhaled or absorbed."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q17"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-18",
+    "question": "Before applying a protective coating to any unpainted clean aluminum, you should",
+    "choices": [
+      "avoid touching the surface with bare hands.",
+      "remove any conversion coating film.",
+      "wipe the surface with avgas or kerosene."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q18"
+    ]
+  },
+  {
+    "id": "ass_1_205_finishes-19",
+    "question": "What is the main function of the topcoat finish on an aircraft?",
+    "choices": [
+      "To protect the exposed surfaces from corrosion and deterioration.",
+      "To make the aircraft easier to clean and maintain.",
+      "To add color and improve the aesthetics."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT205 – Assignment – Finishes – #1 – Q19"
+    ]
+  }
+]
