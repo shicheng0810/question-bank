@@ -189,6 +189,7 @@
         <option value="es">Español</option>
       </select>
       <button class="btn" id="theme-toggle" type="button" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">🌙</button>
+      <button class="btn" id="suggest-btn" onclick="openSuggestModal()" data-testid="suggest-btn" data-i18n="fb_suggest_btn">💬 Feedback</button>
       <button class="btn" id="guide-btn" onclick="openGuide()" data-testid="guide-open-btn" data-i18n="guide_summary">Button Guide</button>
       <button class="btn" id="tutorial-help-btn" onclick="openTutorial()" data-testid="tutorial-help-btn"
               title="Tutorial" aria-label="Open tutorial"
@@ -244,6 +245,18 @@
     .guide-card{max-width:640px}
     .guide-card ul{margin:12px 0 0; padding-left:18px; line-height:1.9; overflow:auto; max-height:62vh; color:var(--ink-soft)}
     .guide-card ul strong{color:var(--ink)}
+    /* 反馈 / 报错 */
+    .qb-report-btn{appearance:none; border:none; background:none; color:var(--muted); font:inherit; font-size:12px; cursor:pointer; padding:2px 4px; border-radius:6px}
+    .qb-report-btn:hover{color:var(--brand); background:var(--hover)}
+    .qb-fb-ctx{font-size:12px; color:var(--muted); background:var(--card-2); border:1px solid var(--border); border-radius:var(--radius-xs); padding:8px 10px; margin:0 0 12px; max-height:5.4em; overflow:auto}
+    .qb-fb-types{display:flex; flex-wrap:wrap; gap:8px 14px; margin:6px 0 12px}
+    .qb-fb-types label{display:flex; align-items:center; gap:6px; font-size:13.5px; cursor:pointer}
+    .qb-fb-card label{font-size:13px; color:var(--ink-soft); display:block; margin:10px 0 4px}
+    .qb-fb-card textarea,.qb-fb-card input[type=email]{width:100%; font:inherit; font-size:14px; padding:9px 11px; border:1px solid var(--border-strong); border-radius:var(--radius-xs); background:var(--card-2); color:var(--ink)}
+    .qb-fb-card textarea{resize:vertical; min-height:64px}
+    .qb-fb-status{font-size:13px; min-height:1.2em; margin-top:8px}
+    .qb-fb-status.ok{color:var(--success-ink)} .qb-fb-status.err{color:var(--danger-ink)}
+    .qb-hp{position:absolute; left:-9999px; width:1px; height:1px; opacity:0} /* 蜜罐：人看不见，机器人会填 */
   </style>
   <!-- All Banks 合并页：开始前选择要练习的题库（公开勾选、加密解锁加入），按所选现场合并 -->
   <div class="tut-overlay" id="qb-allbanks" hidden data-testid="qb-allbanks" style="align-items:center">
@@ -268,6 +281,54 @@
         <button class="btn" onclick="closeGuide()" data-testid="guide-close-btn" aria-label="Close" style="width:36px;height:36px;border-radius:50%;padding:0">✕</button>
       </div>
       <ul class="meta" id="guide-list"></ul>
+    </div>
+  </div>
+
+  <!-- 逐题报错弹窗 -->
+  <div class="tut-overlay" id="qb-report" hidden data-testid="qb-report" onclick="if(event.target===this)closeReportModal()">
+    <div class="tut-card qb-fb-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <h2 data-i18n="fb_report_title" style="margin:0;font-size:1.1rem">Report a problem with this question</h2>
+        <button class="btn" onclick="closeReportModal()" aria-label="Close" style="width:36px;height:36px;border-radius:50%;padding:0">✕</button>
+      </div>
+      <div class="qb-fb-ctx" id="qb-report-ctx"></div>
+      <div data-i18n="fb_type_label" style="font-size:13px;color:var(--ink-soft)">What's wrong?</div>
+      <div class="qb-fb-types">
+        <label><input type="radio" name="qb-report-type" value="answer"><span data-i18n="fb_type_answer">Wrong answer</span></label>
+        <label><input type="radio" name="qb-report-type" value="typo"><span data-i18n="fb_type_typo">Typo</span></label>
+        <label><input type="radio" name="qb-report-type" value="choices"><span data-i18n="fb_type_choices">Choices</span></label>
+        <label><input type="radio" name="qb-report-type" value="other"><span data-i18n="fb_type_other">Other</span></label>
+      </div>
+      <label id="qb-report-msg-label" data-i18n="fb_msg_label">Details (optional)</label>
+      <textarea id="qb-report-msg" maxlength="2000" data-i18n-placeholder="fb_msg_ph"></textarea>
+      <input type="text" class="qb-hp" id="qb-report-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="tut-actions">
+        <button class="btn" onclick="closeReportModal()" data-i18n="fb_cancel">Cancel</button>
+        <span class="spacer"></span>
+        <button class="btn submit-btn" id="qb-report-send" onclick="onReportSubmit()" data-i18n="fb_report_submit">Send report</button>
+      </div>
+      <div class="qb-fb-status" id="qb-report-status"></div>
+    </div>
+  </div>
+
+  <!-- 通用建议弹窗 -->
+  <div class="tut-overlay" id="qb-suggest" hidden data-testid="qb-suggest" onclick="if(event.target===this)closeSuggestModal()">
+    <div class="tut-card qb-fb-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <h2 data-i18n="fb_suggest_title" style="margin:0;font-size:1.1rem">Feedback / suggestions</h2>
+        <button class="btn" onclick="closeSuggestModal()" aria-label="Close" style="width:36px;height:36px;border-radius:50%;padding:0">✕</button>
+      </div>
+      <p class="meta" data-i18n="fb_suggest_desc" style="margin:6px 0 4px">Want this site to work better?</p>
+      <textarea id="qb-suggest-msg" maxlength="2000" data-i18n-placeholder="fb_suggest_ph"></textarea>
+      <label data-i18n="fb_email_label">Email (optional)</label>
+      <input type="email" id="qb-suggest-email" maxlength="120" autocomplete="email">
+      <input type="text" class="qb-hp" id="qb-suggest-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="tut-actions">
+        <button class="btn" onclick="closeSuggestModal()" data-i18n="fb_cancel">Cancel</button>
+        <span class="spacer"></span>
+        <button class="btn submit-btn" id="qb-suggest-send" onclick="onSuggestSubmit()" data-i18n="fb_suggest_submit">Send feedback</button>
+      </div>
+      <div class="qb-fb-status" id="qb-suggest-status"></div>
     </div>
   </div>
 
@@ -302,6 +363,16 @@
       ATTEMPT_COUNT_KEY = STORAGE_NS + "_attempt_count_map_v1";
     }
 
+    /* ------------------ 反馈配置（构建时注入；未注入则降级为 mailto/剪贴板，按钮永不失效） ------------------ */
+    // 裸 marker（与题库 payload 同模式）：构建时被替换成 JS 对象字面量；所有消费路径都会替换。
+    const RAW_FEEDBACK_CONFIG = {"endpoint":"https://question-bank-78u.pages.dev/api/feedback","email":"","turnstile_site_key":"","app_version":"site"};
+    let FEEDBACK_CONFIG = { endpoint: "", email: "", turnstile_site_key: "", app_version: "dev" };
+    try {
+      if (RAW_FEEDBACK_CONFIG && typeof RAW_FEEDBACK_CONFIG === "object") {
+        FEEDBACK_CONFIG = Object.assign(FEEDBACK_CONFIG, RAW_FEEDBACK_CONFIG);
+      }
+    } catch (_e) {}
+
     /* ------------------ UI 多语言（只翻界面文案，不动题目内容） ------------------ */
     const UI_LANG_KEY = "qb_ui_lang"; // 全局偏好（不分题库）
     const I18N = {
@@ -309,6 +380,14 @@
         title_h1: "AMT Question Bank Practice",
         back_catalog: "← Catalog",
         guide_summary: "Button Guide",
+        fb_report_btn: "⚐ Report", fb_report_title: "Report a problem with this question",
+        fb_type_label: "What's wrong?", fb_type_answer: "Wrong answer", fb_type_typo: "Typo / wording", fb_type_choices: "Problem with choices", fb_type_other: "Something else",
+        fb_msg_label: "Details (optional)", fb_msg_required: "Details (required)", fb_msg_ph: "e.g. choice B should also be accepted",
+        fb_report_submit: "Send report",
+        fb_suggest_btn: "💬 Feedback", fb_suggest_title: "Feedback / suggestions", fb_suggest_desc: "Want this site to work better? One sentence is enough.", fb_suggest_ph: "e.g. let me filter by chapter",
+        fb_email_label: "Email (optional, so I can reply)", fb_suggest_submit: "Send feedback",
+        fb_cancel: "Cancel", fb_need_type: "Please choose a problem type.", fb_need_msg: "Please add a short note.",
+        fb_sending: "Sending…", fb_thanks: "✅ Got it — thank you!", fb_mailto_hint: "Opening your email app…", fb_copied_hint: "Copied to clipboard — paste it to {email}", fb_error: "Couldn't send, please try later.",
         filter_summary: "Filter Question Banks",
         select_all: "Select All", select_none: "Select None", confirm: "Confirm",
         randomize: "Randomize + Reset",
@@ -364,6 +443,14 @@
         title_h1: "AMT 题库练习",
         back_catalog: "← 返回目录",
         guide_summary: "页面按钮说明",
+        fb_report_btn: "⚐ 报错", fb_report_title: "报告这道题的问题",
+        fb_type_label: "问题类型", fb_type_answer: "答案不对", fb_type_typo: "有错别字", fb_type_choices: "选项有问题", fb_type_other: "其它",
+        fb_msg_label: "说明（可选）", fb_msg_required: "说明（必填）", fb_msg_ph: "例如：B 选项应该也算对",
+        fb_report_submit: "提交报错",
+        fb_suggest_btn: "💬 反馈", fb_suggest_title: "反馈 / 建议", fb_suggest_desc: "想让这个题库站更好用？告诉我一句话就行。", fb_suggest_ph: "例如：希望能按章节筛选",
+        fb_email_label: "邮箱（可选，方便我回复你）", fb_suggest_submit: "发送反馈",
+        fb_cancel: "取消", fb_need_type: "请选择问题类型。", fb_need_msg: "请填写一句话说明。",
+        fb_sending: "提交中…", fb_thanks: "✅ 已收到，谢谢你的反馈！", fb_mailto_hint: "正在打开你的邮件应用…", fb_copied_hint: "已复制到剪贴板——请粘贴发给 {email}", fb_error: "提交失败，请稍后再试。",
         filter_summary: "筛选题库",
         select_all: "全选", select_none: "全不选", confirm: "确认",
         randomize: "打乱并重置",
@@ -419,6 +506,14 @@
         title_h1: "Práctica del banco de preguntas AMT",
         back_catalog: "← Catálogo",
         guide_summary: "Guía de botones",
+        fb_report_btn: "⚐ Reportar", fb_report_title: "Reportar un problema con esta pregunta",
+        fb_type_label: "¿Qué está mal?", fb_type_answer: "Respuesta incorrecta", fb_type_typo: "Error de ortografía", fb_type_choices: "Problema con las opciones", fb_type_other: "Otra cosa",
+        fb_msg_label: "Detalles (opcional)", fb_msg_required: "Detalles (obligatorio)", fb_msg_ph: "p. ej., la opción B también debería ser válida",
+        fb_report_submit: "Enviar reporte",
+        fb_suggest_btn: "💬 Comentarios", fb_suggest_title: "Comentarios / sugerencias", fb_suggest_desc: "¿Quieres que este sitio funcione mejor? Una frase basta.", fb_suggest_ph: "p. ej., poder filtrar por capítulo",
+        fb_email_label: "Email (opcional, para responderte)", fb_suggest_submit: "Enviar comentarios",
+        fb_cancel: "Cancelar", fb_need_type: "Elige un tipo de problema.", fb_need_msg: "Escribe una breve nota.",
+        fb_sending: "Enviando…", fb_thanks: "✅ ¡Recibido, gracias!", fb_mailto_hint: "Abriendo tu app de correo…", fb_copied_hint: "Copiado — pégalo y envíalo a {email}", fb_error: "No se pudo enviar, inténtalo más tarde.",
         filter_summary: "Filtrar bancos de preguntas",
         select_all: "Seleccionar todo", select_none: "Ninguno", confirm: "Confirmar",
         randomize: "Mezclar y reiniciar",
@@ -1077,7 +1172,10 @@
 
           <div class="keys-panel" id="keys-${q.id}" style="display:${(st.submitted && st.showKeys && isFill(q)) ? "block" : "none"}"></div>
 
-          <div class="meta">${renderSource(q)}</div>
+          <div class="meta" style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+            <span>${renderSource(q)}</span>
+            <button class="qb-report-btn" type="button" onclick="openReportModal('${q.id}',${i+1})" title="${T('fb_report_title')}">${T('fb_report_btn')}</button>
+          </div>
           ${viewMode==='wrong'?`<div class="mt-2"><button class="btn" onclick="removeFromWrong('${q.id}')">${T('remove_wrong')}</button></div>`:""}
         </div>`;
       }
@@ -1770,6 +1868,124 @@
     function closeGuide(){
       const overlay = document.getElementById("qb-guide");
       if (overlay) overlay.hidden = true;
+    }
+
+    /* ------------------ 反馈 / 报错：唯一出口 submitFeedback + 优雅降级 ------------------ */
+    let REPORT_CTX = { qId:"", idx:0 };
+    function fbStatus(id, key, kind){ // kind: 'ok' | 'err' | ''
+      const el = document.getElementById(id); if(!el) return;
+      el.textContent = key; el.className = "qb-fb-status" + (kind ? " "+kind : "");
+    }
+    function buildFeedbackPayload(base){
+      return Object.assign({
+        schema_version:1, ui_lang:uiLang, page_url:location.href,
+        user_agent:navigator.userAgent, viewport:window.innerWidth+"x"+window.innerHeight,
+        client_ts:new Date().toISOString(),
+        app_version:(FEEDBACK_CONFIG&&FEEDBACK_CONFIG.app_version)||"dev",
+        bank_id:STORAGE_NS,
+        bank_title:(document.querySelector('#quizApp h1')||{}).textContent||document.title||"",
+        player_mode:(LEGACY_BANK_PAYLOAD&&LEGACY_BANK_PAYLOAD.mode)||"standalone"
+      }, base);
+    }
+    function feedbackToText(p){
+      return Object.keys(p).map(function(k){ var v=p[k]; return k+": "+(typeof v==="object"?JSON.stringify(v):String(v==null?"":v)); }).join("\n");
+    }
+    function feedbackMailto(p){
+      const email=(FEEDBACK_CONFIG&&FEEDBACK_CONFIG.email)||""; if(!email) return "";
+      const tag=p.kind==="question_report" ? ("[Report] "+p.bank_id+" #"+(p.question_index||"?")) : ("[Feedback] "+p.bank_id);
+      return "mailto:"+email+"?subject="+encodeURIComponent(tag)+"&body="+encodeURIComponent(feedbackToText(p));
+    }
+    // 唯一出口：POST 端点 → mailto → 剪贴板，永远 resolve（按钮不会死）。返回 {ok,mode,email}
+    async function submitFeedback(raw){
+      const p=buildFeedbackPayload(raw), cfg=FEEDBACK_CONFIG||{};
+      if(cfg.endpoint){
+        try{
+          const res=await fetch(cfg.endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(p),keepalive:true});
+          if(res.ok) return {ok:true,mode:"posted"};
+        }catch(_e){}
+      }
+      const mailto=feedbackMailto(p);
+      if(mailto){ try{ window.location.href=mailto; return {ok:true,mode:"mailto",email:cfg.email}; }catch(_e){} }
+      const text=feedbackToText(p);
+      try{ if(navigator.clipboard&&navigator.clipboard.writeText){ await navigator.clipboard.writeText(text); return {ok:true,mode:"clipboard",email:cfg.email}; } }catch(_e){}
+      try{ window.prompt("Copy & send this:", text); }catch(_e){}
+      return {ok:true,mode:"manual",email:cfg.email};
+    }
+    function afterFeedback(statusId, r, closeFn){
+      if(r.mode==="posted") fbStatus(statusId, T("fb_thanks"), "ok");
+      else if(r.mode==="mailto") fbStatus(statusId, T("fb_mailto_hint"), "ok");
+      else fbStatus(statusId, T("fb_copied_hint").split("{email}").join(r.email||""), "ok");
+      setTimeout(closeFn, 1400);
+    }
+
+    /* ---- 逐题报错 ---- */
+    function openReportModal(qId, idx){
+      REPORT_CTX={ qId:String(qId), idx:idx||0 };
+      const q=getQ(qId);
+      const stem=(q && (q.question || (q.question_html||"").replace(/<[^>]+>/g," ")) || "").trim().slice(0,90);
+      const ctx=document.getElementById("qb-report-ctx");
+      if(ctx) ctx.textContent = "#"+(idx||"?") + (q?(" · "+renderSourceText(q)):"") + (stem?("\n「"+stem+"」"):"");
+      const t=document.querySelector('input[name="qb-report-type"]:checked'); if(t) t.checked=false;
+      const msg=document.getElementById("qb-report-msg"); if(msg) msg.value="";
+      const hp=document.getElementById("qb-report-hp"); if(hp) hp.value="";
+      fbStatus("qb-report-status","","");
+      const lbl=document.getElementById("qb-report-msg-label"); if(lbl) lbl.textContent=T("fb_msg_label");
+      document.getElementById("qb-report").hidden=false;
+    }
+    function closeReportModal(){ const o=document.getElementById("qb-report"); if(o) o.hidden=true; }
+    function renderSourceText(q){
+      const s = q && q.source;
+      return Array.isArray(s) ? s.join(" | ") : String(s||"");
+    }
+    // 「其它」类型时说明必填——切换 radio 时更新标签
+    document.addEventListener("change", function(e){
+      if(e.target && e.target.name==="qb-report-type"){
+        const lbl=document.getElementById("qb-report-msg-label");
+        if(lbl) lbl.textContent = (e.target.value==="other") ? T("fb_msg_required") : T("fb_msg_label");
+      }
+    });
+    async function onReportSubmit(){
+      const type=document.querySelector('input[name="qb-report-type"]:checked');
+      if(!type){ fbStatus("qb-report-status", T("fb_need_type"), "err"); return; }
+      const msg=(document.getElementById("qb-report-msg").value||"").trim();
+      if(type.value==="other" && !msg){ fbStatus("qb-report-status", T("fb_need_msg"), "err"); return; }
+      if((document.getElementById("qb-report-hp")||{}).value){ closeReportModal(); return; } // 蜜罐命中：静默丢弃
+      const q=getQ(REPORT_CTX.qId), st=(uiState[REPORT_CTX.qId])||{};
+      const payload={
+        kind:"question_report", report_type:type.value, message:msg,
+        question_id:REPORT_CTX.qId, question_index:REPORT_CTX.idx,
+        question_stem:String((q&&q.question)||"").slice(0,120),
+        question_type: isFill(q)?"fill":isEssay(q)?"essay":isMulti(q)?"multi":"single",
+        question_source: renderSourceText(q),
+        submitted: !!st.submitted, was_wrong: wrongSet.has(REPORT_CTX.qId),
+        selected_answer: isMulti(q)?[...(st.selectedSet||[])] : isFill(q)?(st.fillInputs||[]) : (st.selectedIndex)
+      };
+      const btn=document.getElementById("qb-report-send"); if(btn) btn.disabled=true;
+      fbStatus("qb-report-status", T("fb_sending"), "");
+      const r=await submitFeedback(payload);
+      if(btn) btn.disabled=false;
+      afterFeedback("qb-report-status", r, closeReportModal);
+    }
+
+    /* ---- 通用建议 ---- */
+    function openSuggestModal(){
+      const m=document.getElementById("qb-suggest-msg"); if(m) m.value="";
+      const em=document.getElementById("qb-suggest-email"); if(em) em.value="";
+      const hp=document.getElementById("qb-suggest-hp"); if(hp) hp.value="";
+      fbStatus("qb-suggest-status","","");
+      document.getElementById("qb-suggest").hidden=false;
+    }
+    function closeSuggestModal(){ const o=document.getElementById("qb-suggest"); if(o) o.hidden=true; }
+    async function onSuggestSubmit(){
+      const msg=(document.getElementById("qb-suggest-msg").value||"").trim();
+      if(!msg){ fbStatus("qb-suggest-status", T("fb_need_msg"), "err"); return; }
+      if((document.getElementById("qb-suggest-hp")||{}).value){ closeSuggestModal(); return; }
+      const payload={ kind:"general_feedback", message:msg, reply_email:(document.getElementById("qb-suggest-email").value||"").trim(), source_page:"player" };
+      const btn=document.getElementById("qb-suggest-send"); if(btn) btn.disabled=true;
+      fbStatus("qb-suggest-status", T("fb_sending"), "");
+      const r=await submitFeedback(payload);
+      if(btn) btn.disabled=false;
+      afterFeedback("qb-suggest-status", r, closeSuggestModal);
     }
 
     /* ------------------ 新手教程（首次打开，英文，可 Skip） ------------------ */
