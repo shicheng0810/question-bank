@@ -324,6 +324,10 @@
         stats_score: "Total:{total} | Score: {correct}/{attempts} ({acc}%) | Wrong in scope: {wrong}",
         empty_list: "No questions match the current filters.",
         clear_choices: "Clear choices for this list",
+        remove_all_wrong: "Remove all from wrong",
+        clear_all_stars: "Unstar all",
+        confirm_remove_all_wrong: "Remove all {n} questions from your wrong list?",
+        confirm_clear_all_stars: "Unstar all {n} questions?",
         question_badge: "Question {n}",
         star: "Star", unstar: "Unstar",
         submit: "Submit Answer", submitted: "Submitted", redo: "Redo",
@@ -375,6 +379,10 @@
         stats_score: "共 {total} 题 | 得分 {correct}/{attempts}（{acc}%）| 范围内错题：{wrong}",
         empty_list: "没有符合条件的题目，请检查筛选条件。",
         clear_choices: "清空本列表的已选答案",
+        remove_all_wrong: "全部移出错题",
+        clear_all_stars: "全部取消收藏",
+        confirm_remove_all_wrong: "确定把这 {n} 道题全部移出错题？",
+        confirm_clear_all_stars: "确定取消收藏这 {n} 道题？",
         question_badge: "第 {n} 题",
         star: "收藏", unstar: "取消收藏",
         submit: "提交答案", submitted: "已提交", redo: "重做",
@@ -426,6 +434,10 @@
         stats_score: "Total:{total} | Puntuación: {correct}/{attempts} ({acc}%) | Errores en alcance: {wrong}",
         empty_list: "Ninguna pregunta coincide con los filtros actuales.",
         clear_choices: "Borrar selecciones de esta lista",
+        remove_all_wrong: "Quitar todo de errores",
+        clear_all_stars: "Quitar todas las favoritas",
+        confirm_remove_all_wrong: "¿Quitar las {n} preguntas de tu lista de errores?",
+        confirm_clear_all_stars: "¿Quitar las {n} preguntas de favoritas?",
         question_badge: "Pregunta {n}",
         star: "Marcar", unstar: "Desmarcar",
         submit: "Enviar respuesta", submitted: "Enviado", redo: "Rehacer",
@@ -1011,7 +1023,12 @@
         return;
       }
       let html="";
-      if(viewMode!=='all'){html+=`<div class="toolbar"><button class="btn" onclick="clearCurrentSelections()">${T('clear_choices')}</button></div>`}
+      if(viewMode!=='all'){
+        let bulkBtn='';
+        if(viewMode==='wrong') bulkBtn=`<button class="btn" onclick="removeAllFromWrong()" data-testid="remove-all-wrong-btn">${T('remove_all_wrong')}</button>`;
+        else if(viewMode==='star') bulkBtn=`<button class="btn" onclick="clearAllStars()" data-testid="clear-all-stars-btn">${T('clear_all_stars')}</button>`;
+        html+=`<div class="toolbar"><button class="btn" onclick="clearCurrentSelections()">${T('clear_choices')}</button>${bulkBtn}</div>`;
+      }
 
       for(let i=0;i<questions.length;i++){
         const q=questions[i];
@@ -1517,6 +1534,24 @@
       updateButtons();
     }
     function removeFromWrong(id){ wrongSet.delete(id); saveSet(WRONG_KEY,wrongSet); rerenderCurrentView(); }
+
+    // 一键把当前错题/收藏列表里所有题清空（错题/收藏视图工具栏按钮），清完回到全部视图
+    function removeAllFromWrong(){
+      const ids=(currentQuestions||[]).map(q=>q.id);
+      if(!ids.length) return;
+      if(!confirm(T('confirm_remove_all_wrong',{n:ids.length}))) return;
+      ids.forEach(id=>wrongSet.delete(id));
+      saveSet(WRONG_KEY,wrongSet);
+      showAll();
+    }
+    function clearAllStars(){
+      const ids=(currentQuestions||[]).map(q=>q.id);
+      if(!ids.length) return;
+      if(!confirm(T('confirm_clear_all_stars',{n:ids.length}))) return;
+      ids.forEach(id=>starred.delete(id));
+      saveSet(STAR_KEY,starred);
+      showAll();
+    }
 
     function updateButtons(){
       const bw=document.getElementById('btn-wrong'), bs=document.getElementById('btn-star'), bb=document.getElementById('btn-back'), br=document.getElementById('btn-random150'), br150=document.getElementById('btn-back150');
