@@ -49,9 +49,13 @@
     /* .btn 用了 display:inline-flex（作者样式），会盖过浏览器默认的 [hidden]{display:none}，
        导致 Random150/Back150/返回目录 等靠 hidden 属性切换的按钮隐藏失效。全局兜底： */
     [hidden]{display:none !important}
-    /* 星座粒子背景层：固定全屏、置底、不挡点击；正文容器抬到 z-index:1 之上 */
-    #constellation{position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; display:block}
-    #quizApp, #unlock-panel{position:relative; z-index:1}
+    /* 星座粒子背景层：固定全屏、置底、不挡点击。
+       用 z-index:-1（与目录页一致）：body 背景会传播到根层、画在画布之下，所以粒子仍可见。
+       关键——正文容器因此【不需要】自建 z-index。之前给 #quizApp 加 z-index:1 会形成层叠上下文，
+       把新手教程的高亮(z-index:95)困在遮罩(z-index:90)之下，导致被指向的按钮无法凸显（粒子整合引入的回归）。
+       position:relative 配 z-index:auto 不会创建层叠上下文，保留它以兼容卡片内的定位子元素。 */
+    #constellation{position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:-1; display:block}
+    #quizApp, #unlock-panel{position:relative}
 
     .app-header{display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap;
       background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:12px 16px; box-shadow:var(--shadow-sm); margin-bottom:16px}
@@ -84,7 +88,10 @@
     #theme-toggle:hover{background:var(--hover)}
     .controls .btn,.controls #ui-lang{height:36px}
     #tutorial-help-btn{justify-content:center}
-    [data-testid="guide-close-btn"]{justify-content:center}
+    /* 圆形图标关闭按钮：.btn 是 inline-flex 但默认 justify-content:flex-start，
+       单字形 ✕ 会偏左错位 → 必须显式居中。之前只给 guide 的 ✕ 单独修过，
+       report/suggest 两个反馈弹窗的 ✕ 漏了，这里统一成一个类。 */
+    .qb-x{width:36px; height:36px; padding:0; border-radius:50%; justify-content:center; flex:0 0 auto}
 
     .toolbar{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:0 0 16px}
     #stats{margin-left:6px; font-weight:700; color:var(--ink-soft); font-size:13.5px}
@@ -278,7 +285,7 @@
     <div class="tut-card guide-card">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
         <h2 data-i18n="guide_summary" style="margin:0;font-size:1.15rem">Button Guide</h2>
-        <button class="btn" onclick="closeGuide()" data-testid="guide-close-btn" aria-label="Close" style="width:36px;height:36px;border-radius:50%;padding:0">✕</button>
+        <button class="btn qb-x" onclick="closeGuide()" data-testid="guide-close-btn" aria-label="Close">✕</button>
       </div>
       <ul class="meta" id="guide-list"></ul>
     </div>
@@ -289,7 +296,7 @@
     <div class="tut-card qb-fb-card">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
         <h2 data-i18n="fb_report_title" style="margin:0;font-size:1.1rem">Report a problem with this question</h2>
-        <button class="btn" onclick="closeReportModal()" aria-label="Close" style="width:36px;height:36px;border-radius:50%;padding:0">✕</button>
+        <button class="btn qb-x" onclick="closeReportModal()" aria-label="Close">✕</button>
       </div>
       <div class="qb-fb-ctx" id="qb-report-ctx"></div>
       <div data-i18n="fb_type_label" style="font-size:13px;color:var(--ink-soft)">What's wrong?</div>
@@ -316,7 +323,7 @@
     <div class="tut-card qb-fb-card">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
         <h2 data-i18n="fb_suggest_title" style="margin:0;font-size:1.1rem">Feedback / suggestions</h2>
-        <button class="btn" onclick="closeSuggestModal()" aria-label="Close" style="width:36px;height:36px;border-radius:50%;padding:0">✕</button>
+        <button class="btn qb-x" onclick="closeSuggestModal()" aria-label="Close">✕</button>
       </div>
       <p class="meta" data-i18n="fb_suggest_desc" style="margin:6px 0 4px">Want this site to work better?</p>
       <textarea id="qb-suggest-msg" maxlength="2000" data-i18n-placeholder="fb_suggest_ph"></textarea>
@@ -437,7 +444,7 @@
         ab_none: "Select at least one bank (protected ones must be unlocked).",
         ab_load_fail: "Failed to load: {id}",
         ab_start: "Start practicing",
-        guide_html: '<li><strong>Theme (🌙 / ☀️)</strong>: switch between light and dark — your choice is saved and follows your system setting by default. The 🌐 menu beside it changes the interface language.</li><li><strong>Filter Question Banks (Select All / Select None / Confirm)</strong>: tick the question sets you want to practice — combine as many as you like — then press Confirm.</li><li><strong>Randomize + Reset</strong>: shuffle the questions in the current scope and clear this round’s selections.</li><li><strong>Auto Submit</strong>: when ON, clicking a choice grades it instantly (no Submit needed).</li><li><strong>Random Choose 150</strong>: draw 150 questions from the current scope, weighted toward the ones you’ve practiced least (hidden when the scope has 150 questions or fewer).</li><li><strong>Back to Current 150</strong>: return to this round’s draw (hidden until you’ve drawn one).</li><li><strong>Wrong Only (N)</strong>: show only wrong answers in the current scope; answering correctly does NOT remove a question — use <strong>Remove from wrong</strong> on its card.</li><li><strong>Star Only (N)</strong>: show only starred questions; tap <strong>☆</strong> on any card to star/unstar.</li><li><strong>Back to All</strong>: leave the wrong/star/draw view and return to the full filtered list.</li><li><strong>Clear choices for this list</strong>: clear all selected answers in the current list (wrong/star records are kept).</li><li><strong>Submit Answer / Redo</strong>: grade this question; Redo lets you answer it again.</li><li><strong>Show Correct Answers</strong>: after submitting a fill-in question, optionally reveal the accepted answers. Grading ignores case, extra spaces, and spacing differences (<code>check list</code> = <code>checklist</code>).</li>',
+        guide_html: '<li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Feedback &amp; ⚐ Report — the most useful buttons here!</strong> Found a wrong answer, a typo, or anything confusing? Tap <strong>💬 Feedback</strong> at the top, or <strong>⚐ Report</strong> on any question card. Your message reaches the author in seconds and <strong>actually gets fixed</strong> — every report makes this bank better for the next person. No sign-up, takes 5 seconds. Please use it!</li><li><strong>Theme (🌙 / ☀️)</strong>: switch between light and dark — your choice is saved and follows your system setting by default. The 🌐 menu beside it changes the interface language.</li><li><strong>Filter Question Banks (Select All / Select None / Confirm)</strong>: tick the question sets you want to practice — combine as many as you like — then press Confirm.</li><li><strong>Randomize + Reset</strong>: shuffle the questions in the current scope and clear this round’s selections.</li><li><strong>Auto Submit</strong>: when ON, clicking a choice grades it instantly (no Submit needed).</li><li><strong>Random Choose 150</strong>: draw 150 questions from the current scope, weighted toward the ones you’ve practiced least (hidden when the scope has 150 questions or fewer).</li><li><strong>Back to Current 150</strong>: return to this round’s draw (hidden until you’ve drawn one).</li><li><strong>Wrong Only (N)</strong>: show only wrong answers in the current scope; answering correctly does NOT remove a question — use <strong>Remove from wrong</strong> on its card.</li><li><strong>Star Only (N)</strong>: show only starred questions; tap <strong>☆</strong> on any card to star/unstar.</li><li><strong>Back to All</strong>: leave the wrong/star/draw view and return to the full filtered list.</li><li><strong>Clear choices for this list</strong>: clear all selected answers in the current list (wrong/star records are kept).</li><li><strong>Submit Answer / Redo</strong>: grade this question; Redo lets you answer it again.</li><li><strong>Show Correct Answers</strong>: after submitting a fill-in question, optionally reveal the accepted answers. Grading ignores case, extra spaces, and spacing differences (<code>check list</code> = <code>checklist</code>).</li>',
       },
       zh: {
         title_h1: "AMT 题库练习",
@@ -500,7 +507,7 @@
         ab_none: "至少选择一个题库（加密库需先解锁）。",
         ab_load_fail: "加载失败：{id}",
         ab_start: "开始做题",
-        guide_html: '<li><strong>主题（🌙 / ☀️）</strong>：切换浅色/深色，选择会被记住，默认跟随系统设置。旁边的 🌐 菜单切换界面语言。</li><li><strong>筛选题库（全选 / 全不选 / 确认）</strong>：勾选要练习的题套（可任意组合多个），点确认生效。</li><li><strong>打乱并重置</strong>：把当前范围内的题目重新打乱，并清空本轮所有选择。</li><li><strong>自动提交</strong>：开启后点选项即自动判分，不用再按提交。</li><li><strong>随机抽 150 题</strong>：从当前范围按「做得少优先」的权重随机抽 150 题（范围不足 150 题时不显示）。</li><li><strong>回到本轮 150 题</strong>：回到本轮已抽中的那 150 题（没有抽过时不显示）。</li><li><strong>只看错题（N）</strong>：只显示当前范围内的错题；答对不会自动移出，需手动点题卡上的<strong>移出错题</strong>。</li><li><strong>只看收藏（N）</strong>：只显示收藏的题；点题卡右上角 <strong>☆</strong> 收藏/取消。</li><li><strong>返回全部</strong>：从错题/收藏/抽题视图回到当前筛选范围的完整列表。</li><li><strong>清空本列表的已选答案</strong>：清空当前列表里所有题的已选答案（不动错题/收藏记录）。</li><li><strong>提交答案 / 重做</strong>：提交本题判分；重做可再答一次。</li><li><strong>显示参考答案</strong>：填空题提交后可选择性显示参考答案。判分忽略大小写、多余空格，也忽略空格有无（<code>check list</code> = <code>checklist</code>）。</li>',
+        guide_html: '<li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 反馈 &amp; ⚐ 报错 —— 这里最有用的按钮！</strong> 发现答案错了、有错别字、或哪里看不懂？点顶部的 <strong>💬 反馈</strong>，或任意题卡上的 <strong>⚐ 报错</strong>。你的留言几秒内直达作者、<strong>真的会被修</strong> —— 每一条都让题库对下一个人更好用。免注册、5 秒搞定，欢迎多用！</li><li><strong>主题（🌙 / ☀️）</strong>：切换浅色/深色，选择会被记住，默认跟随系统设置。旁边的 🌐 菜单切换界面语言。</li><li><strong>筛选题库（全选 / 全不选 / 确认）</strong>：勾选要练习的题套（可任意组合多个），点确认生效。</li><li><strong>打乱并重置</strong>：把当前范围内的题目重新打乱，并清空本轮所有选择。</li><li><strong>自动提交</strong>：开启后点选项即自动判分，不用再按提交。</li><li><strong>随机抽 150 题</strong>：从当前范围按「做得少优先」的权重随机抽 150 题（范围不足 150 题时不显示）。</li><li><strong>回到本轮 150 题</strong>：回到本轮已抽中的那 150 题（没有抽过时不显示）。</li><li><strong>只看错题（N）</strong>：只显示当前范围内的错题；答对不会自动移出，需手动点题卡上的<strong>移出错题</strong>。</li><li><strong>只看收藏（N）</strong>：只显示收藏的题；点题卡右上角 <strong>☆</strong> 收藏/取消。</li><li><strong>返回全部</strong>：从错题/收藏/抽题视图回到当前筛选范围的完整列表。</li><li><strong>清空本列表的已选答案</strong>：清空当前列表里所有题的已选答案（不动错题/收藏记录）。</li><li><strong>提交答案 / 重做</strong>：提交本题判分；重做可再答一次。</li><li><strong>显示参考答案</strong>：填空题提交后可选择性显示参考答案。判分忽略大小写、多余空格，也忽略空格有无（<code>check list</code> = <code>checklist</code>）。</li>',
       },
       es: {
         title_h1: "Práctica del banco de preguntas AMT",
@@ -563,7 +570,7 @@
         ab_none: "Selecciona al menos un banco.",
         ab_load_fail: "Fallo al cargar: {id}",
         ab_start: "Empezar",
-        guide_html: '<li><strong>Tema (🌙 / ☀️)</strong>: cambia entre claro y oscuro — tu elección se guarda y sigue el sistema por defecto. El menú 🌐 al lado cambia el idioma.</li><li><strong>Filtrar bancos (Seleccionar todo / Ninguno / Confirmar)</strong>: marca los conjuntos que quieras practicar — combina varios — y pulsa Confirmar.</li><li><strong>Mezclar y reiniciar</strong>: baraja las preguntas del alcance actual y borra las selecciones de esta ronda.</li><li><strong>Envío automático</strong>: al activarlo, hacer clic en una opción califica al instante.</li><li><strong>150 al azar</strong>: sortea 150 preguntas del alcance actual, priorizando las menos practicadas (oculto si hay 150 o menos).</li><li><strong>Volver a las 150</strong>: regresa al sorteo de esta ronda (oculto hasta que sortees uno).</li><li><strong>Solo errores (N)</strong>: muestra solo tus errores; acertar NO los quita — usa <strong>Quitar de errores</strong> en la tarjeta.</li><li><strong>Solo favoritas (N)</strong>: muestra solo las marcadas; toca <strong>☆</strong> en cualquier tarjeta.</li><li><strong>Volver a todo</strong>: sal de la vista de errores/favoritas/sorteo y vuelve a la lista completa.</li><li><strong>Borrar selecciones de esta lista</strong>: borra todas las respuestas seleccionadas de la lista actual (se conservan errores/favoritas).</li><li><strong>Enviar respuesta / Rehacer</strong>: califica la pregunta; Rehacer permite contestarla de nuevo.</li><li><strong>Mostrar respuestas</strong>: tras enviar una pregunta de rellenar, muestra las respuestas aceptadas. La calificación ignora mayúsculas y espacios (<code>check list</code> = <code>checklist</code>).</li>',
+        guide_html: '<li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Comentarios y ⚐ Reportar — ¡los botones más útiles!</strong> ¿Una respuesta incorrecta, una errata o algo confuso? Toca <strong>💬 Comentarios</strong> arriba, o <strong>⚐ Reportar</strong> en cualquier tarjeta. Tu mensaje llega al autor en segundos y <strong>de verdad se corrige</strong> — cada reporte mejora este banco para el siguiente. Sin registro, 5 segundos. ¡Úsalo!</li><li><strong>Tema (🌙 / ☀️)</strong>: cambia entre claro y oscuro — tu elección se guarda y sigue el sistema por defecto. El menú 🌐 al lado cambia el idioma.</li><li><strong>Filtrar bancos (Seleccionar todo / Ninguno / Confirmar)</strong>: marca los conjuntos que quieras practicar — combina varios — y pulsa Confirmar.</li><li><strong>Mezclar y reiniciar</strong>: baraja las preguntas del alcance actual y borra las selecciones de esta ronda.</li><li><strong>Envío automático</strong>: al activarlo, hacer clic en una opción califica al instante.</li><li><strong>150 al azar</strong>: sortea 150 preguntas del alcance actual, priorizando las menos practicadas (oculto si hay 150 o menos).</li><li><strong>Volver a las 150</strong>: regresa al sorteo de esta ronda (oculto hasta que sortees uno).</li><li><strong>Solo errores (N)</strong>: muestra solo tus errores; acertar NO los quita — usa <strong>Quitar de errores</strong> en la tarjeta.</li><li><strong>Solo favoritas (N)</strong>: muestra solo las marcadas; toca <strong>☆</strong> en cualquier tarjeta.</li><li><strong>Volver a todo</strong>: sal de la vista de errores/favoritas/sorteo y vuelve a la lista completa.</li><li><strong>Borrar selecciones de esta lista</strong>: borra todas las respuestas seleccionadas de la lista actual (se conservan errores/favoritas).</li><li><strong>Enviar respuesta / Rehacer</strong>: califica la pregunta; Rehacer permite contestarla de nuevo.</li><li><strong>Mostrar respuestas</strong>: tras enviar una pregunta de rellenar, muestra las respuestas aceptadas. La calificación ignora mayúsculas y espacios (<code>check list</code> = <code>checklist</code>).</li>',
       },
     };
     let uiLang = (function(){ try{ const v = localStorage.getItem(UI_LANG_KEY); return I18N[v] ? v : "en"; }catch(_e){ return "en"; } })();
@@ -1989,8 +1996,12 @@
     }
 
     /* ------------------ 新手教程（首次打开，英文，可 Skip） ------------------ */
-    const TUTORIAL_KEY = "qb_tutorial_done_v1"; // 故意不带命名空间：同域名任意题库页看过一次即可
+    // v2：把「反馈/报错」做成教程第一条重点。bump 版本号让看过 v1 的老用户也再弹一次。
+    const TUTORIAL_KEY = "qb_tutorial_done_v2"; // 故意不带命名空间：同域名任意题库页看过一次即可
     const TUTORIAL_STEPS = [
+      { title: "⭐ Found an error? Tell me — this really works!",
+        body: "The single most useful button here. Tap 💬 Feedback at the top, or ⚐ Report on any question card, to flag a wrong answer, a typo, or anything unclear. Your message reaches me in seconds and I actually fix it — every report makes this bank better for the next person. No sign-up, takes 5 seconds. Please use it!",
+        sel: "#suggest-btn" },
       { title: "Welcome 👋",
         body: "Every question lives on this single page — scroll and answer at your own pace. Wrong answers, starred questions and attempt counts are saved on this device automatically. Use the 🌙 / ☀️ button at the top to switch between light and dark.",
         sel: null },
