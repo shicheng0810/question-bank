@@ -12,7 +12,7 @@
       --bg:#eef1f6; --card:#ffffff; --card-2:#f6f8fc;
       --ink:#1e293b; --ink-soft:#3b4860; --muted:#64748b;
       --border:#e4e8f0; --border-strong:#d3d9e4;
-      --brand:#2563eb; --brand-strong:#1d4ed8; --brand-weak:#eef4ff; --brand-ring:rgba(37,99,235,.18); --on-brand:#ffffff;
+      --brand:#2563eb; --brand-strong:#1d4ed8; --brand-weak:#eef4ff; --brand-ring:rgba(37,99,235,.18); --on-brand:#ffffff; --particle-rgb:37,99,235;
       --success:#059669; --success-ink:#047857; --success-bg:#e7f8f0; --success-border:#b6ead2;
       --danger:#dc2626; --danger-ink:#b91c1c; --danger-bg:#fdecec; --danger-border:#f6c9c9;
       --star:#f5a623;
@@ -26,7 +26,7 @@
       --bg:#0b1020; --card:#141b2d; --card-2:#0f1626;
       --ink:#e8edf6; --ink-soft:#c4cee0; --muted:#93a0b8;
       --border:#26304a; --border-strong:#33415f;
-      --brand:#6f9bff; --brand-strong:#5b8cff; --brand-weak:rgba(111,155,255,.14); --brand-ring:rgba(111,155,255,.32); --on-brand:#0b1020;
+      --brand:#6f9bff; --brand-strong:#5b8cff; --brand-weak:rgba(111,155,255,.14); --brand-ring:rgba(111,155,255,.32); --on-brand:#0b1020; --particle-rgb:111,155,255;
       --success:#34d399; --success-ink:#6ee7b7; --success-bg:rgba(16,185,129,.14); --success-border:rgba(52,211,153,.34);
       --danger:#f87171; --danger-ink:#fca5a5; --danger-bg:rgba(239,68,68,.15); --danger-border:rgba(248,113,113,.36);
       --star:#fbbf24;
@@ -49,6 +49,9 @@
     /* .btn 用了 display:inline-flex（作者样式），会盖过浏览器默认的 [hidden]{display:none}，
        导致 Random150/Back150/返回目录 等靠 hidden 属性切换的按钮隐藏失效。全局兜底： */
     [hidden]{display:none !important}
+    /* 星座粒子背景层：固定全屏、置底、不挡点击；正文容器抬到 z-index:1 之上 */
+    #constellation{position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; display:block}
+    #quizApp, #unlock-panel{position:relative; z-index:1}
 
     .app-header{display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap;
       background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:12px 16px; box-shadow:var(--shadow-sm); margin-bottom:16px}
@@ -159,6 +162,7 @@
   </style>
 </head>
 <body>
+  <canvas id="constellation" aria-hidden="true"></canvas>
   <section id="unlock-panel" class="unlock-panel" hidden>
     <a class="btn" id="back-catalog-unlock" href="./" hidden data-i18n="back_catalog" style="margin-bottom:10px;display:inline-block">← Catalog</a>
     <p class="meta" data-i18n="unlock_eyebrow">Protected Question Bank</p>
@@ -506,6 +510,7 @@
       document.documentElement.setAttribute("data-theme", t);
       try{ localStorage.setItem(THEME_KEY, t); }catch(_e){}
       applyThemeIcon();
+      if(window.__constellationThemeUpdate) window.__constellationThemeUpdate(); // 粒子背景跟随主题变色
     }
     function toggleTheme(){ setTheme(currentTheme() === "dark" ? "light" : "dark"); }
 
@@ -2112,6 +2117,125 @@
     applyUiLang(); // 先按保存的语言偏好渲染静态文案（默认英文）
     applyThemeIcon();
     bootstrapLegacyBank();
+  </script>
+  <script>
+  /* ===== 星座 / 导航网络 粒子背景（候选 A，移植自 .particle-demos/A-constellation.html）
+     独立 IIFE；不污染全局；每帧零分配；省电；尊重 reduced-motion；跟随 data-theme 主题 ===== */
+  (function constellation(){
+    "use strict";
+    var canvas = document.getElementById('constellation');
+    if(!canvas) return;
+    var ctx = canvas.getContext('2d', { alpha: true });
+    if(!ctx) return;
+
+    var AREA_PER_NODE = 16000, MIN_NODES = 14;
+    var LINK_DIST = 132, LINK_DIST_SQ = LINK_DIST*LINK_DIST;
+    var MOUSE_RADIUS = 150, MOUSE_RADIUS_SQ = MOUSE_RADIUS*MOUSE_RADIUS;
+    var MOUSE_PULL = 0.022, MAX_DPR = 2, SPEED = 0.16;
+
+    var dpr=1, W=0, H=0, nodeCount=0, nodes=[], rafId=0, running=false, reduceMotion=false;
+    var rgb = "37,99,235";
+    var mouseX=0, mouseY=0, mouseActive=false;
+    var reduceMQ = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+
+    function clamp(v,lo,hi){ return v<lo?lo:(v>hi?hi:v); }
+    function readParticleColor(){
+      var c = getComputedStyle(document.documentElement).getPropertyValue('--particle-rgb').trim();
+      if(c) rgb = c;
+    }
+    function nodeCap(){ if(W<560) return 46; if(W<1000) return 80; return 120; }
+    function computeNodeCount(){ return clamp(Math.floor(W*H/AREA_PER_NODE), MIN_NODES, nodeCap()); }
+
+    function resize(){
+      dpr = clamp(window.devicePixelRatio||1, 1, MAX_DPR);
+      W = window.innerWidth; H = window.innerHeight;
+      canvas.width = Math.round(W*dpr); canvas.height = Math.round(H*dpr);
+      canvas.style.width = W+'px'; canvas.style.height = H+'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      rebuildNodes();
+    }
+    function rebuildNodes(){
+      var target = computeNodeCount();
+      while(nodes.length < target) nodes.push({x:0,y:0,vx:0,vy:0,r:0,tw:0,tws:0});
+      nodeCount = target;
+      for(var i=0;i<nodeCount;i++){
+        var n=nodes[i];
+        n.x=Math.random()*W; n.y=Math.random()*H;
+        var ang=Math.random()*Math.PI*2;
+        n.vx=Math.cos(ang)*SPEED*(0.5+Math.random());
+        n.vy=Math.sin(ang)*SPEED*(0.5+Math.random());
+        n.r=1.1+Math.random()*1.6; n.tw=Math.random()*Math.PI*2; n.tws=0.008+Math.random()*0.012;
+      }
+    }
+    function drawNode(n, alphaScale){
+      var a=(0.26+0.16*Math.sin(n.tw))*alphaScale;
+      ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle='rgba('+rgb+','+a.toFixed(3)+')'; ctx.fill();
+    }
+    function drawLinks(globalScale){
+      ctx.lineWidth=1;
+      for(var i=0;i<nodeCount;i++){
+        var a=nodes[i];
+        for(var j=i+1;j<nodeCount;j++){
+          var b=nodes[j], dx=a.x-b.x, dy=a.y-b.y, d2=dx*dx+dy*dy;
+          if(d2<LINK_DIST_SQ){
+            var t=1-d2/LINK_DIST_SQ, alpha=t*t*0.12*globalScale;
+            if(mouseActive){ var mdx=a.x-mouseX, mdy=a.y-mouseY; if(mdx*mdx+mdy*mdy<MOUSE_RADIUS_SQ) alpha+=0.05*t; }
+            if(alpha<=0.004) continue;
+            ctx.strokeStyle='rgba('+rgb+','+alpha.toFixed(3)+')';
+            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+          }
+        }
+      }
+    }
+    function drawStatic(){
+      ctx.clearRect(0,0,W,H); drawLinks(0.55);
+      for(var i=0;i<nodeCount;i++) drawNode(nodes[i],0.5);
+    }
+    function step(){
+      ctx.clearRect(0,0,W,H);
+      var i,n;
+      for(i=0;i<nodeCount;i++){
+        n=nodes[i]; n.x+=n.vx; n.y+=n.vy; n.tw+=n.tws;
+        if(n.x<-20){n.x=-20;n.vx=-n.vx;} else if(n.x>W+20){n.x=W+20;n.vx=-n.vx;}
+        if(n.y<-20){n.y=-20;n.vy=-n.vy;} else if(n.y>H+20){n.y=H+20;n.vy=-n.vy;}
+        if(mouseActive){
+          var dx=mouseX-n.x, dy=mouseY-n.y, d2=dx*dx+dy*dy;
+          if(d2<MOUSE_RADIUS_SQ && d2>1){
+            var f=(1-d2/MOUSE_RADIUS_SQ)*MOUSE_PULL, inv=1/Math.sqrt(d2);
+            n.vx+=dx*inv*f; n.vy+=dy*inv*f;
+          }
+        }
+        n.vx*=0.992; n.vy*=0.992;
+        var sp2=n.vx*n.vx+n.vy*n.vy;
+        if(sp2<0.0025){ var k=0.05/(Math.sqrt(sp2)+0.0001); n.vx+=n.vx*k; n.vy+=n.vy*k; }
+      }
+      drawLinks(1);
+      for(i=0;i<nodeCount;i++) drawNode(nodes[i],1);
+      rafId=requestAnimationFrame(step);
+    }
+    function start(){ if(running) return; if(reduceMotion){ drawStatic(); return; } running=true; rafId=requestAnimationFrame(step); }
+    function stop(){ running=false; if(rafId){ cancelAnimationFrame(rafId); rafId=0; } }
+    function onVisibility(){ if(document.hidden){ stop(); } else if(!reduceMotion){ start(); } else { drawStatic(); } }
+    var resizeTimer=0;
+    function onResize(){ if(resizeTimer) clearTimeout(resizeTimer); resizeTimer=setTimeout(function(){ resizeTimer=0; resize(); if(reduceMotion||document.hidden) drawStatic(); },150); }
+    function onPointerMove(e){ mouseX=e.clientX; mouseY=e.clientY; mouseActive=true; }
+    function onPointerLeave(){ mouseActive=false; }
+    function applyThemeVisuals(){ readParticleColor(); if(reduceMotion||document.hidden) drawStatic(); }
+    function onReduceChange(){ reduceMotion=!!(reduceMQ&&reduceMQ.matches); stop(); if(reduceMotion){ drawStatic(); } else if(!document.hidden){ start(); } }
+    function init(){
+      reduceMotion=!!(reduceMQ&&reduceMQ.matches);
+      readParticleColor(); resize(); start();
+      window.addEventListener('resize', onResize, {passive:true});
+      document.addEventListener('visibilitychange', onVisibility);
+      window.addEventListener('pointermove', onPointerMove, {passive:true});
+      window.addEventListener('blur', onPointerLeave);
+      document.addEventListener('mouseleave', onPointerLeave);
+      if(reduceMQ){ if(reduceMQ.addEventListener) reduceMQ.addEventListener('change', onReduceChange); else if(reduceMQ.addListener) reduceMQ.addListener(onReduceChange); }
+      window.__constellationThemeUpdate = applyThemeVisuals;
+    }
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
+  })();
   </script>
 </body>
 </html>
