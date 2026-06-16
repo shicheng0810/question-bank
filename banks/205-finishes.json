@@ -1071,7 +1071,7 @@
     "choices": [
       "A matte, non-reflective finish.",
       "A strong odor that deters pests.",
-      "It offers high resistance to abrasion, stains, chemicals, and UV rays."
+      "It offers high resistance to abrasion, stains, chemicals, and UV rays. [AUTOTEST]"
     ],
     "answer": 2,
     "source": [
