@@ -1577,7 +1577,11 @@
     function toggleStar(id){
       starred.has(id)?starred.delete(id):starred.add(id);
       saveSet(STAR_KEY,starred);
-      rerenderCurrentView();
+      if(viewMode==='star'){ rerenderCurrentView(); return; }
+      const card=document.getElementById("card-"+id);
+      const btn=card&&card.querySelector(".star-btn");
+      if(btn) btn.classList.toggle("starred", starred.has(id));
+      updateButtons();
     }
 
     function getBaseQuestions(){
