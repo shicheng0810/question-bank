@@ -260,10 +260,18 @@
     .qb-fb-types{display:flex; flex-wrap:wrap; gap:8px 14px; margin:6px 0 12px}
     .qb-fb-types label{display:flex; align-items:center; gap:6px; font-size:13.5px; cursor:pointer}
     .qb-fb-card label{font-size:13px; color:var(--ink-soft); display:block; margin:10px 0 4px}
-    .qb-fb-card textarea,.qb-fb-card input[type=email]{width:100%; font:inherit; font-size:14px; padding:9px 11px; border:1px solid var(--border-strong); border-radius:var(--radius-xs); background:var(--card-2); color:var(--ink)}
+    .qb-fb-card textarea,.qb-fb-card input[type=email],.qb-fb-card input[type=text]{width:100%; font:inherit; font-size:14px; padding:9px 11px; border:1px solid var(--border-strong); border-radius:var(--radius-xs); background:var(--card-2); color:var(--ink)}
     .qb-fb-card textarea{resize:vertical; min-height:64px}
     .qb-fb-status{font-size:13px; min-height:1.2em; margin-top:8px}
     .qb-fb-status.ok{color:var(--success-ink)} .qb-fb-status.err{color:var(--danger-ink)}
+    /* 逐题「提议修正」内联编辑器 */
+    .qb-edit-body{max-height:46vh; overflow:auto; margin:2px 0 4px; padding-right:2px}
+    .qb-edit-choice{display:flex; align-items:flex-start; gap:8px; margin:6px 0}
+    .qb-edit-choice input[type=radio],.qb-edit-choice input[type=checkbox]{margin-top:11px; flex:0 0 auto}
+    .qb-edit-choice .qb-edit-choice-text{flex:1; min-width:0}
+    .qb-edit-choice .qb-edit-rm{flex:0 0 auto; width:30px; height:30px; padding:0; margin-top:3px; border-radius:50%; justify-content:center; color:var(--muted)}
+    .qb-edit-addrow{margin:8px 0 2px}
+    .qb-edit-add{font-size:12.5px; padding:5px 10px}
     .qb-hp{position:absolute; left:-9999px; width:1px; height:1px; opacity:0} /* 蜜罐：人看不见，机器人会填 */
   </style>
   <!-- All Banks 合并页：开始前选择要练习的题库（公开勾选、加密解锁加入），按所选现场合并 -->
@@ -296,24 +304,19 @@
   <div class="tut-overlay" id="qb-report" hidden data-testid="qb-report" onclick="if(event.target===this)closeReportModal()">
     <div class="tut-card qb-fb-card">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
-        <h2 data-i18n="fb_report_title" style="margin:0;font-size:1.1rem">Report a problem with this question</h2>
+        <h2 data-i18n="fb_edit_title" style="margin:0;font-size:1.1rem">Suggest a correction</h2>
         <button class="btn qb-x" onclick="closeReportModal()" aria-label="Close">✕</button>
       </div>
       <div class="qb-fb-ctx" id="qb-report-ctx"></div>
-      <div data-i18n="fb_type_label" style="font-size:13px;color:var(--ink-soft)">What's wrong?</div>
-      <div class="qb-fb-types">
-        <label><input type="radio" name="qb-report-type" value="answer"><span data-i18n="fb_type_answer">Wrong answer</span></label>
-        <label><input type="radio" name="qb-report-type" value="typo"><span data-i18n="fb_type_typo">Typo</span></label>
-        <label><input type="radio" name="qb-report-type" value="choices"><span data-i18n="fb_type_choices">Choices</span></label>
-        <label><input type="radio" name="qb-report-type" value="other"><span data-i18n="fb_type_other">Other</span></label>
-      </div>
-      <label id="qb-report-msg-label" data-i18n="fb_msg_label">Details (optional)</label>
-      <textarea id="qb-report-msg" maxlength="2000" data-i18n-placeholder="fb_msg_ph"></textarea>
+      <p class="meta" data-i18n="fb_edit_intro" style="margin:0 0 10px">Fix anything wrong below, then send it to me.</p>
+      <div class="qb-edit-body" id="qb-edit-body"></div>
+      <label id="qb-report-msg-label" data-i18n="fb_note_label">Note (optional)</label>
+      <textarea id="qb-report-msg" maxlength="1000" data-i18n-placeholder="fb_note_ph"></textarea>
       <input type="text" class="qb-hp" id="qb-report-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
       <div class="tut-actions">
         <button class="btn" onclick="closeReportModal()" data-i18n="fb_cancel">Cancel</button>
         <span class="spacer"></span>
-        <button class="btn submit-btn" id="qb-report-send" onclick="onReportSubmit()" data-i18n="fb_report_submit">Send report</button>
+        <button class="btn submit-btn" id="qb-report-send" onclick="onReportSubmit()" data-i18n="fb_edit_submit">Send my fix</button>
       </div>
       <div class="qb-fb-status" id="qb-report-status"></div>
     </div>
@@ -404,6 +407,10 @@
         fb_type_label: "What's wrong?", fb_type_answer: "Wrong answer", fb_type_typo: "Typo / wording", fb_type_choices: "Problem with choices", fb_type_other: "Something else",
         fb_msg_label: "Details (optional)", fb_msg_required: "Details (required)", fb_msg_ph: "e.g. choice B should also be accepted",
         fb_report_submit: "Send report",
+        fb_edit_title: "Suggest a correction", fb_edit_intro: "Fix anything that's wrong below, then send it to me — I review every suggestion.",
+        fb_edit_stem_label: "Question", fb_edit_choices_label: "Choices — tick the correct one(s)", fb_edit_add_choice: "+ Add choice",
+        fb_note_label: "Note (optional)", fb_note_ph: "anything else I should know",
+        fb_edit_submit: "Send my fix", fb_edit_need_stem: "The question text can't be empty.", fb_edit_need_choices: "Need at least 2 non-empty choices.", fb_edit_need_correct: "Tick which choice is correct.", fb_edit_nochange: "Nothing changed yet — edit something first.",
         fb_suggest_btn: "💬 Feedback", fb_suggest_title: "Feedback / suggestions", fb_suggest_desc: "Want this site to work better? One sentence is enough.", fb_suggest_ph: "e.g. let me filter by chapter",
         fb_email_label: "Email (optional, so I can reply)", fb_suggest_submit: "Send feedback",
         fb_cancel: "Cancel", fb_need_type: "Please choose a problem type.", fb_need_msg: "Please add a short note.",
@@ -467,6 +474,10 @@
         fb_type_label: "问题类型", fb_type_answer: "答案不对", fb_type_typo: "有错别字", fb_type_choices: "选项有问题", fb_type_other: "其它",
         fb_msg_label: "说明（可选）", fb_msg_required: "说明（必填）", fb_msg_ph: "例如：B 选项应该也算对",
         fb_report_submit: "提交报错",
+        fb_edit_title: "提议修正", fb_edit_intro: "下面哪里不对就直接改，改完发给我——每条我都会看。",
+        fb_edit_stem_label: "题干", fb_edit_choices_label: "选项——勾选正确的那个（可多选）", fb_edit_add_choice: "+ 加一个选项",
+        fb_note_label: "备注（可选）", fb_note_ph: "还有什么想告诉我的",
+        fb_edit_submit: "发送我的修正", fb_edit_need_stem: "题干不能为空。", fb_edit_need_choices: "至少要 2 个非空选项。", fb_edit_need_correct: "请勾选哪个选项是正确的。", fb_edit_nochange: "还没改任何东西——先改点什么。",
         fb_suggest_btn: "💬 反馈", fb_suggest_title: "反馈 / 建议", fb_suggest_desc: "想让这个题库站更好用？告诉我一句话就行。", fb_suggest_ph: "例如：希望能按章节筛选",
         fb_email_label: "邮箱（可选，方便我回复你）", fb_suggest_submit: "发送反馈",
         fb_cancel: "取消", fb_need_type: "请选择问题类型。", fb_need_msg: "请填写一句话说明。",
@@ -530,6 +541,10 @@
         fb_type_label: "¿Qué está mal?", fb_type_answer: "Respuesta incorrecta", fb_type_typo: "Error de ortografía", fb_type_choices: "Problema con las opciones", fb_type_other: "Otra cosa",
         fb_msg_label: "Detalles (opcional)", fb_msg_required: "Detalles (obligatorio)", fb_msg_ph: "p. ej., la opción B también debería ser válida",
         fb_report_submit: "Enviar reporte",
+        fb_edit_title: "Sugerir una corrección", fb_edit_intro: "Corrige lo que esté mal abajo y envíamelo — reviso cada sugerencia.",
+        fb_edit_stem_label: "Pregunta", fb_edit_choices_label: "Opciones — marca la(s) correcta(s)", fb_edit_add_choice: "+ Añadir opción",
+        fb_note_label: "Nota (opcional)", fb_note_ph: "cualquier otra cosa que deba saber",
+        fb_edit_submit: "Enviar mi corrección", fb_edit_need_stem: "La pregunta no puede estar vacía.", fb_edit_need_choices: "Se necesitan al menos 2 opciones no vacías.", fb_edit_need_correct: "Marca cuál opción es correcta.", fb_edit_nochange: "Nada ha cambiado todavía — edita algo primero.",
         fb_suggest_btn: "💬 Comentarios", fb_suggest_title: "Comentarios / sugerencias", fb_suggest_desc: "¿Quieres que este sitio funcione mejor? Una frase basta.", fb_suggest_ph: "p. ej., poder filtrar por capítulo",
         fb_email_label: "Email (opcional, para responderte)", fb_suggest_submit: "Enviar comentarios",
         fb_cancel: "Cancelar", fb_need_type: "Elige un tipo de problema.", fb_need_msg: "Escribe una breve nota.",
@@ -1577,7 +1592,11 @@
     function toggleStar(id){
       starred.has(id)?starred.delete(id):starred.add(id);
       saveSet(STAR_KEY,starred);
+      // 「只看收藏」视图里取消收藏 → 这张卡要从列表里消失，才需要重渲染。
       if(viewMode==='star'){ rerenderCurrentView(); return; }
+      // 其它视图：只切这一张卡的星标 class + 刷新计数，【绝不重建整列表】。
+      // 之前每次点星都 rerenderCurrentView() 整列表重渲染 → 滚动乱跳、页面闪烁、
+      // 重建期间手指/光标落到了别的卡 → 误标其他题。只动这一张就都没了。
       const card=document.getElementById("card-"+id);
       const btn=card&&card.querySelector(".star-btn");
       if(btn) btn.classList.toggle("starred", starred.has(id));
@@ -1983,17 +2002,47 @@
     }
 
     /* ---- 逐题报错 ---- */
+    var EDIT_ORIG=null; // 原题快照（提交时算 diff）
+    function qbEditAddChoice(text, correct){
+      var box=document.getElementById("qb-edit-choices"); if(!box) return;
+      var multi=!!(EDIT_ORIG&&EDIT_ORIG.multi);
+      var row=document.createElement("div");
+      row.className="qb-edit-choice";
+      row.innerHTML='<input type="'+(multi?"checkbox":"radio")+'" name="qb-edit-correct"'+(correct?" checked":"")+'>'
+        +'<input type="text" class="qb-edit-choice-text" maxlength="600">'
+        +'<button type="button" class="btn qb-x qb-edit-rm" onclick="qbEditRemoveChoice(this)" aria-label="remove">✕</button>';
+      box.appendChild(row);
+      row.querySelector(".qb-edit-choice-text").value = (text==null?"":String(text));
+    }
+    function qbEditRemoveChoice(btn){ var r=btn.closest(".qb-edit-choice"); if(r) r.remove(); }
     function openReportModal(qId, idx){
       REPORT_CTX={ qId:String(qId), idx:idx||0 };
-      const q=getQ(qId);
-      const stem=(q && (q.question || (q.question_html||"").replace(/<[^>]+>/g," ")) || "").trim().slice(0,90);
-      const ctx=document.getElementById("qb-report-ctx");
-      if(ctx) ctx.textContent = "#"+(idx||"?") + (q?(" · "+renderSourceText(q)):"") + (stem?("\n「"+stem+"」"):"");
-      const t=document.querySelector('input[name="qb-report-type"]:checked'); if(t) t.checked=false;
-      const msg=document.getElementById("qb-report-msg"); if(msg) msg.value="";
-      const hp=document.getElementById("qb-report-hp"); if(hp) hp.value="";
+      var q=getQ(qId);
+      var stem0=String((q&&q.question)||"").trim().slice(0,90);
+      var ctx=document.getElementById("qb-report-ctx");
+      if(ctx) ctx.textContent = "#"+(idx||"?") + (q?(" · "+renderSourceText(q)):"") + (stem0?("\n「"+stem0+"」"):"");
+      var msg=document.getElementById("qb-report-msg"); if(msg) msg.value="";
+      var hp=document.getElementById("qb-report-hp"); if(hp) hp.value="";
       fbStatus("qb-report-status","","");
-      const lbl=document.getElementById("qb-report-msg-label"); if(lbl) lbl.textContent=T("fb_msg_label");
+      var multi=isMulti(q);
+      var choiceQ = !isFill(q) && !isEssay(q) && Array.isArray(q&&q.choices) && q.choices.length>0;
+      var correctSet=new Set((multi ? (Array.isArray(q&&q.answers)?q.answers:[]) : [q&&q.answer]).map(Number));
+      EDIT_ORIG={ stem:String((q&&q.question)||""), multi:multi, choiceQ:choiceQ, choices:[], correctIdx:[] };
+      var body=document.getElementById("qb-edit-body");
+      var html='<label>'+T("fb_edit_stem_label")+'</label><textarea id="qb-edit-stem" maxlength="2000"></textarea>';
+      if(choiceQ){
+        html+='<label style="margin-top:12px">'+T("fb_edit_choices_label")+'</label><div id="qb-edit-choices"></div>'
+          +'<div class="qb-edit-addrow"><button type="button" class="btn qb-edit-add" onclick="qbEditAddChoice(\'\',false)">'+T("fb_edit_add_choice")+'</button></div>';
+      }
+      body.innerHTML=html;
+      document.getElementById("qb-edit-stem").value=EDIT_ORIG.stem;
+      if(choiceQ){
+        (q.choices||[]).forEach(function(c,i){
+          EDIT_ORIG.choices.push(String(c));
+          if(correctSet.has(i)) EDIT_ORIG.correctIdx.push(i);
+          qbEditAddChoice(String(c), correctSet.has(i));
+        });
+      }
       document.getElementById("qb-report").hidden=false;
     }
     function closeReportModal(){ const o=document.getElementById("qb-report"); if(o) o.hidden=true; }
@@ -2009,24 +2058,44 @@
       }
     });
     async function onReportSubmit(){
-      const type=document.querySelector('input[name="qb-report-type"]:checked');
-      if(!type){ fbStatus("qb-report-status", T("fb_need_type"), "err"); return; }
-      const msg=(document.getElementById("qb-report-msg").value||"").trim();
-      if(type.value==="other" && !msg){ fbStatus("qb-report-status", T("fb_need_msg"), "err"); return; }
       if((document.getElementById("qb-report-hp")||{}).value){ closeReportModal(); return; } // 蜜罐命中：静默丢弃
-      const q=getQ(REPORT_CTX.qId), st=(uiState[REPORT_CTX.qId])||{};
-      const payload={
-        kind:"question_report", report_type:type.value, message:msg,
+      if(!EDIT_ORIG){ closeReportModal(); return; }
+      var note=(document.getElementById("qb-report-msg").value||"").trim();
+      var stem=(document.getElementById("qb-edit-stem").value||"").trim();
+      if(!stem){ fbStatus("qb-report-status", T("fb_edit_need_stem"), "err"); return; }
+      var corrected={ question:stem }, original={ question:EDIT_ORIG.stem }, diff=[];
+      if(EDIT_ORIG.stem.trim()!==stem) diff.push({ field:"question", from:EDIT_ORIG.stem, to:stem });
+      if(EDIT_ORIG.choiceQ){
+        var rows=Array.prototype.slice.call(document.querySelectorAll("#qb-edit-choices .qb-edit-choice"));
+        var choices=[], correctIdx=[];
+        rows.forEach(function(row){
+          var txt=(row.querySelector(".qb-edit-choice-text").value||"").trim();
+          if(!txt) return; // 空选项跳过
+          if(row.querySelector('input[name="qb-edit-correct"]').checked) correctIdx.push(choices.length);
+          choices.push(txt);
+        });
+        if(choices.length<2){ fbStatus("qb-report-status", T("fb_edit_need_choices"), "err"); return; }
+        if(!correctIdx.length){ fbStatus("qb-report-status", T("fb_edit_need_correct"), "err"); return; }
+        corrected.choices=choices;
+        if(EDIT_ORIG.multi) corrected.answers=correctIdx; else corrected.answer=correctIdx[0];
+        original.choices=EDIT_ORIG.choices.slice();
+        if(EDIT_ORIG.multi) original.answers=EDIT_ORIG.correctIdx.slice(); else original.answer=EDIT_ORIG.correctIdx[0];
+        if(JSON.stringify(EDIT_ORIG.choices)!==JSON.stringify(choices)) diff.push({ field:"choices", from:EDIT_ORIG.choices, to:choices });
+        if(JSON.stringify(EDIT_ORIG.correctIdx)!==JSON.stringify(correctIdx)) diff.push({ field:"answer", from:EDIT_ORIG.correctIdx, to:correctIdx });
+      }
+      if(!diff.length && !note){ fbStatus("qb-report-status", T("fb_edit_nochange"), "err"); return; }
+      var q=getQ(REPORT_CTX.qId), st=(uiState[REPORT_CTX.qId])||{};
+      var payload={
+        kind:"question_edit",
         question_id:REPORT_CTX.qId, question_index:REPORT_CTX.idx,
-        question_stem:String((q&&q.question)||"").slice(0,120),
-        question_type: isFill(q)?"fill":isEssay(q)?"essay":isMulti(q)?"multi":"single",
         question_source: renderSourceText(q),
-        submitted: !!st.submitted, was_wrong: wrongSet.has(REPORT_CTX.qId),
-        selected_answer: isMulti(q)?[...(st.selectedSet||[])] : isFill(q)?(st.fillInputs||[]) : (st.selectedIndex)
+        question_type: EDIT_ORIG.choiceQ ? (EDIT_ORIG.multi?"multi":"single") : (isFill(q)?"fill":"essay"),
+        original: original, corrected: corrected, diff: diff, note: note,
+        submitted: !!st.submitted, was_wrong: wrongSet.has(REPORT_CTX.qId)
       };
-      const btn=document.getElementById("qb-report-send"); if(btn) btn.disabled=true;
+      var btn=document.getElementById("qb-report-send"); if(btn) btn.disabled=true;
       fbStatus("qb-report-status", T("fb_sending"), "");
-      const r=await submitFeedback(payload);
+      var r=await submitFeedback(payload);
       if(btn) btn.disabled=false;
       afterFeedback("qb-report-status", r, closeReportModal);
     }
