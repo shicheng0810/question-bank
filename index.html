@@ -273,10 +273,20 @@
       var s = String(text == null ? "" : text).trim();
       if (s.indexOf(FENCE3) !== 0) return s;            // 不是以围栏开头 → 原样
       s = s.slice(3);                                    // 去掉开头围栏
-      var nl = s.indexOf("\n");                         // 形如「三反引号+json」的语言标注独占一行 → 去掉
-      if (nl >= 0){ var head = s.slice(0, nl); if (head.indexOf("[") < 0 && head.indexOf("{") < 0) s = s.slice(nl + 1); }
       var last = s.lastIndexOf(FENCE3);                  // 去掉结尾围栏
       if (last >= 0) s = s.slice(0, last);
+      s = s.trim();
+      // 紧跟围栏的语言标注（json/js…，无论换行还是同一行）：取开头连续字母数字，
+      // 若其后跳过空白是真正的 [ 或 { 就把标注去掉（避免单行「围栏+json+数组」残留 "json " 前缀）。
+      var W = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_+-";
+      var m = 0;
+      while (m < s.length && W.indexOf(s.charAt(m)) >= 0) m++;
+      if (m > 0 && m < s.length){
+        var k2 = m;
+        while (k2 < s.length){ var c = s.charCodeAt(k2); if (c===32||c===9||c===10||c===13) k2++; else break; }
+        var first = s.charAt(k2);
+        if (first === "[" || first === "{") s = s.slice(k2);
+      }
       return s.trim();
     }
     function coerceBankArray(parsed){
@@ -284,7 +294,8 @@
       if (parsed && typeof parsed === "object"){
         var keys = ["questions","bank","items","data","records","list","banks"];
         for (var i = 0; i < keys.length; i++){ if (Array.isArray(parsed[keys[i]])) return parsed[keys[i]]; }
-        for (var k in parsed){ if (Array.isArray(parsed[k])) return parsed[k]; } // 兜底：第一个数组属性
+        // 兜底：取「第一个元素是对象」的数组（避免取到 tags 之类的元数据字符串数组）
+        for (var k in parsed){ var v = parsed[k]; if (Array.isArray(v) && v.length && v[0] && typeof v[0] === "object") return v; }
       }
       return null;
     }

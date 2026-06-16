@@ -1112,7 +1112,7 @@
     function deriveCategoriesFromQuestions(){
       const map=new Map();
       for(const q of QUESTION_BANK){
-        const banks = Array.isArray(q.banks) ? q.banks : getBanks(q);
+        const banks = (Array.isArray(q.banks) && q.banks.length) ? q.banks : getBanks(q);
         for(const prefix of banks){
           if(!prefix || map.has(prefix)) continue;
           map.set(prefix, prettifyPrefix(prefix));
@@ -1599,7 +1599,13 @@
       // 重建期间手指/光标落到了别的卡 → 误标其他题。只动这一张就都没了。
       const card=document.getElementById("card-"+id);
       const btn=card&&card.querySelector(".star-btn");
-      if(btn) btn.classList.toggle("starred", starred.has(id));
+      if(btn){
+        var on=starred.has(id);
+        btn.classList.toggle("starred", on);
+        var lbl=on?T("unstar"):T("star");          // 同步无障碍标签/悬浮提示，否则读屏会念反状态
+        btn.setAttribute("aria-label", lbl);
+        btn.setAttribute("title", lbl);
+      }
       updateButtons();
     }
 
@@ -2050,13 +2056,6 @@
       const s = q && q.source;
       return Array.isArray(s) ? s.join(" | ") : String(s||"");
     }
-    // 「其它」类型时说明必填——切换 radio 时更新标签
-    document.addEventListener("change", function(e){
-      if(e.target && e.target.name==="qb-report-type"){
-        const lbl=document.getElementById("qb-report-msg-label");
-        if(lbl) lbl.textContent = (e.target.value==="other") ? T("fb_msg_required") : T("fb_msg_label");
-      }
-    });
     async function onReportSubmit(){
       if((document.getElementById("qb-report-hp")||{}).value){ closeReportModal(); return; } // 蜜罐命中：静默丢弃
       if(!EDIT_ORIG){ closeReportModal(); return; }
@@ -2087,11 +2086,12 @@
       var q=getQ(REPORT_CTX.qId), st=(uiState[REPORT_CTX.qId])||{};
       var payload={
         kind:"question_edit",
+        // 单库页 bank_file 不存在 → 用 STORAGE_NS（=真实库 id）；合并页 → 用该题标记的来源库 id。
+        bank_id: (q && q.bank_file) || STORAGE_NS,
         question_id:REPORT_CTX.qId, question_index:REPORT_CTX.idx,
         question_source: renderSourceText(q),
         question_type: EDIT_ORIG.choiceQ ? (EDIT_ORIG.multi?"multi":"single") : (isFill(q)?"fill":"essay"),
-        original: original, corrected: corrected, diff: diff, note: note,
-        submitted: !!st.submitted, was_wrong: wrongSet.has(REPORT_CTX.qId)
+        original: original, corrected: corrected, diff: diff, note: note
       };
       var btn=document.getElementById("qb-report-send"); if(btn) btn.disabled=true;
       fbStatus("qb-report-status", T("fb_sending"), "");
@@ -2328,7 +2328,11 @@
             const res = await fetch(e.json, { cache: "no-store" });
             if (!res.ok) throw new Error("HTTP " + res.status);
             const qs = await res.json();
-            return Array.isArray(qs) ? qs : [];
+            const arr = Array.isArray(qs) ? qs : [];
+            // 标记每题的来源库文件 id —— 合并视图里 STORAGE_NS 是 'all-banks'（无此文件），
+            // 「提议修正」要靠这个 bank_file 才能定位到真正的 banks/<id>.json 去改。dedup 的 {...q0} 会保留它。
+            arr.forEach(q => { if (q && typeof q === "object") q.bank_file = e.id; });
+            return arr;
           }catch(_err){
             abShowMsg(T("ab_load_fail", { id: e.id }));
             return null;
@@ -2337,7 +2341,7 @@
         if (fetched.some(x => x === null)) return; // 有库拉取失败：留在对话框让用户重试/取消勾选
         let qs = [];
         for (const arr of fetched) qs = qs.concat(arr);
-        for (const arr of AB_UNLOCKED.values()) qs = qs.concat(arr);
+        for (const [bid, arr] of AB_UNLOCKED.entries()){ arr.forEach(q => { if (q && typeof q === "object") q.bank_file = bid; }); qs = qs.concat(arr); }
         document.getElementById("qb-allbanks").hidden = true;
         showQuizApp();
         startQuiz(qs);
