@@ -384,7 +384,7 @@
     /* ------------------ UI 功能开关（构建时注入；未注入=全开，站点行为不变） ------------------ */
     // 裸 marker，同 payload 模式。单文件离线导出会注入 {feedback:false, tutorial:false, languages:["en"]}：
     // 去掉反馈/报错入口 + 新手教程、锁定英文；Button Guide 始终保留。站点(player/local.html)注入全开。
-    const RAW_UI_FEATURES = {"feedback":true,"tutorial":true,"languages":["en","zh","es"]};
+    const RAW_UI_FEATURES = {"feedback":false,"tutorial":true,"languages":["en","zh","es"]};
     let UI_FEATURES = { feedback: true, tutorial: true, languages: ["en", "zh", "es"] };
     try {
       if (RAW_UI_FEATURES && typeof RAW_UI_FEATURES === "object") {
