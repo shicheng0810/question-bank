@@ -189,12 +189,13 @@
       <h1 data-i18n="title_h1" style="margin:0">AMT Question Bank Practice</h1>
     </div>
     <label class="controls">
-      🌐
-      <select id="ui-lang" onchange="setUiLang(this.value)" data-testid="ui-lang-select">
-        <option value="en">English</option>
-        <option value="zh">中文</option>
-        <option value="es">Español</option>
-      </select>
+      <span id="lang-switch" style="display:inline-flex;align-items:center;gap:6px">🌐
+        <select id="ui-lang" onchange="setUiLang(this.value)" data-testid="ui-lang-select">
+          <option value="en">English</option>
+          <option value="zh">中文</option>
+          <option value="es">Español</option>
+        </select>
+      </span>
       <button class="btn" id="theme-toggle" type="button" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">🌙</button>
       <button class="btn" id="suggest-btn" onclick="openSuggestModal()" data-testid="suggest-btn" data-i18n="fb_suggest_btn">💬 Feedback</button>
       <button class="btn" id="guide-btn" onclick="openGuide()" data-testid="guide-open-btn" data-i18n="guide_summary">Button Guide</button>
@@ -379,6 +380,18 @@
         FEEDBACK_CONFIG = Object.assign(FEEDBACK_CONFIG, RAW_FEEDBACK_CONFIG);
       }
     } catch (_e) {}
+
+    /* ------------------ UI 功能开关（构建时注入；未注入=全开，站点行为不变） ------------------ */
+    // 裸 marker，同 payload 模式。单文件离线导出会注入 {feedback:false, tutorial:false, languages:["en"]}：
+    // 去掉反馈/报错入口 + 新手教程、锁定英文；Button Guide 始终保留。站点(player/local.html)注入全开。
+    const RAW_UI_FEATURES = {"feedback":true,"tutorial":true,"languages":["en","zh","es"]};
+    let UI_FEATURES = { feedback: true, tutorial: true, languages: ["en", "zh", "es"] };
+    try {
+      if (RAW_UI_FEATURES && typeof RAW_UI_FEATURES === "object") {
+        UI_FEATURES = Object.assign(UI_FEATURES, RAW_UI_FEATURES);
+      }
+    } catch (_e) {}
+    if (!Array.isArray(UI_FEATURES.languages) || !UI_FEATURES.languages.length) UI_FEATURES.languages = ["en"];
 
     /* ------------------ UI 多语言（只翻界面文案，不动题目内容） ------------------ */
     const UI_LANG_KEY = "qb_ui_lang"; // 全局偏好（不分题库）
@@ -584,7 +597,18 @@
       document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = T(el.getAttribute("data-i18n")); });
       document.querySelectorAll("[data-i18n-placeholder]").forEach(el => { el.setAttribute("placeholder", T(el.getAttribute("data-i18n-placeholder"))); });
       const guideList = document.getElementById("guide-list");
-      if (guideList) guideList.innerHTML = T("guide_html");
+      if (guideList){
+        let gh = T("guide_html");
+        // 反馈关闭（离线导出）时，去掉指南里那条「💬 反馈 / ⚐ 报错」高亮——否则会指向并不存在的按钮
+        if (!UI_FEATURES.feedback) gh = gh.replace(/^<li style="list-style:none[\s\S]*?<\/li>/, "");
+        // 只有一种语言（离线导出锁英文）时 🌐 切换器已隐藏——去掉主题项里关于「语言菜单」的那句
+        if ((UI_FEATURES.languages || []).length <= 1) {
+          gh = gh.replace(" The 🌐 menu beside it changes the interface language.", "")
+                 .replace("旁边的 🌐 菜单切换界面语言。", "")
+                 .replace(" El menú 🌐 al lado cambia el idioma.", "");
+        }
+        guideList.innerHTML = gh;
+      }
       const sel = document.getElementById("ui-lang");
       if (sel) sel.value = uiLang;
     }
@@ -594,6 +618,26 @@
       applyUiLang();
       if (Array.isArray(currentQuestions) && currentQuestions.length){ rerenderCurrentView(); }
       updateAutoBtn();
+    }
+    // 按构建注入的开关裁剪 UI：单文件离线导出会关掉反馈/教程、锁英文（Button Guide 永远保留）。
+    // 在 applyUiLang() 之前调用，确保语言被夹紧到白名单后再渲染文案。
+    function applyUiFeatures(){
+      // 1) 语言：删掉下拉里不在白名单的 <option>；夹紧当前语言；只剩一种则隐藏整个 🌐 切换器
+      const langs = (UI_FEATURES.languages || ["en"]).filter(l => I18N[l]);
+      const allow = langs.length ? langs : ["en"];
+      const sel = document.getElementById("ui-lang");
+      if (sel) Array.from(sel.options).forEach(opt => { if (!allow.includes(opt.value)) opt.remove(); });
+      if (!allow.includes(uiLang)){ uiLang = allow[0]; try{ localStorage.setItem(UI_LANG_KEY, uiLang); }catch(_e){} }
+      const langWrap = document.getElementById("lang-switch");
+      if (langWrap && allow.length <= 1) langWrap.style.display = "none";
+      // 2) 反馈/报错：关则隐藏顶栏「💬 Feedback」（题卡内 ⚐ 报错按钮在渲染时已按开关跳过）
+      if (!UI_FEATURES.feedback){
+        const sb = document.getElementById("suggest-btn"); if (sb) sb.hidden = true;
+      }
+      // 3) 新手教程：关则隐藏「?」按钮（首屏自动弹出在 maybeStartTutorial 里另行拦截）
+      if (!UI_FEATURES.tutorial){
+        const tb = document.getElementById("tutorial-help-btn"); if (tb) tb.hidden = true;
+      }
     }
 
     /* ---- 主题（浅/深）切换：与目录页共用 qb_theme 偏好 ---- */
@@ -1074,6 +1118,9 @@
       const cats=deriveCategoriesFromQuestions();
       const container=document.getElementById("filter-container");
       container.innerHTML=cats.map(c=>`<label class="filter-label"><input type="checkbox" class="bank-filter" value="${c.id}" checked>${c.label}</label>`).join("");
+      // 没有任何分类（AI 导入/手写库，题目无 bank 前缀）时隐藏整个筛选面板——否则是个空壳。
+      const panel=document.querySelector('details.filter-panel');
+      if(panel) panel.hidden = cats.length===0;
     }
     function toggleFilters(check){document.querySelectorAll(".bank-filter").forEach(cb=>cb.checked=check)}
     function getSelectedPrefixes(){return Array.from(document.querySelectorAll(".bank-filter:checked")).map(cb=>cb.value)}
@@ -1181,7 +1228,7 @@
 
           <div class="meta" style="display:flex;justify-content:space-between;align-items:center;gap:10px">
             <span>${renderSource(q)}</span>
-            <button class="qb-report-btn" type="button" onclick="openReportModal('${q.id}',${i+1})" title="${T('fb_report_title')}">${T('fb_report_btn')}</button>
+            ${UI_FEATURES.feedback ? `<button class="qb-report-btn" type="button" onclick="openReportModal('${q.id}',${i+1})" title="${T('fb_report_title')}">${T('fb_report_btn')}</button>` : ""}
           </div>
           ${viewMode==='wrong'?`<div class="mt-2"><button class="btn" onclick="removeFromWrong('${q.id}')">${T('remove_wrong')}</button></div>`:""}
         </div>`;
@@ -1814,7 +1861,13 @@
       activeRandom150Questions=null;
       activeRandom150SourcePool=null;
       const prefixes=getSelectedPrefixes();
-      const subset=QUESTION_BANK.filter(q=>prefixes.some(p=> (Array.isArray(q.banks)?q.banks.includes(p):getBanks(q).includes(p)) ));
+      const subset=QUESTION_BANK.filter(q=>{
+        const banks=(Array.isArray(q.banks)&&q.banks.length)?q.banks:getBanks(q);
+        // 无任何分类前缀的题目（如 AI 导入、id 不含“-”、手写库）永远显示——
+        // 否则它们不属于任何筛选项会被全部隐藏（"No questions match the current filters"）。
+        if(!banks.length) return true;
+        return prefixes.some(p=>banks.includes(p));
+      });
       shuffle(subset);
       baseQuestions = subset.slice();
       render(baseQuestions);
@@ -2073,6 +2126,7 @@
       tutorialRender();
     }
     function maybeStartTutorial(){
+      if (!UI_FEATURES.tutorial) return; // 离线导出关掉了新手教程
       try{ if (localStorage.getItem(TUTORIAL_KEY)) return; }catch(_e){ return; }
       openTutorial();
     }
@@ -2341,6 +2395,7 @@
       startQuiz(Array.isArray(payload) ? payload : (Array.isArray(payload && payload.questions) ? payload.questions : []));
     }
 
+    applyUiFeatures(); // 先按构建开关裁剪 UI（语言白名单/反馈/教程），再渲染文案
     applyUiLang(); // 先按保存的语言偏好渲染静态文案（默认英文）
     applyThemeIcon();
     bootstrapLegacyBank();

@@ -200,10 +200,22 @@
     // 与发布脚本同规则的轻量校验（导入侧提示用；详见 format.html）
     function validateBank(list){
       var valid = [], rejected = 0;
-      (Array.isArray(list) ? list : []).forEach(function(rec){
+      (Array.isArray(list) ? list : []).forEach(function(rec, idx){
         if (!rec || typeof rec !== "object" || Array.isArray(rec)) { rejected++; return; }
         var bad = false;
-        if (!String(rec.id == null ? "" : rec.id).trim()) bad = true;
+        // 缺 id 自动补一个（本地练习够用；id 仅用于错题/收藏的存储 key）——AI 产出最常见的“缺字段”
+        if (!String(rec.id == null ? "" : rec.id).trim()) rec.id = "auto-" + (idx + 1);
+        // —— 归一化便宜 AI 的常见偏差（实测 Gemini 输出）——
+        if (rec.id != null && typeof rec.id !== "string") rec.id = String(rec.id); // 数字 id → 字符串
+        // 单选答案被包成数组：answer:[2] → answer:2；answer:[0,2] → answers:[0,2]
+        if (Array.isArray(rec.answer)){
+          if (rec.answer.length === 1) rec.answer = rec.answer[0];
+          else { rec.answers = rec.answer; delete rec.answer; }
+        }
+        // 索引写成字符串数字："2" → 2（answer 与 answers 都兜）
+        var toIdx = function(v){ return (typeof v === "string" && /^[0-9]+$/.test(v.trim())) ? parseInt(v, 10) : v; };
+        if (rec.answer !== undefined && rec.answer !== null) rec.answer = toIdx(rec.answer);
+        if (Array.isArray(rec.answers)) rec.answers = rec.answers.map(toIdx);
         var hasImg = !!(rec.image && (typeof rec.image === "string" || (Array.isArray(rec.image) && rec.image.length)));
         if (!String(rec.question == null ? "" : rec.question).trim() && !hasImg) bad = true;
         var isFill = rec.type === "fill" || Array.isArray(rec.blanks);
@@ -254,6 +266,28 @@
       el.textContent = text;
       el.style.color = isError ? "var(--danger-ink)" : "var(--ok-ink)";
     }
+    // AI 产出的 .json 常见杂质：① 用三反引号代码围栏包起来（含 json 语言标注）② 包成对象 {questions:[...]}。这里都兜住。
+    // 注意：本段在 catalogHtml 的模板字符串里，绝不能出现裸反引号 —— 用 fromCharCode 取反引号、纯字符串操作（不用正则）。
+    var FENCE3 = String.fromCharCode(96, 96, 96); // 三个反引号
+    function stripCodeFences(text){
+      var s = String(text == null ? "" : text).trim();
+      if (s.indexOf(FENCE3) !== 0) return s;            // 不是以围栏开头 → 原样
+      s = s.slice(3);                                    // 去掉开头围栏
+      var nl = s.indexOf("\n");                         // 形如「三反引号+json」的语言标注独占一行 → 去掉
+      if (nl >= 0){ var head = s.slice(0, nl); if (head.indexOf("[") < 0 && head.indexOf("{") < 0) s = s.slice(nl + 1); }
+      var last = s.lastIndexOf(FENCE3);                  // 去掉结尾围栏
+      if (last >= 0) s = s.slice(0, last);
+      return s.trim();
+    }
+    function coerceBankArray(parsed){
+      if (Array.isArray(parsed)) return parsed;
+      if (parsed && typeof parsed === "object"){
+        var keys = ["questions","bank","items","data","records","list","banks"];
+        for (var i = 0; i < keys.length; i++){ if (Array.isArray(parsed[keys[i]])) return parsed[keys[i]]; }
+        for (var k in parsed){ if (Array.isArray(parsed[k])) return parsed[k]; } // 兜底：第一个数组属性
+      }
+      return null;
+    }
     (function bindImport(){
       var input = document.getElementById("import-file");
       if (!input) return;
@@ -264,9 +298,11 @@
         var reader = new FileReader();
         reader.onload = function(){
           var parsed;
-          try{ parsed = JSON.parse(String(reader.result || "")); }
+          try{ parsed = JSON.parse(stripCodeFences(reader.result)); }
           catch(e){ importMessage(T("err_parse"), true); return; }
-          var res = validateBank(parsed);
+          var list = coerceBankArray(parsed);
+          if (!list){ importMessage(T("err_shape"), true); return; }
+          var res = validateBank(list);
           if (!res.valid.length){ importMessage(T("err_shape"), true); return; }
           var title = String(file.name || "bank").replace(/\.json$/i, "");
           var id = slugLocal(title);
