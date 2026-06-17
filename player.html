@@ -873,6 +873,24 @@
         .replace(/"/g,"&quot;")
         .replace(/'/g,"&#39;");
     }
+    // 极简 HTML 消毒：保留排版标签，剥掉脚本/事件处理器/javascript: 等。
+    // 题库内容（选项、question_html）可能来自不可信导入/分享，渲染前过一遍防存储型 XSS。
+    function sanitizeHTML(html){
+      try{
+        const tpl = document.createElement("template");
+        tpl.innerHTML = String(html == null ? "" : html);
+        tpl.content.querySelectorAll("*").forEach(el => {
+          const tag = el.tagName ? el.tagName.toLowerCase() : "";
+          if (["script","style","iframe","object","embed","link","meta","base","form"].includes(tag)){ el.remove(); return; }
+          Array.from(el.attributes).forEach(a => {
+            const n = a.name.toLowerCase();
+            if (n.startsWith("on")) el.removeAttribute(a.name);
+            else if (["href","src","xlink:href","formaction"].includes(n) && /^\s*javascript:/i.test(a.value || "")) el.removeAttribute(a.name);
+          });
+        });
+        return tpl.innerHTML;
+      }catch(_e){ return escHTML(html); }
+    }
 
     function renderSource(q){
       const s = (q && (q.source ?? q.sources)) ?? "";
@@ -1194,7 +1212,7 @@
     function renderImgs(img){
       if(!img) return '';
       const arr = Array.isArray(img) ? img : [img];
-      return arr.map(src => `<div class="img-wrap"><img src="${src}" alt="figure" loading="lazy" decoding="async"></div>`).join('');
+      return arr.map(src => `<div class="img-wrap"><img src="${escapeAttr(src)}" alt="figure" loading="lazy" decoding="async"></div>`).join('');
     }
 
     /* ------------------ 渲染与交互 ------------------ */
@@ -1331,7 +1349,7 @@
       if (!el) return;
 
       if (isFill(q) && typeof q.question_html === "string" && q.question_html.trim()){
-        el.innerHTML = q.question_html;
+        el.innerHTML = sanitizeHTML(q.question_html);
       } else {
         el.textContent = q.question || "";
       }
@@ -1422,7 +1440,7 @@
       const disabled = st.submitted ? 'disabled' : '';
       for(let i=0;i<(q.choices||[]).length;i++){
         ul.insertAdjacentHTML('beforeend',
-          `<li class="choice-item"><button class="choice-btn ${disabled}" onclick="selectChoice('${q.id}',${i})">${String.fromCharCode(65+i)}. ${q.choices[i]}</button></li>`
+          `<li class="choice-item"><button class="choice-btn ${disabled}" onclick="selectChoice('${q.id}',${i})">${String.fromCharCode(65+i)}. ${sanitizeHTML(q.choices[i])}</button></li>`
         );
       }
       box.innerHTML = "";

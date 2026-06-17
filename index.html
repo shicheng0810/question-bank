@@ -612,8 +612,12 @@
           var snap = d && d.snapshot;
           if (!snap){ alert(T("hist_load_fail")); return; }
           try{ sessionStorage.setItem("qb_restore", JSON.stringify(snap)); }catch(e){}
-          var page = (snap.bank_id && String(snap.bank_id).indexOf("local-") === 0) ? "local.html" : "player.html";
-          location.href = page + "?bank=" + encodeURIComponent(snap.bank_id);
+          var bid = String(snap.bank_id || "");
+          var url;
+          if (bid.indexOf("u-") === 0) url = "player.html?mybank=" + encodeURIComponent(bid.slice(2));        // 私有库 → ?mybank
+          else if (bid.indexOf("local-") === 0) url = "local.html?bank=" + encodeURIComponent(bid.slice(6));  // 本地库 → 去掉 local- 前缀
+          else url = "player.html?bank=" + encodeURIComponent(bid);                                            // 公开库
+          location.href = url;
         })
         .catch(function(){ alert(T("hist_load_fail")); });
     }
