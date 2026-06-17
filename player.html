@@ -2536,6 +2536,7 @@
       tutorialRender();
     }
     function maybeStartTutorial(){
+      if (IS_SPECIAL) return; // 访客（分享码）模式：不强制弹新手教程
       if (!UI_FEATURES.tutorial) return; // 离线导出关掉了新手教程
       try{ if (localStorage.getItem(TUTORIAL_KEY)) return; }catch(_e){ return; }
       openTutorial();
