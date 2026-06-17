@@ -498,7 +498,7 @@
     function enterSpecial(code, bank){
       try{ sessionStorage.setItem("qb_special", JSON.stringify({ code: code, id: bank.id, title: bank.title })); }catch(e){}
       loginStatus(T("special_ok"), "ok");
-      setTimeout(function(){ closeLoginModal(); updateAuthUI(); }, 500);
+      setTimeout(function(){ location.href = "player.html?special=1"; }, 500); // 直接进特殊题库，不停在目录页
     }
     function applySpecialMode(){
       var sp = getSpecial();
@@ -685,9 +685,15 @@
         .then(function(){ renderCloudBanks(); }, function(){ renderCloudBanks(); });
     }
 
-    applyLang();
-    applyThemeIcon();
-    scanProgress();
+    // 分享码（特殊题库）模式：直接进那个题库，不渲染目录页
+    var _sp0 = getSpecial();
+    if (_sp0 && _sp0.code) {
+      location.replace("player.html?special=1");
+    } else {
+      applyLang();
+      applyThemeIcon();
+      scanProgress();
+    }
   </script>
 </body>
 </html>
