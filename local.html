@@ -49,12 +49,6 @@
     /* .btn 用了 display:inline-flex（作者样式），会盖过浏览器默认的 [hidden]{display:none}，
        导致 Random150/Back150/返回目录 等靠 hidden 属性切换的按钮隐藏失效。全局兜底： */
     [hidden]{display:none !important}
-    /* 星座粒子背景层：固定全屏、置底、不挡点击。
-       用 z-index:-1（与目录页一致）：body 背景会传播到根层、画在画布之下，所以粒子仍可见。
-       关键——正文容器因此【不需要】自建 z-index。之前给 #quizApp 加 z-index:1 会形成层叠上下文，
-       把新手教程的高亮(z-index:95)困在遮罩(z-index:90)之下，导致被指向的按钮无法凸显（粒子整合引入的回归）。
-       position:relative 配 z-index:auto 不会创建层叠上下文，保留它以兼容卡片内的定位子元素。 */
-    #constellation{position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:-1; display:block}
     #quizApp, #unlock-panel{position:relative}
 
     .app-header{display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap;
@@ -169,7 +163,6 @@
   </style>
 </head>
 <body>
-  <canvas id="constellation" aria-hidden="true"></canvas>
   <section id="unlock-panel" class="unlock-panel" hidden>
     <a class="btn" id="back-catalog-unlock" href="./" hidden data-i18n="back_catalog" style="margin-bottom:10px;display:inline-block">← Catalog</a>
     <p class="meta" data-i18n="unlock_eyebrow">Protected Question Bank</p>
@@ -197,6 +190,7 @@
         </select>
       </span>
       <button class="btn" id="theme-toggle" type="button" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">🌙</button>
+      <button class="btn" id="account-btn" type="button" onclick="onAccountBtn()" data-testid="account-btn" title="Sign in / history">👤 <span id="account-label">Sign in</span></button>
       <button class="btn" id="suggest-btn" onclick="openSuggestModal()" data-testid="suggest-btn" data-i18n="fb_suggest_btn">💬 Feedback</button>
       <button class="btn" id="guide-btn" onclick="openGuide()" data-testid="guide-open-btn" data-i18n="guide_summary">Button Guide</button>
       <button class="btn" id="tutorial-help-btn" onclick="openTutorial()" data-testid="tutorial-help-btn"
@@ -273,6 +267,15 @@
     .qb-edit-addrow{margin:8px 0 2px}
     .qb-edit-add{font-size:12.5px; padding:5px 10px}
     .qb-hp{position:absolute; left:-9999px; width:1px; height:1px; opacity:0} /* 蜜罐：人看不见，机器人会填 */
+    /* 登录 / 做题历史 */
+    .qb-hist-list{max-height:48vh; overflow:auto; margin:4px 0 2px; display:flex; flex-direction:column; gap:8px}
+    .qb-hist-row{display:flex; align-items:center; gap:8px; padding:9px 11px; border:1px solid var(--border); border-radius:var(--radius-xs); background:var(--card-2)}
+    .qb-hist-main{flex:1; min-width:0}
+    .qb-hist-title{font-weight:600; font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    .qb-hist-sub{font-size:12px; color:var(--ink-soft); margin-top:2px}
+    .qb-hist-row .btn{flex:0 0 auto; padding:5px 10px; font-size:13px}
+    .qb-hist-row .qb-x{width:30px; height:30px}
+    #account-btn{white-space:nowrap; max-width:170px; overflow:hidden; text-overflow:ellipsis}
   </style>
   <!-- All Banks 合并页：开始前选择要练习的题库（公开勾选、加密解锁加入），按所选现场合并 -->
   <div class="tut-overlay" id="qb-allbanks" hidden data-testid="qb-allbanks" style="align-items:center">
@@ -340,6 +343,39 @@
         <button class="btn submit-btn" id="qb-suggest-send" onclick="onSuggestSubmit()" data-i18n="fb_suggest_submit">Send feedback</button>
       </div>
       <div class="qb-fb-status" id="qb-suggest-status"></div>
+    </div>
+  </div>
+
+  <div class="tut-overlay" id="qb-login" hidden data-testid="qb-login" onclick="if(event.target===this)closeLoginModal()">
+    <div class="tut-card qb-fb-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <h2 data-i18n="login_title" style="margin:0;font-size:1.1rem">Sign in to save your history</h2>
+        <button class="btn qb-x" onclick="closeLoginModal()" aria-label="Close">✕</button>
+      </div>
+      <p class="meta" data-i18n="login_hint" style="margin:6px 0 8px">Pick a code and remember it.</p>
+      <input type="text" id="qb-login-code" maxlength="64" autocomplete="off" autocapitalize="off" spellcheck="false" data-i18n-placeholder="login_ph" onkeydown="if(event.key==='Enter'){event.preventDefault();doLogin();}">
+      <div class="tut-actions">
+        <button class="btn" onclick="closeLoginModal()" data-i18n="login_cancel">Cancel</button>
+        <span class="spacer"></span>
+        <button class="btn submit-btn" id="qb-login-go" onclick="doLogin()" data-i18n="login_go">Enter</button>
+      </div>
+      <div class="qb-fb-status" id="qb-login-status"></div>
+    </div>
+  </div>
+
+  <div class="tut-overlay" id="qb-history" hidden data-testid="qb-history" onclick="if(event.target===this)closeHistory()">
+    <div class="tut-card qb-fb-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <h2 data-i18n="history_title" style="margin:0;font-size:1.1rem">Your practice history</h2>
+        <button class="btn qb-x" onclick="closeHistory()" aria-label="Close">✕</button>
+      </div>
+      <p class="meta" data-i18n="history_sub" style="margin:6px 0 8px">Your latest 10 rounds.</p>
+      <div id="qb-history-list" class="qb-hist-list"></div>
+      <div class="tut-actions">
+        <button class="btn" onclick="logout()" data-i18n="hist_logout">Sign out</button>
+        <span class="spacer"></span>
+        <button class="btn" onclick="closeHistory()" data-i18n="login_cancel">Cancel</button>
+      </div>
     </div>
   </div>
 
@@ -415,6 +451,8 @@
         fb_email_label: "Email (optional, so I can reply)", fb_suggest_submit: "Send feedback",
         fb_cancel: "Cancel", fb_need_type: "Please choose a problem type.", fb_need_msg: "Please add a short note.",
         fb_sending: "Sending…", fb_thanks: "✅ Got it — thank you!", fb_mailto_hint: "Opening your email app…", fb_copied_hint: "Copied to clipboard — paste it to {email}", fb_error: "Couldn't send, please try later.",
+        login_btn: "Sign in", login_title: "Sign in to save your history", login_hint: "Pick a code and remember it — use the same code on any device to find your history. Anyone who knows the code can see that history, so don't reuse a real password.", login_ph: "your code (4+ characters)", login_go: "Enter", login_cancel: "Cancel", login_ing: "Signing in…", login_ok: "✅ Signed in", login_fail: "Couldn't sign in, try again.", login_too_short: "Code needs at least 4 characters.", login_rate: "Too many tries — wait a minute.", login_neterr: "Network error, try again later.",
+        history_title: "Your practice history", history_sub: "Your latest 10 rounds (the oldest is dropped). “Load” reopens a round with your answers.", hist_loading: "Loading…", hist_empty: "No saved rounds yet — answer a few questions and they'll show up here.", hist_load: "Load", hist_neterr: "Couldn't load history.", hist_del_confirm: "Delete this record?", hist_load_fail: "Couldn't load that round.", hist_logout: "Sign out", hist_unanswered: "not started", mybank_need_login: "Sign in to open your private bank — it's stored in your account and visible only to you.", mybank_not_found: "Private bank not found — it may have been removed, or you're signed in with a different code.",
         filter_summary: "Filter Question Banks",
         select_all: "Select All", select_none: "Select None", confirm: "Confirm",
         randomize: "Randomize + Reset",
@@ -464,7 +502,7 @@
         ab_none: "Select at least one bank (protected ones must be unlocked).",
         ab_load_fail: "Failed to load: {id}",
         ab_start: "Start practicing",
-        guide_html: '<li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Feedback &amp; ⚐ Report — the most useful buttons here!</strong> Found a wrong answer, a typo, or anything confusing? Tap <strong>💬 Feedback</strong> at the top, or <strong>⚐ Report</strong> on any question card. Your message reaches the author in seconds and <strong>actually gets fixed</strong> — every report makes this bank better for the next person. No sign-up, takes 5 seconds. Please use it!</li><li><strong>Theme (🌙 / ☀️)</strong>: switch between light and dark — your choice is saved and follows your system setting by default. The 🌐 menu beside it changes the interface language.</li><li><strong>Filter Question Banks (Select All / Select None / Confirm)</strong>: tick the question sets you want to practice — combine as many as you like — then press Confirm.</li><li><strong>Randomize + Reset</strong>: shuffle the questions in the current scope and clear this round’s selections.</li><li><strong>Auto Submit</strong>: when ON, clicking a choice grades it instantly (no Submit needed).</li><li><strong>Random Choose 150</strong>: draw 150 questions from the current scope, weighted toward the ones you’ve practiced least (hidden when the scope has 150 questions or fewer).</li><li><strong>Back to Current 150</strong>: return to this round’s draw (hidden until you’ve drawn one).</li><li><strong>Wrong Only (N)</strong>: show only wrong answers in the current scope; answering correctly does NOT remove a question — use <strong>Remove from wrong</strong> on its card.</li><li><strong>Star Only (N)</strong>: show only starred questions; tap <strong>☆</strong> on any card to star/unstar.</li><li><strong>Back to All</strong>: leave the wrong/star/draw view and return to the full filtered list.</li><li><strong>Clear choices for this list</strong>: clear all selected answers in the current list (wrong/star records are kept).</li><li><strong>Submit Answer / Redo</strong>: grade this question; Redo lets you answer it again.</li><li><strong>Show Correct Answers</strong>: after submitting a fill-in question, optionally reveal the accepted answers. Grading ignores case, extra spaces, and spacing differences (<code>check list</code> = <code>checklist</code>).</li>',
+        guide_html: '<li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Feedback &amp; ⚐ Report — the most useful buttons here!</strong> Found a wrong answer, a typo, or anything confusing? Tap <strong>💬 Feedback</strong> at the top, or <strong>⚐ Report</strong> on any question card. Your message reaches the author in seconds and <strong>actually gets fixed</strong> — every report makes this bank better for the next person. No sign-up, takes 5 seconds. Please use it!</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 Sign in — save &amp; reload your history!</strong> Tap <strong>👤</strong> at the top and pick a personal code (great on phones — no email, no password reset). Then every round you do is saved automatically, and you can <strong>reload any of your last 10 rounds on any device</strong> — your answers come back exactly as you left them. The same code shows the same history everywhere.</li><li><strong>Theme (🌙 / ☀️)</strong>: switch between light and dark — your choice is saved and follows your system setting by default. The 🌐 menu beside it changes the interface language.</li><li><strong>Filter Question Banks (Select All / Select None / Confirm)</strong>: tick the question sets you want to practice — combine as many as you like — then press Confirm.</li><li><strong>Randomize + Reset</strong>: shuffle the questions in the current scope and clear this round’s selections.</li><li><strong>Auto Submit</strong>: when ON, clicking a choice grades it instantly (no Submit needed).</li><li><strong>Random Choose 150</strong>: draw 150 questions from the current scope, weighted toward the ones you’ve practiced least (hidden when the scope has 150 questions or fewer).</li><li><strong>Back to Current 150</strong>: return to this round’s draw (hidden until you’ve drawn one).</li><li><strong>Wrong Only (N)</strong>: show only wrong answers in the current scope; answering correctly does NOT remove a question — use <strong>Remove from wrong</strong> on its card.</li><li><strong>Star Only (N)</strong>: show only starred questions; tap <strong>☆</strong> on any card to star/unstar.</li><li><strong>Back to All</strong>: leave the wrong/star/draw view and return to the full filtered list.</li><li><strong>Clear choices for this list</strong>: clear all selected answers in the current list (wrong/star records are kept).</li><li><strong>Submit Answer / Redo</strong>: grade this question; Redo lets you answer it again.</li><li><strong>Show Correct Answers</strong>: after submitting a fill-in question, optionally reveal the accepted answers. Grading ignores case, extra spaces, and spacing differences (<code>check list</code> = <code>checklist</code>).</li>',
       },
       zh: {
         title_h1: "AMT 题库练习",
@@ -482,6 +520,8 @@
         fb_email_label: "邮箱（可选，方便我回复你）", fb_suggest_submit: "发送反馈",
         fb_cancel: "取消", fb_need_type: "请选择问题类型。", fb_need_msg: "请填写一句话说明。",
         fb_sending: "提交中…", fb_thanks: "✅ 已收到，谢谢你的反馈！", fb_mailto_hint: "正在打开你的邮件应用…", fb_copied_hint: "已复制到剪贴板——请粘贴发给 {email}", fb_error: "提交失败，请稍后再试。",
+        login_btn: "登录", login_title: "登录以保存历史", login_hint: "自定义一个码并记住它——换设备也用同一个码就能找回你的历史。知道这个码的人就能看到那份历史，所以别用你别处的真实密码。", login_ph: "你的码（4 位以上）", login_go: "进入", login_cancel: "取消", login_ing: "登录中…", login_ok: "✅ 已登录", login_fail: "登录失败，请重试。", login_too_short: "码至少要 4 位。", login_rate: "尝试太频繁，请稍等一分钟。", login_neterr: "网络错误，请稍后再试。",
+        history_title: "你的做题历史", history_sub: "最近 10 轮（超出自动删最旧）。点「载入」回到那一轮、带上你当时的作答。", hist_loading: "加载中…", hist_empty: "还没有记录——做几道题就会出现在这里。", hist_load: "载入", hist_neterr: "加载历史失败。", hist_del_confirm: "删除这条记录？", hist_load_fail: "载入这一轮失败。", hist_logout: "退出登录", hist_unanswered: "未开始", mybank_need_login: "登录后才能打开你的私有题库——它存在你的账号里，只有你能看到。", mybank_not_found: "找不到这个私有题库——可能已被移除，或你登录用的码不是当初上传的那个。",
         filter_summary: "筛选题库",
         select_all: "全选", select_none: "全不选", confirm: "确认",
         randomize: "打乱并重置",
@@ -531,7 +571,7 @@
         ab_none: "至少选择一个题库（加密库需先解锁）。",
         ab_load_fail: "加载失败：{id}",
         ab_start: "开始做题",
-        guide_html: '<li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 反馈 &amp; ⚐ 报错 —— 这里最有用的按钮！</strong> 发现答案错了、有错别字、或哪里看不懂？点顶部的 <strong>💬 反馈</strong>，或任意题卡上的 <strong>⚐ 报错</strong>。你的留言几秒内直达作者、<strong>真的会被修</strong> —— 每一条都让题库对下一个人更好用。免注册、5 秒搞定，欢迎多用！</li><li><strong>主题（🌙 / ☀️）</strong>：切换浅色/深色，选择会被记住，默认跟随系统设置。旁边的 🌐 菜单切换界面语言。</li><li><strong>筛选题库（全选 / 全不选 / 确认）</strong>：勾选要练习的题套（可任意组合多个），点确认生效。</li><li><strong>打乱并重置</strong>：把当前范围内的题目重新打乱，并清空本轮所有选择。</li><li><strong>自动提交</strong>：开启后点选项即自动判分，不用再按提交。</li><li><strong>随机抽 150 题</strong>：从当前范围按「做得少优先」的权重随机抽 150 题（范围不足 150 题时不显示）。</li><li><strong>回到本轮 150 题</strong>：回到本轮已抽中的那 150 题（没有抽过时不显示）。</li><li><strong>只看错题（N）</strong>：只显示当前范围内的错题；答对不会自动移出，需手动点题卡上的<strong>移出错题</strong>。</li><li><strong>只看收藏（N）</strong>：只显示收藏的题；点题卡右上角 <strong>☆</strong> 收藏/取消。</li><li><strong>返回全部</strong>：从错题/收藏/抽题视图回到当前筛选范围的完整列表。</li><li><strong>清空本列表的已选答案</strong>：清空当前列表里所有题的已选答案（不动错题/收藏记录）。</li><li><strong>提交答案 / 重做</strong>：提交本题判分；重做可再答一次。</li><li><strong>显示参考答案</strong>：填空题提交后可选择性显示参考答案。判分忽略大小写、多余空格，也忽略空格有无（<code>check list</code> = <code>checklist</code>）。</li>',
+        guide_html: '<li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 反馈 &amp; ⚐ 报错 —— 这里最有用的按钮！</strong> 发现答案错了、有错别字、或哪里看不懂？点顶部的 <strong>💬 反馈</strong>，或任意题卡上的 <strong>⚐ 报错</strong>。你的留言几秒内直达作者、<strong>真的会被修</strong> —— 每一条都让题库对下一个人更好用。免注册、5 秒搞定，欢迎多用！</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 登录 —— 保存并重新加载你的历史！</strong> 点顶部 <strong>👤</strong> 设一个自定义码（手机也好用 —— 免邮箱、不用找回密码）。登录后每一轮做题都会自动保存，你可以<strong>在任意设备重新加载最近 10 次做题记录</strong> —— 作答会原样回来。同一个码在哪儿都看到同一份历史。</li><li><strong>主题（🌙 / ☀️）</strong>：切换浅色/深色，选择会被记住，默认跟随系统设置。旁边的 🌐 菜单切换界面语言。</li><li><strong>筛选题库（全选 / 全不选 / 确认）</strong>：勾选要练习的题套（可任意组合多个），点确认生效。</li><li><strong>打乱并重置</strong>：把当前范围内的题目重新打乱，并清空本轮所有选择。</li><li><strong>自动提交</strong>：开启后点选项即自动判分，不用再按提交。</li><li><strong>随机抽 150 题</strong>：从当前范围按「做得少优先」的权重随机抽 150 题（范围不足 150 题时不显示）。</li><li><strong>回到本轮 150 题</strong>：回到本轮已抽中的那 150 题（没有抽过时不显示）。</li><li><strong>只看错题（N）</strong>：只显示当前范围内的错题；答对不会自动移出，需手动点题卡上的<strong>移出错题</strong>。</li><li><strong>只看收藏（N）</strong>：只显示收藏的题；点题卡右上角 <strong>☆</strong> 收藏/取消。</li><li><strong>返回全部</strong>：从错题/收藏/抽题视图回到当前筛选范围的完整列表。</li><li><strong>清空本列表的已选答案</strong>：清空当前列表里所有题的已选答案（不动错题/收藏记录）。</li><li><strong>提交答案 / 重做</strong>：提交本题判分；重做可再答一次。</li><li><strong>显示参考答案</strong>：填空题提交后可选择性显示参考答案。判分忽略大小写、多余空格，也忽略空格有无（<code>check list</code> = <code>checklist</code>）。</li>',
       },
       es: {
         title_h1: "Práctica del banco de preguntas AMT",
@@ -549,6 +589,8 @@
         fb_email_label: "Email (opcional, para responderte)", fb_suggest_submit: "Enviar comentarios",
         fb_cancel: "Cancelar", fb_need_type: "Elige un tipo de problema.", fb_need_msg: "Escribe una breve nota.",
         fb_sending: "Enviando…", fb_thanks: "✅ ¡Recibido, gracias!", fb_mailto_hint: "Abriendo tu app de correo…", fb_copied_hint: "Copiado — pégalo y envíalo a {email}", fb_error: "No se pudo enviar, inténtalo más tarde.",
+        login_btn: "Entrar", login_title: "Entra para guardar tu historial", login_hint: "Elige un código y recuérdalo — usa el mismo en cualquier dispositivo para encontrar tu historial. Quien conozca el código verá ese historial, así que no uses una contraseña real.", login_ph: "tu código (4+ caracteres)", login_go: "Entrar", login_cancel: "Cancelar", login_ing: "Entrando…", login_ok: "✅ Sesión iniciada", login_fail: "No se pudo entrar, reinténtalo.", login_too_short: "El código necesita 4+ caracteres.", login_rate: "Demasiados intentos — espera un minuto.", login_neterr: "Error de red, inténtalo más tarde.",
+        history_title: "Tu historial de práctica", history_sub: "Tus últimas 10 rondas (se elimina la más antigua). “Cargar” reabre una ronda con tus respuestas.", hist_loading: "Cargando…", hist_empty: "Aún no hay rondas — responde algunas preguntas y aparecerán aquí.", hist_load: "Cargar", hist_neterr: "No se pudo cargar el historial.", hist_del_confirm: "¿Eliminar este registro?", hist_load_fail: "No se pudo cargar esa ronda.", hist_logout: "Cerrar sesión", hist_unanswered: "sin empezar", mybank_need_login: "Inicia sesión para abrir tu banco privado — está en tu cuenta y solo tú puedes verlo.", mybank_not_found: "Banco privado no encontrado — puede que se haya eliminado o que hayas entrado con otro código.",
         filter_summary: "Filtrar bancos de preguntas",
         select_all: "Seleccionar todo", select_none: "Ninguno", confirm: "Confirmar",
         randomize: "Mezclar y reiniciar",
@@ -598,7 +640,7 @@
         ab_none: "Selecciona al menos un banco.",
         ab_load_fail: "Fallo al cargar: {id}",
         ab_start: "Empezar",
-        guide_html: '<li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Comentarios y ⚐ Reportar — ¡los botones más útiles!</strong> ¿Una respuesta incorrecta, una errata o algo confuso? Toca <strong>💬 Comentarios</strong> arriba, o <strong>⚐ Reportar</strong> en cualquier tarjeta. Tu mensaje llega al autor en segundos y <strong>de verdad se corrige</strong> — cada reporte mejora este banco para el siguiente. Sin registro, 5 segundos. ¡Úsalo!</li><li><strong>Tema (🌙 / ☀️)</strong>: cambia entre claro y oscuro — tu elección se guarda y sigue el sistema por defecto. El menú 🌐 al lado cambia el idioma.</li><li><strong>Filtrar bancos (Seleccionar todo / Ninguno / Confirmar)</strong>: marca los conjuntos que quieras practicar — combina varios — y pulsa Confirmar.</li><li><strong>Mezclar y reiniciar</strong>: baraja las preguntas del alcance actual y borra las selecciones de esta ronda.</li><li><strong>Envío automático</strong>: al activarlo, hacer clic en una opción califica al instante.</li><li><strong>150 al azar</strong>: sortea 150 preguntas del alcance actual, priorizando las menos practicadas (oculto si hay 150 o menos).</li><li><strong>Volver a las 150</strong>: regresa al sorteo de esta ronda (oculto hasta que sortees uno).</li><li><strong>Solo errores (N)</strong>: muestra solo tus errores; acertar NO los quita — usa <strong>Quitar de errores</strong> en la tarjeta.</li><li><strong>Solo favoritas (N)</strong>: muestra solo las marcadas; toca <strong>☆</strong> en cualquier tarjeta.</li><li><strong>Volver a todo</strong>: sal de la vista de errores/favoritas/sorteo y vuelve a la lista completa.</li><li><strong>Borrar selecciones de esta lista</strong>: borra todas las respuestas seleccionadas de la lista actual (se conservan errores/favoritas).</li><li><strong>Enviar respuesta / Rehacer</strong>: califica la pregunta; Rehacer permite contestarla de nuevo.</li><li><strong>Mostrar respuestas</strong>: tras enviar una pregunta de rellenar, muestra las respuestas aceptadas. La calificación ignora mayúsculas y espacios (<code>check list</code> = <code>checklist</code>).</li>',
+        guide_html: '<li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Comentarios y ⚐ Reportar — ¡los botones más útiles!</strong> ¿Una respuesta incorrecta, una errata o algo confuso? Toca <strong>💬 Comentarios</strong> arriba, o <strong>⚐ Reportar</strong> en cualquier tarjeta. Tu mensaje llega al autor en segundos y <strong>de verdad se corrige</strong> — cada reporte mejora este banco para el siguiente. Sin registro, 5 segundos. ¡Úsalo!</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 Inicia sesión — ¡guarda y recarga tu historial!</strong> Toca <strong>👤</strong> arriba y elige un código personal (ideal para móviles — sin correo, sin recuperar contraseña). Cada ronda se guarda sola y puedes <strong>recargar cualquiera de tus últimas 10 rondas en cualquier dispositivo</strong> — tus respuestas vuelven tal como las dejaste. El mismo código muestra el mismo historial en todas partes.</li><li><strong>Tema (🌙 / ☀️)</strong>: cambia entre claro y oscuro — tu elección se guarda y sigue el sistema por defecto. El menú 🌐 al lado cambia el idioma.</li><li><strong>Filtrar bancos (Seleccionar todo / Ninguno / Confirmar)</strong>: marca los conjuntos que quieras practicar — combina varios — y pulsa Confirmar.</li><li><strong>Mezclar y reiniciar</strong>: baraja las preguntas del alcance actual y borra las selecciones de esta ronda.</li><li><strong>Envío automático</strong>: al activarlo, hacer clic en una opción califica al instante.</li><li><strong>150 al azar</strong>: sortea 150 preguntas del alcance actual, priorizando las menos practicadas (oculto si hay 150 o menos).</li><li><strong>Volver a las 150</strong>: regresa al sorteo de esta ronda (oculto hasta que sortees uno).</li><li><strong>Solo errores (N)</strong>: muestra solo tus errores; acertar NO los quita — usa <strong>Quitar de errores</strong> en la tarjeta.</li><li><strong>Solo favoritas (N)</strong>: muestra solo las marcadas; toca <strong>☆</strong> en cualquier tarjeta.</li><li><strong>Volver a todo</strong>: sal de la vista de errores/favoritas/sorteo y vuelve a la lista completa.</li><li><strong>Borrar selecciones de esta lista</strong>: borra todas las respuestas seleccionadas de la lista actual (se conservan errores/favoritas).</li><li><strong>Enviar respuesta / Rehacer</strong>: califica la pregunta; Rehacer permite contestarla de nuevo.</li><li><strong>Mostrar respuestas</strong>: tras enviar una pregunta de rellenar, muestra las respuestas aceptadas. La calificación ignora mayúsculas y espacios (<code>check list</code> = <code>checklist</code>).</li>',
       },
     };
     let uiLang = (function(){ try{ const v = localStorage.getItem(UI_LANG_KEY); return I18N[v] ? v : "en"; }catch(_e){ return "en"; } })();
@@ -648,6 +690,9 @@
       // 2) 反馈/报错：关则隐藏顶栏「💬 Feedback」（题卡内 ⚐ 报错按钮在渲染时已按开关跳过）
       if (!UI_FEATURES.feedback){
         const sb = document.getElementById("suggest-btn"); if (sb) sb.hidden = true;
+        const ab = document.getElementById("account-btn"); if (ab) ab.hidden = true; // 登录/历史依赖后端，离线/本地导出隐藏
+      } else {
+        updateAuthUI();
       }
       // 3) 新手教程：关则隐藏「?」按钮（首屏自动弹出在 maybeStartTutorial 里另行拦截）
       if (!UI_FEATURES.tutorial){
@@ -671,7 +716,6 @@
       document.documentElement.setAttribute("data-theme", t);
       try{ localStorage.setItem(THEME_KEY, t); }catch(_e){}
       applyThemeIcon();
-      if(window.__constellationThemeUpdate) window.__constellationThemeUpdate(); // 粒子背景跟随主题变色
     }
     function toggleTheme(){ setTheme(currentTheme() === "dark" ? "light" : "dark"); }
 
@@ -1243,7 +1287,7 @@
 
           <div class="meta" style="display:flex;justify-content:space-between;align-items:center;gap:10px">
             <span>${renderSource(q)}</span>
-            ${UI_FEATURES.feedback ? `<button class="qb-report-btn" type="button" onclick="openReportModal('${q.id}',${i+1})" title="${T('fb_report_title')}">${T('fb_report_btn')}</button>` : ""}
+            ${(UI_FEATURES.feedback && !IS_PRIVATE_BANK) ? `<button class="qb-report-btn" type="button" onclick="openReportModal('${q.id}',${i+1})" title="${T('fb_report_title')}">${T('fb_report_btn')}</button>` : ""}
           </div>
           ${viewMode==='wrong'?`<div class="mt-2"><button class="btn" onclick="removeFromWrong('${q.id}')">${T('remove_wrong')}</button></div>`:""}
         </div>`;
@@ -1526,6 +1570,7 @@
       st.feedbackHTML=html;
       syncQuestionUI(qId);
       updateStats();
+      scheduleSnapshotSave(); // 登录用户：防抖自动存本轮快照
     }
 
     function toggleKeys(qId){
@@ -1885,6 +1930,7 @@
 
     function shuffleAndRender(){
       resetSessionScoreState();
+      SESSION_ID = newSessionId(); // 每次重排 = 新一轮 = 一条新历史
       viewMode='all';
       specialFilterSource='base';
       activeRandom150Questions=null;
@@ -1946,6 +1992,7 @@
       sanitizeSavedSets();
       updateAutoBtn();
       shuffleAndRender();
+      checkPendingRestore(); // 若有「重新加载历史」待应用且属于本库，覆盖默认轮次
       setTimeout(maybeStartTutorial, 350);
     }
 
@@ -2005,6 +2052,257 @@
       else if(r.mode==="mailto") fbStatus(statusId, T("fb_mailto_hint"), "ok");
       else fbStatus(statusId, T("fb_copied_hint").split("{email}").join(r.email||""), "ok");
       setTimeout(closeFn, 1400);
+    }
+
+    /* ================= 登录 + 做题历史（每用户最近 10 条快照，存 CF KV，跨设备） ================= */
+    // 复用反馈端点同一组 CF Function：把 /feedback 换成 /auth、/history。离线/本地导出关闭反馈时本段 UI 不显示。
+    var QB_API_BASE = (function(){
+      var ep = (FEEDBACK_CONFIG && FEEDBACK_CONFIG.endpoint) ? String(FEEDBACK_CONFIG.endpoint) : "";
+      if(/\/feedback$/.test(ep)) return ep.replace(/\/feedback$/, "");
+      if(/\/api\/?$/.test(ep)) return ep.replace(/\/$/, "");
+      return "https://question-bank-78u.pages.dev/api";
+    })();
+    var AUTH_KEY = "qb_auth_v1"; // localStorage：{ token, name }
+    function getAuth(){ try{ return JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); }catch(_e){ return null; } }
+    function setAuth(a){ try{ localStorage.setItem(AUTH_KEY, JSON.stringify(a)); }catch(_e){} updateAuthUI(); }
+    function clearAuth(){ try{ localStorage.removeItem(AUTH_KEY); }catch(_e){} updateAuthUI(); }
+    function isLoggedIn(){ var a=getAuth(); return !!(a && a.token); }
+    function authHeaders(){ var a=getAuth(); return (a && a.token) ? { "Authorization": "Bearer " + a.token } : {}; }
+    function updateAuthUI(){
+      var lbl = document.getElementById("account-label"); if(!lbl) return;
+      var a = getAuth();
+      lbl.textContent = (a && a.name) ? a.name : T("login_btn");
+    }
+    function onAccountBtn(){ if(isLoggedIn()) openHistory(); else openLoginModal(); }
+
+    function openLoginModal(){
+      var m = document.getElementById("qb-login"); if(!m) return;
+      var inp = document.getElementById("qb-login-code"); if(inp) inp.value = "";
+      fbStatus("qb-login-status", "", "");
+      m.hidden = false;
+      if(inp) setTimeout(function(){ try{ inp.focus(); }catch(_e){} }, 60);
+    }
+    function closeLoginModal(){ var m=document.getElementById("qb-login"); if(m) m.hidden = true; }
+    async function doLogin(){
+      var inp = document.getElementById("qb-login-code");
+      var code = ((inp && inp.value) || "").trim();
+      if(code.length < 4){ fbStatus("qb-login-status", T("login_too_short"), "err"); return; }
+      var btn = document.getElementById("qb-login-go"); if(btn) btn.disabled = true;
+      fbStatus("qb-login-status", T("login_ing"), "");
+      try{
+        var res = await fetch(QB_API_BASE + "/auth", {
+          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ code: code })
+        });
+        var d = {}; try{ d = await res.json(); }catch(_e){}
+        if(res.ok && d.ok && d.token){
+          setAuth({ token: d.token, name: (d.user && d.user.name) || code });
+          fbStatus("qb-login-status", T("login_ok"), "ok");
+          setTimeout(function(){
+            closeLoginModal();
+            if (IS_PRIVATE_BANK && (!QUESTION_BANK || !QUESTION_BANK.length)){ location.reload(); return; } // 私有题库登录门：登录后重载即加载
+            openHistory();
+          }, 650);
+        } else if(res.status === 429 || (d && d.error === "rate_limited")){
+          fbStatus("qb-login-status", T("login_rate"), "err");
+        } else {
+          fbStatus("qb-login-status", T("login_fail"), "err");
+        }
+      }catch(_e){
+        fbStatus("qb-login-status", T("login_neterr"), "err");
+      }
+      if(btn) btn.disabled = false;
+    }
+    function logout(){ clearAuth(); closeHistory(); }
+
+    /* ---- 本轮快照 + 防抖自动保存 ---- */
+    var MERGED_BANK_IDS = null; // 合并练习页(all-banks)：本轮纳入的公开库 id；单库为 null
+    var IS_PRIVATE_BANK = false; // player.html?mybank= 私有题库：关掉反馈/报错；快照 bank_id 带 "u-" 前缀
+    var SESSION_ID = null;      // 本轮 id（一次 shuffleAndRender 一个）；还原时改成被还原快照的 id
+    var RESTORING = false;      // 还原期间不触发自动保存
+    var _snapTimer = null;
+    function newSessionId(){ return "r" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+    function regradeOk(q, st){
+      if(isFill(q)) return !!checkFill(q, st.fillInputs).ok;
+      if(isMulti(q)) return setEqualsArray(st.selectedSet, q.answers.slice().sort(function(a,b){ return a-b; }));
+      return st.selectedIndex === q.answer;
+    }
+    function snapshotScopeList(){
+      if(Array.isArray(baseQuestions) && baseQuestions.length) return baseQuestions;
+      return Array.isArray(currentQuestions) ? currentQuestions : [];
+    }
+    function buildSnapshot(){
+      var round = snapshotScopeList();
+      var state = {}, answered = 0, correct = 0;
+      for(var i=0;i<round.length;i++){
+        var q = round[i]; if(!q) continue;
+        var st = uiState[q.id]; if(!st) continue;
+        var hasFill = Array.isArray(st.fillInputs) && st.fillInputs.some(function(v){ return String(v == null ? "" : v).trim(); });
+        var hasSel = (st.selectedIndex != null) || (st.selectedSet && st.selectedSet.size) || hasFill;
+        if(!st.submitted && !hasSel) continue;
+        state[q.id] = {
+          selectedIndex: (st.selectedIndex == null ? null : st.selectedIndex),
+          selectedSet: (st.selectedSet && st.selectedSet.size) ? Array.from(st.selectedSet) : undefined,
+          fillInputs: hasFill ? st.fillInputs.slice() : undefined,
+          submitted: !!st.submitted,
+          showKeys: !!st.showKeys
+        };
+        if(st.submitted){ answered++; if(regradeOk(q, st)) correct++; }
+      }
+      if(!SESSION_ID) SESSION_ID = newSessionId();
+      var h1 = document.querySelector('#quizApp h1');
+      return {
+        id: SESSION_ID,
+        bank_id: STORAGE_NS,
+        merged_banks: (Array.isArray(MERGED_BANK_IDS) && MERGED_BANK_IDS.length) ? MERGED_BANK_IDS.slice() : null,
+        title: (h1 && h1.textContent ? h1.textContent.trim() : STORAGE_NS),
+        ts: Date.now(),
+        viewMode: "all",
+        score: { correct: correct, answered: answered, total: round.length },
+        count: answered,
+        state: state,
+        scope: round.map(function(q){ return q.id; })
+      };
+    }
+    function scheduleSnapshotSave(){
+      if(RESTORING || !isLoggedIn()) return;
+      clearTimeout(_snapTimer);
+      _snapTimer = setTimeout(saveSnapshotNow, 1500);
+    }
+    async function saveSnapshotNow(){
+      if(!isLoggedIn()) return;
+      var snap = buildSnapshot();
+      if(!snap.count) return; // 没有已提交的题就不存
+      try{
+        await fetch(QB_API_BASE + "/history", {
+          method: "POST",
+          headers: Object.assign({ "Content-Type": "application/json" }, authHeaders()),
+          body: JSON.stringify({ snapshot: snap }),
+          keepalive: true
+        });
+      }catch(_e){ /* 自动保存失败静默，不打断做题 */ }
+    }
+
+    /* ---- 历史面板 ---- */
+    function openHistory(){
+      if(!isLoggedIn()){ openLoginModal(); return; }
+      var m = document.getElementById("qb-history"); if(!m) return;
+      m.hidden = false;
+      renderHistoryList();
+    }
+    function closeHistory(){ var m=document.getElementById("qb-history"); if(m) m.hidden = true; }
+    function fmtHistTime(ts){ try{ return new Date(ts).toLocaleString(); }catch(_e){ return ""; } }
+    async function renderHistoryList(){
+      var box = document.getElementById("qb-history-list"); if(!box) return;
+      box.innerHTML = '<div class="meta" style="padding:8px">' + escHTML(T("hist_loading")) + '</div>';
+      try{
+        var res = await fetch(QB_API_BASE + "/history", { headers: authHeaders() });
+        if(res.status === 401){ clearAuth(); closeHistory(); openLoginModal(); return; }
+        var d = {}; try{ d = await res.json(); }catch(_e){}
+        var items = (d && d.items) || [];
+        if(!items.length){ box.innerHTML = '<div class="meta" style="padding:8px">' + escHTML(T("hist_empty")) + '</div>'; return; }
+        box.innerHTML = items.map(function(it){
+          var sc = it.score ? (it.score.correct + "/" + it.score.answered + " ✓ · " + it.score.answered + "/" + it.score.total) : escHTML(T("hist_unanswered"));
+          var id = escapeAttr(it.id);
+          return '<div class="qb-hist-row">'
+            + '<div class="qb-hist-main"><div class="qb-hist-title">' + escHTML(it.title || it.bank_id) + '</div>'
+            + '<div class="qb-hist-sub">' + sc + ' · ' + escHTML(fmtHistTime(it.ts)) + '</div></div>'
+            + '<button class="btn" onclick="restoreSnapshot(\'' + id + '\')">' + escHTML(T("hist_load")) + '</button>'
+            + '<button class="btn qb-x" onclick="deleteSnapshot(\'' + id + '\')" aria-label="delete" title="delete">✕</button>'
+            + '</div>';
+        }).join("");
+      }catch(_e){
+        box.innerHTML = '<div class="meta" style="padding:8px;color:var(--danger-ink)">' + escHTML(T("hist_neterr")) + '</div>';
+      }
+    }
+    async function deleteSnapshot(id){
+      if(!confirm(T("hist_del_confirm"))) return;
+      try{ await fetch(QB_API_BASE + "/history?id=" + encodeURIComponent(id), { method: "DELETE", headers: authHeaders() }); }catch(_e){}
+      renderHistoryList();
+    }
+    async function restoreSnapshot(id){
+      var snap = null;
+      try{
+        var res = await fetch(QB_API_BASE + "/history?id=" + encodeURIComponent(id), { headers: authHeaders() });
+        if(res.status === 401){ clearAuth(); closeHistory(); openLoginModal(); return; }
+        var d = {}; try{ d = await res.json(); }catch(_e){}
+        snap = d && d.snapshot;
+      }catch(_e){}
+      if(!snap){ alert(T("hist_load_fail")); return; }
+      try{ sessionStorage.setItem("qb_restore", JSON.stringify(snap)); }catch(_e){}
+      closeHistory();
+      if(snap.bank_id === STORAGE_NS){ checkPendingRestore(); }   // 已在同一库：直接应用
+      else { location.href = bankUrlForSnapshot(snap.bank_id); } // 跳到对应库后应用
+    }
+    // 快照 bank_id → 打开 URL：u- 前缀 = 私有题库（?mybank=），否则公开库（?bank=）
+    function bankUrlForSnapshot(bid){
+      bid = String(bid || "");
+      if(bid.indexOf("u-") === 0) return "player.html?mybank=" + encodeURIComponent(bid.slice(2));
+      return "player.html?bank=" + encodeURIComponent(bid);
+    }
+
+    /* ---- 还原 ---- */
+    function getPendingRestore(){
+      try{ var s = sessionStorage.getItem("qb_restore"); return s ? JSON.parse(s) : null; }catch(_e){ return null; }
+    }
+    function clearPendingRestore(){ try{ sessionStorage.removeItem("qb_restore"); }catch(_e){} }
+    function applyRestore(snap){
+      var byId = {};
+      for(var i=0;i<QUESTION_BANK.length;i++) byId[QUESTION_BANK[i].id] = QUESTION_BANK[i];
+      var list = [];
+      (snap.scope || []).forEach(function(id){ if(byId[id]) list.push(byId[id]); });
+      if(!list.length){ clearPendingRestore(); alert(T("hist_load_fail")); return; }
+      RESTORING = true;
+      resetSessionScoreState(); // 清零 totals/answeredOnce/uiState，再按快照重建
+      viewMode = 'all'; specialFilterSource = 'base';
+      activeRandom150Questions = null; activeRandom150SourcePool = null;
+      var stState = snap.state || {};
+      var submittedIds = [];
+      Object.keys(stState).forEach(function(id){
+        var s = stState[id], q = byId[id]; if(!q || !s) return;
+        var st = {
+          selectedIndex: (s.selectedIndex == null ? null : s.selectedIndex),
+          selectedSet: new Set(Array.isArray(s.selectedSet) ? s.selectedSet : []),
+          fillInputs: Array.isArray(s.fillInputs) ? s.fillInputs.slice() : (Array.isArray(q.blanks) ? Array(q.blanks.length).fill("") : []),
+          submitted: !!s.submitted,
+          feedbackHTML: "",
+          showKeys: !!s.showKeys
+        };
+        if(st.submitted){
+          var ok = regradeOk(q, st);
+          st.feedbackHTML = ok ? '<div class="correct">' + T('correct_fb') + '</div>' : '<div class="wrong">' + T('wrong_fb') + '</div>';
+          submittedIds.push(id);
+          totalAttempts++; answeredOnce.add(id);
+          if(ok) totalCorrect++;
+        }
+        uiState[id] = st;
+      });
+      baseQuestions = list.slice();
+      SESSION_ID = snap.id || newSessionId();
+      render(list);
+      // 已提交的题：先 hydrate 再补画反馈/锁定提交按钮（懒加载卡片默认不在视口里）
+      submittedIds.forEach(function(id){ try{ ensureHydrated(id); syncQuestionUI(id); }catch(_e){} });
+      updateButtons();
+      updateStats();
+      RESTORING = false;
+      clearPendingRestore();
+      try{ window.scrollTo(0, 0); }catch(_e){}
+    }
+    function checkPendingRestore(){
+      var snap = getPendingRestore();
+      if(snap && snap.bank_id === STORAGE_NS){ applyRestore(snap); return true; }
+      return false;
+    }
+    // all-banks 合并页还原：自动勾选当时纳入的公开库并直接开始（受保护库无法自动解锁，跳过）
+    function maybeAutoMergeRestore(){
+      if(STORAGE_NS !== "all-banks") return false;
+      var snap = getPendingRestore();
+      if(!snap || snap.bank_id !== STORAGE_NS || !Array.isArray(snap.merged_banks) || !snap.merged_banks.length) return false;
+      var want = {}; snap.merged_banks.forEach(function(x){ want[x] = 1; });
+      var boxes = document.querySelectorAll('#ab-public-list [data-ab-pub]');
+      var matched = 0;
+      boxes.forEach(function(b){ var on = !!want[b.value]; b.checked = on; if(on) matched++; });
+      if(matched){ setTimeout(function(){ try{ startAllBanksMerged(); }catch(_e){} }, 30); return true; }
+      return false;
     }
 
     /* ---- 逐题报错 ---- */
@@ -2128,6 +2426,9 @@
       { title: "⭐ Found an error? Tell me — this really works!",
         body: "The single most useful button here. Tap 💬 Feedback at the top, or ⚐ Report on any question card, to flag a wrong answer, a typo, or anything unclear. Your message reaches me in seconds and I actually fix it — every report makes this bank better for the next person. No sign-up, takes 5 seconds. Please use it!",
         sel: "#suggest-btn" },
+      { title: "👤 Sign in to save your history",
+        body: "Tap 👤 at the top and pick a personal code — great on phones, no email or password reset. Every round you answer is then saved automatically, and you can reload any of your last 10 rounds on any device — your answers come back exactly as you left them. The same code shows the same history everywhere, so you can sign in from the catalog page too.",
+        sel: "#account-btn" },
       { title: "Welcome 👋",
         body: "Every question lives on this single page — scroll and answer at your own pace. Wrong answers, starred questions and attempt counts are saved on this device automatically. Use the 🌙 / ☀️ button at the top to switch between light and dark.",
         sel: null },
@@ -2274,6 +2575,7 @@
       const msg = document.getElementById("ab-msg");
       if (msg) msg.hidden = true;
       document.getElementById("qb-allbanks").hidden = false;
+      maybeAutoMergeRestore(); // 「重新加载历史」指向合并页时：自动勾选并开始
     }
     async function abUnlock(id){
       const row = document.querySelector('#ab-list [data-ab-id="' + id + '"]');
@@ -2342,6 +2644,7 @@
         let qs = [];
         for (const arr of fetched) qs = qs.concat(arr);
         for (const [bid, arr] of AB_UNLOCKED.entries()){ arr.forEach(q => { if (q && typeof q === "object") q.bank_file = bid; }); qs = qs.concat(arr); }
+        MERGED_BANK_IDS = checkedIds.concat(Array.from(AB_UNLOCKED.keys())); // 历史快照记录本轮纳入的库
         document.getElementById("qb-allbanks").hidden = true;
         showQuizApp();
         startQuiz(qs);
@@ -2360,6 +2663,38 @@
 
     // 通用播放器（remote 模式）的数据装载：banks/index.json 找条目 → 拉对应文件
     let REMOTE_ENVELOPE = null; // 密码库的密文信封（解锁函数读它）
+    // 私有题库：必须登录；登录后从 /api/banks?id 按需取，不在设备缓存。STORAGE_NS 用 "u-"+id 命名空间。
+    async function bootstrapPrivateBank(id, fail){
+      if(!/^[A-Za-z0-9_-]{1,64}$/.test(id)){ fail("Invalid ?mybank= id"); return; }
+      IS_PRIVATE_BANK = true;
+      setStorageNamespace("u-" + id);
+      const sb = document.getElementById("suggest-btn"); if (sb) sb.hidden = true; // 私有题库内容只属于本人，关掉反馈/报错
+      if(!isLoggedIn()){
+        showQuizApp();
+        document.getElementById("quiz").innerHTML =
+          '<div style="padding:30px;text-align:center;color:var(--muted)">' +
+          '<p style="margin:0 0 16px;font-size:15px">' + escHTML(T("mybank_need_login")) + '</p>' +
+          '<button class="btn submit-btn" type="button" onclick="openLoginModal()">' + escHTML(T("login_btn")) + '</button>' +
+          '<br><br><a href="./" style="color:var(--brand)">← Back to catalog / 返回目录</a></div>';
+        return;
+      }
+      try{
+        const res = await fetch(QB_API_BASE + "/banks?id=" + encodeURIComponent(id), { headers: authHeaders() });
+        if(res.status === 401){ clearAuth(); await bootstrapPrivateBank(id, fail); return; }
+        if(res.status === 404){ fail(T("mybank_not_found")); return; }
+        if(!res.ok) throw new Error("HTTP " + res.status);
+        const d = await res.json();
+        const bank = d && d.bank;
+        if(!bank || !Array.isArray(bank.questions) || !bank.questions.length){ fail(T("mybank_not_found")); return; }
+        document.title = bank.title || id;
+        setPageHeading(bank.title || id);
+        showQuizApp();
+        startQuiz(bank.questions);
+      }catch(e){
+        fail("Failed to load your bank (" + (e && e.message ? e.message : String(e)) + ")");
+      }
+    }
+
     async function bootstrapRemoteBank(){
       const id = String(new URLSearchParams(location.search).get("bank") || "").trim();
       const fail = (msg) => {
@@ -2368,6 +2703,9 @@
           '<div style="padding:24px;text-align:center;color:var(--muted)">' + msg +
           '<br><a href="./" style="color:var(--brand)">← Back to catalog / 返回目录</a></div>';
       };
+      // 私有题库（登录后云端打开）：player.html?mybank=<id> —— 必须登录，按需从账号云端拉取，不在设备留存
+      const myId = String(new URLSearchParams(location.search).get("mybank") || "").trim();
+      if (myId){ await bootstrapPrivateBank(myId, fail); return; }
       if(!/^[A-Za-z0-9_-]{1,64}$/.test(id)){ fail("Missing or invalid ?bank= id"); return; }
       let entry = null;
       let manifestList = [];
@@ -2477,125 +2815,7 @@
     applyThemeIcon();
     bootstrapLegacyBank();
   </script>
-  <script>
-  /* ===== 星座 / 导航网络 粒子背景（候选 A，移植自 .particle-demos/A-constellation.html）
-     独立 IIFE；不污染全局；每帧零分配；省电；尊重 reduced-motion；跟随 data-theme 主题 ===== */
-  (function constellation(){
-    "use strict";
-    var canvas = document.getElementById('constellation');
-    if(!canvas) return;
-    var ctx = canvas.getContext('2d', { alpha: true });
-    if(!ctx) return;
 
-    var AREA_PER_NODE = 16000, MIN_NODES = 14;
-    var LINK_DIST = 132, LINK_DIST_SQ = LINK_DIST*LINK_DIST;
-    var MOUSE_RADIUS = 150, MOUSE_RADIUS_SQ = MOUSE_RADIUS*MOUSE_RADIUS;
-    var MOUSE_PULL = 0.022, MAX_DPR = 2, SPEED = 0.16;
-
-    var dpr=1, W=0, H=0, nodeCount=0, nodes=[], rafId=0, running=false, reduceMotion=false;
-    var rgb = "37,99,235";
-    var mouseX=0, mouseY=0, mouseActive=false;
-    var reduceMQ = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
-
-    function clamp(v,lo,hi){ return v<lo?lo:(v>hi?hi:v); }
-    function readParticleColor(){
-      var c = getComputedStyle(document.documentElement).getPropertyValue('--particle-rgb').trim();
-      if(c) rgb = c;
-    }
-    function nodeCap(){ if(W<560) return 46; if(W<1000) return 80; return 120; }
-    function computeNodeCount(){ return clamp(Math.floor(W*H/AREA_PER_NODE), MIN_NODES, nodeCap()); }
-
-    function resize(){
-      dpr = clamp(window.devicePixelRatio||1, 1, MAX_DPR);
-      W = window.innerWidth; H = window.innerHeight;
-      canvas.width = Math.round(W*dpr); canvas.height = Math.round(H*dpr);
-      canvas.style.width = W+'px'; canvas.style.height = H+'px';
-      ctx.setTransform(dpr,0,0,dpr,0,0);
-      rebuildNodes();
-    }
-    function rebuildNodes(){
-      var target = computeNodeCount();
-      while(nodes.length < target) nodes.push({x:0,y:0,vx:0,vy:0,r:0,tw:0,tws:0});
-      nodeCount = target;
-      for(var i=0;i<nodeCount;i++){
-        var n=nodes[i];
-        n.x=Math.random()*W; n.y=Math.random()*H;
-        var ang=Math.random()*Math.PI*2;
-        n.vx=Math.cos(ang)*SPEED*(0.5+Math.random());
-        n.vy=Math.sin(ang)*SPEED*(0.5+Math.random());
-        n.r=1.1+Math.random()*1.6; n.tw=Math.random()*Math.PI*2; n.tws=0.008+Math.random()*0.012;
-      }
-    }
-    function drawNode(n, alphaScale){
-      var a=(0.26+0.16*Math.sin(n.tw))*alphaScale;
-      ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
-      ctx.fillStyle='rgba('+rgb+','+a.toFixed(3)+')'; ctx.fill();
-    }
-    function drawLinks(globalScale){
-      ctx.lineWidth=1;
-      for(var i=0;i<nodeCount;i++){
-        var a=nodes[i];
-        for(var j=i+1;j<nodeCount;j++){
-          var b=nodes[j], dx=a.x-b.x, dy=a.y-b.y, d2=dx*dx+dy*dy;
-          if(d2<LINK_DIST_SQ){
-            var t=1-d2/LINK_DIST_SQ, alpha=t*t*0.12*globalScale;
-            if(mouseActive){ var mdx=a.x-mouseX, mdy=a.y-mouseY; if(mdx*mdx+mdy*mdy<MOUSE_RADIUS_SQ) alpha+=0.05*t; }
-            if(alpha<=0.004) continue;
-            ctx.strokeStyle='rgba('+rgb+','+alpha.toFixed(3)+')';
-            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
-          }
-        }
-      }
-    }
-    function drawStatic(){
-      ctx.clearRect(0,0,W,H); drawLinks(0.55);
-      for(var i=0;i<nodeCount;i++) drawNode(nodes[i],0.5);
-    }
-    function step(){
-      ctx.clearRect(0,0,W,H);
-      var i,n;
-      for(i=0;i<nodeCount;i++){
-        n=nodes[i]; n.x+=n.vx; n.y+=n.vy; n.tw+=n.tws;
-        if(n.x<-20){n.x=-20;n.vx=-n.vx;} else if(n.x>W+20){n.x=W+20;n.vx=-n.vx;}
-        if(n.y<-20){n.y=-20;n.vy=-n.vy;} else if(n.y>H+20){n.y=H+20;n.vy=-n.vy;}
-        if(mouseActive){
-          var dx=mouseX-n.x, dy=mouseY-n.y, d2=dx*dx+dy*dy;
-          if(d2<MOUSE_RADIUS_SQ && d2>1){
-            var f=(1-d2/MOUSE_RADIUS_SQ)*MOUSE_PULL, inv=1/Math.sqrt(d2);
-            n.vx+=dx*inv*f; n.vy+=dy*inv*f;
-          }
-        }
-        n.vx*=0.992; n.vy*=0.992;
-        var sp2=n.vx*n.vx+n.vy*n.vy;
-        if(sp2<0.0025){ var k=0.05/(Math.sqrt(sp2)+0.0001); n.vx+=n.vx*k; n.vy+=n.vy*k; }
-      }
-      drawLinks(1);
-      for(i=0;i<nodeCount;i++) drawNode(nodes[i],1);
-      rafId=requestAnimationFrame(step);
-    }
-    function start(){ if(running) return; if(reduceMotion){ drawStatic(); return; } running=true; rafId=requestAnimationFrame(step); }
-    function stop(){ running=false; if(rafId){ cancelAnimationFrame(rafId); rafId=0; } }
-    function onVisibility(){ if(document.hidden){ stop(); } else if(!reduceMotion){ start(); } else { drawStatic(); } }
-    var resizeTimer=0;
-    function onResize(){ if(resizeTimer) clearTimeout(resizeTimer); resizeTimer=setTimeout(function(){ resizeTimer=0; resize(); if(reduceMotion||document.hidden) drawStatic(); },150); }
-    function onPointerMove(e){ mouseX=e.clientX; mouseY=e.clientY; mouseActive=true; }
-    function onPointerLeave(){ mouseActive=false; }
-    function applyThemeVisuals(){ readParticleColor(); if(reduceMotion||document.hidden) drawStatic(); }
-    function onReduceChange(){ reduceMotion=!!(reduceMQ&&reduceMQ.matches); stop(); if(reduceMotion){ drawStatic(); } else if(!document.hidden){ start(); } }
-    function init(){
-      reduceMotion=!!(reduceMQ&&reduceMQ.matches);
-      readParticleColor(); resize(); start();
-      window.addEventListener('resize', onResize, {passive:true});
-      document.addEventListener('visibilitychange', onVisibility);
-      window.addEventListener('pointermove', onPointerMove, {passive:true});
-      window.addEventListener('blur', onPointerLeave);
-      document.addEventListener('mouseleave', onPointerLeave);
-      if(reduceMQ){ if(reduceMQ.addEventListener) reduceMQ.addEventListener('change', onReduceChange); else if(reduceMQ.addListener) reduceMQ.addListener(onReduceChange); }
-      window.__constellationThemeUpdate = applyThemeVisuals;
-    }
-    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
-  })();
-  </script>
 </body>
 </html>
 

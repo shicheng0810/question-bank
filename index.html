@@ -35,8 +35,6 @@
       --shadow-sm:0 1px 2px rgba(0,0,0,.4); --shadow-md:0 16px 38px rgba(0,0,0,.5);
     }
     *{box-sizing:border-box}
-    /* 星座粒子背景层：固定全屏、置底(-1)、不挡点击；正文是 body 在流内容、自然在其上 */
-    #constellation{position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:-1; display:block}
     body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; color:var(--ink); background:radial-gradient(1100px 560px at 100% -12%, var(--glow), transparent 60%), var(--bg); background-attachment:fixed; min-height:100vh; max-width:940px; margin:0 auto; line-height:1.6; padding:22px 16px 64px; -webkit-font-smoothing:antialiased}
     h1{font-size:1.7rem; font-weight:780; letter-spacing:-.02em; margin:0 0 4px}
     .topbar{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:6px}
@@ -61,14 +59,42 @@
     .go{display:inline-flex; align-items:center; gap:6px; margin-top:14px; color:var(--brand); font-weight:700; font-size:14px}
     .card:hover .go{gap:9px}
     input[type=file]{font:inherit; font-size:13px; color:var(--muted)}
+    /* 登录 / 做题历史 */
+    #account-btn{height:36px; padding:0 12px; border-radius:10px; border:1px solid var(--border-strong); background:var(--card); color:var(--ink); font-size:13px; font-weight:650; cursor:pointer; display:inline-flex; align-items:center; gap:6px; box-shadow:var(--shadow-sm); max-width:180px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    #account-btn:hover{background:var(--muted-bg)}
+    .login-reminder{display:flex; align-items:center; gap:12px; flex-wrap:wrap; background:var(--ok-bg); border:1px solid var(--ok-border); color:var(--ok-ink); padding:10px 14px; border-radius:12px; margin:-6px 0 18px; font-size:13.5px; line-height:1.5}
+    .login-reminder span{flex:1; min-width:200px}
+    .qb-ov{position:fixed; inset:0; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center; padding:18px; z-index:50}
+    .qb-ov[hidden]{display:none}
+    .qb-card{background:var(--card); border:1px solid var(--border-strong); border-radius:16px; box-shadow:var(--shadow-md); width:100%; max-width:440px; padding:20px; max-height:86vh; overflow:auto}
+    .qb-card h2{font-size:1.1rem; margin:0; font-weight:720}
+    .qb-card .row{display:flex; justify-content:space-between; align-items:center; gap:12px}
+    .qb-card input[type=text]{width:100%; font:inherit; font-size:14px; padding:9px 11px; border:1px solid var(--border-strong); border-radius:10px; background:var(--card); color:var(--ink); margin-top:8px}
+    .qb-x{width:34px; height:34px; border-radius:50%; border:1px solid var(--border-strong); background:var(--card); color:var(--ink); cursor:pointer; flex:0 0 auto; font-size:15px; line-height:1}
+    .qb-acts{display:flex; gap:8px; align-items:center; margin-top:16px}
+    .qb-acts .spacer{flex:1}
+    .qb-btn{height:38px; padding:0 16px; border-radius:10px; border:1px solid var(--border-strong); background:var(--card); color:var(--ink); font:inherit; font-weight:650; cursor:pointer}
+    .qb-btn:hover{background:var(--muted-bg)}
+    .qb-btn.primary{background:var(--brand); border-color:var(--brand); color:#fff}
+    .qb-btn.primary:hover{filter:brightness(1.05)}
+    .qb-status{font-size:13px; min-height:1.2em; margin-top:8px}
+    .qb-status.ok{color:var(--ok-ink)} .qb-status.err{color:var(--danger-ink)}
+    .qb-hint{color:var(--muted); font-size:13px; margin:8px 0 0; line-height:1.5}
+    .hist-list{display:flex; flex-direction:column; gap:8px; margin-top:10px; max-height:54vh; overflow:auto}
+    .hist-row{display:flex; align-items:center; gap:8px; padding:9px 11px; border:1px solid var(--border); border-radius:10px; background:var(--card)}
+    .hist-main{flex:1; min-width:0}
+    .hist-title{font-weight:650; font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    .hist-sub{font-size:12px; color:var(--muted); margin-top:2px}
+    .hist-row .qb-btn{height:30px; padding:0 10px; font-size:13px}
+    .hist-row .qb-x{width:28px; height:28px; font-size:13px}
   </style>
 </head>
 <body>
-  <canvas id="constellation" aria-hidden="true"></canvas>
   <div class="topbar">
     <h1 data-i18n="title">AMT Question Bank Practice</h1>
     <div class="topbar-controls">
       <button id="theme-toggle" type="button" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">🌙</button>
+      <button id="account-btn" type="button" onclick="onAccountBtn()" data-testid="account-btn" title="Sign in / history">👤 <span id="account-label">Sign in</span></button>
       <label class="lang">🌐
         <select id="ui-lang" onchange="setLang(this.value)" data-testid="ui-lang-select">
           <option value="en">English</option>
@@ -79,6 +105,10 @@
     </div>
   </div>
   <p class="sub" data-i18n="sub">Pick a bank to start — every question on one page, submit one by one; wrong answers and stars are saved on this device.</p>
+  <div id="login-reminder" class="login-reminder" hidden data-testid="login-reminder">
+    <span data-i18n="login_reminder">💡 Sign in to save every practice round and reload your history on any device.</span>
+    <button class="qb-btn primary" style="height:32px;padding:0 14px" onclick="openLoginModal()" data-i18n="login_btn">Sign in</button>
+  </div>
   <div class="grid" data-testid="bank-list">
 
     <a class="card" href="player.html?bank=all-banks" data-bank-id="all-banks" data-testid="bank-card">
@@ -141,6 +171,15 @@
 
   <div class="grid" id="local-grid" data-testid="local-grid" style="margin-top:14px"></div>
 
+  <section class="card" id="cloud-box" hidden data-testid="cloud-box" style="margin-top:14px">
+    <div class="card-head">
+      <h2 data-i18n="cloud_title">My account banks</h2>
+      <span class="pill progress" data-i18n="cloud_badge_section">☁️ Private · any device</span>
+    </div>
+    <p class="desc" data-i18n="cloud_desc">Banks you uploaded to your account. Only you, signed in with your code, can see and open them.</p>
+    <div class="grid" id="cloud-grid" data-testid="cloud-grid" style="margin-top:12px"></div>
+  </section>
+
   <section class="card" style="margin-top:14px" data-testid="import-box">
     <div class="card-head">
       <h2 data-i18n="import_title">Import your own bank (local)</h2>
@@ -151,8 +190,41 @@
       <input type="file" id="import-file" accept=".json,application/json" data-testid="import-file">
       <a class="go" style="margin-top:0" href="format.html" data-i18n="format_link" data-testid="format-link">JSON format guide →</a>
     </div>
+    <label id="import-cloud-row" style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--ink);cursor:pointer">
+      <input type="checkbox" id="import-to-account" data-testid="import-to-account">
+      <span data-i18n="import_to_account">☁️ Save to my account instead — private, opens on any device after you sign in</span>
+    </label>
     <p class="desc" id="import-msg" style="margin-top:8px" hidden data-testid="import-msg"></p>
   </section>
+
+  <div class="qb-ov" id="login-modal" hidden data-testid="login-modal" onclick="if(event.target===this)closeLoginModal()">
+    <div class="qb-card">
+      <div class="row"><h2 data-i18n="login_title">Sign in to save your history</h2>
+        <button class="qb-x" onclick="closeLoginModal()" aria-label="Close">✕</button></div>
+      <p class="qb-hint" data-i18n="login_hint">Pick a code and remember it.</p>
+      <input type="text" id="login-code" maxlength="64" autocomplete="off" autocapitalize="off" spellcheck="false" data-i18n-ph="login_ph" onkeydown="if(event.key==='Enter'){event.preventDefault();doLogin();}">
+      <div class="qb-acts">
+        <button class="qb-btn" onclick="closeLoginModal()" data-i18n="login_cancel">Cancel</button>
+        <span class="spacer"></span>
+        <button class="qb-btn primary" id="login-go" onclick="doLogin()" data-i18n="login_go">Enter</button>
+      </div>
+      <div class="qb-status" id="login-status"></div>
+    </div>
+  </div>
+
+  <div class="qb-ov" id="history-modal" hidden data-testid="history-modal" onclick="if(event.target===this)closeHistory()">
+    <div class="qb-card">
+      <div class="row"><h2 data-i18n="history_title">Your practice history</h2>
+        <button class="qb-x" onclick="closeHistory()" aria-label="Close">✕</button></div>
+      <p class="qb-hint" data-i18n="history_sub">Your latest 10 rounds.</p>
+      <div class="hist-list" id="history-list"></div>
+      <div class="qb-acts">
+        <button class="qb-btn" onclick="logout()" data-i18n="hist_logout">Sign out</button>
+        <span class="spacer"></span>
+        <button class="qb-btn" onclick="closeHistory()" data-i18n="login_cancel">Close</button>
+      </div>
+    </div>
+  </div>
   <script>
     var I18N = {
       en: { title:"AMT Question Bank Practice", sub:"Pick a bank to start — every question on one page, submit one by one; wrong answers and stars are saved on this device.",
@@ -160,28 +232,37 @@
             badge_public:"Public", badge_protected:"\uD83D\uDD12 Protected", count:"{n} questions", progress:"{n} practiced", start:"Start practicing \u2192",
             import_title:"Import your own bank (local)", import_badge:"Stays on this device",
             import_desc:"Pick a question-bank .json file \u2014 it is saved in this browser only (nothing is uploaded) and appears above as a Local bank.",
-            format_link:"JSON format guide \u2192", local_badge:"Local", local_practice:"Practice \u2192", local_delete:"Delete",
+            format_link:"JSON format guide \u2192", local_badge:"Local", local_practice:"Practice \u2192", local_delete:"Delete", local_to_account:"\u2601\uFE0F Save to account",
             import_ok:"Imported \u201C{t}\u201D: {n} questions ready.", import_rej:" ({r} invalid skipped \u2014 see format guide)",
             err_parse:"Not valid JSON \u2014 check the file.", err_shape:"No valid questions found \u2014 see the JSON format guide.", err_quota:"Browser storage is full \u2014 delete a local bank or shrink images.",
-            confirm_delete:"Delete this local bank? Its practice records stay until re-imported with the same file name." },
+            confirm_delete:"Delete this local bank? Its practice records stay until re-imported with the same file name.",
+            login_btn:"Sign in", login_title:"Sign in to save your history", login_hint:"Pick a code and remember it - use the same code on any device to find your history. Anyone who knows the code can see that history, so do not reuse a real password.", login_ph:"your code (4+ characters)", login_go:"Enter", login_cancel:"Cancel", login_ing:"Signing in...", login_ok:"\u2705 Signed in", login_fail:"Couldn't sign in, try again.", login_too_short:"Code needs at least 4 characters.", login_rate:"Too many tries - wait a minute.", login_neterr:"Network error, try again later.", login_reminder:"\uD83D\uDCA1 Sign in to save every practice round and reload your history on any device.",
+            history_title:"Your practice history", history_sub:"Your latest 10 rounds (oldest dropped). Tap Load to reopen a round with your answers.", hist_loading:"Loading...", hist_empty:"No saved rounds yet - answer a few questions and they will show up here.", hist_load:"Load", hist_neterr:"Couldn't load history.", hist_del_confirm:"Delete this record?", hist_load_fail:"Couldn't load that round.", hist_logout:"Sign out", hist_unanswered:"not started",
+            cloud_title:"My account banks", cloud_badge_section:"\u2601\uFE0F Private \u00B7 any device", cloud_badge:"\u2601\uFE0F Private", cloud_desc:"Banks you uploaded to your account. Only you, signed in with your code, can see and open them.", cloud_empty:"No account banks yet. Tick \u201CSave to my account\u201D below when you import a file.", cloud_delete:"Remove", cloud_del_confirm:"Remove this bank from your account? It is deleted from the cloud.", import_to_account:"\u2601\uFE0F Save to my account instead - private, opens on any device after you sign in", cloud_need_login:"Sign in first to upload to your account.", cloud_uploading:"Uploading to your account...", cloud_uploaded:"Uploaded \u201C{t}\u201D: {n} questions to your account.", cloud_moved:"Moved \u201C{t}\u201D ({n} questions) to your account; the local copy and its progress were removed.", cloud_limit:"Account bank limit reached ({n}). Remove one first.", cloud_too_large:"This bank is too large to upload - try removing large images.", cloud_fail:"Upload failed, please try again.", cloud_neterr:"Network error, try again later." },
       zh: { title:"AMT \u9898\u5E93\u7EC3\u4E60", sub:"\u9009\u62E9\u4E00\u4E2A\u9898\u5E93\u5F00\u59CB \u2014 \u6240\u6709\u9898\u76EE\u4E00\u9875\u5E73\u94FA\uFF0C\u9010\u9898\u63D0\u4EA4\uFF0C\u9519\u9898/\u6536\u85CF\u81EA\u52A8\u4FDD\u5B58\u5728\u672C\u673A\u3002",
             merged_title:"\u5168\u90E8\u9898\u5E93 \u00B7 \u5408\u5E76\u7EC3\u4E60", merged_desc:"\u6240\u6709\u516C\u5F00\u9898\u5E93\u5408\u5E76\u5230\u4E00\u9875\uFF08\u91CD\u590D\u9898\u5DF2\u667A\u80FD\u53BB\u91CD\uFF09\u3002\u6253\u5F00\u540E\u5728\u300C\u7B5B\u9009\u9898\u5E93\u300D\u91CC\u52FE\u9009\u4EFB\u610F\u7EC4\u5408\u4E00\u8D77\u505A\u3002",
             badge_public:"\u516C\u5F00", badge_protected:"\uD83D\uDD12 \u5BC6\u7801\u4FDD\u62A4", count:"{n} \u9898", progress:"\u5DF2\u505A {n} \u9898", start:"\u5F00\u59CB\u505A\u9898 \u2192",
             import_title:"\u5BFC\u5165\u81EA\u5DF1\u7684\u9898\u5E93\uFF08\u672C\u5730\uFF09", import_badge:"\u4EC5\u5B58\u672C\u8BBE\u5907",
             import_desc:"\u9009\u4E00\u4E2A\u9898\u5E93 .json \u6587\u4EF6 \u2014 \u53EA\u5B58\u5728\u8FD9\u4E2A\u6D4F\u89C8\u5668\u91CC\uFF08\u4E0D\u4E0A\u4F20\uFF09\uFF0C\u5BFC\u5165\u540E\u5728\u4E0A\u65B9\u4EE5\u300C\u672C\u5730\u300D\u5361\u7247\u51FA\u73B0\u3002",
-            format_link:"JSON \u683C\u5F0F\u8BF4\u660E \u2192", local_badge:"\u672C\u5730", local_practice:"\u5F00\u59CB\u505A\u9898 \u2192", local_delete:"\u5220\u9664",
+            format_link:"JSON \u683C\u5F0F\u8BF4\u660E \u2192", local_badge:"\u672C\u5730", local_practice:"\u5F00\u59CB\u505A\u9898 \u2192", local_delete:"\u5220\u9664", local_to_account:"\u2601\uFE0F 存到账号",
             import_ok:"\u5DF2\u5BFC\u5165\u300C{t}\u300D\uFF1A{n} \u9898\u53EF\u7528\u3002", import_rej:"\uFF08\u8DF3\u8FC7 {r} \u6761\u4E0D\u5408\u683C\u8BB0\u5F55\uFF0C\u89C1\u683C\u5F0F\u8BF4\u660E\uFF09",
             err_parse:"\u4E0D\u662F\u5408\u6CD5\u7684 JSON \u6587\u4EF6\u3002", err_shape:"\u6CA1\u6709\u627E\u5230\u53EF\u7528\u9898\u76EE \u2014 \u8BF7\u770B JSON \u683C\u5F0F\u8BF4\u660E\u3002", err_quota:"\u6D4F\u89C8\u5668\u5B58\u50A8\u5DF2\u6EE1 \u2014 \u5220\u4E2A\u672C\u5730\u9898\u5E93\u6216\u51CF\u5C0F\u56FE\u7247\u3002",
-            confirm_delete:"\u5220\u9664\u8FD9\u4E2A\u672C\u5730\u9898\u5E93\uFF1F\uFF08\u505A\u9898\u8BB0\u5F55\u4FDD\u7559\uFF0C\u540C\u540D\u91CD\u65B0\u5BFC\u5165\u53EF\u63A5\u7EED\uFF09" },
+            confirm_delete:"\u5220\u9664\u8FD9\u4E2A\u672C\u5730\u9898\u5E93\uFF1F\uFF08\u505A\u9898\u8BB0\u5F55\u4FDD\u7559\uFF0C\u540C\u540D\u91CD\u65B0\u5BFC\u5165\u53EF\u63A5\u7EED\uFF09",
+            login_btn:"登录", login_title:"登录以保存历史", login_hint:"自定义一个码并记住它——换设备也用同一个码就能找回历史。知道码的人就能看到那份历史，别用你别处的真实密码。", login_ph:"你的码（4 位以上）", login_go:"进入", login_cancel:"取消", login_ing:"登录中...", login_ok:"\u2705 已登录", login_fail:"登录失败，请重试。", login_too_short:"码至少要 4 位。", login_rate:"尝试太频繁，请稍等一分钟。", login_neterr:"网络错误，请稍后再试。", login_reminder:"\uD83D\uDCA1 登录后可保存每次做题、并在任意设备重新加载你的历史。",
+            history_title:"你的做题历史", history_sub:"最近 10 轮（超出删最旧）。点「载入」回到那一轮、带上你的作答。", hist_loading:"加载中...", hist_empty:"还没有记录——做几道题就会出现在这里。", hist_load:"载入", hist_neterr:"加载历史失败。", hist_del_confirm:"删除这条记录？", hist_load_fail:"载入这一轮失败。", hist_logout:"退出登录", hist_unanswered:"未开始",
+            cloud_title:"我的账号题库", cloud_badge_section:"\u2601\uFE0F 私有 \u00B7 任意设备", cloud_badge:"\u2601\uFE0F 私有", cloud_desc:"你上传到账号的题库。只有用你的码登录的你，才能看到和打开。", cloud_empty:"账号里还没有题库。导入文件时勾选下面的「传到账号」即可。", cloud_delete:"移除", cloud_del_confirm:"从账号移除这个题库？（会从云端删除。）", import_to_account:"\u2601\uFE0F 改为传到我的账号 —— 私有，登录后任意设备都能打开", cloud_need_login:"请先登录再上传到账号。", cloud_uploading:"正在上传到账号...", cloud_uploaded:"已上传「{t}」：{n} 题到你的账号。", cloud_moved:"已把「{t}」（{n} 题）移到你的账号；本地副本和进度已一并移走。", cloud_limit:"账号题库数量已达上限（{n}）。请先移除一个。", cloud_too_large:"题库太大无法上传 —— 试试去掉大图片。", cloud_fail:"上传失败，请重试。", cloud_neterr:"网络错误，请稍后再试。" },
       es: { title:"Pr\u00E1ctica del banco de preguntas AMT", sub:"Elige un banco para empezar: todas las preguntas en una p\u00E1gina, env\u00EDa una por una; errores y favoritas se guardan en este dispositivo.",
             merged_title:"Todos los bancos \u00B7 Pr\u00E1ctica combinada", merged_desc:"Todos los bancos p\u00FAblicos en una sola p\u00E1gina (sin duplicados). Usa \u201CFiltrar bancos\u201D dentro para elegir cualquier combinaci\u00F3n.",
             badge_public:"P\u00FAblica", badge_protected:"\uD83D\uDD12 Protegida", count:"{n} preguntas", progress:"{n} practicadas", start:"Empezar \u2192",
             import_title:"Importa tu propio banco (local)", import_badge:"Solo en este dispositivo",
             import_desc:"Elige un archivo .json \u2014 se guarda solo en este navegador (no se sube nada) y aparece arriba como banco Local.",
-            format_link:"Gu\u00EDa del formato JSON \u2192", local_badge:"Local", local_practice:"Practicar \u2192", local_delete:"Eliminar",
+            format_link:"Gu\u00EDa del formato JSON \u2192", local_badge:"Local", local_practice:"Practicar \u2192", local_delete:"Eliminar", local_to_account:"\u2601\uFE0F Guardar en cuenta",
             import_ok:"Importado \u201C{t}\u201D: {n} preguntas listas.", import_rej:" ({r} inv\u00E1lidas omitidas \u2014 ver gu\u00EDa)",
             err_parse:"JSON no v\u00E1lido.", err_shape:"No se encontraron preguntas v\u00E1lidas \u2014 ver la gu\u00EDa del formato.", err_quota:"Almacenamiento del navegador lleno.",
-            confirm_delete:"\u00BFEliminar este banco local?" }
+            confirm_delete:"\u00BFEliminar este banco local?",
+            login_btn:"Entrar", login_title:"Entra para guardar tu historial", login_hint:"Elige un código y recuérdalo - usa el mismo en cualquier dispositivo para encontrar tu historial. Quien conozca el código verá ese historial, así que no uses una contraseña real.", login_ph:"tu código (4+ caracteres)", login_go:"Entrar", login_cancel:"Cancelar", login_ing:"Entrando...", login_ok:"\u2705 Sesión iniciada", login_fail:"No se pudo entrar, reinténtalo.", login_too_short:"El código necesita 4+ caracteres.", login_rate:"Demasiados intentos - espera un minuto.", login_neterr:"Error de red, inténtalo más tarde.", login_reminder:"\uD83D\uDCA1 Inicia sesión para guardar cada ronda y recargar tu historial en cualquier dispositivo.",
+            history_title:"Tu historial de práctica", history_sub:"Tus últimas 10 rondas (se elimina la más antigua). Pulsa Cargar para reabrir una ronda con tus respuestas.", hist_loading:"Cargando...", hist_empty:"Aún no hay rondas - responde algunas preguntas y aparecerán aquí.", hist_load:"Cargar", hist_neterr:"No se pudo cargar el historial.", hist_del_confirm:"¿Eliminar este registro?", hist_load_fail:"No se pudo cargar esa ronda.", hist_logout:"Cerrar sesión", hist_unanswered:"sin empezar",
+            cloud_title:"Mis bancos de la cuenta", cloud_badge_section:"\u2601\uFE0F Privado \u00B7 cualquier dispositivo", cloud_badge:"\u2601\uFE0F Privado", cloud_desc:"Bancos que subiste a tu cuenta. Solo tú, con tu código, puedes verlos y abrirlos.", cloud_empty:"Aún no hay bancos en la cuenta. Marca \u201CGuardar en mi cuenta\u201D al importar un archivo.", cloud_delete:"Quitar", cloud_del_confirm:"\u00BFQuitar este banco de tu cuenta? Se elimina de la nube.", import_to_account:"\u2601\uFE0F Guardar en mi cuenta - privado, se abre en cualquier dispositivo tras iniciar sesión", cloud_need_login:"Inicia sesión primero para subir a tu cuenta.", cloud_uploading:"Subiendo a tu cuenta...", cloud_uploaded:"Subido \u201C{t}\u201D: {n} preguntas a tu cuenta.", cloud_moved:"Movido \u201C{t}\u201D ({n} preguntas) a tu cuenta; la copia local y su progreso se quitaron.", cloud_limit:"Límite de bancos alcanzado ({n}). Quita uno primero.", cloud_too_large:"Este banco es demasiado grande - quita imágenes grandes.", cloud_fail:"Error al subir, inténtalo de nuevo.", cloud_neterr:"Error de red, inténtalo más tarde." }
     };
     var LANG_KEY = "qb_ui_lang"; // 与做题页共用同一偏好
     var lang = (function(){ try{ var v = localStorage.getItem(LANG_KEY); return I18N[v] ? v : "en"; }catch(e){ return "en"; } })();
@@ -245,8 +326,9 @@
           '<div class="card-head"><h2>' + escHtml(b.title || id) + '</h2><span class="pill progress">' + escHtml(T("local_badge")) + '</span></div>' +
           '<div class="meta-row"><span class="pill muted">' + escHtml(T("count", { n: count })) + '</span>' +
           '<span class="pill muted progress" data-progress-for="local-' + escHtml(id) + '" hidden></span></div>' +
-          '<div style="display:flex;gap:14px;align-items:center;margin-top:12px">' +
+          '<div style="display:flex;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap">' +
           '<a class="go" style="margin-top:0" href="local.html?bank=' + encodeURIComponent(id) + '" data-testid="local-practice-link">' + escHtml(T("local_practice")) + '</a>' +
+          '<button class="pill muted" style="cursor:pointer" onclick="saveLocalToAccount(\'' + escHtml(id) + '\')" data-testid="local-to-account-btn">' + escHtml(T("local_to_account")) + '</button>' +
           '<button class="pill muted" style="cursor:pointer" onclick="removeLocalBank(\'' + escHtml(id) + '\')" data-testid="local-delete-btn">' + escHtml(T("local_delete")) + '</button>' +
           '</div></div>';
       }).join("");
@@ -258,6 +340,13 @@
       delete banks[id];
       saveLocalBanks(banks);
       renderLocalBanks();
+    }
+    // 把已有的本地题库上传到账号（私有云端）；未登录先弹登录。本地副本保留，用户可自行删除。
+    function saveLocalToAccount(id){
+      if (!isLoggedIn()){ openLoginModal(); importMessage(T("cloud_need_login"), true); return; }
+      var b = loadLocalBanks()[id];
+      if (!b || !Array.isArray(b.questions) || !b.questions.length){ importMessage(T("cloud_fail"), true); return; }
+      uploadBankToAccount(b.title || id, b.questions, 0, { localId: id });
     }
     function importMessage(text, isError){
       var el = document.getElementById("import-msg");
@@ -316,6 +405,13 @@
           var res = validateBank(list);
           if (!res.valid.length){ importMessage(T("err_shape"), true); return; }
           var title = String(file.name || "bank").replace(/\.json$/i, "");
+          var toAcct = document.getElementById("import-to-account");
+          if (toAcct && toAcct.checked){
+            // 上传到账号（私有云端）：未登录先弹登录
+            if (!isLoggedIn()){ openLoginModal(); importMessage(T("cloud_need_login"), true); return; }
+            uploadBankToAccount(title, res.valid, res.rejected);
+            return;
+          }
           var id = slugLocal(title);
           var banks = loadLocalBanks();
           try{
@@ -333,11 +429,13 @@
       document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
       renderLocalBanks(); // 本地卡片直接用 T() 重建
       document.querySelectorAll("[data-i18n]").forEach(function(el){ el.textContent = T(el.getAttribute("data-i18n")); });
+      document.querySelectorAll("[data-i18n-ph]").forEach(function(el){ el.setAttribute("placeholder", T(el.getAttribute("data-i18n-ph"))); });
       document.querySelectorAll("[data-qcount]").forEach(function(el){ el.textContent = T("count", { n: el.getAttribute("data-qcount") }); });
       document.querySelectorAll("[data-progress-for]").forEach(function(el){
         if (el.dataset.done) el.textContent = T("progress", { n: el.dataset.done });
       });
       var sel = document.getElementById("ui-lang"); if (sel) sel.value = lang;
+      if (typeof updateAuthUI === "function") updateAuthUI(); // 语言变了刷新账号按钮/提醒文案
     }
     function setLang(v){ lang = I18N[v] ? v : "en"; try{ localStorage.setItem(LANG_KEY, lang); }catch(e){} applyLang(); }
     // 进度提示：读各题库命名空间下的做题次数表
@@ -368,131 +466,175 @@
       document.documentElement.setAttribute("data-theme", t);
       try{ localStorage.setItem(THEME_KEY, t); }catch(e){}
       applyThemeIcon();
-      if(window.__constellationThemeUpdate) window.__constellationThemeUpdate(); // 粒子背景跟随主题变色
     }
     function toggleTheme(){ setTheme(currentTheme() === "dark" ? "light" : "dark"); }
+    /* ===== 登录 + 做题历史（目录页：与做题页同源，共用 token / 历史）===== */
+    var QB_API_BASE = "https://question-bank-78u.pages.dev/api";
+    var AUTH_KEY = "qb_auth_v1";
+    function getAuth(){ try{ return JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); }catch(e){ return null; } }
+    function setAuth(a){ try{ localStorage.setItem(AUTH_KEY, JSON.stringify(a)); }catch(e){} updateAuthUI(); }
+    function clearAuth(){ try{ localStorage.removeItem(AUTH_KEY); }catch(e){} updateAuthUI(); }
+    function isLoggedIn(){ var a = getAuth(); return !!(a && a.token); }
+    function authHeaders(){ var a = getAuth(); return (a && a.token) ? { "Authorization": "Bearer " + a.token } : {}; }
+    function updateAuthUI(){
+      var a = getAuth();
+      var lbl = document.getElementById("account-label");
+      if (lbl) lbl.textContent = (a && a.name) ? a.name : T("login_btn");
+      var rem = document.getElementById("login-reminder");
+      if (rem) rem.hidden = !!(a && a.token); // 已登录就不再提醒；未登录（含第一次打开）显示提醒
+      renderCloudBanks(); // 已登录显示「我的账号题库」，未登录隐藏
+    }
+    function onAccountBtn(){ if (isLoggedIn()) openHistory(); else openLoginModal(); }
+    function loginStatus(text, kind){ var el = document.getElementById("login-status"); if (!el) return; el.textContent = text || ""; el.className = "qb-status" + (kind ? " " + kind : ""); }
+    function openLoginModal(){
+      var m = document.getElementById("login-modal"); if (!m) return;
+      var inp = document.getElementById("login-code"); if (inp) inp.value = "";
+      loginStatus("", "");
+      m.hidden = false;
+      if (inp) setTimeout(function(){ try{ inp.focus(); }catch(e){} }, 60);
+    }
+    function closeLoginModal(){ var m = document.getElementById("login-modal"); if (m) m.hidden = true; }
+    function doLogin(){
+      var inp = document.getElementById("login-code");
+      var code = ((inp && inp.value) || "").trim();
+      if (code.length < 4){ loginStatus(T("login_too_short"), "err"); return; }
+      var btn = document.getElementById("login-go"); if (btn) btn.disabled = true;
+      loginStatus(T("login_ing"), "");
+      fetch(QB_API_BASE + "/auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ code: code }) })
+        .then(function(res){ return res.json().then(function(d){ return { ok: res.ok, status: res.status, d: d }; }, function(){ return { ok: res.ok, status: res.status, d: {} }; }); })
+        .then(function(r){
+          if (r.ok && r.d && r.d.ok && r.d.token){
+            setAuth({ token: r.d.token, name: (r.d.user && r.d.user.name) || code });
+            loginStatus(T("login_ok"), "ok");
+            setTimeout(function(){ closeLoginModal(); openHistory(); }, 650);
+          } else if (r.status === 429 || (r.d && r.d.error === "rate_limited")){
+            loginStatus(T("login_rate"), "err");
+          } else {
+            loginStatus(T("login_fail"), "err");
+          }
+        })
+        .catch(function(){ loginStatus(T("login_neterr"), "err"); })
+        .then(function(){ if (btn) btn.disabled = false; });
+    }
+    function logout(){ clearAuth(); closeHistory(); }
+    function fmtHistTime(ts){ try{ return new Date(ts).toLocaleString(); }catch(e){ return ""; } }
+    function openHistory(){
+      if (!isLoggedIn()){ openLoginModal(); return; }
+      var m = document.getElementById("history-modal"); if (!m) return;
+      m.hidden = false; renderHistoryList();
+    }
+    function closeHistory(){ var m = document.getElementById("history-modal"); if (m) m.hidden = true; }
+    function renderHistoryList(){
+      var box = document.getElementById("history-list"); if (!box) return;
+      box.innerHTML = '<div class="qb-hint" style="padding:6px">' + escHtml(T("hist_loading")) + '</div>';
+      fetch(QB_API_BASE + "/history", { headers: authHeaders() })
+        .then(function(res){ if (res.status === 401){ clearAuth(); closeHistory(); openLoginModal(); return null; } return res.json(); })
+        .then(function(d){
+          if (!d) return;
+          var items = (d && d.items) || [];
+          if (!items.length){ box.innerHTML = '<div class="qb-hint" style="padding:6px">' + escHtml(T("hist_empty")) + '</div>'; return; }
+          box.innerHTML = items.map(function(it){
+            var sc = it.score ? (it.score.correct + "/" + it.score.answered + " \u2713 \u00B7 " + it.score.answered + "/" + it.score.total) : escHtml(T("hist_unanswered"));
+            var id = escHtml(it.id);
+            return '<div class="hist-row"><div class="hist-main"><div class="hist-title">' + escHtml(it.title || it.bank_id) + '</div>' +
+              '<div class="hist-sub">' + sc + ' \u00B7 ' + escHtml(fmtHistTime(it.ts)) + '</div></div>' +
+              '<button class="qb-btn" onclick="restoreSnapshot(\'' + id + '\')">' + escHtml(T("hist_load")) + '</button>' +
+              '<button class="qb-x" onclick="deleteSnapshot(\'' + id + '\')" aria-label="delete">\u2715</button></div>';
+          }).join("");
+        })
+        .catch(function(){ box.innerHTML = '<div class="qb-hint" style="padding:6px;color:var(--danger-ink)">' + escHtml(T("hist_neterr")) + '</div>'; });
+    }
+    function deleteSnapshot(id){
+      if (!confirm(T("hist_del_confirm"))) return;
+      fetch(QB_API_BASE + "/history?id=" + encodeURIComponent(id), { method: "DELETE", headers: authHeaders() })
+        .then(function(){ renderHistoryList(); }, function(){ renderHistoryList(); });
+    }
+    function restoreSnapshot(id){
+      fetch(QB_API_BASE + "/history?id=" + encodeURIComponent(id), { headers: authHeaders() })
+        .then(function(res){ if (res.status === 401){ clearAuth(); closeHistory(); openLoginModal(); return null; } return res.json(); })
+        .then(function(d){
+          var snap = d && d.snapshot;
+          if (!snap){ alert(T("hist_load_fail")); return; }
+          try{ sessionStorage.setItem("qb_restore", JSON.stringify(snap)); }catch(e){}
+          var page = (snap.bank_id && String(snap.bank_id).indexOf("local-") === 0) ? "local.html" : "player.html";
+          location.href = page + "?bank=" + encodeURIComponent(snap.bank_id);
+        })
+        .catch(function(){ alert(T("hist_load_fail")); });
+    }
+
+    /* ---- 私有题库：上传到账号（云端私有），登录后任意设备打开 ---- */
+    function uploadBankToAccount(title, questions, rejected, opts){
+      opts = opts || {};
+      importMessage(T("cloud_uploading"), false);
+      fetch(QB_API_BASE + "/banks", { method:"POST", headers:Object.assign({"Content-Type":"application/json"}, authHeaders()), body: JSON.stringify({ bank: { id: slugLocal(title), title: title, questions: questions } }) })
+        .then(function(res){ return res.json().then(function(d){ return { status: res.status, d: d }; }, function(){ return { status: res.status, d: {} }; }); })
+        .then(function(r){
+          if (r.status === 401){ clearAuth(); openLoginModal(); importMessage(T("cloud_need_login"), true); return; }
+          if (r.d && r.d.ok){
+            var t2 = document.getElementById("import-to-account"); if (t2) t2.checked = false;
+            if (opts.localId){
+              // 「移动」语义：本地进度（错题/收藏/已答次数）搬到云端命名空间，再删掉本地题库+本地进度
+              migrateLocalProgressToCloud(opts.localId, r.d.saved);
+              var lb = loadLocalBanks(); delete lb[opts.localId]; saveLocalBanks(lb);
+              clearLocalProgress(opts.localId);
+              renderLocalBanks();
+            }
+            renderCloudBanks();
+            importMessage(opts.localId ? T("cloud_moved", { t: title, n: questions.length }) : (T("cloud_uploaded", { t: title, n: questions.length }) + (rejected ? T("import_rej", { r: rejected }) : "")), false);
+          } else if (r.d && r.d.error === "limit"){ importMessage(T("cloud_limit", { n: (r.d.limit || 15) }), true); }
+          else if (r.d && (r.d.error === "too_large" || r.d.error === "too_many_questions")){ importMessage(T("cloud_too_large"), true); }
+          else { importMessage(T("cloud_fail"), true); }
+        })
+        .catch(function(){ importMessage(T("cloud_neterr"), true); });
+    }
+    // 本地题库做题进度从 local-<id> 命名空间复制到云端 u-<cloudId>（题目内容相同→dedup 出的题 id 相同→进度键通用）
+    function localNs(localId){ return "local-" + String(localId).replace(/[^A-Za-z0-9_-]/g, "-").slice(0, 48); }
+    var PROGRESS_SUFFIXES = ["_starred_questions", "_wrong_questions", "_attempt_count_map_v1"];
+    function migrateLocalProgressToCloud(localId, cloudId){
+      if (!localId || !cloudId) return;
+      var fromNs = localNs(localId), toNs = "u-" + cloudId;
+      PROGRESS_SUFFIXES.forEach(function(suf){
+        try{ var v = localStorage.getItem(fromNs + suf); if (v != null) localStorage.setItem(toNs + suf, v); }catch(e){}
+      });
+    }
+    function clearLocalProgress(localId){
+      var ns = localNs(localId);
+      PROGRESS_SUFFIXES.forEach(function(suf){ try{ localStorage.removeItem(ns + suf); }catch(e){} });
+    }
+    function renderCloudBanks(){
+      var box = document.getElementById("cloud-box");
+      var grid = document.getElementById("cloud-grid");
+      if (!grid) return;
+      if (!isLoggedIn()){ if (box) box.hidden = true; return; }
+      fetch(QB_API_BASE + "/banks", { headers: authHeaders() })
+        .then(function(res){ if (res.status === 401){ clearAuth(); return null; } return res.json(); })
+        .then(function(d){
+          if (!d){ if (box) box.hidden = true; return; }
+          var items = (d && d.items) || [];
+          if (box) box.hidden = false;
+          if (!items.length){ grid.innerHTML = '<div class="desc" style="padding:6px">' + escHtml(T("cloud_empty")) + '</div>'; return; }
+          grid.innerHTML = items.map(function(b){
+            var id = escHtml(b.id);
+            return '<div class="card" data-testid="cloud-card" data-cloud-id="' + id + '">' +
+              '<div class="card-head"><h2>' + escHtml(b.title || b.id) + '</h2><span class="pill progress">' + escHtml(T("cloud_badge")) + '</span></div>' +
+              '<div class="meta-row"><span class="pill muted">' + escHtml(T("count", { n: b.count || 0 })) + '</span></div>' +
+              '<div style="display:flex;gap:14px;align-items:center;margin-top:12px">' +
+              '<a class="go" style="margin-top:0" href="player.html?mybank=' + encodeURIComponent(b.id) + '" data-testid="cloud-practice-link">' + escHtml(T("local_practice")) + '</a>' +
+              '<button class="pill muted" style="cursor:pointer" onclick="deleteCloudBank(\'' + id + '\')" data-testid="cloud-delete-btn">' + escHtml(T("cloud_delete")) + '</button>' +
+              '</div></div>';
+          }).join("");
+        })
+        .catch(function(){ if (box) box.hidden = false; grid.innerHTML = '<div class="desc" style="padding:6px;color:var(--danger-ink)">' + escHtml(T("cloud_neterr")) + '</div>'; });
+    }
+    function deleteCloudBank(id){
+      if (!confirm(T("cloud_del_confirm"))) return;
+      fetch(QB_API_BASE + "/banks?id=" + encodeURIComponent(id), { method:"DELETE", headers: authHeaders() })
+        .then(function(){ renderCloudBanks(); }, function(){ renderCloudBanks(); });
+    }
+
     applyLang();
     applyThemeIcon();
     scanProgress();
-  </script>
-  <script>
-  /* ===== 星座 / 导航网络 粒子背景（候选 A，移植自 .particle-demos/A-constellation.html）
-     独立 IIFE；不污染全局；每帧零分配；省电；尊重 reduced-motion；跟随 data-theme 主题 ===== */
-  (function constellation(){
-    "use strict";
-    var canvas = document.getElementById('constellation');
-    if(!canvas) return;
-    var ctx = canvas.getContext('2d', { alpha: true });
-    if(!ctx) return;
-
-    var AREA_PER_NODE = 16000, MIN_NODES = 14;
-    var LINK_DIST = 132, LINK_DIST_SQ = LINK_DIST*LINK_DIST;
-    var MOUSE_RADIUS = 150, MOUSE_RADIUS_SQ = MOUSE_RADIUS*MOUSE_RADIUS;
-    var MOUSE_PULL = 0.022, MAX_DPR = 2, SPEED = 0.16;
-
-    var dpr=1, W=0, H=0, nodeCount=0, nodes=[], rafId=0, running=false, reduceMotion=false;
-    var rgb = "37,99,235";
-    var mouseX=0, mouseY=0, mouseActive=false;
-    var reduceMQ = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
-
-    function clamp(v,lo,hi){ return v<lo?lo:(v>hi?hi:v); }
-    function readParticleColor(){
-      var c = getComputedStyle(document.documentElement).getPropertyValue('--particle-rgb').trim();
-      if(c) rgb = c;
-    }
-    function nodeCap(){ if(W<560) return 46; if(W<1000) return 80; return 120; }
-    function computeNodeCount(){ return clamp(Math.floor(W*H/AREA_PER_NODE), MIN_NODES, nodeCap()); }
-
-    function resize(){
-      dpr = clamp(window.devicePixelRatio||1, 1, MAX_DPR);
-      W = window.innerWidth; H = window.innerHeight;
-      canvas.width = Math.round(W*dpr); canvas.height = Math.round(H*dpr);
-      canvas.style.width = W+'px'; canvas.style.height = H+'px';
-      ctx.setTransform(dpr,0,0,dpr,0,0);
-      rebuildNodes();
-    }
-    function rebuildNodes(){
-      var target = computeNodeCount();
-      while(nodes.length < target) nodes.push({x:0,y:0,vx:0,vy:0,r:0,tw:0,tws:0});
-      nodeCount = target;
-      for(var i=0;i<nodeCount;i++){
-        var n=nodes[i];
-        n.x=Math.random()*W; n.y=Math.random()*H;
-        var ang=Math.random()*Math.PI*2;
-        n.vx=Math.cos(ang)*SPEED*(0.5+Math.random());
-        n.vy=Math.sin(ang)*SPEED*(0.5+Math.random());
-        n.r=1.1+Math.random()*1.6; n.tw=Math.random()*Math.PI*2; n.tws=0.008+Math.random()*0.012;
-      }
-    }
-    function drawNode(n, alphaScale){
-      var a=(0.26+0.16*Math.sin(n.tw))*alphaScale;
-      ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
-      ctx.fillStyle='rgba('+rgb+','+a.toFixed(3)+')'; ctx.fill();
-    }
-    function drawLinks(globalScale){
-      ctx.lineWidth=1;
-      for(var i=0;i<nodeCount;i++){
-        var a=nodes[i];
-        for(var j=i+1;j<nodeCount;j++){
-          var b=nodes[j], dx=a.x-b.x, dy=a.y-b.y, d2=dx*dx+dy*dy;
-          if(d2<LINK_DIST_SQ){
-            var t=1-d2/LINK_DIST_SQ, alpha=t*t*0.12*globalScale;
-            if(mouseActive){ var mdx=a.x-mouseX, mdy=a.y-mouseY; if(mdx*mdx+mdy*mdy<MOUSE_RADIUS_SQ) alpha+=0.05*t; }
-            if(alpha<=0.004) continue;
-            ctx.strokeStyle='rgba('+rgb+','+alpha.toFixed(3)+')';
-            ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
-          }
-        }
-      }
-    }
-    function drawStatic(){
-      ctx.clearRect(0,0,W,H); drawLinks(0.55);
-      for(var i=0;i<nodeCount;i++) drawNode(nodes[i],0.5);
-    }
-    function step(){
-      ctx.clearRect(0,0,W,H);
-      var i,n;
-      for(i=0;i<nodeCount;i++){
-        n=nodes[i]; n.x+=n.vx; n.y+=n.vy; n.tw+=n.tws;
-        if(n.x<-20){n.x=-20;n.vx=-n.vx;} else if(n.x>W+20){n.x=W+20;n.vx=-n.vx;}
-        if(n.y<-20){n.y=-20;n.vy=-n.vy;} else if(n.y>H+20){n.y=H+20;n.vy=-n.vy;}
-        if(mouseActive){
-          var dx=mouseX-n.x, dy=mouseY-n.y, d2=dx*dx+dy*dy;
-          if(d2<MOUSE_RADIUS_SQ && d2>1){
-            var f=(1-d2/MOUSE_RADIUS_SQ)*MOUSE_PULL, inv=1/Math.sqrt(d2);
-            n.vx+=dx*inv*f; n.vy+=dy*inv*f;
-          }
-        }
-        n.vx*=0.992; n.vy*=0.992;
-        var sp2=n.vx*n.vx+n.vy*n.vy;
-        if(sp2<0.0025){ var k=0.05/(Math.sqrt(sp2)+0.0001); n.vx+=n.vx*k; n.vy+=n.vy*k; }
-      }
-      drawLinks(1);
-      for(i=0;i<nodeCount;i++) drawNode(nodes[i],1);
-      rafId=requestAnimationFrame(step);
-    }
-    function start(){ if(running) return; if(reduceMotion){ drawStatic(); return; } running=true; rafId=requestAnimationFrame(step); }
-    function stop(){ running=false; if(rafId){ cancelAnimationFrame(rafId); rafId=0; } }
-    function onVisibility(){ if(document.hidden){ stop(); } else if(!reduceMotion){ start(); } else { drawStatic(); } }
-    var resizeTimer=0;
-    function onResize(){ if(resizeTimer) clearTimeout(resizeTimer); resizeTimer=setTimeout(function(){ resizeTimer=0; resize(); if(reduceMotion||document.hidden) drawStatic(); },150); }
-    function onPointerMove(e){ mouseX=e.clientX; mouseY=e.clientY; mouseActive=true; }
-    function onPointerLeave(){ mouseActive=false; }
-    function applyThemeVisuals(){ readParticleColor(); if(reduceMotion||document.hidden) drawStatic(); }
-    function onReduceChange(){ reduceMotion=!!(reduceMQ&&reduceMQ.matches); stop(); if(reduceMotion){ drawStatic(); } else if(!document.hidden){ start(); } }
-    function init(){
-      reduceMotion=!!(reduceMQ&&reduceMQ.matches);
-      readParticleColor(); resize(); start();
-      window.addEventListener('resize', onResize, {passive:true});
-      document.addEventListener('visibilitychange', onVisibility);
-      window.addEventListener('pointermove', onPointerMove, {passive:true});
-      window.addEventListener('blur', onPointerLeave);
-      document.addEventListener('mouseleave', onPointerLeave);
-      if(reduceMQ){ if(reduceMQ.addEventListener) reduceMQ.addEventListener('change', onReduceChange); else if(reduceMQ.addListener) reduceMQ.addListener(onReduceChange); }
-      window.__constellationThemeUpdate = applyThemeVisuals;
-    }
-    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
-  })();
   </script>
 </body>
 </html>

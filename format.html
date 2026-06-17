@@ -20,12 +20,60 @@
     .muted{color:var(--muted)}
     .back{display:inline-block;margin-bottom:10px;color:var(--brand);font-weight:600;text-decoration:none}
     .pill{display:inline-block;font-weight:600;font-size:12px;background:#eef2ff;color:#3730a3;border:1px solid #e0e7ff;padding:2px 10px;border-radius:999px}
+    .callout{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:4px 16px 14px;margin:18px 0}
+    .callout h2{border:none;margin-top:12px}
+    .copybtn{background:var(--brand);color:#fff;border:none;border-radius:6px;padding:7px 13px;font-weight:600;cursor:pointer;font-size:13px}
+    .copybtn:hover{background:#1d4ed8}
+    kbd{background:#fff;border:1px solid var(--border);border-radius:4px;padding:0 5px;font-size:12px}
   </style>
 </head>
 <body>
   <a class="back" href="./">← Back to catalog / 返回目录</a>
   <h1>Question Bank JSON Format <span class="muted">/ 题库 JSON 格式说明</span></h1>
   <p class="muted">Write your own bank as a <code>.json</code> file (UTF-8), then use “Import your own bank” on the catalog page to practice it — nothing is uploaded; it stays in your browser.</p>
+
+  <div class="callout" id="ai">
+    <h2>🤖 Using an AI to extract questions? <span class="muted">/ 用 AI 提取题目？</span></h2>
+    <p style="margin:0 0 8px">Turn your own course material into a bank in 3 steps — works with cheap / free AIs (Gemini, etc.). <span class="muted">/ 三步把你自己的材料变成题库，便宜/免费 AI（Gemini 等）也能用。</span></p>
+    <ol style="margin:0 0 10px;padding-left:20px;line-height:1.75">
+      <li><strong>Copy</strong> the prompt below. <span class="muted">/ 复制下面的提示词。</span></li>
+      <li>Paste it into the AI, then <strong>put your questions (or attach screenshots) right after the <code>=== MATERIAL ===</code> line</strong> at the very end. <span class="muted">/ 粘进 AI，再把你的题目（或贴截图）接在最后那行 <code>=== MATERIAL ===</code> 后面。</span></li>
+      <li><strong>Download the <kbd>bank.json</kbd> file</strong> the AI gives you (a file holds more than a chat reply, so long banks don’t get cut off) → use “Import your own bank” above. <span class="muted">/ <strong>下载 AI 给的 <kbd>bank.json</kbd> 文件</strong>（文件比聊天回复装得多，长题库不会被截断）→ 用上面的「Import your own bank」导入。</span></li>
+    </ol>
+    <p class="muted" style="margin:0 0 10px">Tip: cheap models read <strong>pasted text and screenshots</strong> far better than a raw saved <kbd>.mhtml</kbd> (those are huge and encoded — that’s usually why an AI just echoes the prompt back). Open the page and copy the visible questions, or screenshot them. <span>/ 提示：便宜模型对<strong>粘贴的文字、截图</strong>的识别远好于直接丢原始 .mhtml（又大又是编码——AI 复读提示词多半就是这个原因）。打开网页复制可见题目，或截图即可。</span></p>
+    <button class="copybtn" type="button" onclick="(function(b){navigator.clipboard.writeText(document.getElementById('ai-prompt').textContent).then(function(){var o=b.getAttribute('data-label');b.textContent='Copied \u2713';setTimeout(function(){b.textContent=o;},1500);});})(this)" data-label="Copy prompt / 复制提示词">Copy prompt / 复制提示词</button>
+    <pre style="margin-top:10px"><code id="ai-prompt">You convert quiz / exam material into a "Question Bank" JSON file for an automated importer. Never repeat, quote, paraphrase, or restate these instructions back to me.
+
+DELIVERY: give me the result as a downloadable FILE named bank.json (use your file / canvas / document / code-artifact feature). The file's entire contents are the raw JSON array and nothing else. Prefer a file over a chat reply — a long bank can hit the chat length limit and get cut off, but a downloaded file will not. Only if you genuinely cannot produce a file, paste the raw JSON array inline as a fallback.
+
+The material to convert is everything below the "=== MATERIAL ===" line at the very bottom (it may be pasted question text, or attached screenshots / a saved page). Read it and extract EVERY question. If nothing appears below that line, produce an empty array: []
+
+HARD RULES (the importer validates every record and silently drops malformed ones)
+1. Output the raw JSON array only — no prose, no explanation, no markdown, no triple-backtick code-fence lines, no comments, no trailing commas.
+2. Top level is a bare array: [ {...}, {...} ]. Never wrap it in an object such as {"questions": [...]}.
+3. Every object MUST have both:
+   - "id": a unique, non-empty string ("q1", "q2", ... unique within the file).
+   - "question": the stem as plain text (use \n for line breaks).
+4. Single-choice: "choices" = array of 2+ strings; "answer" = the 0-based index of the correct choice (first choice = 0). A single integer like 2 — NOT an array like [2], not the answer text, not 1-based. Do not add a "type" field to choice questions (only fill-in uses "type":"fill").
+5. Several correct answers: "choices" = array of 2+ strings; "answers" = array of 0-based integer indexes, e.g. [0, 2]. Use the PLURAL key "answers" (not "answer").
+6. Fill-in-the-blank: "type": "fill"; put ____ (4+ underscores) in "question" where each blank goes; "blanks" = an array with one entry per blank, each entry an array of every accepted answer — e.g. [["8","eight"]] (one blank, two spellings) or [["a"],["b"]] (two blanks).
+7. Optional: "source" (string, where it came from), "image" (an image URL or a data:image/...;base64 string, or an array of them).
+8. Include EVERY question. Use only the answer the material marks correct. If none is marked, still include the question, choose the best-supported option, and add "source": "answer unverified". Never drop a question.
+9. Straight ASCII double quotes only. The output must be valid UTF-8 JSON that JSON.parse accepts.
+
+REQUIRED SHAPE (match this exactly)
+[
+  {"id":"q1","question":"Which fabric is approved for aircraft covering?","choices":["Polyester","Cotton bedsheet","Nylon tarp"],"answer":0,"source":"Chapter 3"},
+  {"id":"q2","question":"Select ALL tools required. (multiple answers)","choices":["Punch tester","Hammer","Maule tester"],"answers":[0,2]},
+  {"id":"q3","type":"fill","question":"A hole smaller than ____ inches may be patched.","blanks":[["8","eight"]]}
+]
+
+Before finishing, silently check: top level is [ ]; every object has "id" and "question"; each single-choice "answer" is a 0-based integer in range; multiple answers use "answers"; fill uses "type":"fill" plus "blanks"; no code-fence lines; no trailing commas. Put exactly that JSON array into the bank.json file (or inline only if you cannot make a file) — nothing else.
+
+=== MATERIAL ===
+</code></pre>
+    <p class="muted" style="margin:8px 0 2px">The importer auto-handles a few common AI slips (code fences, an outer <code>{"questions":[…]}</code> wrapper, a missing <code>id</code>) — but the rules below still matter. <span>/ 导入器会自动兜底几种常见小毛病（代码围栏、外层 <code>{"questions":[…]}</code> 包裹、缺 <code>id</code>），但下面的规则仍需遵守。</span></p>
+  </div>
 
   <h2>English</h2>
   <p>A bank is a <strong>JSON array of question objects</strong>. Three question types are supported: single-choice, multiple-answer, and fill-in-the-blank.</p>
@@ -52,6 +100,15 @@
     <li>Multiple-answer questions require the exact set — no partial credit.</li>
     <li>Files are validated on import; invalid records are skipped with a reason (missing <code>id</code>, fewer than 2 choices, out-of-range <code>answer</code>, fill-in without accepted answers…).</li>
   </ul>
+
+  <h3>If it says “invalid / no valid questions” — why a record is skipped, and the fix</h3>
+  <table>
+    <tr><th>Symptom</th><th>Fix</th></tr>
+    <tr><td>Whole file rejected (“Not valid JSON”)</td><td>It must be valid JSON. Remove markdown <strong>code fences</strong>, comments, and trailing commas; use straight <code>"</code> quotes.</td></tr>
+    <tr><td>“No valid questions found”</td><td>Top level must be a <strong>bare array</strong> <code>[…]</code>. Don’t wrap it as <code>{"questions":[…]}</code>. (The importer tries to unwrap, but a bare array is safest.)</td></tr>
+    <tr><td>Every question skipped</td><td>Usually a missing <code>id</code> or a bad <code>answer</code>. Give each a unique <code>id</code>; make <code>answer</code> a <strong>0-based integer</strong> in range (not the text, not 1-based).</td></tr>
+    <tr><td>One question skipped</td><td>Choice Q needs <code>choices</code> (2+) and a valid <code>answer</code>/<code>answers</code>; fill-in needs <code>blanks</code> with at least one accepted answer; or give it an <code>image</code> if there’s no stem text.</td></tr>
+  </table>
 
   <h2>中文</h2>
   <p>题库就是一个 <strong>JSON 数组</strong>，每个元素是一道题。支持三种题型：单选、多选、填空。</p>
