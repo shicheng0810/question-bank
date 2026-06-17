@@ -2,6 +2,8 @@
 
 **👉 Start practicing / 开始做题: https://shicheng0810.github.io/question-bank/**
 
+Mirror / 镜像（更新更快）: https://question-bank-78u.pages.dev/
+
 A fast, fully static practice site for Aviation Maintenance Technician (AMT) question banks. Every question is on one page — answer at your own pace. Practice works with **no account at all** (progress is saved in your browser); **sign in with a simple code** only if you want your history and your own banks to follow you across devices.
 
 一个快速、纯静态的航空维修（AMT）题库练习站。所有题目一页平铺，按自己的节奏作答。**完全不登录也能用**（进度存在你自己的浏览器里）；只有当你想让做题历史和自己的题库**跨设备同步**时，才用一个简单的码**登录**。
@@ -46,7 +48,7 @@ Signing in is **optional** — practice fully works without it. When you do sign
 - You pick **any code you like** (4+ characters). The same code = the same account on every device. The code is hashed on the server; the raw code is never stored.
 - Your **last 10 practice rounds** are saved, and you can reload any of them (your answers and grading are restored).
 - You can keep **private banks** in your account — upload your own JSON, and only you (signed in with your code) can list or open them.
-- Everything is stored on a **private serverless backend, keyed by your code's hash**, reachable only with your code — nothing is shared and nobody else can enumerate it.
+- Everything is stored in **Cloudflare KV, keyed by your code's hash**, reachable only with your code — nothing is shared and nobody else can enumerate it.
 - Your code is **not a recoverable password**: anyone who knows it can see that history, so don't reuse a real password. Tap **Sign out** to clear it from a shared device.
 
 登录是**可选**的——不登录也完全能练。登录后：
@@ -54,7 +56,7 @@ Signing in is **optional** — practice fully works without it. When you do sign
 - 你自定义**任意一个码**（4 位以上）。同一个码 = 各设备上同一个账号。码在服务端被哈希，原始码绝不落库。
 - **最近 10 次做题**自动保存，可随时重新加载（作答与判分一并还原）。
 - 可在账号里放**私有题库**——上传自己的 JSON，只有用你的码登录的你能列出/打开。
-- 全部存在**私有服务端、以你的码哈希为键**，只有用你的码才能取——不共享、别人也枚举不到。
+- 全部存在 **Cloudflare KV、以你的码哈希为键**，只有用你的码才能取——不共享、别人也枚举不到。
 - 这个码**不是带找回机制的密码**：知道码的人就能看到那份历史，别用你别处的真实密码。共用电脑上点**退出登录**即清除。
 
 ## ✍️ Bring your own bank / 自带题库
@@ -73,9 +75,9 @@ Have your own questions? Convert them to the import JSON format (see **[format.h
 
 ## 📦 About this repo / 关于本仓库
 
-This repository holds **only the static build artifacts** of the site, auto-published on every deploy. The authoring toolchain (Canvas archive extractor, OCR, AI assist, publish pipeline) lives in a private workspace. The optional account features (sign-in, history, private banks, feedback) are served by a private serverless backend — no third-party tracking, no analytics.
+This repository holds **only the static build artifacts** of the site, auto-published on every deploy. The authoring toolchain (Canvas archive extractor, OCR, AI assist, publish pipeline) lives in a private workspace. The optional account features (sign-in, history, private banks, feedback) are served by Cloudflare Pages Functions backed by Cloudflare KV — no third-party tracking.
 
-本仓库只存放站点的**静态构建产物**，每次部署自动推送更新。制作工具链（Canvas 存档提取器、OCR、AI 辅助、发布管线）在私有工作区，不在此仓库。可选的账号功能（登录、历史、私有题库、反馈）由私有服务端提供，无第三方追踪、无分析统计。
+本仓库只存放站点的**静态构建产物**，每次部署自动推送更新。制作工具链（Canvas 存档提取器、OCR、AI 辅助、发布管线）在私有工作区，不在此仓库。可选的账号功能（登录、历史、私有题库、反馈）由 Cloudflare Pages Functions + Cloudflare KV 提供，无第三方追踪。
 
 | File / 文件 | Purpose / 用途 |
 |---|---|
