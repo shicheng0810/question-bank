@@ -433,6 +433,11 @@
     .coffee-tier .ct-emoji{font-size:17px}
     .coffee-tier .ct-amt{font-size:11px;color:var(--muted);font-weight:700}
     .coffee-tier:hover{border-color:var(--brand);transform:translateY(-2px)}
+    .coffee-custom{display:flex;align-items:center;gap:8px;margin:0 0 2px}
+    .coffee-custom[hidden]{display:none}
+    .coffee-custom .cc-prefix{font-weight:800;color:var(--ink-soft)}
+    .coffee-custom input{width:88px;flex:0 0 auto;font:inherit;font-size:14px;font-weight:700;padding:9px 10px;border:1px solid var(--border-strong);border-radius:var(--radius-xs);background:var(--card-2);color:var(--ink);text-align:center}
+    .coffee-custom input::-webkit-outer-spin-button,.coffee-custom input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
     .coffee-thanks{animation:qbPop .45s cubic-bezier(.2,.9,.3,1.3)}
     @keyframes qbPop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
     .coffee-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:110;display:flex;align-items:center;gap:11px;background:var(--card);border:1px solid var(--border-strong);border-radius:14px;box-shadow:var(--shadow-lg);padding:11px 13px;max-width:min(440px,92vw);animation:qbToastIn .45s cubic-bezier(.2,.9,.3,1.2)}
@@ -464,7 +469,11 @@
           <button class="btn coffee-tier" onclick="coffeeGo(event)" data-testid="coffee-tier-m"><span class="ct-emoji">☕☕</span><span data-i18n="coffee_tier_m">Latte</span></button>
           <button class="btn coffee-tier" onclick="coffeeGo(event)" data-testid="coffee-tier-l"><span class="ct-emoji">🫘</span><span data-i18n="coffee_tier_l">Whole bag</span></button>
         </div>
-        <button class="btn submit-btn" onclick="coffeeGo(event)" data-i18n="coffee_go" data-testid="coffee-go-btn" style="width:100%;justify-content:center">Buy me a coffee →</button>
+        <div class="coffee-custom" id="coffee-custom-row">
+          <span class="cc-prefix">$</span>
+          <input type="number" id="coffee-custom" min="1" step="1" inputmode="decimal" data-testid="coffee-custom" data-i18n-placeholder="coffee_custom_ph" aria-label="Custom amount" onkeydown="if(event.key==='Enter'){event.preventDefault();coffeeGo(event);}">
+          <button class="btn submit-btn" onclick="coffeeGo(event)" data-i18n="coffee_go" data-testid="coffee-go-btn" style="flex:1;justify-content:center;white-space:nowrap">Buy me a coffee →</button>
+        </div>
         <p class="meta coffee-thanks" id="coffee-thanks" hidden data-i18n="coffee_thanks" style="margin:12px 0 0;color:var(--success-ink);font-weight:600">Thank you!</p>
       </div>
     </div>
@@ -596,6 +605,7 @@
         coffee_stat: "You've powered through {n} questions here. ☕",
         coffee_tier_s: "Espresso", coffee_tier_m: "Latte", coffee_tier_l: "Whole bag",
         coffee_go: "Buy me a coffee →",
+        coffee_custom_ph: "other",
         coffee_thanks: "You're the best — thank you! ☕✨",
         coffee_toast_title: "Nice — you finished the whole set! 🎉",
         coffee_toast_sub: "Enjoying this? A coffee keeps it growing.",
@@ -675,6 +685,7 @@
         coffee_stat: "你已经在这里刷了 {n} 道题。☕",
         coffee_tier_s: "浓缩", coffee_tier_m: "拿铁", coffee_tier_l: "一整袋豆",
         coffee_go: "请我喝咖啡 →",
+        coffee_custom_ph: "自定义",
         coffee_thanks: "你最好了 —— 谢谢你！☕✨",
         coffee_toast_title: "漂亮 —— 这一整套你都做完了！🎉",
         coffee_toast_sub: "喜欢的话，一杯咖啡能让它继续长大。",
@@ -754,6 +765,7 @@
         coffee_stat: "Ya has resuelto {n} preguntas aquí. ☕",
         coffee_tier_s: "Espresso", coffee_tier_m: "Latte", coffee_tier_l: "Bolsa entera",
         coffee_go: "Invítame a un café →",
+        coffee_custom_ph: "otro",
         coffee_thanks: "¡Eres lo mejor — gracias! ☕✨",
         coffee_toast_title: "¡Bien — completaste todo el conjunto! 🎉",
         coffee_toast_sub: "¿Te gusta? Un café lo mantiene creciendo.",
@@ -2852,7 +2864,9 @@
     }
     function coffeeGo(ev){
       const t = ev && ev.currentTarget;
-      const amount = (t && t.dataset && t.dataset.amount) ? t.dataset.amount : null;
+      let amount = (t && t.dataset && t.dataset.amount) ? t.dataset.amount : null;
+      // 主按钮（无档位）：若自定义框填了有效正数，用它
+      if (!amount){ const inp = document.getElementById("coffee-custom"); const v = inp ? parseFloat(inp.value) : NaN; if (isFinite(v) && v > 0) amount = String(Math.round(v * 100) / 100); }
       const url = coffeeUrl(amount);
       if (url){ try{ window.open(url, "_blank", "noopener"); }catch(_e){} }
       let x = innerWidth / 2, y = innerHeight / 2;
@@ -2862,7 +2876,10 @@
     }
     // 把配置里的三档金额写到三个 tier 按钮上（data-amount + 标签后缀 $N）
     function setupCoffeeTiers(){
-      if (!DONATION || !Array.isArray(DONATION.amounts) || DONATION.amounts.length < 3) return;
+      if (!DONATION) return;
+      // 自定义金额框只对 paypal 有意义（其它平台金额无法拼进链接）
+      const cr = document.getElementById("coffee-custom-row"); if (cr) cr.hidden = (DONATION.provider !== "paypal");
+      if (!Array.isArray(DONATION.amounts) || DONATION.amounts.length < 3) return;
       ["coffee-tier-s","coffee-tier-m","coffee-tier-l"].forEach(function(id, i){
         const btn = document.querySelector('[data-testid="' + id + '"]');
         if (!btn) return;
