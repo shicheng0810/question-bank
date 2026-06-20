@@ -400,31 +400,35 @@
   <!-- ☕ Buy me a coffee（打赏）：FAB「Click me for fun!」→ 扭蛋抽奖动画 → 蹦出金额档；+ 完成整轮庆祝 toast + 彩带 -->
   <style>
     /* 浮动按钮（右下角，会偶尔扭一下） */
-    .coffee-fab{position:fixed;right:18px;bottom:18px;z-index:80;display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:999px;border:1px solid var(--brand);background:var(--brand);color:#fff;font:inherit;font-weight:700;font-size:14px;cursor:pointer;box-shadow:var(--shadow-lg);animation:cfWiggle 3.4s ease-in-out infinite}
+    .coffee-fab{position:fixed;right:18px;bottom:18px;z-index:80;display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:999px;border:1px solid var(--brand);background:var(--brand);color:#fff;font:inherit;font-weight:700;font-size:14px;cursor:pointer;box-shadow:var(--shadow-lg)}
     .coffee-fab[hidden]{display:none}
     .coffee-fab:hover{filter:brightness(1.07);transform:translateY(-2px)}
+    .coffee-fab.wiggle{animation:cfWiggle 3.4s ease-in-out infinite} /* 只在开局 30s 内摆动（JS 控制加/去 class） */
     .coffee-fab .cf-emoji{font-size:17px}
     @keyframes cfWiggle{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(-7deg) scale(1.04)}94%{transform:rotate(7deg) scale(1.04)}}
     @media (max-width:560px){.coffee-fab .cf-text{display:none}.coffee-fab{padding:13px;border-radius:50%;font-size:18px}}
     .coffee-card{max-width:430px;position:relative;text-align:center;overflow:hidden}
-    /* 扭蛋 */
-    .gacha{height:104px;display:flex;align-items:center;justify-content:center;position:relative;margin:8px 0 2px}
-    .capsule{width:78px;height:78px;position:relative}
-    .capsule .cap-top,.capsule .cap-bot{position:absolute;left:0;right:0;height:50%;border:3px solid var(--ink);box-sizing:border-box}
-    .capsule .cap-top{top:0;background:var(--brand);border-radius:40px 40px 0 0;border-bottom:none}
-    .capsule .cap-bot{bottom:0;background:linear-gradient(#ffffff,#eef2f8);border-radius:0 0 40px 40px;border-top:2px dashed var(--ink)}
-    .capsule .cap-dot{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.92);border:2px solid var(--ink);z-index:2}
-    .gacha.shaking .capsule{animation:gachaShake .42s ease-in-out 2}
-    @keyframes gachaShake{0%,100%{transform:rotate(0) translateY(0)}25%{transform:rotate(-13deg)}50%{transform:translateY(-6px)}75%{transform:rotate(13deg)}}
-    .gacha.cracking .cap-top{animation:capTop .55s forwards cubic-bezier(.3,-.4,.7,1)}
-    .gacha.cracking .cap-bot{animation:capBot .55s forwards}
-    .gacha.cracking .cap-dot{opacity:0;transition:opacity .2s}
-    @keyframes capTop{to{transform:translate(-26px,-58px) rotate(-46deg);opacity:0}}
-    @keyframes capBot{to{transform:translateY(16px);opacity:0}}
-    .gacha .prize{position:absolute;font-size:46px;opacity:0;transform:scale(.3) translateY(8px)}
-    .gacha.cracking .prize{animation:prizePop .6s .12s cubic-bezier(.2,.9,.3,1.5) forwards}
-    @keyframes prizePop{to{opacity:1;transform:scale(1) translateY(0)}}
-    .gacha-roll{font-weight:800;font-size:1.05rem;color:var(--brand);margin:2px 0 2px;min-height:1.3em;animation:qbPop .4s}
+    /* 咖啡师现做：机头 → 豆子落下 → 咖啡注入杯中 → 热气 */
+    .barista{height:118px;position:relative;display:flex;align-items:flex-end;justify-content:center;margin:6px 0 2px}
+    .barista .machine{position:absolute;top:2px;left:50%;transform:translateX(-50%);width:56px;height:15px;background:var(--ink);border-radius:4px}
+    .barista .machine:after{content:"";position:absolute;left:50%;top:13px;transform:translateX(-50%);width:11px;height:8px;background:var(--ink);border-radius:0 0 3px 3px}
+    .barista .bean{position:absolute;top:-4px;left:50%;transform:translateX(-50%);font-size:17px;opacity:0}
+    .barista.brewing .bean{animation:beanDrop .5s ease-in forwards}
+    @keyframes beanDrop{0%{opacity:1;top:-4px}70%{opacity:1}100%{opacity:0;top:16px}}
+    .barista .stream{position:absolute;top:22px;left:50%;width:4px;height:44px;background:linear-gradient(#6f4e37,#3b2a1d);border-radius:2px;transform:translateX(-50%) scaleY(0);transform-origin:top;opacity:0}
+    .barista.brewing .stream{animation:streamPour 1.2s ease-in .45s forwards}
+    @keyframes streamPour{0%{opacity:0;transform:translateX(-50%) scaleY(0)}12%{opacity:1;transform:translateX(-50%) scaleY(1)}85%{opacity:1;transform:translateX(-50%) scaleY(1)}100%{opacity:0;transform:translateX(-50%) scaleY(1)}}
+    .barista .cup{position:relative;width:60px;height:46px;background:linear-gradient(#ffffff,#eef2f8);border:3px solid var(--ink);border-radius:5px 5px 14px 14px;overflow:hidden;z-index:2}
+    .barista .cup:before{content:"";position:absolute;right:-16px;top:8px;width:14px;height:18px;border:3px solid var(--ink);border-left:none;border-radius:0 12px 12px 0}
+    .barista .cup .fill{position:absolute;left:0;right:0;bottom:0;height:0;background:linear-gradient(#6f4e37,#4a3526)}
+    .barista.brewing .cup .fill{animation:cupFill 1.15s ease-in .5s forwards}
+    @keyframes cupFill{from{height:0}to{height:74%}}
+    .barista .steam{position:absolute;top:12px;width:5px;height:20px;background:linear-gradient(rgba(148,163,184,0),rgba(148,163,184,.6));border-radius:3px;filter:blur(1px);opacity:0}
+    .barista .steam.s1{left:calc(50% - 11px)} .barista .steam.s2{left:calc(50% - 2px);height:24px} .barista .steam.s3{left:calc(50% + 9px)}
+    .barista.brewed .steam{animation:qbSteam 2.2s ease-in-out infinite}
+    .barista.brewed .steam.s2{animation-delay:.6s} .barista.brewed .steam.s3{animation-delay:1.1s}
+    @keyframes qbSteam{0%{opacity:0;transform:translateY(8px) scaleY(.6)}35%{opacity:.7}100%{opacity:0;transform:translateY(-16px) scaleY(1.2)}}
+    .coffee-brewline{font-weight:800;font-size:1.05rem;color:var(--brand);margin:2px 0 2px;min-height:1.3em;animation:qbPop .4s}
     .coffee-reveal[hidden]{display:none}
     .coffee-reveal{animation:revealUp .5s cubic-bezier(.2,.9,.3,1.1)}
     @keyframes revealUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
@@ -446,7 +450,7 @@
     .coffee-toast strong{font-size:14px}
     .coffee-toast .qb-x{width:30px;height:30px}
     @keyframes qbToastIn{from{opacity:0;transform:translate(-50%,18px)}to{opacity:1;transform:translate(-50%,0)}}
-    @media (prefers-reduced-motion: reduce){.coffee-fab{animation:none}.gacha .prize{opacity:1!important;transform:none!important}.coffee-toast,.coffee-thanks,.gacha-roll,.coffee-reveal{animation:none}}
+    @media (prefers-reduced-motion: reduce){.coffee-fab.wiggle{animation:none}.barista .cup .fill{height:74%!important}.coffee-toast,.coffee-thanks,.coffee-brewline,.coffee-reveal{animation:none}}
   </style>
   <button class="coffee-fab" id="coffee-btn" type="button" onclick="openCoffee()" data-testid="coffee-btn" hidden aria-label="Buy me a coffee">
     <span class="cf-emoji" aria-hidden="true">☕</span><span class="cf-text" data-i18n="coffee_fab">Click me for fun!</span>
@@ -455,11 +459,14 @@
   <div class="tut-overlay" id="qb-coffee" hidden data-testid="qb-coffee" onclick="if(event.target===this)closeCoffee()">
     <div class="tut-card coffee-card">
       <button class="btn qb-x" onclick="closeCoffee()" data-testid="coffee-close-btn" aria-label="Close" style="position:absolute;top:12px;right:12px;z-index:3">✕</button>
-      <div class="gacha" id="coffee-gacha" aria-hidden="true">
-        <div class="capsule" id="coffee-capsule"><span class="cap-top"></span><span class="cap-bot"></span><span class="cap-dot"></span></div>
-        <div class="prize">☕</div>
+      <div class="barista" id="coffee-barista" aria-hidden="true">
+        <span class="machine"></span>
+        <span class="bean">🫘</span>
+        <span class="stream"></span>
+        <div class="cup"><span class="fill"></span></div>
+        <span class="steam s1"></span><span class="steam s2"></span><span class="steam s3"></span>
       </div>
-      <p class="gacha-roll" id="coffee-roll" hidden></p>
+      <p class="coffee-brewline" id="coffee-roll" hidden></p>
       <div class="coffee-reveal" id="coffee-reveal" hidden>
         <h2 data-i18n="coffee_title" style="margin:4px 0 6px;font-size:1.2rem">Buy me a coffee ☕</h2>
         <p class="meta" id="coffee-stat" hidden style="margin:0 0 6px;color:var(--brand);font-weight:600"></p>
@@ -600,7 +607,7 @@
         ab_load_fail: "Failed to load: {id}",
         ab_start: "Start practicing",
         coffee_title: "Buy me a coffee ☕",
-        coffee_fab: "Click me for fun!", coffee_roll_label: "You rolled:",
+        coffee_fab: "Buy me a coffee", coffee_brewing: "Brewing your coffee… ☕", coffee_brew_done: "Fresh brew, just for you! ☕",
         coffee_blurb: "This question bank is free and ad-free, built by one person. If it helped your studying, a coffee keeps it caffeinated and growing. 🙏",
         coffee_stat: "You've powered through {n} questions here. ☕",
         coffee_tier_s: "Espresso", coffee_tier_m: "Latte", coffee_tier_l: "Whole bag",
@@ -610,7 +617,7 @@
         coffee_toast_title: "Nice — you finished the whole set! 🎉",
         coffee_toast_sub: "Enjoying this? A coffee keeps it growing.",
         coffee_toast_go: "☕ Coffee", coffee_toast_dismiss: "Maybe later",
-        guide_html: '<li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Feedback &amp; ⚐ Report — the most useful buttons here!</strong> Found a wrong answer, a typo, or anything confusing? Tap <strong>💬 Feedback</strong> at the top, or <strong>⚐ Report</strong> on any question card. Your message reaches the author in seconds and <strong>actually gets fixed</strong> — every report makes this bank better for the next person. No sign-up, takes 5 seconds. Please use it!</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 Sign in — save &amp; reload your history!</strong> Tap <strong>👤</strong> at the top and pick a personal code (great on phones — no email, no password reset). Then every round you do is saved automatically, and you can <strong>reload any of your last 10 rounds on any device</strong> — your answers come back exactly as you left them. The same code shows the same history everywhere.</li><li><strong>Theme (🌙 / ☀️)</strong>: switch between light and dark — your choice is saved and follows your system setting by default. The 🌐 menu beside it changes the interface language.</li><li><strong>← Catalog</strong>: go back to the bank list to switch to a different question bank, or open several at once and practice them merged.</li><li><strong>Filter Question Banks (Select All / Select None / Confirm)</strong>: tick the question sets you want to practice — combine as many as you like — then press Confirm. Opening several banks together merges duplicate questions automatically; a password-protected bank asks for its password once before it joins.</li><li><strong>Randomize + Reset</strong>: shuffle the questions in the current scope and clear this round’s selections.</li><li><strong>Auto Submit</strong>: when ON, clicking a choice grades it instantly (no Submit needed).</li><li><strong>Progress bar &amp; “Next unanswered →”</strong>: the sticky bar at the top of the list shows how many questions you’ve answered so far; tap <strong>Next unanswered →</strong> to jump straight to the next one you haven’t submitted yet.</li><li><strong>Random Choose 150</strong>: draw 150 questions from the current scope, weighted toward the ones you’ve practiced least; press it again (it turns into <strong>· Reroll</strong>) for a fresh draw. Hidden when the scope has 150 questions or fewer.</li><li><strong>Back to Current 150</strong>: return to this round’s draw (hidden until you’ve drawn one).</li><li><strong>Wrong Only (N)</strong>: show only wrong answers in the current scope; answering correctly does NOT remove a question — use <strong>Remove from wrong</strong> on its card, or <strong>Remove all from wrong</strong> to clear the whole list at once.</li><li><strong>Star Only (N)</strong>: show only starred questions; tap <strong>☆</strong> on any card to star/unstar, or <strong>Unstar all</strong> to clear them at once.</li><li><strong>Back to All</strong>: leave the wrong/star/draw view and return to the full filtered list.</li><li><strong>Clear choices for this list</strong>: clear all selected answers in the current list (wrong/star records are kept).</li><li><strong>Submit Answer / Redo</strong>: grade this question; Redo lets you answer it again.</li><li><strong>Show Correct Answers</strong>: after submitting a fill-in question, optionally reveal the accepted answers. Grading ignores case, extra spaces and spacing (<code>check list</code> = <code>checklist</code>), and treats equal numbers as equal (<code>1,000</code> = <code>1000</code>).</li><li><strong>Stats line</strong> (next to the toolbar): shows how many questions are in view, your running score and accuracy, and how many wrong answers remain in the current scope.</li>',
+        guide_html: '<li data-coffee style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--locked-bg);border:1px solid var(--locked-border);border-radius:10px"><strong>☕ Buy me a coffee — the button at the bottom-right!</strong> This bank is free and ad-free, built by one person. Tap <strong>☕</strong>, watch a fresh coffee get made, then tip <strong>$5 / $10 / $20</strong> or any amount via PayPal. Totally optional — it keeps this bank caffeinated and growing. 🙏</li><li data-feedback style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Feedback &amp; ⚐ Report — the most useful buttons here!</strong> Found a wrong answer, a typo, or anything confusing? Tap <strong>💬 Feedback</strong> at the top, or <strong>⚐ Report</strong> on any question card. Your message reaches the author in seconds and <strong>actually gets fixed</strong> — every report makes this bank better for the next person. No sign-up, takes 5 seconds. Please use it!</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 Sign in — save &amp; reload your history!</strong> Tap <strong>👤</strong> at the top and pick a personal code (great on phones — no email, no password reset). Then every round you do is saved automatically, and you can <strong>reload any of your last 10 rounds on any device</strong> — your answers come back exactly as you left them. The same code shows the same history everywhere.</li><li><strong>Theme (🌙 / ☀️)</strong>: switch between light and dark — your choice is saved and follows your system setting by default. The 🌐 menu beside it changes the interface language.</li><li><strong>← Catalog</strong>: go back to the bank list to switch to a different question bank, or open several at once and practice them merged.</li><li><strong>Filter Question Banks (Select All / Select None / Confirm)</strong>: tick the question sets you want to practice — combine as many as you like — then press Confirm. Opening several banks together merges duplicate questions automatically; a password-protected bank asks for its password once before it joins.</li><li><strong>Randomize + Reset</strong>: shuffle the questions in the current scope and clear this round’s selections.</li><li><strong>Auto Submit</strong>: when ON, clicking a choice grades it instantly (no Submit needed).</li><li><strong>Progress bar &amp; “Next unanswered →”</strong>: the sticky bar at the top of the list shows how many questions you’ve answered so far; tap <strong>Next unanswered →</strong> to jump straight to the next one you haven’t submitted yet.</li><li><strong>Random Choose 150</strong>: draw 150 questions from the current scope, weighted toward the ones you’ve practiced least; press it again (it turns into <strong>· Reroll</strong>) for a fresh draw. Hidden when the scope has 150 questions or fewer.</li><li><strong>Back to Current 150</strong>: return to this round’s draw (hidden until you’ve drawn one).</li><li><strong>Wrong Only (N)</strong>: show only wrong answers in the current scope; answering correctly does NOT remove a question — use <strong>Remove from wrong</strong> on its card, or <strong>Remove all from wrong</strong> to clear the whole list at once.</li><li><strong>Star Only (N)</strong>: show only starred questions; tap <strong>☆</strong> on any card to star/unstar, or <strong>Unstar all</strong> to clear them at once.</li><li><strong>Back to All</strong>: leave the wrong/star/draw view and return to the full filtered list.</li><li><strong>Clear choices for this list</strong>: clear all selected answers in the current list (wrong/star records are kept).</li><li><strong>Submit Answer / Redo</strong>: grade this question; Redo lets you answer it again.</li><li><strong>Show Correct Answers</strong>: after submitting a fill-in question, optionally reveal the accepted answers. Grading ignores case, extra spaces and spacing (<code>check list</code> = <code>checklist</code>), and treats equal numbers as equal (<code>1,000</code> = <code>1000</code>).</li><li><strong>Stats line</strong> (next to the toolbar): shows how many questions are in view, your running score and accuracy, and how many wrong answers remain in the current scope.</li>',
       },
       zh: {
         title_h1: "AMT 题库练习",
@@ -680,7 +687,7 @@
         ab_load_fail: "加载失败：{id}",
         ab_start: "开始做题",
         coffee_title: "请我喝杯咖啡 ☕",
-        coffee_fab: "点我玩一下！", coffee_roll_label: "你抽到了：",
+        coffee_fab: "请我喝杯咖啡", coffee_brewing: "正在为你现做… ☕", coffee_brew_done: "刚出炉，专属你的一杯！☕",
         coffee_blurb: "这个题库免费、无广告，一个人做的。如果它帮到了你的复习，一杯咖啡能让它继续有咖啡因、继续长大。🙏",
         coffee_stat: "你已经在这里刷了 {n} 道题。☕",
         coffee_tier_s: "浓缩", coffee_tier_m: "拿铁", coffee_tier_l: "一整袋豆",
@@ -690,7 +697,7 @@
         coffee_toast_title: "漂亮 —— 这一整套你都做完了！🎉",
         coffee_toast_sub: "喜欢的话，一杯咖啡能让它继续长大。",
         coffee_toast_go: "☕ 咖啡", coffee_toast_dismiss: "下次吧",
-        guide_html: '<li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 反馈 &amp; ⚐ 报错 —— 这里最有用的按钮！</strong> 发现答案错了、有错别字、或哪里看不懂？点顶部的 <strong>💬 反馈</strong>，或任意题卡上的 <strong>⚐ 报错</strong>。你的留言几秒内直达作者、<strong>真的会被修</strong> —— 每一条都让题库对下一个人更好用。免注册、5 秒搞定，欢迎多用！</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 登录 —— 保存并重新加载你的历史！</strong> 点顶部 <strong>👤</strong> 设一个自定义码（手机也好用 —— 免邮箱、不用找回密码）。登录后每一轮做题都会自动保存，你可以<strong>在任意设备重新加载最近 10 次做题记录</strong> —— 作答会原样回来。同一个码在哪儿都看到同一份历史。</li><li><strong>主题（🌙 / ☀️）</strong>：切换浅色/深色，选择会被记住，默认跟随系统设置。旁边的 🌐 菜单切换界面语言。</li><li><strong>← 返回目录</strong>：回到题库列表换一个题库，或一次打开多个题库合并练习。</li><li><strong>筛选题库（全选 / 全不选 / 确认）</strong>：勾选要练习的题套（可任意组合多个），点确认生效。多个题库一起打开时会自动合并去重；加密题库会先要一次密码再加入。</li><li><strong>打乱并重置</strong>：把当前范围内的题目重新打乱，并清空本轮所有选择。</li><li><strong>自动提交</strong>：开启后点选项即自动判分，不用再按提交。</li><li><strong>进度条 &amp; 「跳到下一道未答 →」</strong>：列表顶部的吸顶进度条显示当前列表已答多少题；点<strong>跳到下一道未答 →</strong>直接跳到下一道还没提交的题。</li><li><strong>随机抽 150 题</strong>：从当前范围按「做得少优先」的权重随机抽 150 题；再点一次（按钮会变成<strong>· 重抽</strong>）换一批。范围不足 150 题时不显示。</li><li><strong>回到本轮 150 题</strong>：回到本轮已抽中的那 150 题（没有抽过时不显示）。</li><li><strong>只看错题（N）</strong>：只显示当前范围内的错题；答对不会自动移出，需手动点题卡上的<strong>移出错题</strong>，或用<strong>全部移出错题</strong>一次清空整列。</li><li><strong>只看收藏（N）</strong>：只显示收藏的题；点题卡右上角 <strong>☆</strong> 收藏/取消，或用<strong>全部取消收藏</strong>一次清空。</li><li><strong>返回全部</strong>：从错题/收藏/抽题视图回到当前筛选范围的完整列表。</li><li><strong>清空本列表的已选答案</strong>：清空当前列表里所有题的已选答案（不动错题/收藏记录）。</li><li><strong>提交答案 / 重做</strong>：提交本题判分；重做可再答一次。</li><li><strong>显示参考答案</strong>：填空题提交后可选择性显示参考答案。判分忽略大小写、多余空格，也忽略空格有无（<code>check list</code> = <code>checklist</code>），数值相等即算对（<code>1,000</code> = <code>1000</code>）。</li><li><strong>统计行</strong>（工具栏旁）：显示当前列表题数、累计得分与正确率，以及当前范围内还剩多少错题。</li>',
+        guide_html: '<li data-coffee style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--locked-bg);border:1px solid var(--locked-border);border-radius:10px"><strong>☕ 请我喝杯咖啡 —— 右下角那个按钮！</strong> 这个题库免费、无广告，一个人做的。点 <strong>☕</strong> 看一杯咖啡现做出来，然后用 PayPal 打赏 <strong>$5 / $10 / $20</strong> 或任意金额。完全自愿 —— 它能让题库继续有咖啡因、继续长大。🙏</li><li data-feedback style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 反馈 &amp; ⚐ 报错 —— 这里最有用的按钮！</strong> 发现答案错了、有错别字、或哪里看不懂？点顶部的 <strong>💬 反馈</strong>，或任意题卡上的 <strong>⚐ 报错</strong>。你的留言几秒内直达作者、<strong>真的会被修</strong> —— 每一条都让题库对下一个人更好用。免注册、5 秒搞定，欢迎多用！</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 登录 —— 保存并重新加载你的历史！</strong> 点顶部 <strong>👤</strong> 设一个自定义码（手机也好用 —— 免邮箱、不用找回密码）。登录后每一轮做题都会自动保存，你可以<strong>在任意设备重新加载最近 10 次做题记录</strong> —— 作答会原样回来。同一个码在哪儿都看到同一份历史。</li><li><strong>主题（🌙 / ☀️）</strong>：切换浅色/深色，选择会被记住，默认跟随系统设置。旁边的 🌐 菜单切换界面语言。</li><li><strong>← 返回目录</strong>：回到题库列表换一个题库，或一次打开多个题库合并练习。</li><li><strong>筛选题库（全选 / 全不选 / 确认）</strong>：勾选要练习的题套（可任意组合多个），点确认生效。多个题库一起打开时会自动合并去重；加密题库会先要一次密码再加入。</li><li><strong>打乱并重置</strong>：把当前范围内的题目重新打乱，并清空本轮所有选择。</li><li><strong>自动提交</strong>：开启后点选项即自动判分，不用再按提交。</li><li><strong>进度条 &amp; 「跳到下一道未答 →」</strong>：列表顶部的吸顶进度条显示当前列表已答多少题；点<strong>跳到下一道未答 →</strong>直接跳到下一道还没提交的题。</li><li><strong>随机抽 150 题</strong>：从当前范围按「做得少优先」的权重随机抽 150 题；再点一次（按钮会变成<strong>· 重抽</strong>）换一批。范围不足 150 题时不显示。</li><li><strong>回到本轮 150 题</strong>：回到本轮已抽中的那 150 题（没有抽过时不显示）。</li><li><strong>只看错题（N）</strong>：只显示当前范围内的错题；答对不会自动移出，需手动点题卡上的<strong>移出错题</strong>，或用<strong>全部移出错题</strong>一次清空整列。</li><li><strong>只看收藏（N）</strong>：只显示收藏的题；点题卡右上角 <strong>☆</strong> 收藏/取消，或用<strong>全部取消收藏</strong>一次清空。</li><li><strong>返回全部</strong>：从错题/收藏/抽题视图回到当前筛选范围的完整列表。</li><li><strong>清空本列表的已选答案</strong>：清空当前列表里所有题的已选答案（不动错题/收藏记录）。</li><li><strong>提交答案 / 重做</strong>：提交本题判分；重做可再答一次。</li><li><strong>显示参考答案</strong>：填空题提交后可选择性显示参考答案。判分忽略大小写、多余空格，也忽略空格有无（<code>check list</code> = <code>checklist</code>），数值相等即算对（<code>1,000</code> = <code>1000</code>）。</li><li><strong>统计行</strong>（工具栏旁）：显示当前列表题数、累计得分与正确率，以及当前范围内还剩多少错题。</li>',
       },
       es: {
         title_h1: "Práctica del banco de preguntas AMT",
@@ -760,7 +767,7 @@
         ab_load_fail: "Fallo al cargar: {id}",
         ab_start: "Empezar",
         coffee_title: "Invítame a un café ☕",
-        coffee_fab: "¡Tócame, es divertido!", coffee_roll_label: "¡Te tocó:",
+        coffee_fab: "Invítame a un café", coffee_brewing: "Preparando tu café… ☕", coffee_brew_done: "¡Recién hecho, solo para ti! ☕",
         coffee_blurb: "Este banco de preguntas es gratis y sin anuncios, hecho por una sola persona. Si te ayudó a estudiar, un café lo mantiene con cafeína y creciendo. 🙏",
         coffee_stat: "Ya has resuelto {n} preguntas aquí. ☕",
         coffee_tier_s: "Espresso", coffee_tier_m: "Latte", coffee_tier_l: "Bolsa entera",
@@ -770,7 +777,7 @@
         coffee_toast_title: "¡Bien — completaste todo el conjunto! 🎉",
         coffee_toast_sub: "¿Te gusta? Un café lo mantiene creciendo.",
         coffee_toast_go: "☕ Café", coffee_toast_dismiss: "Quizá luego",
-        guide_html: '<li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Comentarios y ⚐ Reportar — ¡los botones más útiles!</strong> ¿Una respuesta incorrecta, una errata o algo confuso? Toca <strong>💬 Comentarios</strong> arriba, o <strong>⚐ Reportar</strong> en cualquier tarjeta. Tu mensaje llega al autor en segundos y <strong>de verdad se corrige</strong> — cada reporte mejora este banco para el siguiente. Sin registro, 5 segundos. ¡Úsalo!</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 Inicia sesión — ¡guarda y recarga tu historial!</strong> Toca <strong>👤</strong> arriba y elige un código personal (ideal para móviles — sin correo, sin recuperar contraseña). Cada ronda se guarda sola y puedes <strong>recargar cualquiera de tus últimas 10 rondas en cualquier dispositivo</strong> — tus respuestas vuelven tal como las dejaste. El mismo código muestra el mismo historial en todas partes.</li><li><strong>Tema (🌙 / ☀️)</strong>: cambia entre claro y oscuro — tu elección se guarda y sigue el sistema por defecto. El menú 🌐 al lado cambia el idioma.</li><li><strong>← Catálogo</strong>: vuelve a la lista de bancos para cambiar de banco, o abre varios a la vez y practícalos combinados.</li><li><strong>Filtrar bancos (Seleccionar todo / Ninguno / Confirmar)</strong>: marca los conjuntos que quieras practicar — combina varios — y pulsa Confirmar. Al abrir varios bancos juntos se fusionan los duplicados automáticamente; un banco protegido pide su contraseña una vez antes de unirse.</li><li><strong>Mezclar y reiniciar</strong>: baraja las preguntas del alcance actual y borra las selecciones de esta ronda.</li><li><strong>Envío automático</strong>: al activarlo, hacer clic en una opción califica al instante.</li><li><strong>Barra de progreso y “Siguiente sin responder →”</strong>: la barra fija de arriba muestra cuántas preguntas de la lista has respondido; toca <strong>Siguiente sin responder →</strong> para saltar a la próxima que aún no hayas enviado.</li><li><strong>150 al azar</strong>: sortea 150 preguntas del alcance actual, priorizando las menos practicadas; púlsalo otra vez (pasa a <strong>· Repetir</strong>) para un nuevo sorteo. Oculto si hay 150 o menos.</li><li><strong>Volver a las 150</strong>: regresa al sorteo de esta ronda (oculto hasta que sortees uno).</li><li><strong>Solo errores (N)</strong>: muestra solo tus errores; acertar NO los quita — usa <strong>Quitar de errores</strong> en la tarjeta, o <strong>Quitar todo de errores</strong> para vaciar la lista de una vez.</li><li><strong>Solo favoritas (N)</strong>: muestra solo las marcadas; toca <strong>☆</strong> en cualquier tarjeta, o <strong>Quitar todas las favoritas</strong> para vaciarlas de una vez.</li><li><strong>Volver a todo</strong>: sal de la vista de errores/favoritas/sorteo y vuelve a la lista completa.</li><li><strong>Borrar selecciones de esta lista</strong>: borra todas las respuestas seleccionadas de la lista actual (se conservan errores/favoritas).</li><li><strong>Enviar respuesta / Rehacer</strong>: califica la pregunta; Rehacer permite contestarla de nuevo.</li><li><strong>Mostrar respuestas</strong>: tras enviar una pregunta de rellenar, muestra las respuestas aceptadas. La calificación ignora mayúsculas y espacios (<code>check list</code> = <code>checklist</code>) y trata como iguales los números equivalentes (<code>1,000</code> = <code>1000</code>).</li><li><strong>Línea de estadísticas</strong> (junto a la barra): muestra cuántas preguntas hay en vista, tu puntuación y precisión, y cuántos errores quedan en el alcance actual.</li>',
+        guide_html: '<li data-coffee style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--locked-bg);border:1px solid var(--locked-border);border-radius:10px"><strong>☕ Invítame a un café — ¡el botón de abajo a la derecha!</strong> Este banco es gratis y sin anuncios, hecho por una sola persona. Toca <strong>☕</strong>, mira cómo se prepara un café recién hecho y luego deja <strong>$5 / $10 / $20</strong> o lo que quieras por PayPal. Totalmente opcional — mantiene este banco con cafeína y creciendo. 🙏</li><li data-feedback style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Comentarios y ⚐ Reportar — ¡los botones más útiles!</strong> ¿Una respuesta incorrecta, una errata o algo confuso? Toca <strong>💬 Comentarios</strong> arriba, o <strong>⚐ Reportar</strong> en cualquier tarjeta. Tu mensaje llega al autor en segundos y <strong>de verdad se corrige</strong> — cada reporte mejora este banco para el siguiente. Sin registro, 5 segundos. ¡Úsalo!</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 Inicia sesión — ¡guarda y recarga tu historial!</strong> Toca <strong>👤</strong> arriba y elige un código personal (ideal para móviles — sin correo, sin recuperar contraseña). Cada ronda se guarda sola y puedes <strong>recargar cualquiera de tus últimas 10 rondas en cualquier dispositivo</strong> — tus respuestas vuelven tal como las dejaste. El mismo código muestra el mismo historial en todas partes.</li><li><strong>Tema (🌙 / ☀️)</strong>: cambia entre claro y oscuro — tu elección se guarda y sigue el sistema por defecto. El menú 🌐 al lado cambia el idioma.</li><li><strong>← Catálogo</strong>: vuelve a la lista de bancos para cambiar de banco, o abre varios a la vez y practícalos combinados.</li><li><strong>Filtrar bancos (Seleccionar todo / Ninguno / Confirmar)</strong>: marca los conjuntos que quieras practicar — combina varios — y pulsa Confirmar. Al abrir varios bancos juntos se fusionan los duplicados automáticamente; un banco protegido pide su contraseña una vez antes de unirse.</li><li><strong>Mezclar y reiniciar</strong>: baraja las preguntas del alcance actual y borra las selecciones de esta ronda.</li><li><strong>Envío automático</strong>: al activarlo, hacer clic en una opción califica al instante.</li><li><strong>Barra de progreso y “Siguiente sin responder →”</strong>: la barra fija de arriba muestra cuántas preguntas de la lista has respondido; toca <strong>Siguiente sin responder →</strong> para saltar a la próxima que aún no hayas enviado.</li><li><strong>150 al azar</strong>: sortea 150 preguntas del alcance actual, priorizando las menos practicadas; púlsalo otra vez (pasa a <strong>· Repetir</strong>) para un nuevo sorteo. Oculto si hay 150 o menos.</li><li><strong>Volver a las 150</strong>: regresa al sorteo de esta ronda (oculto hasta que sortees uno).</li><li><strong>Solo errores (N)</strong>: muestra solo tus errores; acertar NO los quita — usa <strong>Quitar de errores</strong> en la tarjeta, o <strong>Quitar todo de errores</strong> para vaciar la lista de una vez.</li><li><strong>Solo favoritas (N)</strong>: muestra solo las marcadas; toca <strong>☆</strong> en cualquier tarjeta, o <strong>Quitar todas las favoritas</strong> para vaciarlas de una vez.</li><li><strong>Volver a todo</strong>: sal de la vista de errores/favoritas/sorteo y vuelve a la lista completa.</li><li><strong>Borrar selecciones de esta lista</strong>: borra todas las respuestas seleccionadas de la lista actual (se conservan errores/favoritas).</li><li><strong>Enviar respuesta / Rehacer</strong>: califica la pregunta; Rehacer permite contestarla de nuevo.</li><li><strong>Mostrar respuestas</strong>: tras enviar una pregunta de rellenar, muestra las respuestas aceptadas. La calificación ignora mayúsculas y espacios (<code>check list</code> = <code>checklist</code>) y trata como iguales los números equivalentes (<code>1,000</code> = <code>1000</code>).</li><li><strong>Línea de estadísticas</strong> (junto a la barra): muestra cuántas preguntas hay en vista, tu puntuación y precisión, y cuántos errores quedan en el alcance actual.</li>',
       },
     };
     let uiLang = (function(){ try{ const v = localStorage.getItem(UI_LANG_KEY); return I18N[v] ? v : "en"; }catch(_e){ return "en"; } })();
@@ -786,8 +793,10 @@
       const guideList = document.getElementById("guide-list");
       if (guideList){
         let gh = T("guide_html");
+        // 打赏未配置（离线导出/未注入）时，去掉指南里那条「☕」高亮——否则指向并不存在的按钮
+        if (!(UI_FEATURES.donation && UI_FEATURES.donation.url)) gh = gh.replace(/<li data-coffee[\s\S]*?<\/li>/, "");
         // 反馈关闭（离线导出）时，去掉指南里那条「💬 反馈 / ⚐ 报错」高亮——否则会指向并不存在的按钮
-        if (!UI_FEATURES.feedback) gh = gh.replace(/^<li style="list-style:none[\s\S]*?<\/li>/, "");
+        if (!UI_FEATURES.feedback) gh = gh.replace(/<li data-feedback[\s\S]*?<\/li>/, "");
         // 只有一种语言（离线导出锁英文）时 🌐 切换器已隐藏——去掉主题项里关于「语言菜单」的那句
         if ((UI_FEATURES.languages || []).length <= 1) {
           gh = gh.replace(" The 🌐 menu beside it changes the interface language.", "")
@@ -2674,9 +2683,12 @@
     }
 
     /* ------------------ 新手教程（首次打开，英文，可 Skip） ------------------ */
-    // v2：把「反馈/报错」做成教程第一条重点。bump 版本号让看过 v1 的老用户也再弹一次。
-    const TUTORIAL_KEY = "qb_tutorial_done_v2"; // 故意不带命名空间：同域名任意题库页看过一次即可
+    // v3：把「☕ Buy me a coffee」做成教程第一页（咖啡师现做动画）。bump 版本号让老用户也再弹一次。
+    const TUTORIAL_KEY = "qb_tutorial_done_v3"; // 故意不带命名空间：同域名任意题库页看过一次即可
     const TUTORIAL_STEPS = [
+      { title: "☕ Buy me a coffee",
+        body: "This question bank is free, ad-free and built by one person. The ☕ button (bottom-right) makes a fresh coffee just for you, then lets you tip $5/$10/$20 or any amount via PayPal — it keeps this bank caffeinated and growing. Totally optional, but it means a lot. 🙏",
+        sel: "#coffee-btn" },
       { title: "⭐ Found an error? Tell me — this really works!",
         body: "The single most useful button here. Tap 💬 Feedback at the top, or ⚐ Report on any question card, to flag a wrong answer, a typo, or anything unclear. Your message reaches me in seconds and I actually fix it — every report makes this bank better for the next person. No sign-up, takes 5 seconds. Please use it!",
         sel: "#suggest-btn" },
@@ -2757,9 +2769,10 @@
       tutorialRender();
     }
     function maybeStartTutorial(){
-      if (IS_SPECIAL) return; // 访客（分享码）模式：不强制弹新手教程
-      if (!UI_FEATURES.tutorial) return; // 离线导出关掉了新手教程
-      try{ if (localStorage.getItem(TUTORIAL_KEY)) return; }catch(_e){ return; }
+      // 不弹教程的各路径：直接开始 FAB 的 30s 摆动；要弹教程则等 endTutorial 再开始
+      if (IS_SPECIAL) { startFabWiggle(); return; } // 访客（分享码）模式：不强制弹新手教程
+      if (!UI_FEATURES.tutorial) { startFabWiggle(); return; } // 离线导出关掉了新手教程
+      try{ if (localStorage.getItem(TUTORIAL_KEY)) { startFabWiggle(); return; } }catch(_e){ startFabWiggle(); return; }
       openTutorial();
     }
     function endTutorial(){
@@ -2767,6 +2780,7 @@
       if (overlay) overlay.hidden = true;
       tutorialClearHighlight();
       try{ localStorage.setItem(TUTORIAL_KEY, "1"); }catch(_e){}
+      startFabWiggle(); // 教程关闭后开始 FAB 摆动
     }
 
     /* ------------------ ☕ Buy me a coffee（打赏） ------------------ */
@@ -2814,14 +2828,8 @@
       }catch(_e){}
     }
 
-    // 扭蛋随机"战利品"文案（纯趣味，不影响金额）
-    const COFFEE_ROLLS = {
-      en: ["☕ GOLDEN BEAN! Legendary roast.","✨ DOUBLE ESPRESSO! +10 focus.","🫧 EXTRA FOAM! So smooth.","🔥 DARK ROAST! Bold move.","🍀 LUCKY SIP! Nice one.","💎 DIAMOND DRIP! Super rare.","🌟 CARAMEL CROWN! Sweet."],
-      zh: ["☕ 黄金咖啡豆！传说级烘焙。","✨ 双份浓缩！专注 +10。","🫧 加量奶泡！丝般顺滑。","🔥 深焙！够猛。","🍀 幸运一口！不错哦。","💎 钻石手冲！超稀有。","🌟 焦糖皇冠！甜。"],
-      es: ["☕ ¡GRANO DORADO! Tueste legendario.","✨ ¡DOBLE ESPRESSO! +10 de enfoque.","🫧 ¡EXTRA ESPUMA! Suavísimo.","🔥 ¡TUESTE OSCURO! Con carácter.","🍀 ¡SORBO CON SUERTE! Bien.","💎 ¡GOTEO DIAMANTE! Súper raro.","🌟 ¡CORONA DE CARAMELO! Dulce."]
-    };
     function coffeeReset(){
-      const g = document.getElementById("coffee-gacha"); if (g) g.classList.remove("shaking","cracking");
+      const b = document.getElementById("coffee-barista"); if (b) b.className = "barista";
       const roll = document.getElementById("coffee-roll"); if (roll){ roll.hidden = true; roll.textContent = ""; }
       const rev = document.getElementById("coffee-reveal"); if (rev) rev.hidden = true;
       const thanks = document.getElementById("coffee-thanks"); if (thanks) thanks.hidden = true;
@@ -2834,18 +2842,22 @@
       }
     }
     function coffeeRevealDonate(){
-      const roll = document.getElementById("coffee-roll");
-      if (roll){ const list = COFFEE_ROLLS[uiLang] || COFFEE_ROLLS.en; const pick = list[Math.floor(Math.random() * list.length)]; roll.textContent = T("coffee_roll_label") + " " + pick; roll.hidden = false; }
       const rev = document.getElementById("coffee-reveal"); if (rev) rev.hidden = false;
     }
-    // 扭蛋序列：摇晃 → 裂开+彩带 → 蹦出金额档
-    function runGacha(){
-      const g = document.getElementById("coffee-gacha");
+    // 咖啡师现做：豆子落下 → 注入 → 热气 + 「刚出炉」→ 蹦出金额档
+    function runBarista(){
+      const b = document.getElementById("coffee-barista");
+      const roll = document.getElementById("coffee-roll");
       const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (!g || reduce){ if (g) g.classList.add("cracking"); coffeeRevealDonate(); return; }
-      g.classList.add("shaking");
-      setTimeout(function(){ g.classList.remove("shaking"); g.classList.add("cracking"); fireConfetti(innerWidth / 2, innerHeight * 0.42); }, 820);
-      setTimeout(function(){ coffeeRevealDonate(); }, 1480);
+      if (!b || reduce){
+        if (b) b.className = "barista brewed";
+        if (roll){ roll.textContent = T("coffee_brew_done"); roll.hidden = false; }
+        coffeeRevealDonate(); return;
+      }
+      b.className = "barista brewing";
+      if (roll){ roll.textContent = T("coffee_brewing"); roll.hidden = false; }
+      setTimeout(function(){ b.classList.add("brewed"); if (roll) roll.textContent = T("coffee_brew_done"); fireConfetti(innerWidth / 2, innerHeight * 0.42); }, 1650);
+      setTimeout(function(){ coffeeRevealDonate(); }, 1850);
     }
     function openCoffee(){
       if (!DONATION) return;
@@ -2853,9 +2865,18 @@
       if (!ov) return;
       coffeeReset();
       ov.hidden = false;
-      runGacha();
+      runBarista();
     }
     function closeCoffee(){ const ov = document.getElementById("qb-coffee"); if (ov) ov.hidden = true; }
+    // FAB 开局摆动：只摆 30s（不再一直跳）；若新手教程在弹，则等教程关了再开始（由 endTutorial 触发）
+    let fabWiggled = false;
+    function startFabWiggle(){
+      const f = document.getElementById("coffee-btn");
+      if (!f || f.hidden || fabWiggled) return;
+      fabWiggled = true;
+      f.classList.add("wiggle");
+      setTimeout(function(){ f.classList.remove("wiggle"); }, 30000);
+    }
     // PayPal.Me 支持 /<amount><currency> 预填金额；其它平台忽略金额、打开主页让用户自填。
     function coffeeUrl(amount){
       let url = (DONATION && DONATION.url) ? DONATION.url : "";
