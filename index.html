@@ -48,9 +48,9 @@
     .coffee-fab{position:fixed;right:18px;bottom:18px;z-index:55;display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:999px;border:1px solid var(--brand);background:var(--brand);color:#fff;font:inherit;font-weight:700;font-size:14px;cursor:pointer;box-shadow:var(--shadow-md)}
     .coffee-fab[hidden]{display:none}
     .coffee-fab:hover{filter:brightness(1.07);transform:translateY(-2px)}
-    .coffee-fab.wiggle{animation:cfWiggle 3.4s ease-in-out infinite} /* 只在开局 30s 内摆动 */
+    .coffee-fab.wiggle{animation:cfWiggle 3.4s ease-in-out infinite} /* 目录页：一直跳，但幅度小 */
     .coffee-fab .cf-emoji{font-size:17px}
-    @keyframes cfWiggle{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(-7deg) scale(1.04)}94%{transform:rotate(7deg) scale(1.04)}}
+    @keyframes cfWiggle{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(-4deg)}94%{transform:rotate(4deg)}}
     @media (max-width:560px){.coffee-fab .cf-text{display:none}.coffee-fab{padding:13px;border-radius:50%;font-size:18px}}
     /* 咖啡师现做 */
     .barista{height:118px;position:relative;display:flex;align-items:flex-end;justify-content:center;margin:6px 0 2px}
@@ -836,8 +836,8 @@
       setTimeout(function(){ coffeeRevealDonate(); }, 1850);
     }
     function openCoffee(){ var ov = document.getElementById("coffee-modal"); if (!ov) return; coffeeReset(); ov.hidden = false; runBarista(); }
-    // FAB 开局摆动：只摆 30s（目录页无新手教程，载入即开始）
-    (function(){ var f = document.getElementById("coffee-btn"); if (!f) return; f.classList.add("wiggle"); setTimeout(function(){ f.classList.remove("wiggle"); }, 30000); })();
+    // FAB 摆动：目录页一直跳（小幅度），载入即开始
+    (function(){ var f = document.getElementById("coffee-btn"); if (f) f.classList.add("wiggle"); })();
     function closeCoffee(){ var ov = document.getElementById("coffee-modal"); if (ov) ov.hidden = true; }
     function coffeeGo(ev){ var t = ev && ev.currentTarget; var amount = (t && t.dataset && t.dataset.amount) ? t.dataset.amount : null;
       if (!amount){ var inp = document.getElementById("coffee-custom"); var v = inp ? parseFloat(inp.value) : NaN; if (isFinite(v) && v > 0) amount = String(Math.round(v * 100) / 100); }

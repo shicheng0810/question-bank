@@ -403,9 +403,9 @@
     .coffee-fab{position:fixed;right:18px;bottom:18px;z-index:80;display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:999px;border:1px solid var(--brand);background:var(--brand);color:#fff;font:inherit;font-weight:700;font-size:14px;cursor:pointer;box-shadow:var(--shadow-lg)}
     .coffee-fab[hidden]{display:none}
     .coffee-fab:hover{filter:brightness(1.07);transform:translateY(-2px)}
-    .coffee-fab.wiggle{animation:cfWiggle 3.4s ease-in-out infinite} /* 只在开局 30s 内摆动（JS 控制加/去 class） */
+    .coffee-fab.wiggle{animation:cfWiggle .9s ease-in-out 3} /* 做题页：跳 3 次后自动停（iteration-count=3） */
     .coffee-fab .cf-emoji{font-size:17px}
-    @keyframes cfWiggle{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(-7deg) scale(1.04)}94%{transform:rotate(7deg) scale(1.04)}}
+    @keyframes cfWiggle{0%,55%,100%{transform:rotate(0)}68%{transform:rotate(-8deg) scale(1.05)}84%{transform:rotate(8deg) scale(1.05)}}
     @media (max-width:560px){.coffee-fab .cf-text{display:none}.coffee-fab{padding:13px;border-radius:50%;font-size:18px}}
     .coffee-card{max-width:430px;position:relative;text-align:center;overflow:hidden}
     /* 咖啡师现做：机头 → 豆子落下 → 咖啡注入杯中 → 热气 */
@@ -2868,14 +2868,13 @@
       runBarista();
     }
     function closeCoffee(){ const ov = document.getElementById("qb-coffee"); if (ov) ov.hidden = true; }
-    // FAB 开局摆动：只摆 30s（不再一直跳）；若新手教程在弹，则等教程关了再开始（由 endTutorial 触发）
+    // FAB 摆动：只跳 3 次就停（CSS iteration-count=3 自停）；若强制新手教程在弹，则等教程关了再开始（endTutorial 触发），没教程则直接跳
     let fabWiggled = false;
     function startFabWiggle(){
       const f = document.getElementById("coffee-btn");
       if (!f || f.hidden || fabWiggled) return;
       fabWiggled = true;
-      f.classList.add("wiggle");
-      setTimeout(function(){ f.classList.remove("wiggle"); }, 30000);
+      f.classList.add("wiggle"); // cfWiggle 播 3 次后自动停
     }
     // PayPal.Me 支持 /<amount><currency> 预填金额；其它平台忽略金额、打开主页让用户自填。
     function coffeeUrl(amount){
