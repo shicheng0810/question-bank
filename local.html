@@ -399,11 +399,11 @@
 
   <!-- ☕ Buy me a coffee（打赏）：FAB「Click me for fun!」→ 扭蛋抽奖动画 → 蹦出金额档；+ 完成整轮庆祝 toast + 彩带 -->
   <style>
-    /* 浮动按钮（右下角，会偶尔扭一下） */
-    .coffee-fab{position:fixed;right:18px;bottom:18px;z-index:80;display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:999px;border:1px solid var(--brand);background:var(--brand);color:#fff;font:inherit;font-weight:700;font-size:14px;cursor:pointer;box-shadow:var(--shadow-lg)}
+    /* 做题页浮动按钮：右上角，默认 absolute（随页面滚走、不跟随）；跳动时切 fixed 跟随滚动，跳完(JS去class)复原 */
+    .coffee-fab{position:absolute;right:16px;top:14px;z-index:80;display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:999px;border:1px solid var(--brand);background:var(--brand);color:#fff;font:inherit;font-weight:700;font-size:14px;cursor:pointer;box-shadow:var(--shadow-lg)}
     .coffee-fab[hidden]{display:none}
     .coffee-fab:hover{filter:brightness(1.07);transform:translateY(-2px)}
-    .coffee-fab.wiggle{animation:cfWiggle .9s ease-in-out 3} /* 做题页：跳 3 次后自动停（iteration-count=3） */
+    .coffee-fab.wiggle{position:fixed;top:14px;right:16px;animation:cfWiggle .9s ease-in-out 3} /* 跳 3 次自动停；期间 fixed 跟随滚动 */
     .coffee-fab .cf-emoji{font-size:17px}
     @keyframes cfWiggle{0%,55%,100%{transform:rotate(0)}68%{transform:rotate(-8deg) scale(1.05)}84%{transform:rotate(8deg) scale(1.05)}}
     @media (max-width:560px){.coffee-fab .cf-text{display:none}.coffee-fab{padding:13px;border-radius:50%;font-size:18px}}
@@ -2874,7 +2874,8 @@
       const f = document.getElementById("coffee-btn");
       if (!f || f.hidden || fabWiggled) return;
       fabWiggled = true;
-      f.classList.add("wiggle"); // cfWiggle 播 3 次后自动停
+      f.classList.add("wiggle"); // 跳动期间 fixed 跟随滚动；cfWiggle 播 3 次（.9s×3=2.7s）
+      setTimeout(function(){ f.classList.remove("wiggle"); }, 2800); // 跳完复原成 absolute（随页面滚走）
     }
     // PayPal.Me 支持 /<amount><currency> 预填金额；其它平台忽略金额、打开主页让用户自填。
     function coffeeUrl(amount){
