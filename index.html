@@ -44,6 +44,41 @@
     .lang select{font:inherit; height:36px; padding:8px 10px; border:1px solid var(--border-strong); border-radius:10px; background:var(--card); color:var(--ink); font-size:13px; cursor:pointer; box-shadow:var(--shadow-sm)}
     #theme-toggle{width:36px; height:36px; border-radius:10px; padding:0; border:1px solid var(--border-strong); background:var(--card); color:var(--ink); font-size:16px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; box-shadow:var(--shadow-sm)}
     #theme-toggle:hover{background:var(--muted-bg)}
+    /* ☕ 打赏：浮动按钮 + 扭蛋弹窗 + 彩带 */
+    .coffee-fab{position:fixed;right:18px;bottom:18px;z-index:55;display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:999px;border:1px solid var(--brand);background:var(--brand);color:#fff;font:inherit;font-weight:700;font-size:14px;cursor:pointer;box-shadow:var(--shadow-md);animation:cfWiggle 3.4s ease-in-out infinite}
+    .coffee-fab[hidden]{display:none}
+    .coffee-fab:hover{filter:brightness(1.07);transform:translateY(-2px)}
+    .coffee-fab .cf-emoji{font-size:17px}
+    @keyframes cfWiggle{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(-7deg) scale(1.04)}94%{transform:rotate(7deg) scale(1.04)}}
+    @media (max-width:560px){.coffee-fab .cf-text{display:none}.coffee-fab{padding:13px;border-radius:50%;font-size:18px}}
+    .gacha{height:104px;display:flex;align-items:center;justify-content:center;position:relative;margin:8px 0 2px}
+    .capsule{width:78px;height:78px;position:relative}
+    .capsule .cap-top,.capsule .cap-bot{position:absolute;left:0;right:0;height:50%;border:3px solid var(--ink);box-sizing:border-box}
+    .capsule .cap-top{top:0;background:var(--brand);border-radius:40px 40px 0 0;border-bottom:none}
+    .capsule .cap-bot{bottom:0;background:linear-gradient(#fff,#eef2f8);border-radius:0 0 40px 40px;border-top:2px dashed var(--ink)}
+    .capsule .cap-dot{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.92);border:2px solid var(--ink);z-index:2}
+    .gacha.shaking .capsule{animation:gachaShake .42s ease-in-out 2}
+    @keyframes gachaShake{0%,100%{transform:rotate(0) translateY(0)}25%{transform:rotate(-13deg)}50%{transform:translateY(-6px)}75%{transform:rotate(13deg)}}
+    .gacha.cracking .cap-top{animation:capTop .55s forwards cubic-bezier(.3,-.4,.7,1)}
+    .gacha.cracking .cap-bot{animation:capBot .55s forwards}
+    .gacha.cracking .cap-dot{opacity:0;transition:opacity .2s}
+    @keyframes capTop{to{transform:translate(-26px,-58px) rotate(-46deg);opacity:0}}
+    @keyframes capBot{to{transform:translateY(16px);opacity:0}}
+    .gacha .prize{position:absolute;font-size:46px;opacity:0;transform:scale(.3) translateY(8px)}
+    .gacha.cracking .prize{animation:prizePop .6s .12s cubic-bezier(.2,.9,.3,1.5) forwards}
+    @keyframes prizePop{to{opacity:1;transform:scale(1) translateY(0)}}
+    .gacha-roll{font-weight:800;font-size:1.05rem;color:var(--brand);margin:2px 0 2px;min-height:1.3em;animation:qbPop .4s}
+    .coffee-reveal[hidden]{display:none}
+    .coffee-reveal{animation:revealUp .5s cubic-bezier(.2,.9,.3,1.1)}
+    @keyframes revealUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    .coffee-tiers{display:flex;gap:8px;margin:8px 0 12px}
+    .coffee-tiers .qb-btn{flex:1;flex-direction:column;gap:3px;padding:11px 6px;height:auto;line-height:1.2;display:inline-flex;align-items:center}
+    .coffee-tiers .qb-btn .ct-emoji{font-size:17px}
+    .coffee-tiers .qb-btn .ct-amt{font-size:11px;color:var(--muted);font-weight:700}
+    .coffee-tiers .qb-btn:hover{border-color:var(--brand);transform:translateY(-2px)}
+    #coffee-thanks{animation:qbPop .45s cubic-bezier(.2,.9,.3,1.3)}
+    @keyframes qbPop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+    @media (prefers-reduced-motion: reduce){.coffee-fab{animation:none}.gacha .prize{opacity:1!important;transform:none!important}.gacha-roll,.coffee-reveal{animation:none}}
     .sub{color:var(--muted); margin:0 0 20px; font-size:14.5px; max-width:70ch}
     .grid{display:grid; gap:14px}
     .card{display:block; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px; text-decoration:none; color:inherit; box-shadow:var(--shadow-sm); transition:box-shadow .18s, transform .18s, border-color .18s}
@@ -230,6 +265,33 @@
       </div>
     </div>
   </div>
+
+  <button class="coffee-fab" id="coffee-btn" type="button" onclick="openCoffee()" data-testid="coffee-btn" aria-label="Buy me a coffee">
+    <span class="cf-emoji" aria-hidden="true">☕</span><span class="cf-text" data-i18n="coffee_fab">Click me for fun!</span>
+  </button>
+  <canvas id="qb-confetti" hidden style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60"></canvas>
+  <div class="qb-ov" id="coffee-modal" hidden data-testid="coffee-modal" onclick="if(event.target===this)closeCoffee()">
+    <div class="qb-card" style="max-width:430px;text-align:center;position:relative;overflow:hidden">
+      <button class="qb-x" onclick="closeCoffee()" data-testid="coffee-close-btn" aria-label="Close" style="position:absolute;top:14px;right:14px;z-index:3">✕</button>
+      <div class="gacha" id="coffee-gacha" aria-hidden="true">
+        <div class="capsule"><span class="cap-top"></span><span class="cap-bot"></span><span class="cap-dot"></span></div>
+        <div class="prize">☕</div>
+      </div>
+      <p class="gacha-roll" id="coffee-roll" hidden></p>
+      <div class="coffee-reveal" id="coffee-reveal" hidden>
+        <h2 data-i18n="coffee_title" style="margin:4px 0 6px">Buy me a coffee ☕</h2>
+        <p class="qb-hint" id="coffee-stat" hidden style="margin:0 0 6px;color:var(--brand);font-weight:600"></p>
+        <p class="qb-hint" data-i18n="coffee_blurb" style="margin:0 0 4px;line-height:1.6">This question bank is free. If it helped, buy me a coffee.</p>
+        <div class="coffee-tiers">
+          <button class="qb-btn" onclick="coffeeGo(event)" data-testid="coffee-tier-s"><span class="ct-emoji">☕</span><span data-i18n="coffee_tier_s">Espresso</span></button>
+          <button class="qb-btn" onclick="coffeeGo(event)" data-testid="coffee-tier-m"><span class="ct-emoji">☕☕</span><span data-i18n="coffee_tier_m">Latte</span></button>
+          <button class="qb-btn" onclick="coffeeGo(event)" data-testid="coffee-tier-l"><span class="ct-emoji">🫘</span><span data-i18n="coffee_tier_l">Whole bag</span></button>
+        </div>
+        <button class="qb-btn primary" onclick="coffeeGo(event)" data-i18n="coffee_go" data-testid="coffee-go-btn" style="width:100%;justify-content:center">Buy me a coffee →</button>
+        <p class="qb-hint" id="coffee-thanks" hidden data-i18n="coffee_thanks" style="margin:12px 0 0;color:var(--ok-ink);font-weight:600">Thank you!</p>
+      </div>
+    </div>
+  </div>
   <script>
     var I18N = {
       en: { title:"AMT Question Bank Practice", sub:"Pick a bank to start — every question on one page, submit one by one; wrong answers and stars are saved on this device.",
@@ -243,7 +305,8 @@
             confirm_delete:"Delete this local bank? Its practice records stay until re-imported with the same file name.",
             login_btn:"Sign in", account_history:"History", login_title:"Sign in to save your history", login_hint:"Pick a code and remember it - use the same code on any device to find your history. Anyone who knows the code can see that history, so do not reuse a real password.", login_ph:"your code (4+ characters)", login_go:"Enter", login_cancel:"Cancel", login_ing:"Signing in...", login_ok:"\u2705 Signed in", login_fail:"Couldn't sign in, try again.", login_too_short:"Code needs at least 4 characters.", login_rate:"Too many tries - wait a minute.", login_neterr:"Network error, try again later.", login_reminder:"\uD83D\uDCA1 Sign in to save every practice round and reload your history on any device.",
             history_title:"Your practice history", history_sub:"Your latest 10 rounds (oldest dropped). Tap Load to reopen a round with your answers.", hist_loading:"Loading...", hist_empty:"No saved rounds yet - answer a few questions and they will show up here.", hist_load:"Load", hist_neterr:"Couldn't load history.", hist_del_confirm:"Delete this record?", hist_load_fail:"Couldn't load that round.", hist_logout:"Sign out", hist_unanswered:"not started",
-            cloud_title:"My account banks", cloud_badge_section:"\u2601\uFE0F Private \u00B7 any device", cloud_badge:"\u2601\uFE0F Private", cloud_desc:"Banks you uploaded to your account. Only you, signed in with your code, can see and open them.", cloud_empty:"No account banks yet. Tick \u201CSave to my account\u201D below when you import a file.", cloud_delete:"Remove", cloud_del_confirm:"Remove this bank from your account? It is deleted from the cloud.", import_to_account:"\u2601\uFE0F Save to my account instead - private, opens on any device after you sign in", cloud_need_login:"Sign in first to upload to your account.", cloud_uploading:"Uploading to your account...", cloud_uploaded:"Uploaded \u201C{t}\u201D: {n} questions to your account.", cloud_moved:"Moved \u201C{t}\u201D ({n} questions) to your account; the local copy and its progress were removed.", cloud_limit:"Account bank limit reached ({n}). Remove one first.", cloud_too_large:"This bank is too large to upload - try removing large images.", cloud_fail:"Upload failed, please try again.", cloud_neterr:"Network error, try again later.", del_account_btn:"Delete my data", del_account_confirm:"Permanently delete your account and ALL your data (history + private banks)? This cannot be undone. You can sign in again later with the same code to start fresh.", del_account_done:"\u2705 Your account and all your data were deleted.", del_account_fail:"Couldn't delete - please try again.", special_ok:"\u2705 Opening the shared bank...", special_badge:"\uD83D\uDD11 Shared", special_exit:"Exit", special_exit_confirm:"Exit this shared bank? Your practice here is not saved." },
+            cloud_title:"My account banks", cloud_badge_section:"\u2601\uFE0F Private \u00B7 any device", cloud_badge:"\u2601\uFE0F Private", cloud_desc:"Banks you uploaded to your account. Only you, signed in with your code, can see and open them.", cloud_empty:"No account banks yet. Tick \u201CSave to my account\u201D below when you import a file.", cloud_delete:"Remove", cloud_del_confirm:"Remove this bank from your account? It is deleted from the cloud.", import_to_account:"\u2601\uFE0F Save to my account instead - private, opens on any device after you sign in", cloud_need_login:"Sign in first to upload to your account.", cloud_uploading:"Uploading to your account...", cloud_uploaded:"Uploaded \u201C{t}\u201D: {n} questions to your account.", cloud_moved:"Moved \u201C{t}\u201D ({n} questions) to your account; the local copy and its progress were removed.", cloud_limit:"Account bank limit reached ({n}). Remove one first.", cloud_too_large:"This bank is too large to upload - try removing large images.", cloud_fail:"Upload failed, please try again.", cloud_neterr:"Network error, try again later.", del_account_btn:"Delete my data", del_account_confirm:"Permanently delete your account and ALL your data (history + private banks)? This cannot be undone. You can sign in again later with the same code to start fresh.", del_account_done:"\u2705 Your account and all your data were deleted.", del_account_fail:"Couldn't delete - please try again.", special_ok:"\u2705 Opening the shared bank...", special_badge:"\uD83D\uDD11 Shared", special_exit:"Exit", special_exit_confirm:"Exit this shared bank? Your practice here is not saved.",
+            coffee_title:"Buy me a coffee ☕", coffee_fab:"Click me for fun!", coffee_roll_label:"You rolled:", coffee_blurb:"This question bank is free and ad-free, built by one person. If it helped your studying, a coffee keeps it caffeinated and growing. 🙏", coffee_stat:"You've practiced {n} banks here. ☕", coffee_tier_s:"Espresso", coffee_tier_m:"Latte", coffee_tier_l:"Whole bag", coffee_go:"Buy me a coffee →", coffee_thanks:"You're the best — thank you! ☕✨" },
       zh: { title:"AMT \u9898\u5E93\u7EC3\u4E60", sub:"\u9009\u62E9\u4E00\u4E2A\u9898\u5E93\u5F00\u59CB \u2014 \u6240\u6709\u9898\u76EE\u4E00\u9875\u5E73\u94FA\uFF0C\u9010\u9898\u63D0\u4EA4\uFF0C\u9519\u9898/\u6536\u85CF\u81EA\u52A8\u4FDD\u5B58\u5728\u672C\u673A\u3002",
             merged_title:"\u5168\u90E8\u9898\u5E93 \u00B7 \u5408\u5E76\u7EC3\u4E60", merged_desc:"\u6240\u6709\u516C\u5F00\u9898\u5E93\u5408\u5E76\u5230\u4E00\u9875\uFF08\u91CD\u590D\u9898\u5DF2\u667A\u80FD\u53BB\u91CD\uFF09\u3002\u6253\u5F00\u540E\u5728\u300C\u7B5B\u9009\u9898\u5E93\u300D\u91CC\u52FE\u9009\u4EFB\u610F\u7EC4\u5408\u4E00\u8D77\u505A\u3002",
             badge_public:"\u516C\u5F00", badge_protected:"\uD83D\uDD12 \u5BC6\u7801\u4FDD\u62A4", count:"{n} \u9898", progress:"\u5DF2\u505A {n} \u9898", start:"\u5F00\u59CB\u505A\u9898 \u2192",
@@ -255,7 +318,8 @@
             confirm_delete:"\u5220\u9664\u8FD9\u4E2A\u672C\u5730\u9898\u5E93\uFF1F\uFF08\u505A\u9898\u8BB0\u5F55\u4FDD\u7559\uFF0C\u540C\u540D\u91CD\u65B0\u5BFC\u5165\u53EF\u63A5\u7EED\uFF09",
             login_btn:"登录", account_history:"历史", login_title:"登录以保存历史", login_hint:"自定义一个码并记住它——换设备也用同一个码就能找回历史。知道码的人就能看到那份历史，别用你别处的真实密码。", login_ph:"你的码（4 位以上）", login_go:"进入", login_cancel:"取消", login_ing:"登录中...", login_ok:"\u2705 已登录", login_fail:"登录失败，请重试。", login_too_short:"码至少要 4 位。", login_rate:"尝试太频繁，请稍等一分钟。", login_neterr:"网络错误，请稍后再试。", login_reminder:"\uD83D\uDCA1 登录后可保存每次做题、并在任意设备重新加载你的历史。",
             history_title:"你的做题历史", history_sub:"最近 10 轮（超出删最旧）。点「载入」回到那一轮、带上你的作答。", hist_loading:"加载中...", hist_empty:"还没有记录——做几道题就会出现在这里。", hist_load:"载入", hist_neterr:"加载历史失败。", hist_del_confirm:"删除这条记录？", hist_load_fail:"载入这一轮失败。", hist_logout:"退出登录", hist_unanswered:"未开始",
-            cloud_title:"我的账号题库", cloud_badge_section:"\u2601\uFE0F 私有 \u00B7 任意设备", cloud_badge:"\u2601\uFE0F 私有", cloud_desc:"你上传到账号的题库。只有用你的码登录的你，才能看到和打开。", cloud_empty:"账号里还没有题库。导入文件时勾选下面的「传到账号」即可。", cloud_delete:"移除", cloud_del_confirm:"从账号移除这个题库？（会从云端删除。）", import_to_account:"\u2601\uFE0F 改为传到我的账号 —— 私有，登录后任意设备都能打开", cloud_need_login:"请先登录再上传到账号。", cloud_uploading:"正在上传到账号...", cloud_uploaded:"已上传「{t}」：{n} 题到你的账号。", cloud_moved:"已把「{t}」（{n} 题）移到你的账号；本地副本和进度已一并移走。", cloud_limit:"账号题库数量已达上限（{n}）。请先移除一个。", cloud_too_large:"题库太大无法上传 —— 试试去掉大图片。", cloud_fail:"上传失败，请重试。", cloud_neterr:"网络错误，请稍后再试。", del_account_btn:"删除我的数据", del_account_confirm:"永久删除你的账号和全部数据（历史 + 私有题库）？此操作无法撤销。之后仍可用同一个码重新登录、从空账号开始。", del_account_done:"\u2705 你的账号和全部数据已删除。", del_account_fail:"删除失败，请重试。", special_ok:"\u2705 正在打开分享题库...", special_badge:"\uD83D\uDD11 分享", special_exit:"退出", special_exit_confirm:"退出这个分享题库？这里的做题不会保存。" },
+            cloud_title:"我的账号题库", cloud_badge_section:"\u2601\uFE0F 私有 \u00B7 任意设备", cloud_badge:"\u2601\uFE0F 私有", cloud_desc:"你上传到账号的题库。只有用你的码登录的你，才能看到和打开。", cloud_empty:"账号里还没有题库。导入文件时勾选下面的「传到账号」即可。", cloud_delete:"移除", cloud_del_confirm:"从账号移除这个题库？（会从云端删除。）", import_to_account:"\u2601\uFE0F 改为传到我的账号 —— 私有，登录后任意设备都能打开", cloud_need_login:"请先登录再上传到账号。", cloud_uploading:"正在上传到账号...", cloud_uploaded:"已上传「{t}」：{n} 题到你的账号。", cloud_moved:"已把「{t}」（{n} 题）移到你的账号；本地副本和进度已一并移走。", cloud_limit:"账号题库数量已达上限（{n}）。请先移除一个。", cloud_too_large:"题库太大无法上传 —— 试试去掉大图片。", cloud_fail:"上传失败，请重试。", cloud_neterr:"网络错误，请稍后再试。", del_account_btn:"删除我的数据", del_account_confirm:"永久删除你的账号和全部数据（历史 + 私有题库）？此操作无法撤销。之后仍可用同一个码重新登录、从空账号开始。", del_account_done:"\u2705 你的账号和全部数据已删除。", del_account_fail:"删除失败，请重试。", special_ok:"\u2705 正在打开分享题库...", special_badge:"\uD83D\uDD11 分享", special_exit:"退出", special_exit_confirm:"退出这个分享题库？这里的做题不会保存。",
+            coffee_title:"请我喝杯咖啡 ☕", coffee_fab:"点我玩一下！", coffee_roll_label:"你抽到了：", coffee_blurb:"这个题库免费、无广告，一个人做的。如果它帮到了你的复习，一杯咖啡能让它继续有咖啡因、继续长大。🙏", coffee_stat:"你已经在这里练过 {n} 个题库。☕", coffee_tier_s:"浓缩", coffee_tier_m:"拿铁", coffee_tier_l:"一整袋豆", coffee_go:"请我喝咖啡 →", coffee_thanks:"你最好了 —— 谢谢你！☕✨" },
       es: { title:"Pr\u00E1ctica del banco de preguntas AMT", sub:"Elige un banco para empezar: todas las preguntas en una p\u00E1gina, env\u00EDa una por una; errores y favoritas se guardan en este dispositivo.",
             merged_title:"Todos los bancos \u00B7 Pr\u00E1ctica combinada", merged_desc:"Todos los bancos p\u00FAblicos en una sola p\u00E1gina (sin duplicados). Usa \u201CFiltrar bancos\u201D dentro para elegir cualquier combinaci\u00F3n.",
             badge_public:"P\u00FAblica", badge_protected:"\uD83D\uDD12 Protegida", count:"{n} preguntas", progress:"{n} practicadas", start:"Empezar \u2192",
@@ -267,7 +331,8 @@
             confirm_delete:"\u00BFEliminar este banco local?",
             login_btn:"Entrar", account_history:"Historial", login_title:"Entra para guardar tu historial", login_hint:"Elige un código y recuérdalo - usa el mismo en cualquier dispositivo para encontrar tu historial. Quien conozca el código verá ese historial, así que no uses una contraseña real.", login_ph:"tu código (4+ caracteres)", login_go:"Entrar", login_cancel:"Cancelar", login_ing:"Entrando...", login_ok:"\u2705 Sesión iniciada", login_fail:"No se pudo entrar, reinténtalo.", login_too_short:"El código necesita 4+ caracteres.", login_rate:"Demasiados intentos - espera un minuto.", login_neterr:"Error de red, inténtalo más tarde.", login_reminder:"\uD83D\uDCA1 Inicia sesión para guardar cada ronda y recargar tu historial en cualquier dispositivo.",
             history_title:"Tu historial de práctica", history_sub:"Tus últimas 10 rondas (se elimina la más antigua). Pulsa Cargar para reabrir una ronda con tus respuestas.", hist_loading:"Cargando...", hist_empty:"Aún no hay rondas - responde algunas preguntas y aparecerán aquí.", hist_load:"Cargar", hist_neterr:"No se pudo cargar el historial.", hist_del_confirm:"¿Eliminar este registro?", hist_load_fail:"No se pudo cargar esa ronda.", hist_logout:"Cerrar sesión", hist_unanswered:"sin empezar",
-            cloud_title:"Mis bancos de la cuenta", cloud_badge_section:"\u2601\uFE0F Privado \u00B7 cualquier dispositivo", cloud_badge:"\u2601\uFE0F Privado", cloud_desc:"Bancos que subiste a tu cuenta. Solo tú, con tu código, puedes verlos y abrirlos.", cloud_empty:"Aún no hay bancos en la cuenta. Marca \u201CGuardar en mi cuenta\u201D al importar un archivo.", cloud_delete:"Quitar", cloud_del_confirm:"\u00BFQuitar este banco de tu cuenta? Se elimina de la nube.", import_to_account:"\u2601\uFE0F Guardar en mi cuenta - privado, se abre en cualquier dispositivo tras iniciar sesión", cloud_need_login:"Inicia sesión primero para subir a tu cuenta.", cloud_uploading:"Subiendo a tu cuenta...", cloud_uploaded:"Subido \u201C{t}\u201D: {n} preguntas a tu cuenta.", cloud_moved:"Movido \u201C{t}\u201D ({n} preguntas) a tu cuenta; la copia local y su progreso se quitaron.", cloud_limit:"Límite de bancos alcanzado ({n}). Quita uno primero.", cloud_too_large:"Este banco es demasiado grande - quita imágenes grandes.", cloud_fail:"Error al subir, inténtalo de nuevo.", cloud_neterr:"Error de red, inténtalo más tarde.", del_account_btn:"Eliminar mis datos", del_account_confirm:"¿Eliminar permanentemente tu cuenta y TODOS tus datos (historial + bancos privados)? No se puede deshacer. Puedes volver a entrar con el mismo código y empezar de cero.", del_account_done:"\u2705 Tu cuenta y todos tus datos se eliminaron.", del_account_fail:"No se pudo eliminar - inténtalo de nuevo.", special_ok:"\u2705 Abriendo el banco compartido...", special_badge:"\uD83D\uDD11 Compartido", special_exit:"Salir", special_exit_confirm:"¿Salir de este banco compartido? Tu práctica aquí no se guarda." }
+            cloud_title:"Mis bancos de la cuenta", cloud_badge_section:"\u2601\uFE0F Privado \u00B7 cualquier dispositivo", cloud_badge:"\u2601\uFE0F Privado", cloud_desc:"Bancos que subiste a tu cuenta. Solo tú, con tu código, puedes verlos y abrirlos.", cloud_empty:"Aún no hay bancos en la cuenta. Marca \u201CGuardar en mi cuenta\u201D al importar un archivo.", cloud_delete:"Quitar", cloud_del_confirm:"\u00BFQuitar este banco de tu cuenta? Se elimina de la nube.", import_to_account:"\u2601\uFE0F Guardar en mi cuenta - privado, se abre en cualquier dispositivo tras iniciar sesión", cloud_need_login:"Inicia sesión primero para subir a tu cuenta.", cloud_uploading:"Subiendo a tu cuenta...", cloud_uploaded:"Subido \u201C{t}\u201D: {n} preguntas a tu cuenta.", cloud_moved:"Movido \u201C{t}\u201D ({n} preguntas) a tu cuenta; la copia local y su progreso se quitaron.", cloud_limit:"Límite de bancos alcanzado ({n}). Quita uno primero.", cloud_too_large:"Este banco es demasiado grande - quita imágenes grandes.", cloud_fail:"Error al subir, inténtalo de nuevo.", cloud_neterr:"Error de red, inténtalo más tarde.", del_account_btn:"Eliminar mis datos", del_account_confirm:"¿Eliminar permanentemente tu cuenta y TODOS tus datos (historial + bancos privados)? No se puede deshacer. Puedes volver a entrar con el mismo código y empezar de cero.", del_account_done:"\u2705 Tu cuenta y todos tus datos se eliminaron.", del_account_fail:"No se pudo eliminar - inténtalo de nuevo.", special_ok:"\u2705 Abriendo el banco compartido...", special_badge:"\uD83D\uDD11 Compartido", special_exit:"Salir", special_exit_confirm:"¿Salir de este banco compartido? Tu práctica aquí no se guarda.",
+            coffee_title:"Invítame a un café ☕", coffee_fab:"¡Tócame, es divertido!", coffee_roll_label:"¡Te tocó:", coffee_blurb:"Este banco de preguntas es gratis y sin anuncios, hecho por una sola persona. Si te ayudó a estudiar, un café lo mantiene con cafeína y creciendo. 🙏", coffee_stat:"Has practicado {n} bancos aquí. ☕", coffee_tier_s:"Espresso", coffee_tier_m:"Latte", coffee_tier_l:"Bolsa entera", coffee_go:"Invítame a un café →", coffee_thanks:"¡Eres lo mejor — gracias! ☕✨" }
     };
     var LANG_KEY = "qb_ui_lang"; // 与做题页共用同一偏好
     var lang = (function(){ try{ var v = localStorage.getItem(LANG_KEY); return I18N[v] ? v : "en"; }catch(e){ return "en"; } })();
@@ -701,6 +766,71 @@
       applyThemeIcon();
       scanProgress();
     }
+
+    /* ---- ☕ Buy me a coffee（打赏） ---- */
+    var DONATION = {"provider":"paypal","url":"https://www.paypal.me/LiuShicheng","amounts":[5,10,20],"currency":"USD"};
+    function coffeeUrl(amount){ var url = (DONATION && DONATION.url) ? DONATION.url : ""; if (url && amount && DONATION.provider === "paypal"){ url = url.replace(/\/+$/, "") + "/" + amount + (DONATION.currency || ""); } return url; }
+    function setupCoffeeTiers(){
+      if (!DONATION || !Array.isArray(DONATION.amounts) || DONATION.amounts.length < 3) return;
+      ["coffee-tier-s","coffee-tier-m","coffee-tier-l"].forEach(function(id, i){
+        var btn = document.querySelector('[data-testid="' + id + '"]'); if (!btn) return;
+        btn.dataset.amount = String(DONATION.amounts[i]);
+        var b = btn.querySelector(".ct-amt"); if (!b){ b = document.createElement("span"); b.className = "ct-amt"; btn.appendChild(b); }
+        b.textContent = "$" + DONATION.amounts[i];
+      });
+    }
+    function fireConfetti(x, y){
+      try{
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        var canvas = document.getElementById("qb-confetti"); if (!canvas || !canvas.getContext) return;
+        var ctx = canvas.getContext("2d"), DPR = Math.min(2, window.devicePixelRatio || 1);
+        var W = canvas.width = Math.floor(innerWidth * DPR), H = canvas.height = Math.floor(innerHeight * DPR);
+        canvas.style.width = innerWidth + "px"; canvas.style.height = innerHeight + "px"; canvas.hidden = false;
+        var cx = (x != null ? x : innerWidth / 2) * DPR, cy = (y != null ? y : innerHeight / 2) * DPR;
+        var colors = ["#f59e0b","#fbbf24","#6f9bff","#34d399","#f472b6","#a78bfa","#fb7185"], parts = [];
+        for (var i = 0; i < 130; i++){ var a = Math.random() * Math.PI * 2, sp = (4 + Math.random() * 9) * DPR;
+          parts.push({ x: cx, y: cy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 6 * DPR, g: 0.28 * DPR, w: (5 + Math.random() * 6) * DPR, h: (8 + Math.random() * 7) * DPR, rot: Math.random() * 6.28, vr: (Math.random() - .5) * 0.4, col: colors[i % colors.length], life: 1 }); }
+        var frame = 0;
+        (function tick(){ frame++; ctx.clearRect(0, 0, W, H); var alive = false;
+          for (var j = 0; j < parts.length; j++){ var p = parts[j]; p.vy += p.g; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.vx *= 0.99; p.life -= 0.012;
+            if (p.life > 0 && p.y < H + 40){ alive = true; ctx.save(); ctx.globalAlpha = Math.max(0, p.life); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillStyle = p.col; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore(); } }
+          if (alive && frame < 260) requestAnimationFrame(tick); else { ctx.clearRect(0, 0, W, H); canvas.hidden = true; } })();
+      }catch(e){}
+    }
+    function coffeeBankCount(){ var n = 0; try{ for (var i = 0; i < localStorage.length; i++){ var k = localStorage.key(i); if (k && k.indexOf("_attempt_count_map_v1") > 0){ try{ var m = JSON.parse(localStorage.getItem(k)); if (m && Object.keys(m).length) n++; }catch(e){} } } }catch(e){} return n; }
+    var COFFEE_ROLLS = {
+      en: ["☕ GOLDEN BEAN! Legendary roast.","✨ DOUBLE ESPRESSO! +10 focus.","🫧 EXTRA FOAM! So smooth.","🔥 DARK ROAST! Bold move.","🍀 LUCKY SIP! Nice one.","💎 DIAMOND DRIP! Super rare.","🌟 CARAMEL CROWN! Sweet."],
+      zh: ["☕ 黄金咖啡豆！传说级烘焙。","✨ 双份浓缩！专注 +10。","🫧 加量奶泡！丝般顺滑。","🔥 深焙！够猛。","🍀 幸运一口！不错哦。","💎 钻石手冲！超稀有。","🌟 焦糖皇冠！甜。"],
+      es: ["☕ ¡GRANO DORADO! Tueste legendario.","✨ ¡DOBLE ESPRESSO! +10 de enfoque.","🫧 ¡EXTRA ESPUMA! Suavísimo.","🔥 ¡TUESTE OSCURO! Con carácter.","🍀 ¡SORBO CON SUERTE! Bien.","💎 ¡GOTEO DIAMANTE! Súper raro.","🌟 ¡CORONA DE CARAMELO! Dulce."]
+    };
+    function coffeeReset(){
+      var g = document.getElementById("coffee-gacha"); if (g) g.className = "gacha";
+      var roll = document.getElementById("coffee-roll"); if (roll){ roll.hidden = true; roll.textContent = ""; }
+      var rev = document.getElementById("coffee-reveal"); if (rev) rev.hidden = true;
+      var th = document.getElementById("coffee-thanks"); if (th) th.hidden = true;
+      var s = document.getElementById("coffee-stat"); if (s){ var n = coffeeBankCount(); if (n > 0){ s.textContent = T("coffee_stat", { n: n }); s.hidden = false; } else s.hidden = true; }
+    }
+    function coffeeRevealDonate(){
+      var roll = document.getElementById("coffee-roll");
+      if (roll){ var list = COFFEE_ROLLS[lang] || COFFEE_ROLLS.en; var pick = list[Math.floor(Math.random() * list.length)]; roll.textContent = T("coffee_roll_label") + " " + pick; roll.hidden = false; }
+      var rev = document.getElementById("coffee-reveal"); if (rev) rev.hidden = false;
+    }
+    function runGacha(){
+      var g = document.getElementById("coffee-gacha");
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!g || reduce){ if (g) g.className = "gacha cracking"; coffeeRevealDonate(); return; }
+      g.className = "gacha shaking";
+      setTimeout(function(){ g.className = "gacha cracking"; fireConfetti(innerWidth / 2, innerHeight * 0.42); }, 820);
+      setTimeout(function(){ coffeeRevealDonate(); }, 1480);
+    }
+    function openCoffee(){ var ov = document.getElementById("coffee-modal"); if (!ov) return; coffeeReset(); ov.hidden = false; runGacha(); }
+    function closeCoffee(){ var ov = document.getElementById("coffee-modal"); if (ov) ov.hidden = true; }
+    function coffeeGo(ev){ var t = ev && ev.currentTarget; var amount = (t && t.dataset && t.dataset.amount) ? t.dataset.amount : null; var url = coffeeUrl(amount);
+      try{ if (url) window.open(url, "_blank", "noopener"); }catch(e){}
+      var x = innerWidth / 2, y = innerHeight / 2; if (ev && typeof ev.clientX === "number" && (ev.clientX || ev.clientY)){ x = ev.clientX; y = ev.clientY; }
+      fireConfetti(x, y); var th = document.getElementById("coffee-thanks"); if (th) th.hidden = false; }
+    setupCoffeeTiers(); // DONATION 此处已赋值，给三档写上金额（init 里那次太早、DONATION 还没定义）
+
   </script>
 </body>
 </html>

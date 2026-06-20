@@ -397,6 +397,88 @@
     </div>
   </div>
 
+  <!-- ☕ Buy me a coffee（打赏）：FAB「Click me for fun!」→ 扭蛋抽奖动画 → 蹦出金额档；+ 完成整轮庆祝 toast + 彩带 -->
+  <style>
+    /* 浮动按钮（右下角，会偶尔扭一下） */
+    .coffee-fab{position:fixed;right:18px;bottom:18px;z-index:80;display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:999px;border:1px solid var(--brand);background:var(--brand);color:#fff;font:inherit;font-weight:700;font-size:14px;cursor:pointer;box-shadow:var(--shadow-lg);animation:cfWiggle 3.4s ease-in-out infinite}
+    .coffee-fab[hidden]{display:none}
+    .coffee-fab:hover{filter:brightness(1.07);transform:translateY(-2px)}
+    .coffee-fab .cf-emoji{font-size:17px}
+    @keyframes cfWiggle{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(-7deg) scale(1.04)}94%{transform:rotate(7deg) scale(1.04)}}
+    @media (max-width:560px){.coffee-fab .cf-text{display:none}.coffee-fab{padding:13px;border-radius:50%;font-size:18px}}
+    .coffee-card{max-width:430px;position:relative;text-align:center;overflow:hidden}
+    /* 扭蛋 */
+    .gacha{height:104px;display:flex;align-items:center;justify-content:center;position:relative;margin:8px 0 2px}
+    .capsule{width:78px;height:78px;position:relative}
+    .capsule .cap-top,.capsule .cap-bot{position:absolute;left:0;right:0;height:50%;border:3px solid var(--ink);box-sizing:border-box}
+    .capsule .cap-top{top:0;background:var(--brand);border-radius:40px 40px 0 0;border-bottom:none}
+    .capsule .cap-bot{bottom:0;background:linear-gradient(#ffffff,#eef2f8);border-radius:0 0 40px 40px;border-top:2px dashed var(--ink)}
+    .capsule .cap-dot{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.92);border:2px solid var(--ink);z-index:2}
+    .gacha.shaking .capsule{animation:gachaShake .42s ease-in-out 2}
+    @keyframes gachaShake{0%,100%{transform:rotate(0) translateY(0)}25%{transform:rotate(-13deg)}50%{transform:translateY(-6px)}75%{transform:rotate(13deg)}}
+    .gacha.cracking .cap-top{animation:capTop .55s forwards cubic-bezier(.3,-.4,.7,1)}
+    .gacha.cracking .cap-bot{animation:capBot .55s forwards}
+    .gacha.cracking .cap-dot{opacity:0;transition:opacity .2s}
+    @keyframes capTop{to{transform:translate(-26px,-58px) rotate(-46deg);opacity:0}}
+    @keyframes capBot{to{transform:translateY(16px);opacity:0}}
+    .gacha .prize{position:absolute;font-size:46px;opacity:0;transform:scale(.3) translateY(8px)}
+    .gacha.cracking .prize{animation:prizePop .6s .12s cubic-bezier(.2,.9,.3,1.5) forwards}
+    @keyframes prizePop{to{opacity:1;transform:scale(1) translateY(0)}}
+    .gacha-roll{font-weight:800;font-size:1.05rem;color:var(--brand);margin:2px 0 2px;min-height:1.3em;animation:qbPop .4s}
+    .coffee-reveal[hidden]{display:none}
+    .coffee-reveal{animation:revealUp .5s cubic-bezier(.2,.9,.3,1.1)}
+    @keyframes revealUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    .coffee-tiers{display:flex;gap:8px;margin:8px 0 10px}
+    .coffee-tier{flex:1;flex-direction:column;gap:3px;padding:11px 6px;height:auto;line-height:1.2}
+    .coffee-tier .ct-emoji{font-size:17px}
+    .coffee-tier .ct-amt{font-size:11px;color:var(--muted);font-weight:700}
+    .coffee-tier:hover{border-color:var(--brand);transform:translateY(-2px)}
+    .coffee-thanks{animation:qbPop .45s cubic-bezier(.2,.9,.3,1.3)}
+    @keyframes qbPop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+    .coffee-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:110;display:flex;align-items:center;gap:11px;background:var(--card);border:1px solid var(--border-strong);border-radius:14px;box-shadow:var(--shadow-lg);padding:11px 13px;max-width:min(440px,92vw);animation:qbToastIn .45s cubic-bezier(.2,.9,.3,1.2)}
+    .coffee-toast[hidden]{display:none}
+    .coffee-toast .ct-spark{font-size:22px}
+    .coffee-toast strong{font-size:14px}
+    .coffee-toast .qb-x{width:30px;height:30px}
+    @keyframes qbToastIn{from{opacity:0;transform:translate(-50%,18px)}to{opacity:1;transform:translate(-50%,0)}}
+    @media (prefers-reduced-motion: reduce){.coffee-fab{animation:none}.gacha .prize{opacity:1!important;transform:none!important}.coffee-toast,.coffee-thanks,.gacha-roll,.coffee-reveal{animation:none}}
+  </style>
+  <button class="coffee-fab" id="coffee-btn" type="button" onclick="openCoffee()" data-testid="coffee-btn" hidden aria-label="Buy me a coffee">
+    <span class="cf-emoji" aria-hidden="true">☕</span><span class="cf-text" data-i18n="coffee_fab">Click me for fun!</span>
+  </button>
+  <canvas id="qb-confetti" hidden style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:130"></canvas>
+  <div class="tut-overlay" id="qb-coffee" hidden data-testid="qb-coffee" onclick="if(event.target===this)closeCoffee()">
+    <div class="tut-card coffee-card">
+      <button class="btn qb-x" onclick="closeCoffee()" data-testid="coffee-close-btn" aria-label="Close" style="position:absolute;top:12px;right:12px;z-index:3">✕</button>
+      <div class="gacha" id="coffee-gacha" aria-hidden="true">
+        <div class="capsule" id="coffee-capsule"><span class="cap-top"></span><span class="cap-bot"></span><span class="cap-dot"></span></div>
+        <div class="prize">☕</div>
+      </div>
+      <p class="gacha-roll" id="coffee-roll" hidden></p>
+      <div class="coffee-reveal" id="coffee-reveal" hidden>
+        <h2 data-i18n="coffee_title" style="margin:4px 0 6px;font-size:1.2rem">Buy me a coffee ☕</h2>
+        <p class="meta" id="coffee-stat" hidden style="margin:0 0 6px;color:var(--brand);font-weight:600"></p>
+        <p class="meta" data-i18n="coffee_blurb" style="margin:0 0 14px;line-height:1.6">This question bank is free. If it helped, buy me a coffee.</p>
+        <div class="coffee-tiers">
+          <button class="btn coffee-tier" onclick="coffeeGo(event)" data-testid="coffee-tier-s"><span class="ct-emoji">☕</span><span data-i18n="coffee_tier_s">Espresso</span></button>
+          <button class="btn coffee-tier" onclick="coffeeGo(event)" data-testid="coffee-tier-m"><span class="ct-emoji">☕☕</span><span data-i18n="coffee_tier_m">Latte</span></button>
+          <button class="btn coffee-tier" onclick="coffeeGo(event)" data-testid="coffee-tier-l"><span class="ct-emoji">🫘</span><span data-i18n="coffee_tier_l">Whole bag</span></button>
+        </div>
+        <button class="btn submit-btn" onclick="coffeeGo(event)" data-i18n="coffee_go" data-testid="coffee-go-btn" style="width:100%;justify-content:center">Buy me a coffee →</button>
+        <p class="meta coffee-thanks" id="coffee-thanks" hidden data-i18n="coffee_thanks" style="margin:12px 0 0;color:var(--success-ink);font-weight:600">Thank you!</p>
+      </div>
+    </div>
+  </div>
+  <div class="coffee-toast" id="qb-coffee-toast" hidden data-testid="qb-coffee-toast">
+    <span class="ct-spark" aria-hidden="true">🎉</span>
+    <div style="flex:1;min-width:0">
+      <strong data-i18n="coffee_toast_title">Nice — you finished the whole set! 🎉</strong>
+      <div class="meta" data-i18n="coffee_toast_sub" style="margin-top:2px">Enjoying this? A coffee keeps it growing.</div>
+    </div>
+    <button class="btn submit-btn" onclick="coffeeToastGo(event)" data-i18n="coffee_toast_go" style="white-space:nowrap">☕ Coffee</button>
+    <button class="btn qb-x" onclick="coffeeToastDismiss()" aria-label="Dismiss">✕</button>
+  </div>
+
   <script>
     // 每个题库一个存储命名空间：发布到同一域名（如 Cloudflare Pages）的多个题库页
     // 互不串档。构建/导出时注入题库 id；旧导出未注入时回退到共享的 "amt"。
@@ -427,14 +509,16 @@
     /* ------------------ UI 功能开关（构建时注入；未注入=全开，站点行为不变） ------------------ */
     // 裸 marker，同 payload 模式。单文件离线导出会注入 {feedback:false, tutorial:false, languages:["en"]}：
     // 去掉反馈/报错入口 + 新手教程、锁定英文；Button Guide 始终保留。站点(player/local.html)注入全开。
-    const RAW_UI_FEATURES = {"feedback":true,"tutorial":true,"languages":["en","zh","es"]};
-    let UI_FEATURES = { feedback: true, tutorial: true, languages: ["en", "zh", "es"] };
+    const RAW_UI_FEATURES = {"feedback":true,"tutorial":true,"languages":["en","zh","es"],"donation":{"provider":"paypal","url":"https://www.paypal.me/LiuShicheng","amounts":[5,10,20],"currency":"USD"}};
+    let UI_FEATURES = { feedback: true, tutorial: true, languages: ["en", "zh", "es"], donation: null };
     try {
       if (RAW_UI_FEATURES && typeof RAW_UI_FEATURES === "object") {
         UI_FEATURES = Object.assign(UI_FEATURES, RAW_UI_FEATURES);
       }
     } catch (_e) {}
     if (!Array.isArray(UI_FEATURES.languages) || !UI_FEATURES.languages.length) UI_FEATURES.languages = ["en"];
+    // ☕ 打赏配置（来自 UI_FEATURES.donation：{url, provider}）。未配置=隐藏所有打赏入口。
+    let DONATION = null;
 
     /* ------------------ UI 多语言（只翻界面文案，不动题目内容） ------------------ */
     const UI_LANG_KEY = "qb_ui_lang"; // 全局偏好（不分题库）
@@ -506,6 +590,16 @@
         ab_none: "Select at least one bank (protected ones must be unlocked).",
         ab_load_fail: "Failed to load: {id}",
         ab_start: "Start practicing",
+        coffee_title: "Buy me a coffee ☕",
+        coffee_fab: "Click me for fun!", coffee_roll_label: "You rolled:",
+        coffee_blurb: "This question bank is free and ad-free, built by one person. If it helped your studying, a coffee keeps it caffeinated and growing. 🙏",
+        coffee_stat: "You've powered through {n} questions here. ☕",
+        coffee_tier_s: "Espresso", coffee_tier_m: "Latte", coffee_tier_l: "Whole bag",
+        coffee_go: "Buy me a coffee →",
+        coffee_thanks: "You're the best — thank you! ☕✨",
+        coffee_toast_title: "Nice — you finished the whole set! 🎉",
+        coffee_toast_sub: "Enjoying this? A coffee keeps it growing.",
+        coffee_toast_go: "☕ Coffee", coffee_toast_dismiss: "Maybe later",
         guide_html: '<li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Feedback &amp; ⚐ Report — the most useful buttons here!</strong> Found a wrong answer, a typo, or anything confusing? Tap <strong>💬 Feedback</strong> at the top, or <strong>⚐ Report</strong> on any question card. Your message reaches the author in seconds and <strong>actually gets fixed</strong> — every report makes this bank better for the next person. No sign-up, takes 5 seconds. Please use it!</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 Sign in — save &amp; reload your history!</strong> Tap <strong>👤</strong> at the top and pick a personal code (great on phones — no email, no password reset). Then every round you do is saved automatically, and you can <strong>reload any of your last 10 rounds on any device</strong> — your answers come back exactly as you left them. The same code shows the same history everywhere.</li><li><strong>Theme (🌙 / ☀️)</strong>: switch between light and dark — your choice is saved and follows your system setting by default. The 🌐 menu beside it changes the interface language.</li><li><strong>← Catalog</strong>: go back to the bank list to switch to a different question bank, or open several at once and practice them merged.</li><li><strong>Filter Question Banks (Select All / Select None / Confirm)</strong>: tick the question sets you want to practice — combine as many as you like — then press Confirm. Opening several banks together merges duplicate questions automatically; a password-protected bank asks for its password once before it joins.</li><li><strong>Randomize + Reset</strong>: shuffle the questions in the current scope and clear this round’s selections.</li><li><strong>Auto Submit</strong>: when ON, clicking a choice grades it instantly (no Submit needed).</li><li><strong>Progress bar &amp; “Next unanswered →”</strong>: the sticky bar at the top of the list shows how many questions you’ve answered so far; tap <strong>Next unanswered →</strong> to jump straight to the next one you haven’t submitted yet.</li><li><strong>Random Choose 150</strong>: draw 150 questions from the current scope, weighted toward the ones you’ve practiced least; press it again (it turns into <strong>· Reroll</strong>) for a fresh draw. Hidden when the scope has 150 questions or fewer.</li><li><strong>Back to Current 150</strong>: return to this round’s draw (hidden until you’ve drawn one).</li><li><strong>Wrong Only (N)</strong>: show only wrong answers in the current scope; answering correctly does NOT remove a question — use <strong>Remove from wrong</strong> on its card, or <strong>Remove all from wrong</strong> to clear the whole list at once.</li><li><strong>Star Only (N)</strong>: show only starred questions; tap <strong>☆</strong> on any card to star/unstar, or <strong>Unstar all</strong> to clear them at once.</li><li><strong>Back to All</strong>: leave the wrong/star/draw view and return to the full filtered list.</li><li><strong>Clear choices for this list</strong>: clear all selected answers in the current list (wrong/star records are kept).</li><li><strong>Submit Answer / Redo</strong>: grade this question; Redo lets you answer it again.</li><li><strong>Show Correct Answers</strong>: after submitting a fill-in question, optionally reveal the accepted answers. Grading ignores case, extra spaces and spacing (<code>check list</code> = <code>checklist</code>), and treats equal numbers as equal (<code>1,000</code> = <code>1000</code>).</li><li><strong>Stats line</strong> (next to the toolbar): shows how many questions are in view, your running score and accuracy, and how many wrong answers remain in the current scope.</li>',
       },
       zh: {
@@ -575,6 +669,16 @@
         ab_none: "至少选择一个题库（加密库需先解锁）。",
         ab_load_fail: "加载失败：{id}",
         ab_start: "开始做题",
+        coffee_title: "请我喝杯咖啡 ☕",
+        coffee_fab: "点我玩一下！", coffee_roll_label: "你抽到了：",
+        coffee_blurb: "这个题库免费、无广告，一个人做的。如果它帮到了你的复习，一杯咖啡能让它继续有咖啡因、继续长大。🙏",
+        coffee_stat: "你已经在这里刷了 {n} 道题。☕",
+        coffee_tier_s: "浓缩", coffee_tier_m: "拿铁", coffee_tier_l: "一整袋豆",
+        coffee_go: "请我喝咖啡 →",
+        coffee_thanks: "你最好了 —— 谢谢你！☕✨",
+        coffee_toast_title: "漂亮 —— 这一整套你都做完了！🎉",
+        coffee_toast_sub: "喜欢的话，一杯咖啡能让它继续长大。",
+        coffee_toast_go: "☕ 咖啡", coffee_toast_dismiss: "下次吧",
         guide_html: '<li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 反馈 &amp; ⚐ 报错 —— 这里最有用的按钮！</strong> 发现答案错了、有错别字、或哪里看不懂？点顶部的 <strong>💬 反馈</strong>，或任意题卡上的 <strong>⚐ 报错</strong>。你的留言几秒内直达作者、<strong>真的会被修</strong> —— 每一条都让题库对下一个人更好用。免注册、5 秒搞定，欢迎多用！</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 登录 —— 保存并重新加载你的历史！</strong> 点顶部 <strong>👤</strong> 设一个自定义码（手机也好用 —— 免邮箱、不用找回密码）。登录后每一轮做题都会自动保存，你可以<strong>在任意设备重新加载最近 10 次做题记录</strong> —— 作答会原样回来。同一个码在哪儿都看到同一份历史。</li><li><strong>主题（🌙 / ☀️）</strong>：切换浅色/深色，选择会被记住，默认跟随系统设置。旁边的 🌐 菜单切换界面语言。</li><li><strong>← 返回目录</strong>：回到题库列表换一个题库，或一次打开多个题库合并练习。</li><li><strong>筛选题库（全选 / 全不选 / 确认）</strong>：勾选要练习的题套（可任意组合多个），点确认生效。多个题库一起打开时会自动合并去重；加密题库会先要一次密码再加入。</li><li><strong>打乱并重置</strong>：把当前范围内的题目重新打乱，并清空本轮所有选择。</li><li><strong>自动提交</strong>：开启后点选项即自动判分，不用再按提交。</li><li><strong>进度条 &amp; 「跳到下一道未答 →」</strong>：列表顶部的吸顶进度条显示当前列表已答多少题；点<strong>跳到下一道未答 →</strong>直接跳到下一道还没提交的题。</li><li><strong>随机抽 150 题</strong>：从当前范围按「做得少优先」的权重随机抽 150 题；再点一次（按钮会变成<strong>· 重抽</strong>）换一批。范围不足 150 题时不显示。</li><li><strong>回到本轮 150 题</strong>：回到本轮已抽中的那 150 题（没有抽过时不显示）。</li><li><strong>只看错题（N）</strong>：只显示当前范围内的错题；答对不会自动移出，需手动点题卡上的<strong>移出错题</strong>，或用<strong>全部移出错题</strong>一次清空整列。</li><li><strong>只看收藏（N）</strong>：只显示收藏的题；点题卡右上角 <strong>☆</strong> 收藏/取消，或用<strong>全部取消收藏</strong>一次清空。</li><li><strong>返回全部</strong>：从错题/收藏/抽题视图回到当前筛选范围的完整列表。</li><li><strong>清空本列表的已选答案</strong>：清空当前列表里所有题的已选答案（不动错题/收藏记录）。</li><li><strong>提交答案 / 重做</strong>：提交本题判分；重做可再答一次。</li><li><strong>显示参考答案</strong>：填空题提交后可选择性显示参考答案。判分忽略大小写、多余空格，也忽略空格有无（<code>check list</code> = <code>checklist</code>），数值相等即算对（<code>1,000</code> = <code>1000</code>）。</li><li><strong>统计行</strong>（工具栏旁）：显示当前列表题数、累计得分与正确率，以及当前范围内还剩多少错题。</li>',
       },
       es: {
@@ -644,6 +748,16 @@
         ab_none: "Selecciona al menos un banco.",
         ab_load_fail: "Fallo al cargar: {id}",
         ab_start: "Empezar",
+        coffee_title: "Invítame a un café ☕",
+        coffee_fab: "¡Tócame, es divertido!", coffee_roll_label: "¡Te tocó:",
+        coffee_blurb: "Este banco de preguntas es gratis y sin anuncios, hecho por una sola persona. Si te ayudó a estudiar, un café lo mantiene con cafeína y creciendo. 🙏",
+        coffee_stat: "Ya has resuelto {n} preguntas aquí. ☕",
+        coffee_tier_s: "Espresso", coffee_tier_m: "Latte", coffee_tier_l: "Bolsa entera",
+        coffee_go: "Invítame a un café →",
+        coffee_thanks: "¡Eres lo mejor — gracias! ☕✨",
+        coffee_toast_title: "¡Bien — completaste todo el conjunto! 🎉",
+        coffee_toast_sub: "¿Te gusta? Un café lo mantiene creciendo.",
+        coffee_toast_go: "☕ Café", coffee_toast_dismiss: "Quizá luego",
         guide_html: '<li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Comentarios y ⚐ Reportar — ¡los botones más útiles!</strong> ¿Una respuesta incorrecta, una errata o algo confuso? Toca <strong>💬 Comentarios</strong> arriba, o <strong>⚐ Reportar</strong> en cualquier tarjeta. Tu mensaje llega al autor en segundos y <strong>de verdad se corrige</strong> — cada reporte mejora este banco para el siguiente. Sin registro, 5 segundos. ¡Úsalo!</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 Inicia sesión — ¡guarda y recarga tu historial!</strong> Toca <strong>👤</strong> arriba y elige un código personal (ideal para móviles — sin correo, sin recuperar contraseña). Cada ronda se guarda sola y puedes <strong>recargar cualquiera de tus últimas 10 rondas en cualquier dispositivo</strong> — tus respuestas vuelven tal como las dejaste. El mismo código muestra el mismo historial en todas partes.</li><li><strong>Tema (🌙 / ☀️)</strong>: cambia entre claro y oscuro — tu elección se guarda y sigue el sistema por defecto. El menú 🌐 al lado cambia el idioma.</li><li><strong>← Catálogo</strong>: vuelve a la lista de bancos para cambiar de banco, o abre varios a la vez y practícalos combinados.</li><li><strong>Filtrar bancos (Seleccionar todo / Ninguno / Confirmar)</strong>: marca los conjuntos que quieras practicar — combina varios — y pulsa Confirmar. Al abrir varios bancos juntos se fusionan los duplicados automáticamente; un banco protegido pide su contraseña una vez antes de unirse.</li><li><strong>Mezclar y reiniciar</strong>: baraja las preguntas del alcance actual y borra las selecciones de esta ronda.</li><li><strong>Envío automático</strong>: al activarlo, hacer clic en una opción califica al instante.</li><li><strong>Barra de progreso y “Siguiente sin responder →”</strong>: la barra fija de arriba muestra cuántas preguntas de la lista has respondido; toca <strong>Siguiente sin responder →</strong> para saltar a la próxima que aún no hayas enviado.</li><li><strong>150 al azar</strong>: sortea 150 preguntas del alcance actual, priorizando las menos practicadas; púlsalo otra vez (pasa a <strong>· Repetir</strong>) para un nuevo sorteo. Oculto si hay 150 o menos.</li><li><strong>Volver a las 150</strong>: regresa al sorteo de esta ronda (oculto hasta que sortees uno).</li><li><strong>Solo errores (N)</strong>: muestra solo tus errores; acertar NO los quita — usa <strong>Quitar de errores</strong> en la tarjeta, o <strong>Quitar todo de errores</strong> para vaciar la lista de una vez.</li><li><strong>Solo favoritas (N)</strong>: muestra solo las marcadas; toca <strong>☆</strong> en cualquier tarjeta, o <strong>Quitar todas las favoritas</strong> para vaciarlas de una vez.</li><li><strong>Volver a todo</strong>: sal de la vista de errores/favoritas/sorteo y vuelve a la lista completa.</li><li><strong>Borrar selecciones de esta lista</strong>: borra todas las respuestas seleccionadas de la lista actual (se conservan errores/favoritas).</li><li><strong>Enviar respuesta / Rehacer</strong>: califica la pregunta; Rehacer permite contestarla de nuevo.</li><li><strong>Mostrar respuestas</strong>: tras enviar una pregunta de rellenar, muestra las respuestas aceptadas. La calificación ignora mayúsculas y espacios (<code>check list</code> = <code>checklist</code>) y trata como iguales los números equivalentes (<code>1,000</code> = <code>1000</code>).</li><li><strong>Línea de estadísticas</strong> (junto a la barra): muestra cuántas preguntas hay en vista, tu puntuación y precisión, y cuántos errores quedan en el alcance actual.</li>',
       },
     };
@@ -702,6 +816,10 @@
       if (!UI_FEATURES.tutorial){
         const tb = document.getElementById("tutorial-help-btn"); if (tb) tb.hidden = true;
       }
+      // 4) ☕ 打赏：仅当注入了 donation.url 才显示入口（离线导出/未配置=隐藏）
+      DONATION = (UI_FEATURES.donation && UI_FEATURES.donation.url) ? UI_FEATURES.donation : null;
+      const cb = document.getElementById("coffee-btn"); if (cb) cb.hidden = !DONATION;
+      if (DONATION) setupCoffeeTiers();
     }
 
     /* ---- 主题（浅/深）切换：与目录页共用 qb_theme 偏好 ---- */
@@ -1937,6 +2055,10 @@
         nextBtn.disabled = (done >= total);
         nextBtn.textContent = (uiLang === "zh") ? "跳到下一道未答 →" : (uiLang === "es") ? "Siguiente sin responder →" : "Next unanswered →";
       }
+      // 整轮做完（≥10 题的列表）→ 庆祝；仅在「未完成→完成」跃迁触发一次
+      const complete = (total > 0 && done >= total);
+      if (complete && !lastRoundComplete && total >= 10) celebrateRoundCompletion();
+      lastRoundComplete = complete;
     }
     function jumpToNextUnanswered(){
       const list = Array.isArray(currentQuestions) ? currentQuestions : [];
@@ -2634,6 +2756,133 @@
       tutorialClearHighlight();
       try{ localStorage.setItem(TUTORIAL_KEY, "1"); }catch(_e){}
     }
+
+    /* ------------------ ☕ Buy me a coffee（打赏） ------------------ */
+    const COFFEE_CELEBRATED_KEY = "qb_coffee_celebrated_v1"; // 首次做完整轮的庆祝 toast 只弹一次（跨题库共享）
+    let lastRoundComplete = false;                            // 仅在「未完成→完成」的跃迁时庆祝，避免重复触发
+
+    // 依赖无关的轻量彩带：从 (x,y) 爆开一蓬彩色碎片，~1.5s 自清。prefers-reduced-motion 下静默跳过。
+    function fireConfetti(x, y){
+      try{
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const canvas = document.getElementById("qb-confetti");
+        if (!canvas || !canvas.getContext) return;
+        const ctx = canvas.getContext("2d");
+        const DPR = Math.min(2, window.devicePixelRatio || 1);
+        const W = canvas.width = Math.floor(innerWidth * DPR);
+        const H = canvas.height = Math.floor(innerHeight * DPR);
+        canvas.style.width = innerWidth + "px"; canvas.style.height = innerHeight + "px";
+        canvas.hidden = false;
+        const cx = (x != null ? x : innerWidth / 2) * DPR;
+        const cy = (y != null ? y : innerHeight / 2) * DPR;
+        const colors = ["#f59e0b","#fbbf24","#6f9bff","#34d399","#f472b6","#a78bfa","#fb7185"];
+        const parts = [];
+        for (let i = 0; i < 130; i++){
+          const a = Math.random() * Math.PI * 2, sp = (4 + Math.random() * 9) * DPR;
+          parts.push({ x: cx, y: cy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 6 * DPR,
+            g: 0.28 * DPR, w: (5 + Math.random() * 6) * DPR, h: (8 + Math.random() * 7) * DPR,
+            rot: Math.random() * 6.28, vr: (Math.random() - .5) * 0.4, col: colors[i % colors.length], life: 1 });
+        }
+        let frame = 0;
+        (function tick(){
+          frame++;
+          ctx.clearRect(0, 0, W, H);
+          let alive = false;
+          for (const p of parts){
+            p.vy += p.g; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.vx *= 0.99; p.life -= 0.012;
+            if (p.life > 0 && p.y < H + 40){
+              alive = true;
+              ctx.save(); ctx.globalAlpha = Math.max(0, p.life); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+              ctx.fillStyle = p.col; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
+            }
+          }
+          if (alive && frame < 260) requestAnimationFrame(tick);
+          else { ctx.clearRect(0, 0, W, H); canvas.hidden = true; }
+        })();
+      }catch(_e){}
+    }
+
+    // 扭蛋随机"战利品"文案（纯趣味，不影响金额）
+    const COFFEE_ROLLS = {
+      en: ["☕ GOLDEN BEAN! Legendary roast.","✨ DOUBLE ESPRESSO! +10 focus.","🫧 EXTRA FOAM! So smooth.","🔥 DARK ROAST! Bold move.","🍀 LUCKY SIP! Nice one.","💎 DIAMOND DRIP! Super rare.","🌟 CARAMEL CROWN! Sweet."],
+      zh: ["☕ 黄金咖啡豆！传说级烘焙。","✨ 双份浓缩！专注 +10。","🫧 加量奶泡！丝般顺滑。","🔥 深焙！够猛。","🍀 幸运一口！不错哦。","💎 钻石手冲！超稀有。","🌟 焦糖皇冠！甜。"],
+      es: ["☕ ¡GRANO DORADO! Tueste legendario.","✨ ¡DOBLE ESPRESSO! +10 de enfoque.","🫧 ¡EXTRA ESPUMA! Suavísimo.","🔥 ¡TUESTE OSCURO! Con carácter.","🍀 ¡SORBO CON SUERTE! Bien.","💎 ¡GOTEO DIAMANTE! Súper raro.","🌟 ¡CORONA DE CARAMELO! Dulce."]
+    };
+    function coffeeReset(){
+      const g = document.getElementById("coffee-gacha"); if (g) g.classList.remove("shaking","cracking");
+      const roll = document.getElementById("coffee-roll"); if (roll){ roll.hidden = true; roll.textContent = ""; }
+      const rev = document.getElementById("coffee-reveal"); if (rev) rev.hidden = true;
+      const thanks = document.getElementById("coffee-thanks"); if (thanks) thanks.hidden = true;
+      const statEl = document.getElementById("coffee-stat");
+      if (statEl){
+        let n = 0;
+        try{ n = Object.keys(JSON.parse(localStorage.getItem(ATTEMPT_COUNT_KEY) || "{}")).length; }catch(_e){}
+        if (n > 0){ statEl.textContent = T("coffee_stat", { n: n }); statEl.hidden = false; }
+        else statEl.hidden = true;
+      }
+    }
+    function coffeeRevealDonate(){
+      const roll = document.getElementById("coffee-roll");
+      if (roll){ const list = COFFEE_ROLLS[uiLang] || COFFEE_ROLLS.en; const pick = list[Math.floor(Math.random() * list.length)]; roll.textContent = T("coffee_roll_label") + " " + pick; roll.hidden = false; }
+      const rev = document.getElementById("coffee-reveal"); if (rev) rev.hidden = false;
+    }
+    // 扭蛋序列：摇晃 → 裂开+彩带 → 蹦出金额档
+    function runGacha(){
+      const g = document.getElementById("coffee-gacha");
+      const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!g || reduce){ if (g) g.classList.add("cracking"); coffeeRevealDonate(); return; }
+      g.classList.add("shaking");
+      setTimeout(function(){ g.classList.remove("shaking"); g.classList.add("cracking"); fireConfetti(innerWidth / 2, innerHeight * 0.42); }, 820);
+      setTimeout(function(){ coffeeRevealDonate(); }, 1480);
+    }
+    function openCoffee(){
+      if (!DONATION) return;
+      const ov = document.getElementById("qb-coffee");
+      if (!ov) return;
+      coffeeReset();
+      ov.hidden = false;
+      runGacha();
+    }
+    function closeCoffee(){ const ov = document.getElementById("qb-coffee"); if (ov) ov.hidden = true; }
+    // PayPal.Me 支持 /<amount><currency> 预填金额；其它平台忽略金额、打开主页让用户自填。
+    function coffeeUrl(amount){
+      let url = (DONATION && DONATION.url) ? DONATION.url : "";
+      if (url && amount && DONATION.provider === "paypal"){ url = url.replace(/\/+$/, "") + "/" + amount + (DONATION.currency || ""); }
+      return url;
+    }
+    function coffeeGo(ev){
+      const t = ev && ev.currentTarget;
+      const amount = (t && t.dataset && t.dataset.amount) ? t.dataset.amount : null;
+      const url = coffeeUrl(amount);
+      if (url){ try{ window.open(url, "_blank", "noopener"); }catch(_e){} }
+      let x = innerWidth / 2, y = innerHeight / 2;
+      if (ev && typeof ev.clientX === "number" && (ev.clientX || ev.clientY)){ x = ev.clientX; y = ev.clientY; }
+      fireConfetti(x, y);
+      const thanks = document.getElementById("coffee-thanks"); if (thanks) thanks.hidden = false;
+    }
+    // 把配置里的三档金额写到三个 tier 按钮上（data-amount + 标签后缀 $N）
+    function setupCoffeeTiers(){
+      if (!DONATION || !Array.isArray(DONATION.amounts) || DONATION.amounts.length < 3) return;
+      ["coffee-tier-s","coffee-tier-m","coffee-tier-l"].forEach(function(id, i){
+        const btn = document.querySelector('[data-testid="' + id + '"]');
+        if (!btn) return;
+        btn.dataset.amount = String(DONATION.amounts[i]);
+        let b = btn.querySelector(".ct-amt");
+        if (!b){ b = document.createElement("span"); b.className = "ct-amt"; btn.appendChild(b); }
+        b.textContent = "$" + DONATION.amounts[i];
+      });
+    }
+
+    // 做完整轮（当前列表全部提交）时的庆祝：永远来一蓬彩带；首次再附一个不打扰的打赏 toast。
+    function celebrateRoundCompletion(){
+      fireConfetti(innerWidth / 2, innerHeight * 0.4);
+      if (!DONATION) return;
+      try{ if (localStorage.getItem(COFFEE_CELEBRATED_KEY)) return; }catch(_e){ return; }
+      try{ localStorage.setItem(COFFEE_CELEBRATED_KEY, "1"); }catch(_e){}
+      const toast = document.getElementById("qb-coffee-toast"); if (toast) toast.hidden = false;
+    }
+    function coffeeToastDismiss(){ const t = document.getElementById("qb-coffee-toast"); if (t) t.hidden = true; }
+    function coffeeToastGo(ev){ coffeeToastDismiss(); openCoffee(); }
 
     function showQuizApp(){
       const app = document.getElementById("quizApp");
