@@ -68,7 +68,7 @@
       display:inline-flex; align-items:center; gap:7px; box-shadow:var(--shadow-sm);
       transition:background .15s, border-color .15s, box-shadow .15s, transform .04s}
     .btn:hover{background:var(--hover)}
-    .btn:active{transform:translateY(1px)}
+    .btn:active{transform:translateY(1px) scale(.98)} /* P2 按压态 */
     .btn:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
     .btn-sm{padding:6px 10px; font-size:12px}
     .btn:disabled{opacity:.55; cursor:not-allowed; box-shadow:none}
@@ -78,8 +78,8 @@
     .redo-btn{background:var(--card)}
     .redo-btn:hover{background:var(--hover)}
     #ui-lang{font:inherit; font-size:13px; padding:8px 10px; border:1px solid var(--border-strong); border-radius:var(--radius-xs); background:var(--card); color:var(--ink); cursor:pointer; box-shadow:var(--shadow-sm)}
-    #theme-toggle{width:36px; height:36px; padding:0; border-radius:var(--radius-xs); font-size:16px; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--border-strong); background:var(--card); color:var(--ink); cursor:pointer; box-shadow:var(--shadow-sm)}
-    #theme-toggle:hover{background:var(--hover)}
+    #theme-toggle,#motion-toggle{width:36px; height:36px; padding:0; border-radius:var(--radius-xs); font-size:16px; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--border-strong); background:var(--card); color:var(--ink); cursor:pointer; box-shadow:var(--shadow-sm)}
+    #theme-toggle:hover,#motion-toggle:hover{background:var(--hover)}
     .controls .btn,.controls #ui-lang{height:36px}
     #tutorial-help-btn{justify-content:center}
     /* 圆形图标关闭按钮：.btn 是 inline-flex 但默认 justify-content:flex-start，
@@ -122,7 +122,7 @@
     .choice-item{margin:8px 0}
     .choice-btn{width:100%; text-align:left; background:var(--card); color:var(--ink); border:1px solid var(--border-strong); border-radius:var(--radius-sm); padding:12px 14px; display:flex; align-items:flex-start; gap:11px; font-size:15px; line-height:1.45; cursor:pointer; transition:background .15s, border-color .15s, box-shadow .15s, transform .04s}
     .choice-btn:hover{background:var(--hover)}
-    .choice-btn:active{transform:translateY(1px)}
+    .choice-btn:active{transform:translateY(1px) scale(.985)} /* P2 按压态 */
     .choice-btn.selected{border-color:var(--brand); box-shadow:0 0 0 3px var(--brand-ring); background:var(--brand-weak)}
     .choice-btn.disabled{cursor:default}
     .choice-btn.disabled:hover{background:var(--card)}
@@ -160,6 +160,123 @@
     .keys-chip{display:inline-block; padding:3px 9px; border-radius:var(--pill); border:1px solid var(--border-strong); background:var(--card); font-size:12px; color:var(--ink); margin:3px 6px 3px 0}
 
     code{background:var(--card-2); border:1px solid var(--border); padding:1px 5px; border-radius:5px; font-size:.92em}
+
+    /* ===== P6 动效闸门（html[data-motion] 三态：off 全关；reduced 保留信息性轻动效） ===== */
+    html[data-motion="reduced"] #motion-toggle{opacity:.55}
+    html[data-motion="off"] #motion-toggle{opacity:.3}
+    html[data-motion="off"] .qb-shake, html[data-motion="off"] .qb-ok-pulse, html[data-motion="off"] .qb-bad-pulse,
+    html[data-motion="off"] .qb-star-pop, html[data-motion="off"] .qb-star-pop svg, html[data-motion="off"] .qb-flash, html[data-motion="off"] .qb-float, html[data-motion="off"] .qb-tick,
+    html[data-motion="off"] .feedback.visible, html[data-motion="off"] .qb-toast, html[data-motion="off"] .qb-hint, html[data-motion="off"] .qb-welcome, html[data-motion="off"] .qb-sheet-panel,
+    html[data-motion="off"] .fb-check path,
+    html[data-motion="off"] .coffee-fab.wiggle{animation:none !important}
+    html[data-motion="reduced"] .qb-shake, html[data-motion="reduced"] .qb-ok-pulse, html[data-motion="reduced"] .qb-bad-pulse,
+    html[data-motion="reduced"] .qb-star-pop, html[data-motion="reduced"] .qb-star-pop svg, html[data-motion="reduced"] .qb-flash, html[data-motion="reduced"] .qb-float, html[data-motion="reduced"] .qb-tick,
+    html[data-motion="reduced"] .fb-check path,
+    html[data-motion="reduced"] .coffee-fab.wiggle{animation:none !important}
+    @media (prefers-reduced-motion: reduce){
+      html:not([data-motion="full"]) .qb-shake, html:not([data-motion="full"]) .qb-ok-pulse, html:not([data-motion="full"]) .qb-bad-pulse,
+      html:not([data-motion="full"]) .qb-star-pop, html:not([data-motion="full"]) .qb-star-pop svg, html:not([data-motion="full"]) .qb-flash, html:not([data-motion="full"]) .qb-float, html:not([data-motion="full"]) .qb-tick,
+      html:not([data-motion="full"]) .fb-check path,
+      html:not([data-motion="full"]) .coffee-fab.wiggle{animation:none !important}
+    }
+
+    /* ===== P1 判分微动效 ===== */
+    .feedback.visible{animation:qbFadeUp .2s ease both}
+    @keyframes qbFadeUp{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+    .question-card.qb-ok-pulse{animation:qbOkPulse .45s ease}
+    @keyframes qbOkPulse{0%{box-shadow:0 0 0 0 rgba(5,150,105,.35)}100%{box-shadow:0 0 0 12px rgba(5,150,105,0)}}
+    .question-card.qb-bad-pulse{animation:qbBadPulse .45s ease}
+    @keyframes qbBadPulse{0%{box-shadow:0 0 0 0 rgba(220,38,38,.30)}100%{box-shadow:0 0 0 10px rgba(220,38,38,0)}}
+    .qb-shake{animation:qbShake .3s ease}
+    @keyframes qbShake{0%,100%{transform:none}25%{transform:translateX(-3px)}50%{transform:translateX(3px)}75%{transform:translateX(-2px)}}
+    .fb-icon{display:inline-block;width:1em;height:1em;vertical-align:-.12em;margin-right:.4em}
+    .fb-icon path{fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+    .question-card.qb-ok-pulse .fb-check path{stroke-dasharray:26;stroke-dashoffset:26;animation:qbDraw .3s ease .05s forwards}
+    @keyframes qbDraw{to{stroke-dashoffset:0}}
+
+    /* ===== P3 星标 pop ===== */
+    .star-btn.qb-star-pop svg{animation:qbStarPop .22s cubic-bezier(.2,.9,.3,1.4)}
+    @keyframes qbStarPop{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+
+    /* ===== P4 卡片内联提示（替代提交验证 alert） ===== */
+    .qb-hint{display:none;margin-top:10px;padding:8px 12px;border-radius:10px;font-size:13.5px;
+      background:#fef3e2;border:1px solid #f5d9ae;color:#b45309}
+    html[data-theme="dark"] .qb-hint{background:rgba(180,83,9,.16);border-color:rgba(245,158,11,.4);color:#fbbf24}
+    .qb-hint.show{display:block;animation:qbFadeUp .2s ease both}
+
+    /* ===== P13 征服错题（徽章 / 浮字 / 剩余计数） ===== */
+    .qb-conq-chip{display:inline-block;font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 9px;margin-left:8px;
+      color:var(--danger-ink);background:var(--danger-bg);border:1px solid var(--danger-border);transition:background .3s,color .3s,border-color .3s}
+    .qb-conq-chip.is-conq{color:var(--success-ink);background:var(--success-bg);border-color:var(--success-border)}
+    .qb-float{display:inline-block;margin-left:6px;font-size:12px;font-weight:800;color:var(--success);animation:qbFloatUp .4s ease forwards}
+    @keyframes qbFloatUp{from{opacity:1;transform:none}to{opacity:0;transform:translateY(-14px)}}
+    .qb-remaining{margin-left:10px;font-size:13px;color:var(--muted)}
+    .qb-remaining.qb-tick{display:inline-block;animation:qbTick .3s ease}
+    @keyframes qbTick{50%{transform:scale(1.12)}}
+
+    /* ===== P14 掌握度四态点 ===== */
+    .q-mastery{display:inline-block;width:8px;height:8px;border-radius:50%;margin-left:8px;vertical-align:middle;border:1px solid var(--border-strong)}
+    .q-mastery.m-new{background:transparent}
+    .q-mastery.m-miss{background:var(--danger);border-color:transparent}
+    .q-mastery.m-conq{background:var(--star);border-color:transparent}
+    .q-mastery.m-solid{background:var(--success);border-color:transparent}
+
+    /* ===== P12 通用轻提示 toast ===== */
+    .qb-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:120;background:var(--card);color:var(--ink);
+      border:1px solid var(--border-strong);border-radius:14px;box-shadow:var(--shadow-lg);padding:10px 16px;max-width:min(440px,92vw);font-size:14px}
+    .qb-toast.show{animation:qbToastUp .35s cubic-bezier(.2,.9,.3,1.2)}
+    @keyframes qbToastUp{from{opacity:0;transform:translate(-50%,14px)}to{opacity:1;transform:translate(-50%,0)}}
+
+    /* ===== P10 欢迎回来横幅 ===== */
+    .qb-welcome{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      background:var(--brand-weak);border:1px solid var(--brand-ring);border-radius:12px;padding:10px 14px;margin:0 0 12px;font-size:14px;animation:qbFadeUp .25s ease both}
+    .qb-wb-actions{display:flex;gap:6px;flex-wrap:wrap}
+
+    /* ===== P7 答题卡缩略图 ===== */
+    .qb-sheet-panel{position:fixed;top:56px;right:8px;z-index:95;width:min(92vw,520px);max-height:62vh;overflow:auto;
+      background:var(--card);border:1px solid var(--border-strong);border-radius:14px;box-shadow:var(--shadow-lg);padding:12px;animation:qbFadeUp .2s ease both}
+    .qb-sheet-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(34px,1fr));gap:5px}
+    .qb-cell{position:relative;height:30px;border:1px solid var(--border-strong);border-radius:8px;background:var(--card);
+      font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+    .qb-cell.st-ok{background:var(--success-bg);border-color:var(--success-border);color:var(--success-ink)}
+    .qb-cell.st-bad{background:var(--danger-bg);border-color:var(--danger-border);color:var(--danger-ink)}
+    .qb-cell .st-star{position:absolute;top:2px;right:3px;width:6px;height:6px;border-radius:50%;background:var(--star)}
+    .qb-sheet-legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:10px}
+    .qb-sheet-legend .sw{display:inline-block;width:11px;height:11px;border-radius:4px;border:1px solid var(--border-strong);vertical-align:-1px;margin-right:4px}
+    .question-card.qb-flash{animation:qbFlash .45s ease}
+    @keyframes qbFlash{0%{box-shadow:0 0 0 3px var(--brand-ring)}100%{box-shadow:0 0 0 0 rgba(0,0,0,0)}}
+    @media (max-width:560px){ #qp-sheet span{display:none} }
+
+    /* ===== P8 键盘流 ===== */
+    .question-card.kb-focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-ring)}
+    .qb-kbrow{display:flex;align-items:center;gap:10px;margin:9px 0;font-size:14px;color:var(--ink-soft)}
+    .qb-kbrow kbd{background:var(--card-2);border:1px solid var(--border-strong);border-bottom-width:2px;border-radius:6px;
+      padding:1px 7px;font-size:12.5px;font-weight:700;color:var(--ink);min-width:24px;text-align:center}
+
+    /* ===== P11 交卷报告 + P15 练习热力图 ===== */
+    #qb-recap .tut-card{max-height:80vh;overflow:auto}
+    #qb-recap h4{margin:14px 0 4px;font-size:14px;color:var(--ink)}
+    .qb-recap-stats{font-weight:650;margin:10px 0 2px}
+    .qb-recap-wrongs{margin:6px 0 2px;padding-left:20px;font-size:14px}
+    .qb-recap-wrongs a{color:var(--brand);text-decoration:none}
+    .qb-recap-wrongs a:hover{text-decoration:underline}
+    .qb-recap-perfect{color:var(--success-ink);font-weight:650;margin:10px 0 0}
+    .qb-recap-mastery,.qb-recap-today,.qb-recap-compare{font-size:13px;color:var(--muted);margin:8px 0 0}
+    .qb-hm-grid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,11px);gap:3px;justify-content:start;padding:4px 0}
+    .qb-hm-cell{width:11px;height:11px;border-radius:3px;background:var(--border)}
+    .qb-hm-cell.lv1{background:color-mix(in srgb,var(--success) 30%,var(--card))}
+    .qb-hm-cell.lv2{background:color-mix(in srgb,var(--success) 55%,var(--card))}
+    .qb-hm-cell.lv3{background:color-mix(in srgb,var(--success) 78%,var(--card))}
+    .qb-hm-cell.lv4{background:var(--success)}
+
+    /* ===== P17 今日目标 ===== */
+    #qb-goal-n{width:90px;padding:7px 10px;border:1px solid var(--border-strong);border-radius:8px;background:var(--card);color:var(--ink);font-size:14px}
+    #qb-goal-n:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-ring)}
+
+    /* ===== P9 移动端筛选吸顶（仅小屏显示；布局类改动，可整体摘除） ===== */
+    #qp-filter{display:none}
+    @media (max-width:720px){ #qp-filter{display:inline-flex} }
+    #qb-filter-pop .btn{display:block;width:100%;margin:6px 0;text-align:left}
   </style>
 </head>
 <body>
@@ -190,6 +307,7 @@
         </select>
       </span>
       <button class="btn" id="theme-toggle" type="button" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">🌙</button>
+      <button class="btn" id="motion-toggle" type="button" onclick="cycleMotion()" title="Animations: full" aria-label="Animations: full">✨</button>
       <button class="btn" id="account-btn" type="button" onclick="onAccountBtn()" data-testid="account-btn" title="Sign in / history">👤 <span id="account-label">Sign in</span></button>
       <button class="btn" id="suggest-btn" onclick="openSuggestModal()" data-testid="suggest-btn" data-i18n="fb_suggest_btn">💬 Feedback</button>
       <button class="btn" id="guide-btn" onclick="openGuide()" data-testid="guide-open-btn" data-i18n="guide_summary">Button Guide</button>
@@ -219,7 +337,8 @@
     <button class="btn" id="btn-wrong" onclick="showWrongOnly()">Wrong Only (0)</button>
     <button class="btn" id="btn-star"  onclick="showStarOnly()">Star Only (0)</button>
     <button class="btn" id="btn-back"  onclick="showAll()" disabled data-i18n="back_all">Back to All</button>
-    <span id="stats"></span>
+    <button class="btn" id="btn-recap" type="button" onclick="openRecap()" data-i18n="recap_btn">Session recap</button>
+    <span id="stats" aria-live="polite"></span>
   </div>
 
   <div id="quiz-progress" class="quiz-progress" hidden>
@@ -227,6 +346,9 @@
     <div class="qp-meta">
       <span id="qp-text"></span>
       <button class="btn btn-sm" id="qp-next" type="button" onclick="jumpToNextUnanswered()">Next unanswered →</button>
+      <button class="btn btn-sm" id="qp-sheet" type="button" onclick="toggleSheet()">▦ <span data-i18n="sheet_btn">Answer sheet</span></button>
+      <button class="btn btn-sm" id="qp-goal" type="button" onclick="toggleGoalPop()">🎯<span id="qp-goal-txt"></span></button>
+      <button class="btn btn-sm" id="qp-filter" type="button" onclick="toggleQpFilter()" aria-label="Filters">☰</button>
     </div>
   </div>
   <div id="quiz"></div>
@@ -495,6 +617,54 @@
     <button class="btn qb-x" onclick="coffeeToastDismiss()" aria-label="Dismiss">✕</button>
   </div>
 
+  <!-- P7 答题卡缩略面板（打开时由 buildSheet() 重建） -->
+  <div id="qb-sheet-panel" class="qb-sheet-panel" hidden>
+    <div class="qb-sheet-legend" id="qb-sheet-legend"></div>
+    <div class="qb-sheet-grid" id="qb-sheet-grid"></div>
+  </div>
+
+  <!-- P11 交卷报告（内容由 openRecap() 动态构建） -->
+  <div class="tut-overlay" id="qb-recap" hidden style="align-items:center" onclick="if(event.target===this)closeRecap()">
+    <div class="tut-card" style="max-width:560px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <h2 data-i18n="recap_title" style="margin:0;font-size:1.15rem">Session recap</h2>
+        <button class="btn qb-x" onclick="closeRecap()" aria-label="Close">✕</button>
+      </div>
+      <div id="qb-recap-body"></div>
+    </div>
+  </div>
+
+  <!-- P9 小屏筛选 popover（打开时镜像 btn-wrong/btn-star/btn-back 重建） -->
+  <div id="qb-filter-pop" class="qb-sheet-panel" style="width:min(92vw,300px)" hidden></div>
+
+  <!-- P17 自设今日目标 popover（IS_SPECIAL 时入口按钮隐藏） -->
+  <div id="qb-goal-pop" class="qb-sheet-panel" style="width:min(92vw,300px)" hidden>
+    <h4 data-i18n="goal_title" style="margin:0 0 10px">Daily goal</h4>
+    <div style="display:flex;gap:8px;align-items:center">
+      <input type="number" id="qb-goal-n" min="1" max="999" style="width:90px">
+      <button class="btn btn-sm" type="button" onclick="saveGoal()" data-i18n="goal_save">Save</button>
+      <button class="btn btn-sm" type="button" onclick="clearGoal()" data-i18n="goal_off">Off</button>
+    </div>
+  </div>
+
+  <!-- P8 快捷键速查（按 ? 呼出） -->
+  <div class="tut-overlay" id="qb-kbsheet" hidden style="align-items:center" onclick="if(event.target===this)this.hidden=true">
+    <div class="tut-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <h2 data-i18n="kb_title" style="margin:0;font-size:1.15rem">Keyboard shortcuts</h2>
+        <button class="btn qb-x" onclick="document.getElementById('qb-kbsheet').hidden=true" aria-label="Close">✕</button>
+      </div>
+      <div class="qb-kbrow"><kbd>J</kbd><kbd>K</kbd><span data-i18n="kb_move">Move between questions</span></div>
+      <div class="qb-kbrow"><kbd>1</kbd>–<kbd>9</kbd><span data-i18n="kb_pick">Select option</span></div>
+      <div class="qb-kbrow"><kbd>Enter</kbd><span data-i18n="kb_submit">Submit</span></div>
+      <div class="qb-kbrow"><kbd>F</kbd><span data-i18n="kb_star">Star</span></div>
+      <div class="qb-kbrow"><kbd>N</kbd><span data-i18n="kb_next">Next unanswered</span></div>
+      <div class="qb-kbrow"><kbd>R</kbd><span data-i18n="kb_redo">Redo</span></div>
+      <div class="qb-kbrow"><kbd>?</kbd><span data-i18n="kb_open">Show this sheet</span></div>
+      <div class="qb-kbrow"><kbd>Esc</kbd><span data-i18n="kb_close">Close panels</span></div>
+    </div>
+  </div>
+
   <script>
     // 每个题库一个存储命名空间：发布到同一域名（如 Cloudflare Pages）的多个题库页
     // 互不串档。构建/导出时注入题库 id；旧导出未注入时回退到共享的 "amt"。
@@ -505,11 +675,13 @@
     let WRONG_KEY=STORAGE_NS+"_wrong_questions";
     const AUTO_KEY="amt_auto_submit"; // 自动提交是个人偏好，保持跨题库共享
     let ATTEMPT_COUNT_KEY=STORAGE_NS+"_attempt_count_map_v1";
+    let CONQ_KEY=STORAGE_NS+"_conquered_questions_v1"; // P13 征服错题
     function setStorageNamespace(ns){
       STORAGE_NS = /^[A-Za-z0-9_-]{1,64}$/.test(String(ns)) ? String(ns) : "amt";
       STAR_KEY = STORAGE_NS + "_starred_questions";
       WRONG_KEY = STORAGE_NS + "_wrong_questions";
       ATTEMPT_COUNT_KEY = STORAGE_NS + "_attempt_count_map_v1";
+      CONQ_KEY = STORAGE_NS + "_conquered_questions_v1"; // P13
     }
 
     /* ------------------ 反馈配置（构建时注入；未注入则降级为 mailto/剪贴板，按钮永不失效） ------------------ */
@@ -586,7 +758,21 @@
         remove_wrong: "Remove from wrong",
         show_keys: "Show Correct Answers", hide_keys: "Hide Correct Answers",
         essay_note: "(Essay question — not graded here)",
-        correct_fb: "✅ Correct!", wrong_fb: "❌ Wrong",
+        correct_fb: "Correct!", wrong_fb: "Wrong",
+        motion_full: "Animations: full", motion_reduced: "Animations: reduced", motion_off: "Animations: off",
+        filters_label: "Filters", close_label: "Close",
+        hint_no_blanks: "This fill question has no blanks defined.", hint_fill_all: "Please fill all blanks!", hint_essay: "Essay question: no auto grading.", hint_select_multi: "Please select at least one answer!", hint_select_one: "Please select an answer first!",
+        wrong_chip: "Wrong", conquered_chip: "Conquered ✓", conquer_plus: "+1 conquered", wrong_remaining: "Unconquered: {n}",
+        mastery_new: "Not practiced", mastery_miss: "Missed", mastery_conq: "Conquered", mastery_solid: "Solid",
+        round_done_small: "Round complete — {n}/{n}! 🎉", wrongs_cleared: "All wrong questions conquered!",
+        welcome_back: "Welcome back — {n} practiced · {m} in wrong list", wb_continue: "Continue", wb_review: "Review wrongs", restored_n: "Restored {n} answers",
+        sheet_btn: "Answer sheet", sheet_un: "Unanswered", sheet_ok: "Correct", sheet_bad: "Wrong", sheet_star: "Starred",
+        mastery_line: "New {a} · Missed {b} · Conquered {c} · Solid {d}",
+        kb_title: "Keyboard shortcuts", kb_move: "Move between questions", kb_pick: "Select option", kb_submit: "Submit", kb_star: "Star", kb_next: "Next unanswered", kb_redo: "Redo", kb_close: "Close panels", kb_open: "Show this sheet",
+        recap_btn: "Session recap", recap_title: "Session recap", recap_line: "Answered {n} · Correct {ok} · Accuracy {acc}%", recap_time: "Time {t}",
+        recap_wrong_title: "Wrong this session ({n})", recap_perfect: "Perfect session — no wrong answers!", recap_none: "No questions answered yet this session.",
+        heatmap_title: "Practice calendar", today_count: "Today: {n} answered", compare_last: "Last saved round {prev}% → this session {now}%",
+        goal_title: "Daily goal", goal_save: "Save", goal_off: "Off", goal_set: "Set a daily goal", goal_progress: "Today {cur}/{n}", goal_done: "Daily goal reached!",
         keys_title: "Correct Answers",
         keys_sets_hint: "Accepted answer sets (any ONE set matches):",
         set_label: "Set", blank_label: "Blank", no_key: "(no key)",
@@ -617,7 +803,7 @@
         coffee_toast_title: "Nice — you finished the whole set! 🎉",
         coffee_toast_sub: "Enjoying this? A coffee keeps it growing.",
         coffee_toast_go: "☕ Coffee", coffee_toast_dismiss: "Maybe later",
-        guide_html: '<li data-coffee style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--locked-bg);border:1px solid var(--locked-border);border-radius:10px"><strong>☕ Buy me a coffee — the button at the bottom-right!</strong> This bank is free and ad-free, built by one person. Tap <strong>☕</strong>, watch a fresh coffee get made, then tip <strong>$5 / $10 / $20</strong> or any amount via PayPal. Totally optional — it keeps this bank caffeinated and growing. 🙏</li><li data-feedback style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Feedback &amp; ⚐ Report — the most useful buttons here!</strong> Found a wrong answer, a typo, or anything confusing? Tap <strong>💬 Feedback</strong> at the top, or <strong>⚐ Report</strong> on any question card. Your message reaches the author in seconds and <strong>actually gets fixed</strong> — every report makes this bank better for the next person. No sign-up, takes 5 seconds. Please use it!</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 Sign in — save &amp; reload your history!</strong> Tap <strong>👤</strong> at the top and pick a personal code (great on phones — no email, no password reset). Then every round you do is saved automatically, and you can <strong>reload any of your last 10 rounds on any device</strong> — your answers come back exactly as you left them. The same code shows the same history everywhere.</li><li><strong>Theme (🌙 / ☀️)</strong>: switch between light and dark — your choice is saved and follows your system setting by default. The 🌐 menu beside it changes the interface language.</li><li><strong>← Catalog</strong>: go back to the bank list to switch to a different question bank, or open several at once and practice them merged.</li><li><strong>Filter Question Banks (Select All / Select None / Confirm)</strong>: tick the question sets you want to practice — combine as many as you like — then press Confirm. Opening several banks together merges duplicate questions automatically; a password-protected bank asks for its password once before it joins.</li><li><strong>Randomize + Reset</strong>: shuffle the questions in the current scope and clear this round’s selections.</li><li><strong>Auto Submit</strong>: when ON, clicking a choice grades it instantly (no Submit needed).</li><li><strong>Progress bar &amp; “Next unanswered →”</strong>: the sticky bar at the top of the list shows how many questions you’ve answered so far; tap <strong>Next unanswered →</strong> to jump straight to the next one you haven’t submitted yet.</li><li><strong>Random Choose 150</strong>: draw 150 questions from the current scope, weighted toward the ones you’ve practiced least; press it again (it turns into <strong>· Reroll</strong>) for a fresh draw. Hidden when the scope has 150 questions or fewer.</li><li><strong>Back to Current 150</strong>: return to this round’s draw (hidden until you’ve drawn one).</li><li><strong>Wrong Only (N)</strong>: show only wrong answers in the current scope; answering correctly does NOT remove a question — use <strong>Remove from wrong</strong> on its card, or <strong>Remove all from wrong</strong> to clear the whole list at once.</li><li><strong>Star Only (N)</strong>: show only starred questions; tap <strong>☆</strong> on any card to star/unstar, or <strong>Unstar all</strong> to clear them at once.</li><li><strong>Back to All</strong>: leave the wrong/star/draw view and return to the full filtered list.</li><li><strong>Clear choices for this list</strong>: clear all selected answers in the current list (wrong/star records are kept).</li><li><strong>Submit Answer / Redo</strong>: grade this question; Redo lets you answer it again.</li><li><strong>Show Correct Answers</strong>: after submitting a fill-in question, optionally reveal the accepted answers. Grading ignores case, extra spaces and spacing (<code>check list</code> = <code>checklist</code>), and treats equal numbers as equal (<code>1,000</code> = <code>1000</code>).</li><li><strong>Stats line</strong> (next to the toolbar): shows how many questions are in view, your running score and accuracy, and how many wrong answers remain in the current scope.</li>',
+        guide_html: '<li data-coffee style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--locked-bg);border:1px solid var(--locked-border);border-radius:10px"><strong>☕ Buy me a coffee — the button at the bottom-right!</strong> This bank is free and ad-free, built by one person. Tap <strong>☕</strong>, watch a fresh coffee get made, then tip <strong>$5 / $10 / $20</strong> or any amount via PayPal. Totally optional — it keeps this bank caffeinated and growing. 🙏</li><li data-feedback style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Feedback &amp; ⚐ Report — the most useful buttons here!</strong> Found a wrong answer, a typo, or anything confusing? Tap <strong>💬 Feedback</strong> at the top, or <strong>⚐ Report</strong> on any question card. Your message reaches the author in seconds and <strong>actually gets fixed</strong> — every report makes this bank better for the next person. No sign-up, takes 5 seconds. Please use it!</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 Sign in — save &amp; reload your history!</strong> Tap <strong>👤</strong> at the top and pick a personal code (great on phones — no email, no password reset). Then every round you do is saved automatically, and you can <strong>reload any of your last 10 rounds on any device</strong> — your answers come back exactly as you left them. The same code shows the same history everywhere.</li><li><strong>Theme (🌙 / ☀️)</strong>: switch between light and dark — your choice is saved and follows your system setting by default. The 🌐 menu beside it changes the interface language.</li><li><strong>✨ Animations</strong>: cycles the animation level — full ✨ → reduced (button dims) → off; your choice is saved and applies everywhere.</li><li><strong>← Catalog</strong>: go back to the bank list to switch to a different question bank, or open several at once and practice them merged.</li><li><strong>Filter Question Banks (Select All / Select None / Confirm)</strong>: tick the question sets you want to practice — combine as many as you like — then press Confirm. Opening several banks together merges duplicate questions automatically; a password-protected bank asks for its password once before it joins.</li><li><strong>Randomize + Reset</strong>: shuffle the questions in the current scope and clear this round’s selections.</li><li><strong>Auto Submit</strong>: when ON, clicking a choice grades it instantly (no Submit needed).</li><li><strong>Progress bar &amp; “Next unanswered →”</strong>: the sticky bar at the top of the list shows how many questions you’ve answered so far; tap <strong>Next unanswered →</strong> to jump straight to the next one you haven’t submitted yet.</li><li><strong>▦ Answer sheet</strong>: opens a mini-map of the current list — green = correct, red = wrong, small dot = starred; tap any cell to jump straight to that question.</li><li><strong>⌨️ Keyboard shortcuts</strong>: press <strong>?</strong> to see the full sheet — J/K move between questions, 1-9 pick an option, Enter submits, F stars, N jumps to the next unanswered, R redoes.</li><li><strong>Session recap</strong>: a summary of this sitting — questions answered, accuracy, time spent, this session’s wrong answers (tap one to revisit it) and your practice calendar.</li><li><strong>🎯 Daily goal</strong>: set how many questions you want to practice per day; the counter next to 🎯 fills up as you answer and celebrates when you reach it.</li><li><strong>Random Choose 150</strong>: draw 150 questions from the current scope, weighted toward the ones you’ve practiced least; press it again (it turns into <strong>· Reroll</strong>) for a fresh draw. Hidden when the scope has 150 questions or fewer.</li><li><strong>Back to Current 150</strong>: return to this round’s draw (hidden until you’ve drawn one).</li><li><strong>Wrong Only (N)</strong>: show only wrong answers in the current scope; answering correctly does NOT remove a question — use <strong>Remove from wrong</strong> on its card, or <strong>Remove all from wrong</strong> to clear the whole list at once.</li><li><strong>Star Only (N)</strong>: show only starred questions; tap <strong>☆</strong> on any card to star/unstar, or <strong>Unstar all</strong> to clear them at once.</li><li><strong>Back to All</strong>: leave the wrong/star/draw view and return to the full filtered list.</li><li><strong>Clear choices for this list</strong>: clear all selected answers in the current list (wrong/star records are kept).</li><li><strong>Submit Answer / Redo</strong>: grade this question; Redo lets you answer it again.</li><li><strong>Show Correct Answers</strong>: after submitting a fill-in question, optionally reveal the accepted answers. Grading ignores case, extra spaces and spacing (<code>check list</code> = <code>checklist</code>), and treats equal numbers as equal (<code>1,000</code> = <code>1000</code>).</li><li><strong>Stats line</strong> (next to the toolbar): shows how many questions are in view, your running score and accuracy, and how many wrong answers remain in the current scope.</li>',
       },
       zh: {
         title_h1: "AMT 题库练习",
@@ -666,7 +852,21 @@
         remove_wrong: "移出错题",
         show_keys: "显示参考答案", hide_keys: "收起参考答案",
         essay_note: "（问答题：此页面不判分）",
-        correct_fb: "✅ 正确！", wrong_fb: "❌ 错误",
+        correct_fb: "正确！", wrong_fb: "错误",
+        motion_full: "动效：完整", motion_reduced: "动效：精简", motion_off: "动效：关闭",
+        filters_label: "筛选", close_label: "关闭",
+        hint_no_blanks: "该填空题未定义空位。", hint_fill_all: "请填写所有空位！", hint_essay: "问答题：本页不做自动判分。", hint_select_multi: "请至少选择一个答案！", hint_select_one: "请先选择一个答案！",
+        wrong_chip: "错题", conquered_chip: "已征服 ✓", conquer_plus: "+1 征服", wrong_remaining: "未征服：{n} 道",
+        mastery_new: "未练习", mastery_miss: "错过", mastery_conq: "已征服", mastery_solid: "稳定",
+        round_done_small: "本轮完成 {n}/{n}！🎉", wrongs_cleared: "错题全部征服！",
+        welcome_back: "欢迎回来——已练 {n} 题 · 错题 {m} 道", wb_continue: "继续练习", wb_review: "复习错题", restored_n: "已还原 {n} 题作答",
+        sheet_btn: "答题卡", sheet_un: "未作答", sheet_ok: "答对", sheet_bad: "答错", sheet_star: "已收藏",
+        mastery_line: "新 {a} · 错过 {b} · 已征服 {c} · 稳定 {d}",
+        kb_title: "键盘快捷键", kb_move: "在题目间移动", kb_pick: "选择选项", kb_submit: "提交", kb_star: "收藏", kb_next: "下一未答题", kb_redo: "重做", kb_close: "关闭面板", kb_open: "打开本表",
+        recap_btn: "本轮小结", recap_title: "本轮小结", recap_line: "本次答题 {n} · 答对 {ok} · 正确率 {acc}%", recap_time: "用时 {t}",
+        recap_wrong_title: "本次错题（{n}）", recap_perfect: "全对！本次没有错题", recap_none: "本次会话还没答题。",
+        heatmap_title: "练习日历", today_count: "今日已练 {n} 题", compare_last: "上次存档 {prev}% → 本次 {now}%",
+        goal_title: "今日目标", goal_save: "保存", goal_off: "关闭", goal_set: "设定今日目标", goal_progress: "今日 {cur}/{n}", goal_done: "今日目标达成！",
         keys_title: "参考答案",
         keys_sets_hint: "可接受的答案组合（任意一组匹配即算对）：",
         set_label: "组", blank_label: "空", no_key: "（无答案）",
@@ -697,7 +897,7 @@
         coffee_toast_title: "漂亮 —— 这一整套你都做完了！🎉",
         coffee_toast_sub: "喜欢的话，一杯咖啡能让它继续长大。",
         coffee_toast_go: "☕ 咖啡", coffee_toast_dismiss: "下次吧",
-        guide_html: '<li data-coffee style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--locked-bg);border:1px solid var(--locked-border);border-radius:10px"><strong>☕ 请我喝杯咖啡 —— 右下角那个按钮！</strong> 这个题库免费、无广告，一个人做的。点 <strong>☕</strong> 看一杯咖啡现做出来，然后用 PayPal 打赏 <strong>$5 / $10 / $20</strong> 或任意金额。完全自愿 —— 它能让题库继续有咖啡因、继续长大。🙏</li><li data-feedback style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 反馈 &amp; ⚐ 报错 —— 这里最有用的按钮！</strong> 发现答案错了、有错别字、或哪里看不懂？点顶部的 <strong>💬 反馈</strong>，或任意题卡上的 <strong>⚐ 报错</strong>。你的留言几秒内直达作者、<strong>真的会被修</strong> —— 每一条都让题库对下一个人更好用。免注册、5 秒搞定，欢迎多用！</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 登录 —— 保存并重新加载你的历史！</strong> 点顶部 <strong>👤</strong> 设一个自定义码（手机也好用 —— 免邮箱、不用找回密码）。登录后每一轮做题都会自动保存，你可以<strong>在任意设备重新加载最近 10 次做题记录</strong> —— 作答会原样回来。同一个码在哪儿都看到同一份历史。</li><li><strong>主题（🌙 / ☀️）</strong>：切换浅色/深色，选择会被记住，默认跟随系统设置。旁边的 🌐 菜单切换界面语言。</li><li><strong>← 返回目录</strong>：回到题库列表换一个题库，或一次打开多个题库合并练习。</li><li><strong>筛选题库（全选 / 全不选 / 确认）</strong>：勾选要练习的题套（可任意组合多个），点确认生效。多个题库一起打开时会自动合并去重；加密题库会先要一次密码再加入。</li><li><strong>打乱并重置</strong>：把当前范围内的题目重新打乱，并清空本轮所有选择。</li><li><strong>自动提交</strong>：开启后点选项即自动判分，不用再按提交。</li><li><strong>进度条 &amp; 「跳到下一道未答 →」</strong>：列表顶部的吸顶进度条显示当前列表已答多少题；点<strong>跳到下一道未答 →</strong>直接跳到下一道还没提交的题。</li><li><strong>随机抽 150 题</strong>：从当前范围按「做得少优先」的权重随机抽 150 题；再点一次（按钮会变成<strong>· 重抽</strong>）换一批。范围不足 150 题时不显示。</li><li><strong>回到本轮 150 题</strong>：回到本轮已抽中的那 150 题（没有抽过时不显示）。</li><li><strong>只看错题（N）</strong>：只显示当前范围内的错题；答对不会自动移出，需手动点题卡上的<strong>移出错题</strong>，或用<strong>全部移出错题</strong>一次清空整列。</li><li><strong>只看收藏（N）</strong>：只显示收藏的题；点题卡右上角 <strong>☆</strong> 收藏/取消，或用<strong>全部取消收藏</strong>一次清空。</li><li><strong>返回全部</strong>：从错题/收藏/抽题视图回到当前筛选范围的完整列表。</li><li><strong>清空本列表的已选答案</strong>：清空当前列表里所有题的已选答案（不动错题/收藏记录）。</li><li><strong>提交答案 / 重做</strong>：提交本题判分；重做可再答一次。</li><li><strong>显示参考答案</strong>：填空题提交后可选择性显示参考答案。判分忽略大小写、多余空格，也忽略空格有无（<code>check list</code> = <code>checklist</code>），数值相等即算对（<code>1,000</code> = <code>1000</code>）。</li><li><strong>统计行</strong>（工具栏旁）：显示当前列表题数、累计得分与正确率，以及当前范围内还剩多少错题。</li>',
+        guide_html: '<li data-coffee style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--locked-bg);border:1px solid var(--locked-border);border-radius:10px"><strong>☕ 请我喝杯咖啡 —— 右下角那个按钮！</strong> 这个题库免费、无广告，一个人做的。点 <strong>☕</strong> 看一杯咖啡现做出来，然后用 PayPal 打赏 <strong>$5 / $10 / $20</strong> 或任意金额。完全自愿 —— 它能让题库继续有咖啡因、继续长大。🙏</li><li data-feedback style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 反馈 &amp; ⚐ 报错 —— 这里最有用的按钮！</strong> 发现答案错了、有错别字、或哪里看不懂？点顶部的 <strong>💬 反馈</strong>，或任意题卡上的 <strong>⚐ 报错</strong>。你的留言几秒内直达作者、<strong>真的会被修</strong> —— 每一条都让题库对下一个人更好用。免注册、5 秒搞定，欢迎多用！</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 登录 —— 保存并重新加载你的历史！</strong> 点顶部 <strong>👤</strong> 设一个自定义码（手机也好用 —— 免邮箱、不用找回密码）。登录后每一轮做题都会自动保存，你可以<strong>在任意设备重新加载最近 10 次做题记录</strong> —— 作答会原样回来。同一个码在哪儿都看到同一份历史。</li><li><strong>主题（🌙 / ☀️）</strong>：切换浅色/深色，选择会被记住，默认跟随系统设置。旁边的 🌐 菜单切换界面语言。</li><li><strong>✨ 动效开关</strong>：循环切换动效级别——完整 ✨ → 精简（按钮变淡）→ 关闭；选择会被记住，全站生效。</li><li><strong>← 返回目录</strong>：回到题库列表换一个题库，或一次打开多个题库合并练习。</li><li><strong>筛选题库（全选 / 全不选 / 确认）</strong>：勾选要练习的题套（可任意组合多个），点确认生效。多个题库一起打开时会自动合并去重；加密题库会先要一次密码再加入。</li><li><strong>打乱并重置</strong>：把当前范围内的题目重新打乱，并清空本轮所有选择。</li><li><strong>自动提交</strong>：开启后点选项即自动判分，不用再按提交。</li><li><strong>进度条 &amp; 「跳到下一道未答 →」</strong>：列表顶部的吸顶进度条显示当前列表已答多少题；点<strong>跳到下一道未答 →</strong>直接跳到下一道还没提交的题。</li><li><strong>▦ 答题卡</strong>：打开当前列表的缩略网格——绿=答对、红=答错、小点=已收藏；点任意格子直接跳到那道题。</li><li><strong>⌨️ 键盘快捷键</strong>：按 <strong>?</strong> 查看完整速查表——J/K 在题目间移动、1-9 选选项、Enter 提交、F 收藏、N 跳到下一未答、R 重做。</li><li><strong>本轮小结</strong>：本次做题的小结——答题数、正确率、用时、本次错题（点击可回看）以及练习日历。</li><li><strong>🎯 今日目标</strong>：设定每天想练多少题；🎯 旁的计数随作答增长，达标时会小小庆祝一下。</li><li><strong>随机抽 150 题</strong>：从当前范围按「做得少优先」的权重随机抽 150 题；再点一次（按钮会变成<strong>· 重抽</strong>）换一批。范围不足 150 题时不显示。</li><li><strong>回到本轮 150 题</strong>：回到本轮已抽中的那 150 题（没有抽过时不显示）。</li><li><strong>只看错题（N）</strong>：只显示当前范围内的错题；答对不会自动移出，需手动点题卡上的<strong>移出错题</strong>，或用<strong>全部移出错题</strong>一次清空整列。</li><li><strong>只看收藏（N）</strong>：只显示收藏的题；点题卡右上角 <strong>☆</strong> 收藏/取消，或用<strong>全部取消收藏</strong>一次清空。</li><li><strong>返回全部</strong>：从错题/收藏/抽题视图回到当前筛选范围的完整列表。</li><li><strong>清空本列表的已选答案</strong>：清空当前列表里所有题的已选答案（不动错题/收藏记录）。</li><li><strong>提交答案 / 重做</strong>：提交本题判分；重做可再答一次。</li><li><strong>显示参考答案</strong>：填空题提交后可选择性显示参考答案。判分忽略大小写、多余空格，也忽略空格有无（<code>check list</code> = <code>checklist</code>），数值相等即算对（<code>1,000</code> = <code>1000</code>）。</li><li><strong>统计行</strong>（工具栏旁）：显示当前列表题数、累计得分与正确率，以及当前范围内还剩多少错题。</li>',
       },
       es: {
         title_h1: "Práctica del banco de preguntas AMT",
@@ -746,7 +946,21 @@
         remove_wrong: "Quitar de errores",
         show_keys: "Mostrar respuestas", hide_keys: "Ocultar respuestas",
         essay_note: "(Pregunta de ensayo — no se califica aquí)",
-        correct_fb: "✅ ¡Correcto!", wrong_fb: "❌ Incorrecto",
+        correct_fb: "¡Correcto!", wrong_fb: "Incorrecto",
+        motion_full: "Animaciones: completas", motion_reduced: "Animaciones: reducidas", motion_off: "Animaciones: desactivadas",
+        filters_label: "Filtros", close_label: "Cerrar",
+        hint_no_blanks: "Esta pregunta no tiene espacios definidos.", hint_fill_all: "¡Completa todos los espacios!", hint_essay: "Pregunta de ensayo: sin corrección automática.", hint_select_multi: "¡Selecciona al menos una respuesta!", hint_select_one: "¡Selecciona una respuesta primero!",
+        wrong_chip: "Fallada", conquered_chip: "Superada ✓", conquer_plus: "+1 superada", wrong_remaining: "Sin superar: {n}",
+        mastery_new: "Sin practicar", mastery_miss: "Fallada", mastery_conq: "Superada", mastery_solid: "Dominada",
+        round_done_small: "¡Ronda completa {n}/{n}! 🎉", wrongs_cleared: "¡Todas las falladas superadas!",
+        welcome_back: "Bienvenido — {n} practicadas · {m} falladas", wb_continue: "Continuar", wb_review: "Repasar falladas", restored_n: "{n} respuestas restauradas",
+        sheet_btn: "Hoja de respuestas", sheet_un: "Sin responder", sheet_ok: "Correcta", sheet_bad: "Incorrecta", sheet_star: "Favorita",
+        mastery_line: "Nuevas {a} · Falladas {b} · Superadas {c} · Dominadas {d}",
+        kb_title: "Atajos de teclado", kb_move: "Moverse entre preguntas", kb_pick: "Elegir opción", kb_submit: "Enviar", kb_star: "Favorita", kb_next: "Siguiente sin responder", kb_redo: "Rehacer", kb_close: "Cerrar paneles", kb_open: "Mostrar esta hoja",
+        recap_btn: "Resumen", recap_title: "Resumen de la sesión", recap_line: "Respondidas {n} · Correctas {ok} · Precisión {acc}%", recap_time: "Tiempo {t}",
+        recap_wrong_title: "Falladas esta sesión ({n})", recap_perfect: "¡Sesión perfecta — sin errores!", recap_none: "Aún no has respondido en esta sesión.",
+        heatmap_title: "Calendario de práctica", today_count: "Hoy: {n} respondidas", compare_last: "Ronda anterior {prev}% → esta sesión {now}%",
+        goal_title: "Meta diaria", goal_save: "Guardar", goal_off: "Quitar", goal_set: "Fijar meta diaria", goal_progress: "Hoy {cur}/{n}", goal_done: "¡Meta diaria conseguida!",
         keys_title: "Respuestas correctas",
         keys_sets_hint: "Conjuntos de respuestas aceptados (basta con que UNO coincida):",
         set_label: "Conjunto", blank_label: "Espacio", no_key: "(sin respuesta)",
@@ -777,7 +991,7 @@
         coffee_toast_title: "¡Bien — completaste todo el conjunto! 🎉",
         coffee_toast_sub: "¿Te gusta? Un café lo mantiene creciendo.",
         coffee_toast_go: "☕ Café", coffee_toast_dismiss: "Quizá luego",
-        guide_html: '<li data-coffee style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--locked-bg);border:1px solid var(--locked-border);border-radius:10px"><strong>☕ Invítame a un café — ¡el botón de abajo a la derecha!</strong> Este banco es gratis y sin anuncios, hecho por una sola persona. Toca <strong>☕</strong>, mira cómo se prepara un café recién hecho y luego deja <strong>$5 / $10 / $20</strong> o lo que quieras por PayPal. Totalmente opcional — mantiene este banco con cafeína y creciendo. 🙏</li><li data-feedback style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Comentarios y ⚐ Reportar — ¡los botones más útiles!</strong> ¿Una respuesta incorrecta, una errata o algo confuso? Toca <strong>💬 Comentarios</strong> arriba, o <strong>⚐ Reportar</strong> en cualquier tarjeta. Tu mensaje llega al autor en segundos y <strong>de verdad se corrige</strong> — cada reporte mejora este banco para el siguiente. Sin registro, 5 segundos. ¡Úsalo!</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 Inicia sesión — ¡guarda y recarga tu historial!</strong> Toca <strong>👤</strong> arriba y elige un código personal (ideal para móviles — sin correo, sin recuperar contraseña). Cada ronda se guarda sola y puedes <strong>recargar cualquiera de tus últimas 10 rondas en cualquier dispositivo</strong> — tus respuestas vuelven tal como las dejaste. El mismo código muestra el mismo historial en todas partes.</li><li><strong>Tema (🌙 / ☀️)</strong>: cambia entre claro y oscuro — tu elección se guarda y sigue el sistema por defecto. El menú 🌐 al lado cambia el idioma.</li><li><strong>← Catálogo</strong>: vuelve a la lista de bancos para cambiar de banco, o abre varios a la vez y practícalos combinados.</li><li><strong>Filtrar bancos (Seleccionar todo / Ninguno / Confirmar)</strong>: marca los conjuntos que quieras practicar — combina varios — y pulsa Confirmar. Al abrir varios bancos juntos se fusionan los duplicados automáticamente; un banco protegido pide su contraseña una vez antes de unirse.</li><li><strong>Mezclar y reiniciar</strong>: baraja las preguntas del alcance actual y borra las selecciones de esta ronda.</li><li><strong>Envío automático</strong>: al activarlo, hacer clic en una opción califica al instante.</li><li><strong>Barra de progreso y “Siguiente sin responder →”</strong>: la barra fija de arriba muestra cuántas preguntas de la lista has respondido; toca <strong>Siguiente sin responder →</strong> para saltar a la próxima que aún no hayas enviado.</li><li><strong>150 al azar</strong>: sortea 150 preguntas del alcance actual, priorizando las menos practicadas; púlsalo otra vez (pasa a <strong>· Repetir</strong>) para un nuevo sorteo. Oculto si hay 150 o menos.</li><li><strong>Volver a las 150</strong>: regresa al sorteo de esta ronda (oculto hasta que sortees uno).</li><li><strong>Solo errores (N)</strong>: muestra solo tus errores; acertar NO los quita — usa <strong>Quitar de errores</strong> en la tarjeta, o <strong>Quitar todo de errores</strong> para vaciar la lista de una vez.</li><li><strong>Solo favoritas (N)</strong>: muestra solo las marcadas; toca <strong>☆</strong> en cualquier tarjeta, o <strong>Quitar todas las favoritas</strong> para vaciarlas de una vez.</li><li><strong>Volver a todo</strong>: sal de la vista de errores/favoritas/sorteo y vuelve a la lista completa.</li><li><strong>Borrar selecciones de esta lista</strong>: borra todas las respuestas seleccionadas de la lista actual (se conservan errores/favoritas).</li><li><strong>Enviar respuesta / Rehacer</strong>: califica la pregunta; Rehacer permite contestarla de nuevo.</li><li><strong>Mostrar respuestas</strong>: tras enviar una pregunta de rellenar, muestra las respuestas aceptadas. La calificación ignora mayúsculas y espacios (<code>check list</code> = <code>checklist</code>) y trata como iguales los números equivalentes (<code>1,000</code> = <code>1000</code>).</li><li><strong>Línea de estadísticas</strong> (junto a la barra): muestra cuántas preguntas hay en vista, tu puntuación y precisión, y cuántos errores quedan en el alcance actual.</li>',
+        guide_html: '<li data-coffee style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--locked-bg);border:1px solid var(--locked-border);border-radius:10px"><strong>☕ Invítame a un café — ¡el botón de abajo a la derecha!</strong> Este banco es gratis y sin anuncios, hecho por una sola persona. Toca <strong>☕</strong>, mira cómo se prepara un café recién hecho y luego deja <strong>$5 / $10 / $20</strong> o lo que quieras por PayPal. Totalmente opcional — mantiene este banco con cafeína y creciendo. 🙏</li><li data-feedback style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Comentarios y ⚐ Reportar — ¡los botones más útiles!</strong> ¿Una respuesta incorrecta, una errata o algo confuso? Toca <strong>💬 Comentarios</strong> arriba, o <strong>⚐ Reportar</strong> en cualquier tarjeta. Tu mensaje llega al autor en segundos y <strong>de verdad se corrige</strong> — cada reporte mejora este banco para el siguiente. Sin registro, 5 segundos. ¡Úsalo!</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 Inicia sesión — ¡guarda y recarga tu historial!</strong> Toca <strong>👤</strong> arriba y elige un código personal (ideal para móviles — sin correo, sin recuperar contraseña). Cada ronda se guarda sola y puedes <strong>recargar cualquiera de tus últimas 10 rondas en cualquier dispositivo</strong> — tus respuestas vuelven tal como las dejaste. El mismo código muestra el mismo historial en todas partes.</li><li><strong>Tema (🌙 / ☀️)</strong>: cambia entre claro y oscuro — tu elección se guarda y sigue el sistema por defecto. El menú 🌐 al lado cambia el idioma.</li><li><strong>✨ Animaciones</strong>: alterna el nivel de animaciones — completas ✨ → reducidas (el botón se atenúa) → desactivadas; tu elección se guarda y aplica en todo el sitio.</li><li><strong>← Catálogo</strong>: vuelve a la lista de bancos para cambiar de banco, o abre varios a la vez y practícalos combinados.</li><li><strong>Filtrar bancos (Seleccionar todo / Ninguno / Confirmar)</strong>: marca los conjuntos que quieras practicar — combina varios — y pulsa Confirmar. Al abrir varios bancos juntos se fusionan los duplicados automáticamente; un banco protegido pide su contraseña una vez antes de unirse.</li><li><strong>Mezclar y reiniciar</strong>: baraja las preguntas del alcance actual y borra las selecciones de esta ronda.</li><li><strong>Envío automático</strong>: al activarlo, hacer clic en una opción califica al instante.</li><li><strong>Barra de progreso y “Siguiente sin responder →”</strong>: la barra fija de arriba muestra cuántas preguntas de la lista has respondido; toca <strong>Siguiente sin responder →</strong> para saltar a la próxima que aún no hayas enviado.</li><li><strong>▦ Hoja de respuestas</strong>: abre un minimapa de la lista actual — verde = correcta, rojo = incorrecta, punto = favorita; toca una celda para saltar a esa pregunta.</li><li><strong>⌨️ Atajos de teclado</strong>: pulsa <strong>?</strong> para ver la hoja completa — J/K mueven entre preguntas, 1-9 eligen opción, Enter envía, F marca favorita, N salta a la siguiente sin responder, R rehace.</li><li><strong>Resumen</strong>: resumen de esta sesión — respondidas, precisión, tiempo, tus falladas de la sesión (toca una para volver) y tu calendario de práctica.</li><li><strong>🎯 Meta diaria</strong>: fija cuántas preguntas quieres practicar al día; el contador junto a 🎯 avanza al responder y celebra cuando la logras.</li><li><strong>150 al azar</strong>: sortea 150 preguntas del alcance actual, priorizando las menos practicadas; púlsalo otra vez (pasa a <strong>· Repetir</strong>) para un nuevo sorteo. Oculto si hay 150 o menos.</li><li><strong>Volver a las 150</strong>: regresa al sorteo de esta ronda (oculto hasta que sortees uno).</li><li><strong>Solo errores (N)</strong>: muestra solo tus errores; acertar NO los quita — usa <strong>Quitar de errores</strong> en la tarjeta, o <strong>Quitar todo de errores</strong> para vaciar la lista de una vez.</li><li><strong>Solo favoritas (N)</strong>: muestra solo las marcadas; toca <strong>☆</strong> en cualquier tarjeta, o <strong>Quitar todas las favoritas</strong> para vaciarlas de una vez.</li><li><strong>Volver a todo</strong>: sal de la vista de errores/favoritas/sorteo y vuelve a la lista completa.</li><li><strong>Borrar selecciones de esta lista</strong>: borra todas las respuestas seleccionadas de la lista actual (se conservan errores/favoritas).</li><li><strong>Enviar respuesta / Rehacer</strong>: califica la pregunta; Rehacer permite contestarla de nuevo.</li><li><strong>Mostrar respuestas</strong>: tras enviar una pregunta de rellenar, muestra las respuestas aceptadas. La calificación ignora mayúsculas y espacios (<code>check list</code> = <code>checklist</code>) y trata como iguales los números equivalentes (<code>1,000</code> = <code>1000</code>).</li><li><strong>Línea de estadísticas</strong> (junto a la barra): muestra cuántas preguntas hay en vista, tu puntuación y precisión, y cuántos errores quedan en el alcance actual.</li>',
       },
     };
     let uiLang = (function(){ try{ const v = localStorage.getItem(UI_LANG_KEY); return I18N[v] ? v : "en"; }catch(_e){ return "en"; } })();
@@ -789,6 +1003,7 @@
     function applyUiLang(){
       document.documentElement.lang = uiLang === "zh" ? "zh-CN" : uiLang;
       document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = T(el.getAttribute("data-i18n")); });
+      try{ const _qf = document.getElementById("qp-filter"); if (_qf){ _qf.title = T("filters_label"); _qf.setAttribute("aria-label", T("filters_label")); } }catch(_e){} // P9 筛选按钮 a11y 文案随语言刷新
       document.querySelectorAll("[data-i18n-placeholder]").forEach(el => { el.setAttribute("placeholder", T(el.getAttribute("data-i18n-placeholder"))); });
       const guideList = document.getElementById("guide-list");
       if (guideList){
@@ -812,6 +1027,9 @@
       uiLang = I18N[value] ? value : "en";
       try{ localStorage.setItem(UI_LANG_KEY, uiLang); }catch(_e){}
       applyUiLang();
+      try{ applyMotion(); }catch(_e){} // P6 换语言后刷新动效按钮 title/aria-label
+      try{ updateGoalUI(); }catch(_e){} // P17 换语言后刷新目标按钮 title/计数
+      try{ refreshWelcomeLang(); }catch(_e){} // P10 换语言后刷新欢迎横幅文案
       if (Array.isArray(currentQuestions) && currentQuestions.length){ rerenderCurrentView(); }
       updateAutoBtn();
     }
@@ -862,6 +1080,32 @@
     }
     function toggleTheme(){ setTheme(currentTheme() === "dark" ? "light" : "dark"); }
 
+    /* ---- P6 动效总开关：full → reduced → off（全局偏好，跨题库共享） ---- */
+    const MOTION_KEY = "qb_motion_v1";
+    let MOTION = (function(){
+      try{
+        const v = localStorage.getItem(MOTION_KEY);
+        if (v === "full" || v === "reduced" || v === "off") return v;
+        return (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) ? "reduced" : "full";
+      }catch(_e){ return "full"; }
+    })();
+    function motionFull(){ return MOTION === "full"; }
+    function scrollBehavior(){ return MOTION === "full" ? "smooth" : "auto"; }
+    function applyMotion(){
+      document.documentElement.dataset.motion = MOTION;
+      const b = document.getElementById("motion-toggle");
+      if (b){
+        const label = T(MOTION === "full" ? "motion_full" : (MOTION === "reduced" ? "motion_reduced" : "motion_off"));
+        b.setAttribute("aria-label", label);
+        b.title = label;
+      }
+    }
+    function cycleMotion(){
+      MOTION = (MOTION === "full") ? "reduced" : (MOTION === "reduced" ? "off" : "full");
+      try{ localStorage.setItem(MOTION_KEY, MOTION); }catch(_e){}
+      applyMotion();
+    }
+
     /* ------------------ 数据区 ------------------ */
     const LEGACY_BANK_PAYLOAD = {"mode":"remote"};
     let RAW_QUESTION_BANK = [];
@@ -871,6 +1115,7 @@
     /* ------------------ 状态区 ------------------ */
     let starred=new Set();
     let wrongSet=new Set();
+    let conqueredSet=new Set(); // P13 征服错题（答对过一次的错题；wrongSet 本身语义不变）
     let attemptCountMap={};
     let answeredOnce=new Set();
     let uiState={}; // { qId: { selectedIndex, selectedSet, fillInputs, submitted, feedbackHTML, showKeys } }
@@ -1002,6 +1247,33 @@
       if(!key) return;
       attemptCountMap[key] = getAttemptCount(key) + 1;
       saveCountMap(ATTEMPT_COUNT_KEY, attemptCountMap);
+    }
+
+    // P15 练习活动记录（全局跨库；IS_SPECIAL 不落盘）
+    const ACTIVITY_KEY = "qb_activity_days_v1";
+    function todayKey(){ const d=new Date(); const p=n=>String(n).padStart(2,"0"); return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate()); }
+    function loadActivity(){ try{ const v=JSON.parse(localStorage.getItem(ACTIVITY_KEY)||"{}"); return (v&&typeof v==="object")?v:{}; }catch(e){ return {}; } }
+    function bumpActivityDay(){
+      if (IS_SPECIAL) return;
+      try{
+        const map = loadActivity(); const k = todayKey();
+        map[k] = (map[k]|0) + 1;
+        localStorage.setItem(ACTIVITY_KEY, JSON.stringify(map));
+        localStorage.setItem(STORAGE_NS + "_last_active_v1", String(Date.now()));
+        if (typeof onActivityBumped === "function") onActivityBumped(); // P17 目标环会挂这里（批次3定义；不存在则跳过）
+      }catch(e){}
+    }
+
+    // P14 掌握度：new(没练过) / miss(错过未征服) / conq(已征服) / solid(练过且从未在错题集)
+    function masteryOf(qId){
+      const attempts = getAttemptCount(qId);
+      if (wrongSet.has(qId)) return conqueredSet.has(qId) ? "conq" : "miss";
+      return attempts > 0 ? "solid" : "new";
+    }
+    function masteryCounts(list){
+      const c = {new:0, miss:0, conq:0, solid:0};
+      (list || QUESTION_BANK).forEach(q => c[masteryOf(q.id)]++);
+      return c;
     }
 
     function escHTML(s){
@@ -1454,6 +1726,7 @@
     }
     function render(questions){
       currentQuestions=questions;
+      kbIndex = -1; // P8 列表重建后旧键盘焦点索引失效，重置（下次 j/k 从视口重新定位）
       const wrap=document.getElementById("quiz");
       if(!questions.length){
         wrap.innerHTML=`<div style="padding:20px;text-align:center;color:var(--muted);">${T('empty_list')}</div>`;
@@ -1465,7 +1738,7 @@
         let bulkBtn='';
         if(viewMode==='wrong') bulkBtn=`<button class="btn" onclick="removeAllFromWrong()" data-testid="remove-all-wrong-btn">${T('remove_all_wrong')}</button>`;
         else if(viewMode==='star') bulkBtn=`<button class="btn" onclick="clearAllStars()" data-testid="clear-all-stars-btn">${T('clear_all_stars')}</button>`;
-        html+=`<div class="toolbar"><button class="btn" onclick="clearCurrentSelections()">${T('clear_choices')}</button>${bulkBtn}</div>`;
+        html+=`<div class="toolbar"><button class="btn" onclick="clearCurrentSelections()">${T('clear_choices')}</button>${bulkBtn}${viewMode==='wrong'?`<span id="qb-wrong-remaining" class="qb-remaining"></span>`:""}</div>`;
       }
 
       for(let i=0;i<questions.length;i++){
@@ -1492,6 +1765,8 @@
                   <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
                 </svg>
               </button>
+              ${IS_SPECIAL?"":`<span class="q-mastery m-${masteryOf(q.id)}" title="${escapeAttr(T('mastery_'+masteryOf(q.id)))}"></span>`}
+              ${viewMode==='wrong'?`<span class="qb-conq-chip ${conqueredSet.has(q.id)?"is-conq":""}">${conqueredSet.has(q.id)?T('conquered_chip'):T('wrong_chip')}</span>`:""}
             </div>
           </div>
 
@@ -1506,7 +1781,7 @@
             ${showKeyBtn}
           </div>
 
-          <div class="feedback ${(st.submitted || st.feedbackHTML)?'visible':''}" id="feedback-${q.id}">${st.feedbackHTML||""}</div>
+          <div class="feedback ${(st.submitted || st.feedbackHTML)?'visible':''}" id="feedback-${q.id}" role="status">${st.feedbackHTML||""}</div>
 
           <div class="keys-panel" id="keys-${q.id}" style="display:${(st.submitted && st.showKeys && isFill(q)) ? "block" : "none"}"></div>
 
@@ -1542,6 +1817,7 @@
         }
       }
 
+      if (viewMode === 'wrong') updateWrongRemaining(); // P13 错题视图重渲染后初始化剩余计数
       updateStats();
     }
 
@@ -1746,6 +2022,60 @@
       return st;
     }
 
+    // P1 判分反馈图标（内联 SVG，替代文案里的 ✅/❌ emoji）
+    const FB_CHECK_SVG = '<svg class="fb-icon fb-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5 11-11"/></svg>';
+    const FB_CROSS_SVG = '<svg class="fb-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+
+    // P1 判分微反馈（不改判分；仅视觉层）。后续批次会在此函数内追加逻辑。
+    function onAnswerScored(qId, ok){
+      try{
+        sessionLog.push({id: qId, ok: ok, t: Date.now()}); // P11 会话日志（无条件，不受动效档位影响）
+        if (motionFull()){
+          const card = document.getElementById("card-" + qId);
+          if (card){
+            const cls = ok ? "qb-ok-pulse" : "qb-bad-pulse";
+            card.classList.remove("qb-ok-pulse","qb-bad-pulse");
+            void card.offsetWidth; // 重置动画
+            card.classList.add(cls);
+            setTimeout(()=>card.classList.remove(cls), 500);
+            if (!ok){
+              card.querySelectorAll(".choice-btn.selected, .qb-blank, .fill-input").forEach(el=>{
+                el.classList.add("qb-shake");
+                setTimeout(()=>el.classList.remove("qb-shake"), 350);
+              });
+            }
+          }
+        }
+        // P14 掌握度小点：判分后同步状态（信息性更新，不受动效档位限制）
+        const dot = document.querySelector("#card-" + qId + " .q-mastery");
+        if (dot){ const m = masteryOf(qId); dot.className = "q-mastery m-" + m; dot.title = T("mastery_" + m); }
+      }catch(e){}
+    }
+
+    // P4 非阻塞内联提示（替代提交验证 alert；验证逻辑本身不变）
+    function showCardHint(qId, msg){
+      try{
+        const card = document.getElementById("card-" + qId);
+        if (!card){ alert(msg); return; } // 兜底
+        let hint = card.querySelector(".qb-hint");
+        if (!hint){
+          hint = document.createElement("div");
+          hint.className = "qb-hint";
+          hint.setAttribute("role","status");
+          const anchor = card.querySelector(".feedback") || card.lastElementChild;
+          anchor.parentNode.insertBefore(hint, anchor);
+        }
+        hint.textContent = msg;
+        hint.classList.remove("show"); void hint.offsetWidth; hint.classList.add("show");
+        if (motionFull()){
+          const sb = card.querySelector(".submit-btn");
+          if (sb){ sb.classList.add("qb-shake"); setTimeout(()=>sb.classList.remove("qb-shake"),350); }
+        }
+        clearTimeout(hint._t);
+        hint._t = setTimeout(()=>{ hint.classList.remove("show"); }, 2200);
+      }catch(e){ alert(msg); }
+    }
+
     function submitAnswer(qId){
       const q = getQ(qId);
       const st = ensureState(q);
@@ -1755,19 +2085,19 @@
       // 校验是否填写/选择
       if (isFill(q)) {
         const n = Array.isArray(q.blanks) ? q.blanks.length : 0;
-        if (!n) { alert("This fill question has no blanks defined."); return; }
-        if (!Array.isArray(st.fillInputs) || st.fillInputs.length !== n) { alert("Please fill all blanks!"); return; }
+        if (!n) { showCardHint(qId, T('hint_no_blanks')); return; }
+        if (!Array.isArray(st.fillInputs) || st.fillInputs.length !== n) { showCardHint(qId, T('hint_fill_all')); return; }
         for (let i=0;i<n;i++){
-          if (!String(st.fillInputs[i] ?? "").trim()) { alert("Please fill all blanks!"); return; }
+          if (!String(st.fillInputs[i] ?? "").trim()) { showCardHint(qId, T('hint_fill_all')); return; }
         }
       } else if (isEssay(q)) {
-        alert("Essay question: no auto grading in this frame.");
+        showCardHint(qId, T('hint_essay'));
         return;
       } else {
         if (isMulti(q)) {
-          if (!st.selectedSet || st.selectedSet.size === 0) { alert("Please select at least one answer!"); return; }
+          if (!st.selectedSet || st.selectedSet.size === 0) { showCardHint(qId, T('hint_select_multi')); return; }
         } else {
-          if (st.selectedIndex === null) { alert("Please select an answer first!"); return; }
+          if (st.selectedIndex === null) { showCardHint(qId, T('hint_select_one')); return; }
         }
       }
 
@@ -1787,13 +2117,21 @@
         answeredOnce.add(qId);
         totalAttempts++;
         bumpAttemptCount(qId);
+        bumpActivityDay(); // P15 练习日历：当日首答题数 +1
         if(ok) totalCorrect++;
         else { wrongSet.add(qId); saveSet(WRONG_KEY,wrongSet); }
       }
-      const html=ok ? `<div class="correct">${T('correct_fb')}</div>` : `<div class="wrong">${T('wrong_fb')}</div>`;
+      // P13 征服簿记（纯增量：wrongSet 语义不变——答对不移出错题、仍只能手动移除）
+      if (ok && wrongSet.has(qId) && !conqueredSet.has(qId)) {
+        conqueredSet.add(qId); try{ saveSet(CONQ_KEY, conqueredSet); }catch(e){} onConquer(qId);
+      } else if (!ok && conqueredSet.has(qId)) {
+        conqueredSet.delete(qId); try{ saveSet(CONQ_KEY, conqueredSet); }catch(e){} onUnconquer(qId);
+      }
+      const html=ok ? `<div class="correct">${FB_CHECK_SVG}${T('correct_fb')}</div>` : `<div class="wrong">${FB_CROSS_SVG}${T('wrong_fb')}</div>`;
       st.submitted=true;
       st.feedbackHTML=html;
       syncQuestionUI(qId);
+      onAnswerScored(qId, ok); // P1 判分微反馈（仅 submit 路径；restore/regrade 不触发）
       updateStats();
       scheduleSnapshotSave(); // 登录用户：防抖自动存本轮快照
     }
@@ -1863,7 +2201,16 @@
       starred.has(id)?starred.delete(id):starred.add(id);
       saveSet(STAR_KEY,starred);
       // 「只看收藏」视图里取消收藏 → 这张卡要从列表里消失，才需要重渲染。
-      if(viewMode==='star'){ rerenderCurrentView(); return; }
+      if(viewMode==='star'){
+        // P3 星标 pop：动效全开时先把这张卡淡出再重渲染（最终仍走 rerenderCurrentView，行为不变）
+        if(motionFull()){
+          const fading=document.getElementById("card-"+id);
+          if(fading){ fading.style.transition="opacity .15s"; fading.style.opacity="0"; }
+          setTimeout(rerenderCurrentView, 160);
+          return;
+        }
+        rerenderCurrentView(); return;
+      }
       // 其它视图：只切这一张卡的星标 class + 刷新计数，【绝不重建整列表】。
       // 之前每次点星都 rerenderCurrentView() 整列表重渲染 → 滚动乱跳、页面闪烁、
       // 重建期间手指/光标落到了别的卡 → 误标其他题。只动这一张就都没了。
@@ -1875,6 +2222,11 @@
         var lbl=on?T("unstar"):T("star");          // 同步无障碍标签/悬浮提示，否则读屏会念反状态
         btn.setAttribute("aria-label", lbl);
         btn.setAttribute("title", lbl);
+        if(on && motionFull()){ // P3 星标 pop：变为已收藏时弹一下
+          btn.classList.remove("qb-star-pop"); void btn.offsetWidth;
+          btn.classList.add("qb-star-pop");
+          setTimeout(function(){ btn.classList.remove("qb-star-pop"); }, 250);
+        }
       }
       updateButtons();
     }
@@ -1981,8 +2333,49 @@
     function showWrongOnly(){
       specialFilterSource = getPreferredSpecialSource();
       viewMode='wrong';
+      wrongsClearedFired = false; // P12 每次进入错题视图重置「错题清零庆祝」
       render(getWrongQuestions());
       updateButtons();
+    }
+
+    // P13 错题视图头部「未征服」剩余计数（render 尾部与征服/取消征服时刷新）
+    function updateWrongRemaining(){
+      const el = document.getElementById("qb-wrong-remaining");
+      if (!el) return;
+      const n = [...wrongSet].filter(id => !conqueredSet.has(id)).length;
+      el.textContent = T("wrong_remaining", {n});
+      if (motionFull()){ el.classList.remove("qb-tick"); void el.offsetWidth; el.classList.add("qb-tick"); }
+    }
+    // P13 征服时刻：错题视图内的徽章交叉淡出 + "+1 征服" 浮字 + 剩余计数跳动
+    function onConquer(qId){
+      try{
+        updateWrongRemaining();
+        if (viewMode === "wrong"){
+          const card = document.getElementById("card-" + qId);
+          if (card){
+            const chip = card.querySelector(".qb-conq-chip");
+            if (chip){ chip.textContent = T("conquered_chip"); chip.classList.add("is-conq"); }
+            if (motionFull() && chip){
+              const f = document.createElement("span");
+              f.className = "qb-float"; f.textContent = T("conquer_plus");
+              chip.parentNode.insertBefore(f, chip.nextSibling);
+              setTimeout(()=>f.remove(), 400);
+            }
+          }
+          maybeCelebrateWrongsCleared(); // P12
+        }
+      }catch(e){}
+    }
+    // P13 取消征服（重做又答错）：徽章与剩余计数回退
+    function onUnconquer(qId){
+      try{
+        updateWrongRemaining();
+        if (viewMode === "wrong"){
+          const card = document.getElementById("card-" + qId);
+          const chip = card && card.querySelector(".qb-conq-chip");
+          if (chip){ chip.textContent = T("wrong_chip"); chip.classList.remove("is-conq"); }
+        }
+      }catch(e){}
     }
     function showAll(){
       viewMode='all';
@@ -2076,9 +2469,9 @@
         nextBtn.disabled = (done >= total);
         nextBtn.textContent = (uiLang === "zh") ? "跳到下一道未答 →" : (uiLang === "es") ? "Siguiente sin responder →" : "Next unanswered →";
       }
-      // 整轮做完（≥10 题的列表）→ 庆祝；仅在「未完成→完成」跃迁触发一次
+      // 整轮做完 → 庆祝（<10 题的小轮只弹轻 toast，见 celebrateRoundCompletion）；仅在「未完成→完成」跃迁触发一次
       const complete = (total > 0 && done >= total);
-      if (complete && !lastRoundComplete && total >= 10) celebrateRoundCompletion();
+      if (complete && !lastRoundComplete && total > 0) celebrateRoundCompletion(total);
       lastRoundComplete = complete;
     }
     function jumpToNextUnanswered(){
@@ -2089,12 +2482,12 @@
           ensureHydrated(q.id);
           const card = document.getElementById("card-" + q.id);
           if (card && typeof card.scrollIntoView === "function"){
-            try{ card.scrollIntoView({ behavior:"smooth", block:"center" }); }catch(_e){ try{ card.scrollIntoView(); }catch(_e2){} }
+            try{ card.scrollIntoView({ behavior: scrollBehavior(), block:"center" }); }catch(_e){ try{ card.scrollIntoView(); }catch(_e2){} }
           }
           return;
         }
       }
-      if (typeof window.scrollTo === "function"){ try{ window.scrollTo({ top:0, behavior:"smooth" }); }catch(_e){ try{ window.scrollTo(0,0); }catch(_e2){} } }
+      if (typeof window.scrollTo === "function"){ try{ window.scrollTo({ top:0, behavior: scrollBehavior() }); }catch(_e){ try{ window.scrollTo(0,0); }catch(_e2){} } }
     }
     function updateStats(){
       const el=document.getElementById("stats");
@@ -2178,6 +2571,37 @@
       updateButtons();
     }
 
+    // P10 欢迎回来横幅（每次页面加载至多一次；恢复流程进行中不打扰）
+    let WELCOME_SHOWN = false;
+    function maybeShowWelcomeBack(){
+      try{
+        if (IS_SPECIAL || WELCOME_SHOWN) return;
+        if (sessionStorage.getItem("qb_restore")) return;
+        if (document.getElementById("qb-welcome")) return;
+        const practiced = Object.keys(attemptCountMap || {}).length;
+        const wrongN = wrongSet.size;
+        if (practiced === 0 && wrongN === 0) return;
+        const bar = document.createElement("div");
+        bar.id = "qb-welcome"; bar.className = "qb-welcome";
+        bar.dataset.n = practiced; bar.dataset.m = wrongN;
+        bar.innerHTML = buildWelcomeHTML(practiced, wrongN);
+        const anchor = document.querySelector(".toolbar");
+        if (anchor && anchor.parentNode){ anchor.parentNode.insertBefore(bar, anchor); WELCOME_SHOWN = true; }
+      }catch(e){}
+    }
+    function buildWelcomeHTML(practiced, wrongN){
+      return '<span>' + escHTML(T("welcome_back", {n: practiced, m: wrongN})) + '</span>' +
+        '<span class="qb-wb-actions">' +
+        '<button class="btn btn-sm" type="button" onclick="jumpToNextUnanswered();dismissWelcome()">' + escHTML(T("wb_continue")) + '</button>' +
+        (wrongN > 0 ? '<button class="btn btn-sm" type="button" onclick="showWrongOnly();dismissWelcome()">' + escHTML(T("wb_review")) + '</button>' : "") +
+        '<button class="btn btn-sm" type="button" aria-label="' + escapeAttr(T("close_label")) + '" onclick="dismissWelcome()">✕</button></span>';
+    }
+    function refreshWelcomeLang(){ // 切语言后横幅文案跟随（P10）
+      const b = document.getElementById("qb-welcome");
+      if (b) b.innerHTML = buildWelcomeHTML(parseInt(b.dataset.n, 10) || 0, parseInt(b.dataset.m, 10) || 0);
+    }
+    function dismissWelcome(){ const b = document.getElementById("qb-welcome"); if (b) b.remove(); }
+
     /* ------------------ 启动 ------------------ */
     function startQuiz(rawQuestions){
       RAW_QUESTION_BANK = Array.isArray(rawQuestions) ? rawQuestions : [];
@@ -2185,8 +2609,11 @@
       QUESTION_BANK = Array.isArray(deduped && deduped.bank) ? deduped.bank : [];
       ID_ALIAS = (deduped && deduped.alias) || {};
 
+      SESSION_START = Date.now(); sessionLog = []; // P11 会话跟踪：每次开新一轮（含 local.html 换库）重置
+
       starred=mapIds(loadSet(STAR_KEY));
       wrongSet=mapIds(loadSet(WRONG_KEY));
+      conqueredSet=mapIds(loadSet(CONQ_KEY)); // P13（与 starred/wrongSet 同样做 id 迁移）
       attemptCountMap=mapCountMap(loadCountMap(ATTEMPT_COUNT_KEY));
 
       // 一次性迁移：命名空间 key 还是空的、但旧共享 key（amt_*）里有属于本题库的记录时，
@@ -2221,7 +2648,9 @@
       sanitizeSavedSets();
       updateAutoBtn();
       shuffleAndRender();
+      maybeShowWelcomeBack(); // P10 欢迎回来（有待恢复快照/IS_SPECIAL 时函数内部自行跳过）
       checkPendingRestore(); // 若有「重新加载历史」待应用且属于本库，覆盖默认轮次
+      updateGoalUI(); // P17 今日目标：初始化按钮计数（IS_SPECIAL 时函数内部隐藏入口）
       setTimeout(maybeStartTutorial, 350);
     }
 
@@ -2520,6 +2949,7 @@
       activeRandom150Questions = null; activeRandom150SourcePool = null;
       var stState = snap.state || {};
       var submittedIds = [];
+      var applied = 0; // P10 已恢复条目计数（只数不改恢复逻辑）
       Object.keys(stState).forEach(function(id){
         var s = stState[id], q = byId[id]; if(!q || !s) return;
         var st = {
@@ -2532,12 +2962,13 @@
         };
         if(st.submitted){
           var ok = regradeOk(q, st);
-          st.feedbackHTML = ok ? '<div class="correct">' + T('correct_fb') + '</div>' : '<div class="wrong">' + T('wrong_fb') + '</div>';
+          st.feedbackHTML = ok ? '<div class="correct">' + FB_CHECK_SVG + T('correct_fb') + '</div>' : '<div class="wrong">' + FB_CROSS_SVG + T('wrong_fb') + '</div>';
           submittedIds.push(id);
           totalAttempts++; answeredOnce.add(id);
           if(ok) totalCorrect++;
         }
         uiState[id] = st;
+        applied++; // P10
       });
       baseQuestions = list.slice();
       SESSION_ID = snap.id || newSessionId();
@@ -2548,6 +2979,7 @@
       updateStats();
       RESTORING = false;
       clearPendingRestore();
+      if (applied) qbToast(escHTML(T("restored_n", {n: applied}))); // P10 恢复完成轻提示
       try{ window.scrollTo(0, 0); }catch(_e){}
     }
     function checkPendingRestore(){
@@ -2749,7 +3181,7 @@
         if (el && !el.hidden){
           el.classList.add("tut-highlight");
           tutorialHighlighted = el;
-          try{ el.scrollIntoView({ behavior:"smooth", block:"center" }); }catch(_e){}
+          try{ el.scrollIntoView({ behavior: scrollBehavior(), block:"center" }); }catch(_e){}
         }
       }
     }
@@ -2791,6 +3223,7 @@
     function fireConfetti(x, y){
       try{
         if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (!motionFull()) return; // P6 动效开关非 full 时不放彩带
         const canvas = document.getElementById("qb-confetti");
         if (!canvas || !canvas.getContext) return;
         const ctx = canvas.getContext("2d");
@@ -2848,7 +3281,7 @@
     function runBarista(){
       const b = document.getElementById("coffee-barista");
       const roll = document.getElementById("coffee-roll");
-      const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const reduce = (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) || !motionFull(); // P6 动效开关非 full 时走精简路径
       if (!b || reduce){
         if (b) b.className = "barista brewed";
         if (roll){ roll.textContent = T("coffee_brew_done"); roll.hidden = false; }
@@ -2911,8 +3344,37 @@
       });
     }
 
+    // P12 通用轻提示（信息性；所有动效档位都显示，只是 off 档无动画）
+    function qbToast(html, ms){
+      try{
+        let t = document.getElementById("qb-toast");
+        if (!t){ t = document.createElement("div"); t.id = "qb-toast"; t.className = "qb-toast"; t.setAttribute("role","status"); document.body.appendChild(t); }
+        t.innerHTML = html; t.hidden = false;
+        t.classList.remove("show"); void t.offsetWidth; t.classList.add("show");
+        clearTimeout(t._t); t._t = setTimeout(()=>{ t.hidden = true; }, ms || 2600);
+      }catch(e){}
+    }
+
+    // P12 错题全部征服（当前错题视图内所有题都已征服/本轮答对）——每次进入错题视图最多触发一次
+    let wrongsClearedFired = false; // showWrongOnly 里重置为 false
+    function maybeCelebrateWrongsCleared(){
+      try{
+        if (wrongsClearedFired || viewMode !== "wrong" || !Array.isArray(currentQuestions) || !currentQuestions.length) return;
+        const done = currentQuestions.every(q => conqueredSet.has(q.id) || (uiState[q.id] && uiState[q.id].submitted && regradeOk(q, uiState[q.id])));
+        if (!done) return;
+        wrongsClearedFired = true;
+        qbToast("🏆 " + escHTML(T("wrongs_cleared")));
+        fireConfetti(); // 内部已带 motionFull + reduced-motion 守卫
+      }catch(e){}
+    }
+
     // 做完整轮（当前列表全部提交）时的庆祝：永远来一蓬彩带；首次再附一个不打扰的打赏 toast。
-    function celebrateRoundCompletion(){
+    // P12：<10 题的小轮不放彩带，只弹一条轻 toast。
+    function celebrateRoundCompletion(total){
+      if (total < 10){ // 错题视图刚触发过"错题清零"庆祝时不再叠一条完成 toast（🏆 是更重要的峰值时刻）
+        if (!(viewMode === "wrong" && wrongsClearedFired)) qbToast(escHTML(T("round_done_small", {n: total})));
+        return;
+      }
       fireConfetti(innerWidth / 2, innerHeight * 0.4);
       if (!DONATION) return;
       try{ if (localStorage.getItem(COFFEE_CELEBRATED_KEY)) return; }catch(_e){ return; }
@@ -3258,9 +3720,273 @@
       startQuiz(Array.isArray(payload) ? payload : (Array.isArray(payload && payload.questions) ? payload.questions : []));
     }
 
+    /* ================= 批次 3：P7 答题卡 / P8 键盘流 / P11 交卷报告 / P17 今日目标 / P9 小屏筛选 ================= */
+
+    // P7 答题卡：当前列表的状态缩略网格；点击跳题。打开时重建，无需实时同步。
+    function toggleSheet(){
+      const p = document.getElementById("qb-sheet-panel");
+      if (!p) return;
+      if (!p.hidden){ p.hidden = true; return; }
+      buildSheet(); p.hidden = false;
+    }
+    function buildSheet(){
+      const grid = document.getElementById("qb-sheet-grid");
+      const legend = document.getElementById("qb-sheet-legend");
+      if (!grid) return;
+      const list = Array.isArray(currentQuestions) ? currentQuestions : [];
+      const frag = document.createDocumentFragment();
+      list.forEach((q, i) => {
+        const st = uiState[q.id];
+        const b = document.createElement("button");
+        b.type = "button"; b.className = "qb-cell";
+        if (st && st.submitted) b.classList.add(regradeOk(q, st) ? "st-ok" : "st-bad");
+        b.textContent = i + 1;
+        b.title = "#" + (i + 1);
+        if (starred.has(q.id)){ const s = document.createElement("span"); s.className = "st-star"; b.appendChild(s); }
+        b.onclick = () => { const panel = document.getElementById("qb-sheet-panel"); if (panel) panel.hidden = true; gotoQuestion(q.id); };
+        frag.appendChild(b);
+      });
+      grid.innerHTML = ""; grid.appendChild(frag);
+      // 图例 + 掌握度计数（IS_SPECIAL 无历史，只显示图例）
+      let html =
+        '<span><span class="sw"></span>' + escHTML(T("sheet_un")) + '</span>' +
+        '<span><span class="sw" style="background:var(--success-bg)"></span>' + escHTML(T("sheet_ok")) + '</span>' +
+        '<span><span class="sw" style="background:var(--danger-bg)"></span>' + escHTML(T("sheet_bad")) + '</span>' +
+        '<span><span class="sw" style="background:var(--star);border-color:transparent"></span>' + escHTML(T("sheet_star")) + '</span>';
+      if (!IS_SPECIAL){
+        const c = masteryCounts(list);
+        html += '<span style="margin-left:auto">' + escHTML(T("mastery_line", {a:c.new, b:c.miss, c:c.conq, d:c.solid})) + '</span>';
+      }
+      if (legend) legend.innerHTML = html;
+    }
+    // P7 通用跳题（P7/P8/P11 共用；仅用户主动导航时滚动，不违反「提交后不自动滚动」）
+    function gotoQuestion(qId){
+      try{
+        ensureHydrated(qId);
+        const card = document.getElementById("card-" + qId);
+        if (!card) return;
+        try{ card.scrollIntoView({behavior: scrollBehavior(), block: "center"}); }catch(_e){ try{ card.scrollIntoView(); }catch(_e2){} }
+        card.classList.remove("qb-flash"); void card.offsetWidth; card.classList.add("qb-flash");
+        setTimeout(()=>card.classList.remove("qb-flash"), 500);
+      }catch(e){}
+    }
+    // P7/P17/P9 点击面板外收起（目标不在面板里、也不是对应开关按钮时）
+    document.addEventListener("click", function(ev){
+      [["qb-sheet-panel","qp-sheet"],["qb-goal-pop","qp-goal"],["qb-filter-pop","qp-filter"]].forEach(([pid, bid]) => {
+        const p = document.getElementById(pid);
+        if (!p || p.hidden) return;
+        const t = ev.target;
+        if (t && t.closest && (t.closest("#" + pid) || t.closest("#" + bid))) return;
+        p.hidden = true;
+      });
+    });
+
+    // P8 键盘流：j/k 移动焦点，1-9 选项，Enter 提交，f 收藏，n 下一未答，r 重做，? 快捷键表，Esc 关面板
+    let kbIndex = -1;
+    function kbFocusCard(i){
+      const list = Array.isArray(currentQuestions) ? currentQuestions : [];
+      if (!list.length) return;
+      i = Math.max(0, Math.min(list.length - 1, i));
+      const prev = document.querySelector(".question-card.kb-focus");
+      if (prev) prev.classList.remove("kb-focus");
+      kbIndex = i;
+      const q = list[i];
+      ensureHydrated(q.id);
+      const card = document.getElementById("card-" + q.id);
+      if (card){
+        card.classList.add("kb-focus");
+        try{ card.scrollIntoView({behavior: scrollBehavior(), block: "center"}); }catch(_e){ try{ card.scrollIntoView(); }catch(_e2){} }
+      }
+    }
+    function kbCurrentQ(){
+      const list = Array.isArray(currentQuestions) ? currentQuestions : [];
+      return (kbIndex >= 0 && kbIndex < list.length) ? list[kbIndex] : null;
+    }
+    function kbInit(){ // 以视口中最近的卡为起点（render 按 currentQuestions 顺序输出，索引对齐）
+      const cards = document.querySelectorAll(".question-card");
+      let best = 0, bestD = Infinity, mid = window.innerHeight / 2;
+      cards.forEach((c, i) => { const r = c.getBoundingClientRect(); const d = Math.abs((r.top + r.bottom) / 2 - mid); if (d < bestD){ bestD = d; best = i; } });
+      kbFocusCard(best);
+    }
+    function toggleKbSheet(){ const el = document.getElementById("qb-kbsheet"); if (el) el.hidden = !el.hidden; }
+    document.addEventListener("keydown", function(e){
+      if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
+      const t = e.target;
+      if (t && t.closest && t.closest("input, textarea, select, [contenteditable]")) return;
+      if (e.key === "Escape"){
+        let closed = false;
+        ["qb-sheet-panel","qb-kbsheet","qb-goal-pop","qb-filter-pop"].forEach(id => {
+          const el = document.getElementById(id);
+          if (el && !el.hidden){ el.hidden = true; closed = true; }
+        });
+        if (closed) e.preventDefault();
+        return;
+      }
+      if (e.key === "?"){ // 其它弹窗打开时不叠开快捷键表（自身打开时仍可用 ? 关闭）
+        if (!document.querySelector(".tut-overlay:not([hidden]):not(#qb-kbsheet)")){ toggleKbSheet(); e.preventDefault(); }
+        return;
+      }
+      if (document.querySelector(".tut-overlay:not([hidden])")) return; // 弹窗打开时不劫持其余按键
+      const k = e.key.toLowerCase();
+      if (k === "j" || k === "k"){ kbIndex < 0 ? kbInit() : kbFocusCard(kbIndex + (k === "j" ? 1 : -1)); e.preventDefault(); return; }
+      if (k === "n"){ jumpToNextUnanswered(); e.preventDefault(); return; }
+      const q = kbCurrentQ();
+      if (!q) return;
+      if (e.key === "Enter" && t && t.closest && t.closest("button, a, summary")) return; // 焦点在按钮/链接上时 Enter 走原生激活
+      const st = uiState[q.id];
+      if (/^[1-9]$/.test(e.key)){
+        const idx = parseInt(e.key, 10) - 1;
+        if (st && !st.submitted && Array.isArray(q.choices) && idx < q.choices.length){ selectChoice(q.id, idx); e.preventDefault(); }
+        return;
+      }
+      if (e.key === "Enter"){ if (st && !st.submitted){ submitAnswer(q.id); e.preventDefault(); } return; }
+      if (k === "f"){ toggleStar(q.id); e.preventDefault(); return; }
+      if (k === "r"){ if (st && st.submitted){ redoQuestion(q.id); } e.preventDefault(); return; }
+    });
+
+    // P11 交卷报告：会话跟踪（startQuiz 重置；onAnswerScored 追加，restore/regrade 不计入）
+    let SESSION_START = Date.now();
+    let sessionLog = [];
+    function openRecap(){
+      const el = document.getElementById("qb-recap-body");
+      if (!el) return;
+      const n = sessionLog.length, ok = sessionLog.filter(x => x.ok).length;
+      const acc = n ? Math.round(ok / n * 100) : 0;
+      const secs = Math.max(0, Math.round((Date.now() - SESSION_START) / 1000));
+      const mm = Math.floor(secs / 60), ss = String(secs % 60).padStart(2, "0");
+      let html = "";
+      html += '<div class="qb-recap-stats">' + escHTML(T("recap_line", {n: n, ok: ok, acc: acc})) + ' · ' + escHTML(T("recap_time", {t: mm + ":" + ss})) + '</div>';
+      const wrongs = sessionLog.filter(x => !x.ok);
+      if (wrongs.length){
+        const seen = new Set();
+        let lis = "";
+        wrongs.forEach(x => {
+          if (seen.has(x.id)) return; seen.add(x.id);
+          const q = getQ(x.id); if (!q) return;
+          const txt = String(q.question || "").slice(0, 70);
+          lis += '<li><a href="javascript:void 0" onclick="closeRecap();gotoQuestion(\'' + escapeAttr(String(x.id)) + '\')">' + escHTML(txt) + '…</a></li>';
+        });
+        html += '<h4>' + escHTML(T("recap_wrong_title", {n: seen.size})) + '</h4><ul class="qb-recap-wrongs">' + lis + '</ul>';
+      } else if (n) {
+        html += '<p class="qb-recap-perfect">' + escHTML(T("recap_perfect")) + '</p>';
+      } else {
+        html += '<p>' + escHTML(T("recap_none")) + '</p>';
+      }
+      if (!IS_SPECIAL){ // 访客分享模式无历史数据：掌握度/热力图/今日计数全部不显示
+        const c = masteryCounts(Array.isArray(currentQuestions) ? currentQuestions : []);
+        html += '<div class="qb-recap-mastery">' + escHTML(T("mastery_line", {a:c.new, b:c.miss, c:c.conq, d:c.solid})) + '</div>';
+        html += '<h4>' + escHTML(T("heatmap_title")) + '</h4><div id="qb-heatmap"></div>';
+        html += '<div class="qb-recap-today">' + escHTML(T("today_count", {n: (loadActivity()[todayKey()] | 0)})) + '</div>';
+      }
+      el.innerHTML = html;
+      if (!IS_SPECIAL) renderHeatmap(document.getElementById("qb-heatmap"));
+      maybeAppendCompare(el); // 登录且有历史才补一行，静默失败
+      const overlay = document.getElementById("qb-recap");
+      if (overlay) overlay.hidden = false;
+    }
+    function closeRecap(){ const overlay = document.getElementById("qb-recap"); if (overlay) overlay.hidden = true; }
+    // P15 渲染：最近 17 周 GitHub 式格子（列=周、行=7 天），无外部依赖
+    function renderHeatmap(box){
+      if (!box) return;
+      const map = loadActivity();
+      const today = new Date(); today.setHours(0,0,0,0);
+      const start = new Date(today); start.setDate(start.getDate() - (7 * 16 + today.getDay())); // 对齐周日起
+      const frag = document.createDocumentFragment();
+      const grid = document.createElement("div"); grid.className = "qb-hm-grid";
+      for (let d = new Date(start); d <= today; d.setDate(d.getDate() + 1)){
+        const p = n => String(n).padStart(2, "0");
+        const key = d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
+        const v = map[key] | 0;
+        const lv = v === 0 ? 0 : v < 10 ? 1 : v < 25 ? 2 : v < 50 ? 3 : 4;
+        const cell = document.createElement("span");
+        cell.className = "qb-hm-cell lv" + lv;
+        cell.title = key + " · " + v;
+        grid.appendChild(cell);
+      }
+      frag.appendChild(grid); box.innerHTML = ""; box.appendChild(frag);
+    }
+    // P11 与上次存档对比（登录 + 云端反馈可用才显示；排除本轮自己的自动存档；静默失败）
+    function maybeAppendCompare(container){
+      try{
+        if (IS_SPECIAL || !UI_FEATURES.feedback || !isLoggedIn() || !sessionLog.length) return;
+        fetch(QB_API_BASE + "/history", { headers: authHeaders() }).then(r => r.ok ? r.json() : null).then(data => {
+          const list = (data && data.items) || [];
+          const prev = list.find(s => s && s.bank_id === STORAGE_NS && String(s.id) !== String(SESSION_ID) && s.score && s.score.answered);
+          if (!prev) return;
+          const pAcc = Math.round(prev.score.correct / Math.max(1, prev.score.answered) * 100);
+          const n = sessionLog.length, ok = sessionLog.filter(x => x.ok).length;
+          const now = Math.round(ok / Math.max(1, n) * 100);
+          const div = document.createElement("div");
+          div.className = "qb-recap-compare";
+          div.textContent = T("compare_last", {prev: pAcc, now: now});
+          container.appendChild(div);
+        }).catch(()=>{});
+      }catch(e){}
+    }
+
+    // P17 自设今日目标（endowed progress：当天已答自动计入；全局 key，跨库共享；IS_SPECIAL 隐藏入口）
+    function loadGoal(){ try{ const g = JSON.parse(localStorage.getItem("qb_daily_goal_v1") || "{}"); return (g && g.n > 0) ? g : null; }catch(e){ return null; } }
+    function toggleGoalPop(){
+      if (IS_SPECIAL) return;
+      const p = document.getElementById("qb-goal-pop"); if (!p) return;
+      if (!p.hidden){ p.hidden = true; return; }
+      const g = loadGoal();
+      const inp = document.getElementById("qb-goal-n"); if (inp) inp.value = g ? g.n : 20;
+      p.hidden = false;
+    }
+    function saveGoal(){
+      const inp = document.getElementById("qb-goal-n");
+      const n = parseInt(inp && inp.value, 10);
+      if (n > 0){
+        const old = loadGoal() || {};
+        try{ localStorage.setItem("qb_daily_goal_v1", JSON.stringify({n: n, done: old.done || ""})); }catch(e){}
+      }
+      const p = document.getElementById("qb-goal-pop"); if (p) p.hidden = true;
+      updateGoalUI();
+    }
+    function clearGoal(){
+      try{ localStorage.removeItem("qb_daily_goal_v1"); }catch(e){}
+      const p = document.getElementById("qb-goal-pop"); if (p) p.hidden = true;
+      updateGoalUI();
+    }
+    function updateGoalUI(){
+      const txt = document.getElementById("qp-goal-txt"); const btn = document.getElementById("qp-goal");
+      if (!txt || !btn) return;
+      if (IS_SPECIAL){ btn.hidden = true; return; }
+      const g = loadGoal();
+      if (!g){ txt.textContent = ""; btn.title = T("goal_set"); return; }
+      const cur = loadActivity()[todayKey()] | 0;
+      txt.textContent = " " + Math.min(cur, g.n) + "/" + g.n;
+      btn.title = T("goal_progress", {cur: cur, n: g.n});
+      if (cur >= g.n && g.done !== todayKey()){ // 达标庆祝：同一天只弹一次（done 记当天日期）
+        g.done = todayKey();
+        try{ localStorage.setItem("qb_daily_goal_v1", JSON.stringify(g)); }catch(e){}
+        qbToast("🎯 " + escHTML(T("goal_done")));
+      }
+    }
+    function onActivityBumped(){ updateGoalUI(); } // P15 bumpActivityDay 的挂点（批次 2 已用 typeof 守卫调用）
+
+    // P9 小屏筛选 popover：镜像 btn-wrong / btn-star / btn-back 的文案与禁用态（不改 updateButtons 本身）
+    function toggleQpFilter(){
+      const p = document.getElementById("qb-filter-pop"); if (!p) return;
+      if (!p.hidden){ p.hidden = true; return; }
+      p.innerHTML = "";
+      [["btn-wrong", showWrongOnly], ["btn-star", showStarOnly], ["btn-back", showAll]].forEach(([srcId, fn]) => {
+        const src = document.getElementById(srcId); if (!src) return;
+        const b = document.createElement("button");
+        b.type = "button"; b.className = "btn";
+        b.textContent = src.textContent;
+        b.disabled = !!src.disabled;
+        b.onclick = () => { p.hidden = true; fn(); };
+        p.appendChild(b);
+      });
+      p.hidden = false;
+    }
+
     applyUiFeatures(); // 先按构建开关裁剪 UI（语言白名单/反馈/教程），再渲染文案
     applyUiLang(); // 先按保存的语言偏好渲染静态文案（默认英文）
     applyThemeIcon();
+    applyMotion(); // P6 动效开关：设置 html[data-motion] + 按钮 title/aria-label
     bootstrapLegacyBank();
   </script>
 
