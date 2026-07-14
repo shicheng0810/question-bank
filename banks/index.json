@@ -1,5 +1,15 @@
 [
   {
+    "id": "239-airframe-elec",
+    "title": "Aircraft Electrical",
+    "mode": "public",
+    "description": "",
+    "tags": [],
+    "question_count": 34,
+    "has_images": true,
+    "json": "banks/239-airframe-elec.json"
+  },
+  {
     "id": "205-finishes",
     "title": "Finishes",
     "mode": "public",
@@ -28,16 +38,6 @@
     "question_count": 1139,
     "has_images": true,
     "json": "banks/general.json"
-  },
-  {
-    "id": "239-airframe-elec",
-    "title": "Aircraft Electrical",
-    "mode": "public",
-    "description": "",
-    "tags": [],
-    "question_count": 34,
-    "has_images": true,
-    "json": "banks/239-airframe-elec.json"
   },
   {
     "id": "all-banks",
