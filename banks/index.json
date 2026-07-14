@@ -17,6 +17,7 @@
     "tags": [],
     "question_count": 112,
     "has_images": false,
+    "archived": true,
     "json": "banks/205-finishes.json"
   },
   {
@@ -27,6 +28,7 @@
     "tags": [],
     "question_count": 29,
     "has_images": false,
+    "archived": true,
     "json": "banks/215-helicopter.json"
   },
   {

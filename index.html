@@ -104,6 +104,14 @@
     button.pill{cursor:pointer; font:inherit}
     .go{display:inline-flex; align-items:center; gap:6px; margin-top:14px; color:var(--brand); font-weight:700; font-size:14px}
     .card:hover .go{gap:9px}
+    /* Old Question Banks：默认折叠的旧库分组，样式低调 */
+    .old-banks{margin-top:20px}
+    .old-banks>summary{cursor:pointer; color:var(--muted); font-size:14px; font-weight:650; padding:8px 2px; list-style:none; user-select:none}
+    .old-banks>summary::-webkit-details-marker{display:none}
+    .old-banks>summary::before{content:"▸"; display:inline-block; margin-right:8px; transition:transform .15s}
+    .old-banks[open]>summary::before{transform:rotate(90deg)}
+    .old-banks>summary:hover{color:var(--ink-soft)}
+    .old-banks .grid{margin-top:12px}
     input[type=file]{font:inherit; font-size:13px; color:var(--muted)}
     /* 登录 / 做题历史 */
     #account-btn{height:36px; padding:0 12px; border-radius:10px; border:1px solid var(--border-strong); background:var(--card); color:var(--ink); font-size:13px; font-weight:650; cursor:pointer; display:inline-flex; align-items:center; gap:6px; box-shadow:var(--shadow-sm); max-width:260px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
@@ -192,6 +200,26 @@
       <span class="go" data-i18n="start">Start practicing →</span>
     </a>
 
+    <a class="card" href="player.html?bank=general" data-bank-id="general" data-testid="bank-card">
+      <div class="card-head">
+        <h2>General Question Banks</h2>
+        <span class="pill " data-i18n="badge_public">Public</span>
+      </div>
+      
+      <div class="meta-row">
+        <span class="pill muted" data-qcount="1139">1139 questions</span>
+        <span class="pill muted progress" data-progress-for="general" hidden></span>
+        
+      </div>
+      <span class="go" data-i18n="start">Start practicing →</span>
+    </a>
+  </div>
+  
+
+  <details class="old-banks" data-testid="old-banks">
+    <summary>Old Question Banks (2)</summary>
+    <div class="grid">
+
     <a class="card" href="player.html?bank=205-finishes" data-bank-id="205-finishes" data-testid="bank-card">
       <div class="card-head">
         <h2>Finishes</h2>
@@ -219,22 +247,8 @@
       </div>
       <span class="go" data-i18n="start">Start practicing →</span>
     </a>
-
-    <a class="card" href="player.html?bank=general" data-bank-id="general" data-testid="bank-card">
-      <div class="card-head">
-        <h2>General Question Banks</h2>
-        <span class="pill " data-i18n="badge_public">Public</span>
-      </div>
-      
-      <div class="meta-row">
-        <span class="pill muted" data-qcount="1139">1139 questions</span>
-        <span class="pill muted progress" data-progress-for="general" hidden></span>
-        
-      </div>
-      <span class="go" data-i18n="start">Start practicing →</span>
-    </a>
-  </div>
-  
+    </div>
+  </details>
 
   <div class="grid" id="local-grid" data-testid="local-grid" style="margin-top:14px"></div>
 
