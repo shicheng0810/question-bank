@@ -30,13 +30,23 @@
     "json": "banks/general.json"
   },
   {
+    "id": "239-airframe-elec",
+    "title": "Aircraft Electrical",
+    "mode": "public",
+    "description": "",
+    "tags": [],
+    "question_count": 34,
+    "has_images": true,
+    "json": "banks/239-airframe-elec.json"
+  },
+  {
     "id": "all-banks",
     "title": "All Banks · Merged Practice",
     "mode": "public",
     "virtual": true,
     "description": "Pick any combination of banks and practice them together.",
     "tags": [],
-    "question_count": 1280,
+    "question_count": 1306,
     "has_images": true
   }
 ]
