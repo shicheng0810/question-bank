@@ -1,0 +1,457 @@
+[
+  {
+    "id": "quiz_201_composite-1",
+    "question": "When repairing large, flat surfaces with polyester resins, warping of the surface is likely to occur. One method of reducing the amount of warpage is to",
+    "choices": [
+      "add an extra amount of catalyst to the resin.",
+      "use less catalyst than normal so the repair will be more flexible.",
+      "use short strips of fiberglass in the bonded repair."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT201 – Quiz – Composite – Q1"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-2",
+    "question": "Superficial scars, scratches, surface abrasion, or rain erosion on fiberglass laminates can generally be repaired by applying",
+    "choices": [
+      "one or more coats of suitable resin (room temperature catalyzed) to the surface.",
+      "a piece of resin impregnated glass fabric facing.",
+      "a sheet of polyethylene over the abraded surface and one or more coats of resin cured with infrared heat lamps."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT201 – Quiz – Composite – Q2"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-3",
+    "question": "Fiberglass laminate damage not exceeding the first layer of ply can be repaired by",
+    "choices": [
+      "sanding the damaged area until aerodynamic smoothness is obtained.",
+      "filling with a putty consisting of a compatible resin and clean, short glass fibers.",
+      "trimming the rough edges and sealing with paint."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT201 – Quiz – Composite – Q3"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-4",
+    "question": "Composite fabric material is considered to be the strongest in what direction?",
+    "choices": [
+      "Fill.",
+      "Bias.",
+      "Warp."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT201 – Quiz – Composite – Q4"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-5",
+    "question": "When making repairs to fiberglass, cleaning of the area to be repaired is essential for a good bond. The final cleaning should be made using",
+    "choices": [
+      "a thixotropic agent.",
+      "soap, water, and a scrub brush.",
+      "MEK"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT201 – Quiz – Composite – Q5"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-6",
+    "question": "Repairing advanced composites using materials and techniques traditionally used for fiberglass repairs is likely to result in",
+    "choices": [
+      "an unairworthy repair.",
+      "restored strength and flexibility.",
+      "improved wear resistance to the structure."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT201 – Quiz – Composite – Q6"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-7",
+    "question": "Which fiber to resin (percent) ratio for advanced composite wet lay-ups is generally considered the best for strength?",
+    "choices": [
+      "60:40",
+      "40:60",
+      "50:50"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT201 – Quiz – Composite – Q7"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-8",
+    "question": "Hole filling fasteners (for example, MS20470 rivets) should not be used in composite structures primarily because of the",
+    "choices": [
+      "possibility of causing delamination.",
+      "increased possibility of fretting corrosion in the fastener.",
+      "difficulty in forming a proper shop head."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT201 – Quiz – Composite – Q8"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-9",
+    "question": "The classification for fiberglass reinforcement material that has high resistivity and is the most common is",
+    "choices": [
+      "S",
+      "G",
+      "E"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT201 – Quiz – Composite – Q9"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-10",
+    "question": "What reference tool is used to determine how the fiber is to be oriented for a particular ply of fabric?",
+    "choices": [
+      "Fill clock (or compass)",
+      "Warp clock (or compass).",
+      "Bias clock (or compass)"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT201 – Quiz – Composite – Q10"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-11",
+    "question": "What is the material layer used within the vacuum bag pressure system to absorb excess resin during curing called?",
+    "choices": [
+      "Release.",
+      "Breather.",
+      "Bleeder."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT201 – Quiz – Composite – Q11"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-12",
+    "question": "Which of the following are generally characteristic of aramid fiber (Kevlar) composites?\n1. High tensile strength.\n2. Flexibility.\n3. Stiffness.\n4. Corrosive effect in contact with aluminum.\n5. Ability to conduct electricity.",
+    "choices": [
+      "1, 3, and 5.",
+      "1 and 2.",
+      "2, 3, and 4."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT201 – Quiz – Composite – Q12"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-13",
+    "question": "Which of these methods may be used to inspect fiberglass/honeycomb structures for entrapped water?\n1. Acoustic emission monitoring.\n2. X-ray\n3. Backlighting.",
+    "choices": [
+      "2 and 3.",
+      "1 and 2.",
+      "1 and 3."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT201 – Quiz – Composite – Q13"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-14",
+    "question": "Metal fasteners used with carbon/graphite composites structures",
+    "choices": [
+      "must be constructed of high strength aluminum-lithium alloy.",
+      "may be constructed of any of the metals commonly used in aircraft fasteners.",
+      "must be constructed of material such as titanium or corrosion resistant steel."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT201 – Quiz – Composite – Q14"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-15",
+    "question": "(1) When performing a ring (coin tap) test on composite structures, a change in sound may be due to damage or to transition to a different internal structure.\n(2) The extent of separation damage in composite structures is most accurately measured by a ring (coin tap) test.",
+    "choices": [
+      "both No. 1 and No. 2 are true.",
+      "only No. 1 is true.",
+      "only No. 2 is true."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT201 – Quiz – Composite – Q15"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-16",
+    "question": "What precaution, if any, should be taken to prevent corrosion inside a repaired metal honeycomb structure?",
+    "choices": [
+      "none. Honeycomb is usually made from a man made or fibrous material which is not susceptible to corrosion.",
+      "Paint the outside area with several coats of exterior paint.",
+      "Prime the repair with a corrosion inhibitor and seal from the atmosphere."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT201 – Quiz – Composite – Q16"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-17",
+    "question": "Proper pre-preg composite lay-up curing is generally accomplished by 1. applying external heat. 2. room temperature exposure. 3. adding a catalyst or curing agent to the resin. 4. applying pressure.",
+    "choices": [
+      "1 and 4.",
+      "2 and 3.",
+      "1, 3, and 4."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT201 – Quiz – Composite – Q17"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-18",
+    "question": "When inspecting a composite panel using the ring test/tapping method, a dull thud may indicate",
+    "choices": [
+      "less than full strength curing of the matrix.",
+      "an are of too much matrix between fiber layers.",
+      "separation of the laminates."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT201 – Quiz – Composite – Q18"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-19",
+    "question": "When necessary, what type of cutting fluid is usually acceptable for machining composite laminates?",
+    "choices": [
+      "Water soluble oil.",
+      "Water only.",
+      "Water displacing oil."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT201 – Quiz – Composite – Q19"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-20",
+    "question": "Fiberglass damage that extends completely through a laminated sandwich structure",
+    "choices": [
+      "may be filled with putty which is compatible with resin.",
+      "may be repaired.",
+      "must be filled with resin to eliminate dangerous stress concentrations."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT201 – Quiz – Composite – Q20"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-21",
+    "question": "One method of inspection a laminated fiberglass structure that has been subjected to damage is to",
+    "choices": [
+      "strip the damaged area of all paint and shine a strong light through the structure.",
+      "use dye penetrant inspection procedures, exposing the entire damaged area to the penetrant matrix.",
+      "use an eddy current probe on both sides of the damaged area."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT201 – Quiz – Composite – Q21"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-22",
+    "question": "Which of the following, when added to wet resins, provide strength for the repair of damaged fastener holes in composite panels?\n1. Microballoons\n2. Flox\n3. Chopped fibers",
+    "choices": [
+      "2 and 3",
+      "1 and 3",
+      "1, 2, and 3"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT201 – Quiz – Composite – Q22"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-23",
+    "question": "One of the best ways to assure that a properly prepared batch of matrix resin has been achieved is to",
+    "choices": [
+      "have mixed enough for a test sample.",
+      "perform a chemical composition analysis.",
+      "test the viscosity of the resin immediately after mixing."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT201 – Quiz – Composite – Q23"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-24",
+    "question": "The part of a replacement honeycomb core that must line up with the adjacent original is the",
+    "choices": [
+      "cell side.",
+      "ribbon direction.",
+      "cell edge."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT201 – Quiz – Composite – Q24"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-25",
+    "question": "Composite inspections conducted by means of acoustic emission monitoring",
+    "choices": [
+      "create sonogram pictures of the areas being inspected.",
+      "analyze ultrasonic signals transmitted into the parts being inspected.",
+      "pick up the \"noise\" of corrosion or other deterioration occurring."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT201 – Quiz – Composite – Q25"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-26",
+    "question": "Which of the following are generally characteristic of carbon/graphite fiber composites?\n1. Flexibility.\n2. Stiffness.\n3. High compressive strength.\n4. Corrosive effect in contact with aluminum.\n5. Ability to conduct electricity.",
+    "choices": [
+      "1, 3, and 5",
+      "2, 3, and 4",
+      "1 and 3"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT201 – Quiz – Composite – Q26"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-27",
+    "question": "A category of plastic material that is capable of softening or flowing when reheated is described as a",
+    "choices": [
+      "thermocure.",
+      "thermoset.",
+      "thermoplastic."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT201 – Quiz – Composite – Q27"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-28",
+    "question": "Sandwich panels made of metal honeycomb construction are used on modern aircraft because this type of construction",
+    "choices": [
+      "may be repaired by gluing replacement skin to the inner core material with thermoplastic resin.",
+      "has a high strength to weight ratio.",
+      "is lighter than single sheet skin of the same strength."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT201 – Quiz – Composite – Q28"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-29",
+    "question": "How many of the following are benefits of using microballoons when making repairs to laminated honeycomb panels.\n1. Greater concentrations of resin in edges and corners.\n2. Improved strength to weight ratio.\n3. Less density.\n4. Lower stress concentrations.",
+    "choices": [
+      "1, 3, and 4.",
+      "2, 3, and 4",
+      "1, 2, and 4."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT201 – Quiz – Composite – Q29"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-30",
+    "question": "The length of time that a catalyzed resin will remain in a workable state is called the",
+    "choices": [
+      "pot life.",
+      "service life.",
+      "shelf life."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT201 – Quiz – Composite – Q30"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-31",
+    "question": "The classification for high tensile strength fiberglass used in aircraft structures is",
+    "choices": [
+      "G",
+      "E",
+      "S"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT201 – Quiz – Composite – Q31"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-32",
+    "question": "A potted compound repair on honeycomb can usually be made on damages less than",
+    "choices": [
+      "4 inch in diameter",
+      "2 inch in diameter",
+      "1 inch in diameter"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT201 – Quiz – Composite – Q32"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-33",
+    "question": "Fiberglass laminate damage that extends completely through one facing and into the core",
+    "choices": [
+      "requires the replacement of the damaged core and facing.",
+      "cannot be repaired.",
+      "can be repaired by using a typical metal facing patch."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT201 – Quiz – Composite – Q33"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-34",
+    "question": "The preferred way to make permanent repairs on composites is by",
+    "choices": [
+      "riveting on metal or cured composite patches.",
+      "laminating on new repair plies.",
+      "bonding on metal or cured composite patches."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT201 – Quiz – Composite – Q34"
+    ]
+  },
+  {
+    "id": "quiz_201_composite-35",
+    "question": "The strength and stiffness of a properly constructed composite buildup depends primarily on",
+    "choices": [
+      "the orientation of the plies to the load direction.",
+      "the ability of the fibers to transfer stress to the matrix.",
+      "a 60 percent matrix to 40 percent fiber ratio."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT201 – Quiz – Composite – Q35"
+    ]
+  }
+]
