@@ -43,13 +43,23 @@
     "json": "banks/general.json"
   },
   {
+    "id": "201-composite",
+    "title": "Composite",
+    "mode": "public",
+    "description": "",
+    "tags": [],
+    "question_count": 35,
+    "has_images": false,
+    "json": "banks/201-composite.json"
+  },
+  {
     "id": "all-banks",
     "title": "All Banks · Merged Practice",
     "mode": "public",
     "virtual": true,
     "description": "Pick any combination of banks and practice them together.",
     "tags": [],
-    "question_count": 1306,
+    "question_count": 1341,
     "has_images": true
   }
 ]
