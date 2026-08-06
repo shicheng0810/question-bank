@@ -182,6 +182,18 @@
     .wrong{display:block; color:var(--danger-ink); background:var(--danger-bg); border:1px solid var(--danger-border); padding:11px 13px; border-radius:var(--radius-xs); font-weight:650}
     /* 题目解析：提交并显示答案后出现，与正确答案同一「揭示」动作里一起显示 */
     .qb-explain{margin-top:10px; padding:11px 13px; background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-xs); color:var(--ink); line-height:1.65; font-size:.95em; white-space:pre-wrap}
+    /* Section 分组 + 阅读文章：每个 section 的第一题前插入，像雅思一样先给文章再作答 */
+    .qb-section{margin:26px 0 10px}
+    .qb-section:first-child{margin-top:4px}
+    .qb-section-title{font-weight:700; font-size:1.08em; color:var(--ink); margin-bottom:8px; padding-bottom:7px; border-bottom:2px solid var(--brand)}
+    .qb-passage-wrap{background:var(--card,#fff); border:1px solid var(--border); border-radius:var(--radius-xs); padding:0 14px}
+    .qb-passage-wrap>summary{cursor:pointer; padding:12px 0; font-weight:650; color:var(--muted); list-style:none}
+    .qb-passage-wrap>summary::-webkit-details-marker{display:none}
+    .qb-passage-wrap>summary::before{content:"📖 "}
+    .qb-passage-wrap[open]>summary{border-bottom:1px solid var(--border); margin-bottom:2px}
+    .qb-passage{padding:10px 0 15px; line-height:1.8; color:var(--ink)}
+    .qb-passage p{margin:0 0 12px}
+    .qb-passage p:last-child{margin-bottom:0}
 
     .keys-panel{margin-top:12px; padding:12px 14px; border:1px dashed var(--border-strong); border-radius:var(--radius-xs); background:var(--card-2); display:none}
     .keys-title{font-weight:700; margin-bottom:6px; color:var(--ink)}
@@ -794,6 +806,7 @@
         submit: "Submit Answer", submitted: "Submitted", redo: "Redo",
         remove_wrong: "Remove from wrong",
         show_keys: "Show Correct Answers", hide_keys: "Hide Correct Answers",
+        reading_passage: "Reading Passage",
         essay_note: "(Essay question — not graded here)",
         correct_fb: "Correct!", wrong_fb: "Wrong",
         motion_full: "Animations: full", motion_reduced: "Animations: reduced", motion_off: "Animations: off",
@@ -889,6 +902,7 @@
         submit: "提交答案", submitted: "已提交", redo: "重做",
         remove_wrong: "移出错题",
         show_keys: "显示参考答案", hide_keys: "收起参考答案",
+        reading_passage: "阅读文章",
         essay_note: "（问答题：此页面不判分）",
         correct_fb: "正确！", wrong_fb: "错误",
         motion_full: "动效：完整", motion_reduced: "动效：精简", motion_off: "动效：关闭",
@@ -984,6 +998,7 @@
         submit: "Enviar respuesta", submitted: "Enviado", redo: "Rehacer",
         remove_wrong: "Quitar de errores",
         show_keys: "Mostrar respuestas", hide_keys: "Ocultar respuestas",
+        reading_passage: "Texto de lectura",
         essay_note: "(Pregunta de ensayo — no se califica aquí)",
         correct_fb: "¡Correcto!", wrong_fb: "Incorrecto",
         motion_full: "Animaciones: completas", motion_reduced: "Animaciones: reducidas", motion_off: "Animaciones: desactivadas",
@@ -1784,6 +1799,20 @@
       const q = getQ(qId);
       if (q) hydrateOne(q);
     }
+    // 雅思式 section 头：section 名 + 可折叠阅读文章（默认展开）。文章按空行分段、逐段转义。
+    function sectionHeaderHTML(q){
+      const name = escHTML(String(q.section || ""));
+      let passageHtml = "";
+      const p = q.passage;
+      if (p && String(p).trim()){
+        const paras = String(p).split(/\n{2,}/)
+          .map(seg => seg.trim()).filter(Boolean)
+          .map(seg => `<p>${escHTML(seg).replace(/\n/g, "<br>")}</p>`).join("");
+        passageHtml = `<details class="qb-passage-wrap" open><summary>${escHTML(T('reading_passage'))}</summary><div class="qb-passage">${paras}</div></details>`;
+      }
+      return `<div class="qb-section" data-testid="qb-section"><div class="qb-section-title">${name}</div>${passageHtml}</div>`;
+    }
+
     function render(questions){
       currentQuestions=questions;
       kbIndex = -1; // P8 列表重建后旧键盘焦点索引失效，重置（下次 j/k 从视口重新定位）
@@ -1801,10 +1830,17 @@
         html+=`<div class="toolbar"><button class="btn" onclick="clearCurrentSelections()">${T('clear_choices')}</button>${bulkBtn}${viewMode==='wrong'?`<span id="qb-wrong-remaining" class="qb-remaining"></span>`:""}</div>`;
       }
 
+      let __prevSection = null;
       for(let i=0;i<questions.length;i++){
         const q=questions[i];
         const isStar = starred.has(q.id);
         const st = ensureState(q);
+
+        // section 边界：换 section 时先插入「篇名 + 阅读文章」头（乱序/筛选视图下自然按当前顺序分组）
+        if (q.section && q.section !== __prevSection){
+          html += sectionHeaderHTML(q);
+          __prevSection = q.section;
+        }
 
         const showKeyBtn = !isEssay(q)
           ? `<button class="btn" id="keysbtn-${q.id}" onclick="toggleKeys('${q.id}')" style="display:${st.submitted ? 'block' : 'none'}">
@@ -2646,10 +2682,26 @@
         if(!banks.length) return true;
         return prefixes.some(p=>banks.includes(p));
       });
-      shuffle(subset);
+      // 带 section 的题库（雅思阅读等）：保持原顺序 —— 每篇文章与它的题目必须成组、按篇顺序作答，
+      // 打乱会把题目从对应文章上扯开。无 section 的普通题库照旧随机打乱。
+      if (subset.some(q => q && q.section)) {
+        subset.sort((a, b) => sectionSortIndex(a) - sectionSortIndex(b));
+      } else {
+        shuffle(subset);
+      }
       baseQuestions = subset.slice();
       render(baseQuestions);
       updateButtons();
+    }
+    // 稳定的原始次序键：按题目在 QUESTION_BANK 里的下标排序，还原「文章分组 + 篇内原序」。
+    let __qbIndexCache = null;
+    function sectionSortIndex(q){
+      if (!__qbIndexCache || __qbIndexCache.size !== QUESTION_BANK.length){
+        __qbIndexCache = new Map();
+        for (let i = 0; i < QUESTION_BANK.length; i++) __qbIndexCache.set(QUESTION_BANK[i], i);
+      }
+      const v = __qbIndexCache.get(q);
+      return v === undefined ? Number.MAX_SAFE_INTEGER : v;
     }
 
     // P10 欢迎回来横幅（每次页面加载至多一次；恢复流程进行中不打扰）
