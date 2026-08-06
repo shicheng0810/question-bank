@@ -180,6 +180,8 @@
     .feedback.visible{display:block}
     .correct{display:block; color:var(--success-ink); background:var(--success-bg); border:1px solid var(--success-border); padding:11px 13px; border-radius:var(--radius-xs); font-weight:650}
     .wrong{display:block; color:var(--danger-ink); background:var(--danger-bg); border:1px solid var(--danger-border); padding:11px 13px; border-radius:var(--radius-xs); font-weight:650}
+    /* 题目解析：提交并显示答案后出现，与正确答案同一「揭示」动作里一起显示 */
+    .qb-explain{margin-top:10px; padding:11px 13px; background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-xs); color:var(--ink); line-height:1.65; font-size:.95em; white-space:pre-wrap}
 
     .keys-panel{margin-top:12px; padding:12px 14px; border:1px dashed var(--border-strong); border-radius:var(--radius-xs); background:var(--card-2); display:none}
     .keys-title{font-weight:700; margin-bottom:6px; color:var(--ink)}
@@ -1843,6 +1845,8 @@
 
           <div class="keys-panel" id="keys-${q.id}" style="display:${(st.submitted && st.showKeys && isFill(q)) ? "block" : "none"}"></div>
 
+          <div class="qb-explain" id="explain-${q.id}" style="display:none"></div>
+
           <div class="meta" style="display:flex;justify-content:space-between;align-items:center;gap:10px">
             <span>${renderSource(q)}</span>
             ${(UI_FEATURES.feedback && !IS_PRIVATE_BANK && !IS_SPECIAL) ? `<button class="qb-report-btn" type="button" onclick="openReportModal('${q.id}',${i+1})" title="${T('fb_report_title')}">${T('fb_report_btn')}</button>` : ""}
@@ -2028,6 +2032,22 @@
       maybeAutoSubmit(qId);
     }
 
+    // 题目解析：只在「已提交且已显示答案」时渲染（与正确答案同一揭示门 showKeys，避免提前泄题）。
+    function syncExplain(qId){
+      const q = getQ(qId); if(!q) return;
+      const st = ensureState(q);
+      const el = document.getElementById(`explain-${qId}`);
+      if(!el) return;
+      const ex = q.explanation;
+      if(st.submitted && st.showKeys && ex && String(ex).trim()){
+        el.innerHTML = '💡 ' + escHTML(String(ex));
+        el.style.display = 'block';
+      } else {
+        el.innerHTML = '';
+        el.style.display = 'none';
+      }
+    }
+
     function syncQuestionUI(qId){
       const q = getQ(qId);
       if(!q) return;
@@ -2040,6 +2060,7 @@
         fb.innerHTML = st.feedbackHTML || '';
         fb.classList.toggle('visible', !!st.feedbackHTML || !!st.submitted);
       }
+      syncExplain(qId);
 
       const sub=document.getElementById(`submit-${qId}`);
       if(sub){
@@ -2207,12 +2228,14 @@
 
       if (isFill(q)) {
         const panel = document.getElementById(`keys-${qId}`);
-        if (!panel) return;
-        panel.style.display = st.showKeys ? "block" : "none";
-        if (st.showKeys) renderKeysPanel(qId);
+        if (panel) {
+          panel.style.display = st.showKeys ? "block" : "none";
+          if (st.showKeys) renderKeysPanel(qId);
+        }
       } else {
         renderAnswerArea(q, st);
       }
+      syncExplain(qId);
     }
 
     function renderKeysPanel(qId){
