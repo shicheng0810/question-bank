@@ -1394,6 +1394,14 @@
       return Array.from(new Set(out.filter(Boolean)));
     }
 
+    // 筛选面板的分类键：题目带 section（如雅思阅读的每篇文章）时按 section 分类，
+    // 否则退回按题库前缀（getBanks）。section 键加 "§" 前缀，避免与题库前缀撞车。
+    const SECTION_KEY_PREFIX = "§";
+    function filterCategoriesOf(q){
+      if(q && q.section) return [SECTION_KEY_PREFIX + String(q.section)];
+      return getBanks(q);
+    }
+
     // \u9898\u5e72\u5e26 HTML \u6807\u8bb0\u65f6\uff0c\u4ec5\u6309"\u7eaf\u6587\u672c"\u7b97 id \u2014\u2014 \u6807\u8bb0\uff08<b>/<span> \u7b49\uff09\u5728\u591a\u6b21\u53d1\u5e03\u95f4\u53d8\u52a8\u4e0d\u5e94
     // \u6539\u53d8 id\uff08\u5426\u5219\u8be5\u9898\u5386\u53f2\u65ad\u94fe\uff09\u3002\u4e0e\u5bfc\u51fa\u7aef normalizeTextForMerge(\u2192cleanHTMLString) \u5bf9\u9f50\uff1a\u53d6 textContent\u3002
     function stripHTMLForKey(s){
@@ -1724,17 +1732,18 @@
     }
 
     /* ---- 自动生成筛选（统一按前缀） ---- */
-    function prettifyPrefix(p){if(/^quiz\d+$/i.test(p))return p.replace(/quiz(\d+)/i,"Quiz $1");if(/^day\d+$/i.test(p))return p.replace(/day(\d+)/i,"Day $1");return p.replace(/_/g," ").replace(/\b\w/g,s=>s.toUpperCase())}
+    function prettifyPrefix(p){if(p&&p[0]===SECTION_KEY_PREFIX)return p.slice(1);if(/^quiz\d+$/i.test(p))return p.replace(/quiz(\d+)/i,"Quiz $1");if(/^day\d+$/i.test(p))return p.replace(/day(\d+)/i,"Day $1");return p.replace(/_/g," ").replace(/\b\w/g,s=>s.toUpperCase())}
     function deriveCategoriesFromQuestions(){
       const map=new Map();
       for(const q of QUESTION_BANK){
-        const banks = (Array.isArray(q.banks) && q.banks.length) ? q.banks : getBanks(q);
-        for(const prefix of banks){
-          if(!prefix || map.has(prefix)) continue;
-          map.set(prefix, prettifyPrefix(prefix));
+        for(const key of filterCategoriesOf(q)){
+          if(!key || map.has(key)) continue;
+          map.set(key, prettifyPrefix(key));
         }
       }
       const cats = Array.from(map,([id,label])=>({id,label}));
+      // 全是 section 分类（雅思等）：保持 QUESTION_BANK 插入顺序 = 篇章顺序，不按字母/课程码重排。
+      if(cats.length && cats.every(c=>c.id[0]===SECTION_KEY_PREFIX)) return cats;
       // Group filters by subject/course first (e.g. all 205 banks, then 215), then order
       // within each course. Course = the 3-digit code in the bank id (ass_7_205_Finishes -> 205).
       const courseOf=id=>{const m=String(id).match(/\d{3}/);return m?m[0]:"￿";};
@@ -2676,11 +2685,11 @@
       activeRandom150SourcePool=null;
       const prefixes=getSelectedPrefixes();
       const subset=QUESTION_BANK.filter(q=>{
-        const banks=(Array.isArray(q.banks)&&q.banks.length)?q.banks:getBanks(q);
-        // 无任何分类前缀的题目（如 AI 导入、id 不含“-”、手写库）永远显示——
+        const cats=filterCategoriesOf(q);
+        // 无任何分类（如 AI 导入、id 不含“-”、手写库）永远显示——
         // 否则它们不属于任何筛选项会被全部隐藏（"No questions match the current filters"）。
-        if(!banks.length) return true;
-        return prefixes.some(p=>banks.includes(p));
+        if(!cats.length) return true;
+        return prefixes.some(p=>cats.includes(p));
       });
       // 带 section 的题库（雅思阅读等）：保持原顺序 —— 每篇文章与它的题目必须成组、按篇顺序作答，
       // 打乱会把题目从对应文章上扯开。无 section 的普通题库照旧随机打乱。
