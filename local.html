@@ -781,6 +781,7 @@
         filter_summary: "Filter Question Banks",
         select_all: "Select All", select_none: "Select None", confirm: "Confirm",
         randomize: "Randomize + Reset",
+        retest: "Retest",
         back_all: "Back to All",
         auto_on: "Auto Submit: ON", auto_off: "Auto Submit: OFF",
         wrong_only: "Wrong Only ({n})", star_only: "Star Only ({n})",
@@ -877,6 +878,7 @@
         filter_summary: "筛选题库",
         select_all: "全选", select_none: "全不选", confirm: "确认",
         randomize: "打乱并重置",
+        retest: "重新测试",
         back_all: "返回全部",
         auto_on: "自动提交：开", auto_off: "自动提交：关",
         wrong_only: "只看错题（{n}）", star_only: "只看收藏（{n}）",
@@ -973,6 +975,7 @@
         filter_summary: "Filtrar bancos de preguntas",
         select_all: "Seleccionar todo", select_none: "Ninguno", confirm: "Confirmar",
         randomize: "Mezclar y reiniciar",
+        retest: "Repetir test",
         back_all: "Volver a todo",
         auto_on: "Envío automático: SÍ", auto_off: "Envío automático: NO",
         wrong_only: "Solo errores ({n})", star_only: "Solo favoritas ({n})",
@@ -1060,6 +1063,7 @@
       document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = T(el.getAttribute("data-i18n")); });
       try{ const _qf = document.getElementById("qp-filter"); if (_qf){ _qf.title = T("filters_label"); _qf.setAttribute("aria-label", T("filters_label")); } }catch(_e){} // P9 筛选按钮 a11y 文案随语言刷新
       try{ const _mb = document.getElementById("qb-menu-btn"); if (_mb){ _mb.title = T("menu_open"); _mb.setAttribute("aria-label", T("menu_open")); } }catch(_e){} // ☰ 菜单按钮 a11y 文案随语言刷新
+      updateRandomBtnLabel(); // section 库：随语言把「Randomize」标签刷成「Retest」（data-i18n 通用刷新会覆盖，故放其后）
       document.querySelectorAll("[data-i18n-placeholder]").forEach(el => { el.setAttribute("placeholder", T(el.getAttribute("data-i18n-placeholder"))); });
       const guideList = document.getElementById("guide-list");
       if (guideList){
@@ -1194,6 +1198,7 @@
     let attemptCountMap={};
     let answeredOnce=new Set();
     let uiState={}; // { qId: { selectedIndex, selectedSet, fillInputs, submitted, feedbackHTML, showKeys } }
+    let BANK_HAS_SECTIONS=false; // 带 section 的题库（雅思阅读等）：不打乱，「Randomize」按钮改叫「Retest」（=清空重做）
     let currentQuestions=[];
     let baseQuestions=[];
     let activeRandom150Questions=null;
@@ -2676,6 +2681,12 @@
 
     function confirmFilters(){ shuffleAndRender(); const panel=document.querySelector('details.filter-panel'); if(panel) panel.open=false; }
 
+    // section 库把「Randomize + Reset」按钮标签换成「Retest」（功能不变：shuffleAndRender 对 section 库本就只清空不打乱）。
+    function updateRandomBtnLabel(){
+      const btn=document.getElementById("btn-random");
+      if(btn) btn.textContent = T(BANK_HAS_SECTIONS ? "retest" : "randomize");
+    }
+
     function shuffleAndRender(){
       resetSessionScoreState();
       SESSION_ID = newSessionId(); // 每次重排 = 新一轮 = 一条新历史
@@ -2750,6 +2761,7 @@
       const deduped = dedupeQuestionBank(RAW_QUESTION_BANK);
       QUESTION_BANK = Array.isArray(deduped && deduped.bank) ? deduped.bank : [];
       ID_ALIAS = (deduped && deduped.alias) || {};
+      BANK_HAS_SECTIONS = QUESTION_BANK.some(q => q && q.section); // 决定按钮标签(Retest)与不打乱
 
       SESSION_START = Date.now(); sessionLog = []; // P11 会话跟踪：每次开新一轮（含 local.html 换库）重置
 
@@ -2787,6 +2799,7 @@
       autoSubmit = loadBool(AUTO_KEY, false);
 
       initFilters();
+      updateRandomBtnLabel(); // section 库→「Retest」；普通库→「Randomize + Reset」
       sanitizeSavedSets();
       updateAutoBtn();
       shuffleAndRender();
