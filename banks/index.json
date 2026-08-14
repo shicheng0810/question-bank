@@ -53,13 +53,23 @@
     "json": "banks/201-composite.json"
   },
   {
+    "id": "211-sheet-metal",
+    "title": "Sheet Metal",
+    "mode": "public",
+    "description": "",
+    "tags": [],
+    "question_count": 246,
+    "has_images": true,
+    "json": "banks/211-sheet-metal.json"
+  },
+  {
     "id": "all-banks",
     "title": "All Banks · Merged Practice",
     "mode": "public",
     "virtual": true,
     "description": "Pick any combination of banks and practice them together.",
     "tags": [],
-    "question_count": 1341,
+    "question_count": 1587,
     "has_images": true
   }
 ]
