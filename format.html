@@ -25,58 +25,62 @@
     .copybtn{background:var(--brand);color:#fff;border:none;border-radius:6px;padding:7px 13px;font-weight:600;cursor:pointer;font-size:13px}
     .copybtn:hover{background:#1d4ed8}
     kbd{background:#fff;border:1px solid var(--border);border-radius:4px;padding:0 5px;font-size:12px}
+    .xlink{display:block;background:#fff;border:1px solid var(--border);border-left:4px solid var(--brand);border-radius:8px;padding:12px 14px;margin:16px 0;text-decoration:none;color:inherit}
+    .xlink:hover{border-color:var(--brand)}
+    .xlink strong{color:var(--brand)}
   </style>
 </head>
 <body>
   <a class="back" href="./">← Back to catalog / 返回目录</a>
   <h1>Question Bank JSON Format <span class="muted">/ 题库 JSON 格式说明</span></h1>
-  <p class="muted">Write your own bank as a <code>.json</code> file (UTF-8), then use “Import your own bank” on the catalog page to practice it — nothing is uploaded; it stays in your browser.</p>
+  <p class="muted">Write your own bank as a <code>.json</code> file (UTF-8) and import it on the catalog page — or skip the file entirely and <strong>paste an AI’s reply straight into the catalog’s “📋 Paste the AI’s reply” box</strong>. Nothing is uploaded; it stays in your browser. <span>/ 可以写成 <code>.json</code> 文件导入，也可以完全不碰文件——<strong>把 AI 的回复直接粘进目录页的「📋 直接粘贴 AI 的回复」</strong>。内容不上传，只存在你的浏览器里。</span></p>
 
   <div class="callout" id="ai">
     <h2>🤖 Using an AI to extract questions? <span class="muted">/ 用 AI 提取题目？</span></h2>
-    <p style="margin:0 0 8px">Turn your own course material into a bank in 3 steps — works with cheap / free AIs (Gemini, etc.). <span class="muted">/ 三步把你自己的材料变成题库，便宜/免费 AI（Gemini 等）也能用。</span></p>
+    <p style="margin:0 0 8px"><strong>No paid plan, no file download needed.</strong> Free ChatGPT / Gemini can do this — you just copy their reply. <span class="muted">/ <strong>不需要付费、不需要下载文件</strong>，免费版 ChatGPT / Gemini 就够——把它的回复复制过来即可。</span></p>
     <ol style="margin:0 0 10px;padding-left:20px;line-height:1.75">
       <li><strong>Copy</strong> the prompt below. <span class="muted">/ 复制下面的提示词。</span></li>
       <li>Paste it into the AI, then <strong>put your questions (or attach screenshots) right after the <code>=== MATERIAL ===</code> line</strong> at the very end. <span class="muted">/ 粘进 AI，再把你的题目（或贴截图）接在最后那行 <code>=== MATERIAL ===</code> 后面。</span></li>
-      <li><strong>Download the <kbd>bank.json</kbd> file</strong> the AI gives you (a file holds more than a chat reply, so long banks don’t get cut off) → use “Import your own bank” above. <span class="muted">/ <strong>下载 AI 给的 <kbd>bank.json</kbd> 文件</strong>（文件比聊天回复装得多，长题库不会被截断）→ 用上面的「Import your own bank」导入。</span></li>
+      <li><strong>Select the AI’s whole reply, copy it</strong>, and paste it into <strong>“📋 No file? Paste the AI’s reply instead”</strong> on the catalog page. No saving, no <kbd>.json</kbd> file, works on a phone. <span class="muted">/ <strong>把 AI 的整段回复选中复制</strong>，粘进目录页的<strong>「📋 没有文件？直接粘贴 AI 的回复」</strong>。不用存文件、不用弄 <kbd>.json</kbd>，手机上也行。</span></li>
+      <li>The prompt makes the AI stop every 15 questions and print <code>MORE AVAILABLE</code>. Type <strong>more</strong>, then paste that batch too with <strong>“add to the same bank”</strong> ticked. Repeat until it prints <code>DONE</code>. <span class="muted">/ 提示词会让 AI 每 15 题停一次并打印 <code>MORE AVAILABLE</code>。回一句 <strong>more</strong>，把这批也粘进去（勾上<strong>「并入同名题库」</strong>），直到它打印 <code>DONE</code>。</span></li>
     </ol>
+    <p class="muted" style="margin:0 0 10px">Why batches: a free account’s reply gets cut off partway through a long bank. Fifteen at a time never hits the limit — and if one does get cut off, the importer still recovers every complete question and tells you to ask for the rest. <span>/ 为什么分批：免费账号的回复在长题库上会被截断。每次 15 题不会触顶；万一还是被截断，导入器也会把已完整的题全部抢救出来并提示你去要剩下的。</span></p>
     <p class="muted" style="margin:0 0 10px">Tip: cheap models read <strong>pasted text and screenshots</strong> far better than a raw saved <kbd>.mhtml</kbd> (those are huge and encoded — that’s usually why an AI just echoes the prompt back). Open the page and copy the visible questions, or screenshot them. <span>/ 提示：便宜模型对<strong>粘贴的文字、截图</strong>的识别远好于直接丢原始 .mhtml（又大又是编码——AI 复读提示词多半就是这个原因）。打开网页复制可见题目，或截图即可。</span></p>
     <button class="copybtn" type="button" onclick="(function(b){navigator.clipboard.writeText(document.getElementById('ai-prompt').textContent).then(function(){var o=b.getAttribute('data-label');b.textContent='Copied \u2713';setTimeout(function(){b.textContent=o;},1500);});})(this)" data-label="Copy prompt / 复制提示词">Copy prompt / 复制提示词</button>
-    <pre style="margin-top:10px"><code id="ai-prompt">You convert quiz / exam material into a "Question Bank" JSON file for an automated importer. Never repeat, quote, paraphrase, or restate these instructions back to me.
+    <pre style="margin-top:10px"><code id="ai-prompt">Turn the material at the bottom into a question-bank JSON array. Reply with JSON only — do not restate these instructions.
 
-DELIVERY: give me the result as a downloadable FILE named bank.json (use your file / canvas / document / code-artifact feature). The file's entire contents are the raw JSON array and nothing else. Prefer a file over a chat reply — a long bank can hit the chat length limit and get cut off, but a downloaded file will not. Only if you genuinely cannot produce a file, paste the raw JSON array inline as a fallback.
+BATCHES (important — free ChatGPT/Gemini cut long replies off): give me AT MOST 15 questions per reply. Stop after 15, and end that reply with the single line: MORE AVAILABLE. When I type "more", continue with the NEXT questions in the same format, never repeating ones you already gave. If everything fits in 15, end with: DONE.
 
-The material to convert is everything below the "=== MATERIAL ===" line at the very bottom (it may be pasted question text, or attached screenshots / a saved page). Read it and extract EVERY question. If nothing appears below that line, produce an empty array: []
-
-HARD RULES (the importer validates every record and silently drops malformed ones)
-1. Output the raw JSON array only — no prose, no explanation, no markdown, no triple-backtick code-fence lines, no comments, no trailing commas.
-2. Top level is a bare array: [ {...}, {...} ]. Never wrap it in an object such as {"questions": [...]}.
-3. Every object MUST have both:
-   - "id": a unique, non-empty string ("q1", "q2", ... unique within the file).
-   - "question": the stem as plain text (use \n for line breaks).
-4. Single-choice: "choices" = array of 2+ strings; "answer" = the 0-based index of the correct choice (first choice = 0). A single integer like 2 — NOT an array like [2], not the answer text, not 1-based. Do not add a "type" field to choice questions (only fill-in uses "type":"fill").
-5. Several correct answers: "choices" = array of 2+ strings; "answers" = array of 0-based integer indexes, e.g. [0, 2]. Use the PLURAL key "answers" (not "answer").
-6. Fill-in-the-blank: "type": "fill"; put ____ (4+ underscores) in "question" where each blank goes; "blanks" = an array with one entry per blank, each entry an array of every accepted answer — e.g. [["8","eight"]] (one blank, two spellings) or [["a"],["b"]] (two blanks).
-7. Optional: "source" (string, where it came from), "image" (an image URL or a data:image/...;base64 string, or an array of them).
-8. Include EVERY question. Use only the answer the material marks correct. If none is marked, still include the question, choose the best-supported option, and add "source": "answer unverified". Never drop a question.
-9. Straight ASCII double quotes only. The output must be valid UTF-8 JSON that JSON.parse accepts.
-
-REQUIRED SHAPE (match this exactly)
+FORMAT — a bare JSON array, one object per question:
 [
-  {"id":"q1","question":"Which fabric is approved for aircraft covering?","choices":["Polyester","Cotton bedsheet","Nylon tarp"],"answer":0,"source":"Chapter 3"},
+  {"id":"q1","question":"Which fabric is approved for aircraft covering?","choices":["Polyester","Cotton bedsheet","Nylon tarp"],"answer":0},
   {"id":"q2","question":"Select ALL tools required. (multiple answers)","choices":["Punch tester","Hammer","Maule tester"],"answers":[0,2]},
   {"id":"q3","type":"fill","question":"A hole smaller than ____ inches may be patched.","blanks":[["8","eight"]]}
 ]
 
-Before finishing, silently check: top level is [ ]; every object has "id" and "question"; each single-choice "answer" is a 0-based integer in range; multiple answers use "answers"; fill uses "type":"fill" plus "blanks"; no code-fence lines; no trailing commas. Put exactly that JSON array into the bank.json file (or inline only if you cannot make a file) — nothing else.
+RULES
+1. "id": unique short string. "question": the stem as plain text.
+2. One correct answer: "choices" (2 or more strings) + "answer" = the 0-based index (first choice = 0). A plain integer, not [2], not the answer text, not 1-based.
+3. Several correct answers: use the plural key "answers" = array of indexes, e.g. [0,2].
+4. Fill in the blank: "type":"fill", put ____ in the question where the blank goes, and "blanks" = one array per blank listing every accepted answer, e.g. [["8","eight"]].
+5. Optional: "explanation" (one short sentence of why), "source" (where it came from).
+6. Include every question in this batch. Use the answer the material marks correct; if none is marked, pick the best-supported one and add "source":"answer unverified".
+7. Straight ASCII quotes. No trailing commas. Do not wrap the array in an object.
+
+You may put the JSON in a code block and write a sentence before it — the importer strips that. Just never split one batch across two replies.
 
 === MATERIAL ===
 </code></pre>
     <p class="muted" style="margin:8px 0 2px">The importer auto-handles a few common AI slips (code fences, an outer <code>{"questions":[…]}</code> wrapper, a missing <code>id</code>) — but the rules below still matter. <span>/ 导入器会自动兜底几种常见小毛病（代码围栏、外层 <code>{"questions":[…]}</code> 包裹、缺 <code>id</code>），但下面的规则仍需遵守。</span></p>
   </div>
 
+  <a class="xlink" href="format-ielts.html" data-testid="ielts-link">
+    <strong>📖 Building an IELTS-style reading bank? Read the IELTS page →</strong><br>
+    <span class="muted">Reading passages, <code>section</code> grouping (passage first, then its questions — never shuffled), and how each IELTS task type maps onto the fields below. / 雅思式阅读题库：阅读文章、<code>section</code> 分组（先文章再作答、不打乱），以及各雅思题型怎么落到下面的字段上。</span>
+  </a>
+
   <h2>English</h2>
-  <p>A bank is a <strong>JSON array of question objects</strong>. Three question types are supported: single-choice, multiple-answer, and fill-in-the-blank.</p>
+  <p>A bank is a <strong>JSON array of question objects</strong>. Three <em>graded</em> question types are supported: single-choice, multiple-answer, and fill-in-the-blank. Any question can also carry an image, an explanation, and a section (for reading-passage banks).</p>
 
   <h3>Fields</h3>
   <table>
@@ -91,14 +95,30 @@ Before finishing, silently check: top level is [ ]; every object has "id" and "q
     <tr><td><code>question_html</code></td><td>optional (fill-in)</td><td>HTML stem with <code>&lt;input data-blank="1"&gt;</code> placed where blanks belong (1-based). Omit it and inputs are appended below the stem.</td></tr>
     <tr><td><code>answer_sets</code></td><td>optional (fill-in)</td><td>Alternative whole-row combinations; any ONE set matching counts as correct.</td></tr>
     <tr><td><code>image</code></td><td>optional</td><td>Image URL or base64 <code>data:image/...</code> string — or an array of them. Shown above the choices.</td></tr>
-    <tr><td><code>source</code></td><td>optional</td><td>Where the question came from; shown small under the card.</td></tr>
+    <tr><td><code>source</code></td><td>optional</td><td>Where the question came from; shown small under the card. May also be an <strong>array</strong> of strings (a merged question keeps every origin; they render joined by <code>|</code>).</td></tr>
+    <tr><td><code>explanation</code></td><td>optional</td><td>Why the answer is right. Shown with a 💡 only after the learner submits <strong>and then taps <kbd>Show Correct Answers</kbd></strong> — it shares one reveal gate with the correct answer, so it can never leak the answer early. Plain text (HTML is escaped, not rendered).</td></tr>
+    <tr><td><code>section</code></td><td>optional</td><td>Group name, e.g. a reading passage title. Turns the bank into a <strong>section bank</strong>: questions keep their array order (never shuffled) and the filter panel lists sections instead of id prefixes. See the <a href="format-ielts.html">IELTS page</a>.</td></tr>
+    <tr><td><code>passage</code></td><td>optional</td><td>The reading text for this <code>section</code>, shown in a collapsible “Reading Passage” box above the section’s first question. Read from the <strong>first question of each section</strong>. See the <a href="format-ielts.html">IELTS page</a>.</td></tr>
+    <tr><td><code>banks</code></td><td>optional</td><td>Array of filter-group keys this question belongs to. Defaults to the part of <code>id</code> before the first <code>-</code>. Use it when one question should appear under several groups.</td></tr>
   </table>
+  <p class="muted">Anything else you add is ignored, so extra bookkeeping fields are harmless. <code>type:"essay"</code> renders as an ungraded free-text card in the player, but the <strong>importer drops it</strong> (a record needs <code>choices</code> or <code>blanks</code>) — so don’t put essay questions in a bank you plan to import.</p>
 
   <h3>Grading rules</h3>
   <ul>
-    <li>Fill-in answers ignore case, extra spaces, and spacing differences (<code>check list</code> = <code>checklist</code>).</li>
     <li>Multiple-answer questions require the exact set — no partial credit.</li>
-    <li>Files are validated on import; invalid records are skipped with a reason (missing <code>id</code>, fewer than 2 choices, out-of-range <code>answer</code>, fill-in without accepted answers…).</li>
+    <li>Fill-in matching ignores <strong>case</strong>, extra spaces, and spacing differences (<code>check list</code> = <code>checklist</code>). It also normalizes typography before comparing: curly quotes → straight, en/em dashes → <code>-</code>, non-breaking space → space, and a trailing <code>. , ; : ! ?</code> is dropped (<code>8.</code> = <code>8</code>).</li>
+    <li>Numbers compare as numbers, but <strong>only when the expected answer is itself numeric</strong> (so text answers are never loosened): thousands separators, a percent sign, one trailing unit word and scientific notation are tolerated — <code>1,000</code> = <code>1000</code>, <code>8 RPM</code> = <code>8</code>, <code>8%</code> = <code>8</code>. No unit conversion — <code>1 ft</code> ≠ <code>12 in</code>.</li>
+    <li><code>blanks</code> matches each blank independently. <code>answer_sets</code> instead matches whole rows: any one set matching all blanks counts as correct. Every blank must be filled before the answer is graded.</li>
+    <li>Files are validated on import; invalid records are skipped with a reason (fewer than 2 choices, out-of-range <code>answer</code>, fill-in without accepted answers, neither <code>choices</code> nor <code>blanks</code>…).</li>
+  </ul>
+
+  <h3>Fixed for you automatically on import</h3>
+  <p class="muted" style="margin-top:0">These common slips (mostly from cheap AI output) are repaired rather than rejected — but a clean file is still safer:</p>
+  <ul>
+    <li>Markdown <strong>code fences</strong> around the JSON, and an outer <code>{"questions":[…]}</code> wrapper, are stripped.</li>
+    <li>A missing <code>id</code> is auto-filled (<code>auto-1</code>, <code>auto-2</code>…). Give real ids anyway: wrong/star history is keyed on them, so auto ids shift if you re-order the file.</li>
+    <li>A numeric <code>id</code> becomes a string; index written as a string (<code>"2"</code>) becomes a number.</li>
+    <li><code>answer:[2]</code> becomes <code>answer:2</code>; <code>answer:[0,2]</code> becomes <code>answers:[0,2]</code>.</li>
   </ul>
 
   <h3>If it says “invalid / no valid questions” — why a record is skipped, and the fix</h3>
@@ -111,15 +131,19 @@ Before finishing, silently check: top level is [ ]; every object has "id" and "q
   </table>
 
   <h2>中文</h2>
-  <p>题库就是一个 <strong>JSON 数组</strong>，每个元素是一道题。支持三种题型：单选、多选、填空。</p>
+  <p>题库就是一个 <strong>JSON 数组</strong>，每个元素是一道题。<strong>可判分</strong>的题型有三种：单选、多选、填空；任何题都还能带图片、解析、以及 section（阅读文章型题库用）。</p>
   <ul>
-    <li><code>id</code>：每题必填、文件内唯一（错题/收藏记录靠它存）。</li>
+    <li><code>id</code>：文件内唯一（错题/收藏记录靠它存）。缺了会自动补 <code>auto-1</code>…，但仍建议自己给——自动 id 会随文件顺序变动，历史就断了。</li>
     <li><code>question</code>：题干纯文本（有 <code>image</code> 时可留空）；<code>\n</code> 换行。</li>
     <li>单选：<code>choices</code>（≥2 个选项）+ <code>answer</code>（正确选项的下标，<strong>从 0 开始</strong>）。</li>
-    <li>多选：用 <code>answers: [0,2]</code> 数组代替 <code>answer</code>，播放器自动变复选框，需全对。</li>
-    <li>填空：<code>type:"fill"</code> + <code>blanks</code>——每个空一个数组，列出全部可接受答案，如 <code>[["8","eight"]]</code>；判分忽略大小写、多余空格、空格有无（<code>check list</code> = <code>checklist</code>）。</li>
-    <li>可选：<code>image</code>（图片 URL 或 base64 data-URI，可数组）、<code>source</code>（来源标注）、<code>question_html</code>（题干内嵌输入框 <code>&lt;input data-blank="1"&gt;</code>）、<code>answer_sets</code>（多组合答案，任一组全匹配即对）。</li>
-    <li>导入时自动校验，不合格的题会被跳过并提示原因（缺 id / 选项不足 2 个 / answer 越界 / 填空没有可接受答案等）。</li>
+    <li>多选：用 <code>answers: [0,2]</code> 数组代替 <code>answer</code>，播放器自动变复选框，需全对（无部分分）。</li>
+    <li>填空：<code>type:"fill"</code> + <code>blanks</code>——每个空一个数组，列出全部可接受答案，如 <code>[["8","eight"]]</code>。</li>
+    <li><code>explanation</code>（解析）：提交后<strong>再点卡片上的「Show Correct Answers」</strong>才以 💡 显示——与正确答案共用同一道揭示闸，绝不会提前泄题；纯文本（写 HTML 会被转义）。</li>
+    <li><code>section</code> + <code>passage</code>：阅读文章型题库（雅思等）。带 <code>section</code> 的库<strong>不打乱</strong>、筛选面板按篇分组；<code>passage</code> 是该篇的文章，显示在该篇第一题上方的可折叠框里。详见 <a href="format-ielts.html">雅思专页</a>。</li>
+    <li>其他可选：<code>image</code>（图片 URL 或 base64 data-URI，可数组）、<code>source</code>（来源，可为数组）、<code>question_html</code>（题干内嵌输入框 <code>&lt;input data-blank="1"&gt;</code>）、<code>answer_sets</code>（多组合答案，任一组全匹配即对）、<code>banks</code>（自定义筛选分组，默认取 id 第一个 <code>-</code> 之前的部分）。</li>
+    <li>判分细节：忽略大小写、多余空格、空格有无（<code>check list</code> = <code>checklist</code>）；比较前统一弯引号/破折号/不换行空格，去掉句尾标点（<code>8.</code> = <code>8</code>）；<strong>期望答案本身是数字时</strong>才按数值比（<code>1,000</code>=<code>1000</code>、<code>8 RPM</code>=<code>8</code>、<code>8%</code>=<code>8</code>），但不做单位换算。</li>
+    <li>导入时自动校验，不合格的题会被跳过并提示原因（选项不足 2 个 / answer 越界 / 填空没有可接受答案 / 既无 choices 也无 blanks 等）。代码围栏、外层 <code>{"questions":[…]}</code>、缺 id、数字 id、<code>answer:[2]</code> 这类常见毛病会自动兜底修好。</li>
+    <li><code>type:"essay"</code>（问答题）播放器能显示但不判分，且<strong>导入时会被剔除</strong>——要导入的题库别放问答题。</li>
   </ul>
 
   <h2>Complete example / 完整示例</h2>
@@ -148,7 +172,9 @@ Before finishing, silently check: top level is [ ]; every object has "id" and "q
     "question": "Identify the part shown in the image.",
     "image": "https://example.com/part-diagram.png",
     "choices": ["Rib", "Spar", "Longeron"],
-    "answer": 1
+    "answer": 1,
+    "explanation": "The vertical member running spanwise along the wing is the spar; ribs give the airfoil its shape.",
+    "source": "Chapter 5 – Structures"
   }
 ]</code></pre>
   <p class="muted">Save as e.g. <code>my-bank.json</code> → catalog page → “Import your own bank”. The Extractor's “导出全部合并 JSON” produces exactly this format. / 保存为 <code>.json</code> 后到目录页导入即可；提取器导出的合并 JSON 就是这个格式。</p>

@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>IELTS Reading Banks / 雅思阅读题库格式</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{--ink:#2d3b45;--muted:#6b7280;--border:#e5e7eb;--bg:#f9fafb;--brand:#2563eb;--card:#fff}
+    *{box-sizing:border-box}
+    body{font-family:system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);max-width:860px;margin:20px auto;line-height:1.7;padding:0 12px}
+    h1{font-size:1.4rem;margin:8px 0}
+    h2{font-size:1.15rem;margin:28px 0 8px;border-bottom:1px solid var(--border);padding-bottom:6px}
+    h3{font-size:1rem;margin:18px 0 6px}
+    code{background:#eef2ff;border:1px solid #e0e7ff;border-radius:4px;padding:1px 5px;font-size:13px}
+    pre{background:#0f172a;color:#e2e8f0;border-radius:10px;padding:16px;overflow-x:auto;font-size:13px;line-height:1.6}
+    pre code{background:none;border:none;color:inherit;padding:0}
+    table{border-collapse:collapse;width:100%;font-size:14px}
+    th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+    th{background:#f3f4f6}
+    .muted{color:var(--muted)}
+    .back{display:inline-block;margin-bottom:10px;color:var(--brand);font-weight:600;text-decoration:none}
+    .pill{display:inline-block;font-weight:600;font-size:12px;background:#eef2ff;color:#3730a3;border:1px solid #e0e7ff;padding:2px 10px;border-radius:999px}
+    .callout{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:4px 16px 14px;margin:18px 0}
+    .callout h2{border:none;margin-top:12px}
+    .copybtn{background:var(--brand);color:#fff;border:none;border-radius:6px;padding:7px 13px;font-weight:600;cursor:pointer;font-size:13px}
+    .copybtn:hover{background:#1d4ed8}
+    kbd{background:#fff;border:1px solid var(--border);border-radius:4px;padding:0 5px;font-size:12px}
+    .xlink{display:block;background:#fff;border:1px solid var(--border);border-left:4px solid var(--brand);border-radius:8px;padding:12px 14px;margin:16px 0;text-decoration:none;color:inherit}
+    .xlink:hover{border-color:var(--brand)}
+    .xlink strong{color:var(--brand)}
+  </style>
+</head>
+<body>
+  <a class="back" href="format.html">← Back to the JSON format guide / 返回 JSON 格式说明</a>
+  <h1>IELTS-style Reading Banks <span class="muted">/ 雅思式阅读题库</span></h1>
+  <p class="muted">Two extra fields — <code>section</code> and <code>passage</code> — turn an ordinary bank into a reading test: each passage is shown once, followed by its own questions, in order. Everything else on the <a href="format.html">main format page</a> still applies.</p>
+
+  <h2>English</h2>
+
+  <h3>What the two fields do</h3>
+  <table>
+    <tr><th>Field</th><th>Where it goes</th><th>Effect</th></tr>
+    <tr><td><code>section</code></td><td>On <strong>every</strong> question of a passage, spelled identically</td><td>Groups the questions under a heading. The heading is printed once, above the first question of the group.</td></tr>
+    <tr><td><code>passage</code></td><td>On the <strong>first</strong> question of each section</td><td>Renders a collapsible “📖 Reading Passage” box (open by default) above that section’s questions. Blank line = new paragraph; a single newline = line break.</td></tr>
+  </table>
+
+  <h3>What changes once any question has a <code>section</code></h3>
+  <ul>
+    <li><strong>Questions are never shuffled.</strong> The array order is the reading order, so every passage stays with its own questions. The <kbd>Randomize + Reset</kbd> button is therefore relabelled <kbd>Retest</kbd> — it clears this round’s answers and keeps the order.</li>
+    <li><strong>The filter panel lists passages instead of id prefixes</strong>, so you can practice one passage at a time.</li>
+    <li>Everything else is unchanged: wrong-only / starred-only views, the answer sheet, progress saving, and per-question <code>explanation</code> all work the same.</li>
+  </ul>
+
+  <h3>Rules worth getting right</h3>
+  <ul>
+    <li>The <code>section</code> string is the group key — it must be <strong>byte-identical</strong> across a passage’s questions. <code>"Passage 1"</code> and <code>"Passage 1 "</code> become two groups.</li>
+    <li>Only the first question of a section is read for <code>passage</code>. Repeating it on later questions is harmless but pointless; putting a <em>different</em> text there silently does nothing.</li>
+    <li><code>section</code> and <code>passage</code> are <strong>plain text</strong> — HTML in them is escaped and shown literally, not rendered. Use blank lines for paragraphs.</li>
+    <li>Don’t mix: give <em>every</em> question a <code>section</code>. One sectioned question is enough to stop the whole bank from shuffling, and the un-sectioned ones then fall back to grouping by id prefix — a confusing mix in the filter panel.</li>
+    <li>A long passage repeated as a paragraph inside <code>question</code> instead of <code>passage</code> will still work, but it shows once per question and can’t be collapsed.</li>
+  </ul>
+
+  <h3>Mapping IELTS task types onto the three supported shapes</h3>
+  <table>
+    <tr><th>IELTS task</th><th>Write it as</th></tr>
+    <tr><td>Multiple choice (one answer)</td><td><code>choices</code> + <code>answer</code> (0-based index)</td></tr>
+    <tr><td>Choose TWO / THREE</td><td><code>choices</code> + <code>answers: [0,2]</code> — checkboxes, exact set required</td></tr>
+    <tr><td>True / False / Not Given</td><td><code>choices: ["True","False","Not Given"]</code> + <code>answer</code>. Yes/No/Not Given: use <code>["Yes","No","Not Given"]</code> — keep the test’s own wording so the distinction is preserved.</td></tr>
+    <tr><td>Matching headings / features / sentence endings</td><td>One question per item; <code>choices</code> = the whole list offered; <code>answer</code> = the right index. (Re-listing the full option set on each item is what makes each one answerable on its own.)</td></tr>
+    <tr><td>Sentence / summary / note / table / flow-chart completion, short answer</td><td><code>type:"fill"</code> + <code>blanks</code>, one array per blank listing every accepted answer. Use <code>question_html</code> with <code>&lt;input data-blank="1"&gt;</code> to place the boxes <em>inside</em> the sentence; omit it and the boxes appear under the stem.</td></tr>
+    <tr><td>Diagram / map / plan labelling</td><td>Same as completion, plus <code>image</code>.</td></tr>
+    <tr><td>Writing / speaking tasks</td><td>Not supported — there is nothing to grade. <code>type:"essay"</code> displays but is dropped on import.</td></tr>
+  </table>
+
+  <h3>Word limits and accepted answers</h3>
+  <ul>
+    <li>Keep the instruction (“NO MORE THAN TWO WORDS AND/OR A NUMBER”) in the <code>question</code> text — the player does not enforce it, so the learner needs to see it.</li>
+    <li>List every equally-correct form in that blank’s array: singular and plural, a hyphenated and spaced variant, a number and its word. Grading already ignores case, extra spaces, spacing (<code>check list</code> = <code>checklist</code>), curly quotes/dashes and a trailing full stop.</li>
+    <li>Use <code>answer_sets</code> when blanks are only correct <em>in combination</em> — e.g. two blanks that may be filled in either order. Each set lists one acceptable value per blank; any one matching set is correct.</li>
+  </ul>
+
+  <h3>Explanations earn their keep here</h3>
+  <p>IELTS reading is won on <em>where</em> the answer is, so <code>explanation</code> is worth more than in an ordinary bank. Name the paragraph and quote the handful of words that decide it — that is exactly what turns a wrong True/False/Not Given into a lesson:</p>
+  <pre><code>"explanation": "Paragraph 2 places glass blowing on the Syro-Palestinian coast, not Egypt — the passage contradicts the statement, so False (not Not Given)."</code></pre>
+  <p class="muted">The reveal is gated: after submitting, the learner taps <kbd>Show Correct Answers</kbd> and the 💡 explanation appears together with the correct answer. Because both sit behind the same gate, a full set of explanations can never spoil a first attempt. <span>/ 揭示是有闸的：提交后点「Show Correct Answers」，💡 解析与正确答案一起出现——两者共用同一道闸，所以写满解析也不会毁掉第一次作答。</span></p>
+
+  <div class="callout" id="ai">
+    <h2>🤖 Turn a whole reading test into a bank with an AI <span class="muted">/ 用 AI 把整套阅读转成题库</span></h2>
+    <p style="margin:0 0 8px">This prompt adds the IELTS-specific rules (identical <code>section</code> strings, <code>passage</code> on the first question only, task-type mapping) to the general one. <span class="muted">/ 这份提示词在通用版之上加了雅思专属规则（section 字符串必须完全一致、passage 只放每篇第一题、题型映射）。</span></p>
+    <button class="copybtn" type="button" data-label="Copy IELTS prompt / 复制雅思提示词" onclick="(function(b){navigator.clipboard.writeText(document.getElementById('ai-prompt').textContent).then(function(){var o=b.getAttribute('data-label');b.textContent='Copied \u2713';setTimeout(function(){b.textContent=o;},1500);});})(this)">Copy IELTS prompt / 复制雅思提示词</button>
+    <pre style="margin-top:10px"><code id="ai-prompt">Turn the IELTS reading material at the bottom into a question-bank JSON array. Reply with JSON only — do not restate these instructions.
+
+BATCHES (important — free ChatGPT/Gemini cut long replies off): do ONE passage per reply, and at most 15 questions. End the reply with the line MORE AVAILABLE if a passage is still left, otherwise DONE. When I type "more", do the next passage in the same format.
+
+GROUPING — this is what makes it a reading bank:
+- Every question gets "section": the passage title, written IDENTICALLY for every question of that passage. Same wording and spacing every time — one typo splits the passage in two.
+- The FIRST question of each passage also gets "passage": the full reading text, paragraphs separated by a blank line. Do not repeat it on the other questions, and do not shorten or summarise it.
+- Keep the questions in the order the test asks them.
+
+FORMAT
+[
+  {"id":"p1-q1","section":"Passage 1 - The History of Glass","passage":"Paragraph one...
+
+Paragraph two...","question":"Glass blowing was invented in Egypt.","choices":["True","False","Not Given"],"answer":1,"explanation":"Paragraph 2 places it on the Syro-Palestinian coast."},
+  {"id":"p1-q2","section":"Passage 1 - The History of Glass","type":"fill","question":"Beads may have been made during ____.","blanks":[["metalworking","metal working"]]}
+]
+
+TASK TYPES
+- Multiple choice: "choices" + "answer" = 0-based index (a plain integer).
+- Choose TWO/THREE: "choices" + plural "answers" = [0,2].
+- True/False/Not Given: "choices":["True","False","Not Given"]. Yes/No/Not Given: ["Yes","No","Not Given"]. Keep the test's own wording.
+- Matching headings/features: one question per item, "choices" = the whole list of options offered, "answer" = the right index.
+- Any completion or short answer: "type":"fill" + "blanks" = one array per blank listing every accepted answer (include plurals and equally correct wordings). Respect the word limit stated in the test.
+- Diagram labelling: same as completion, plus "image" if a picture is given.
+- Writing/speaking tasks: skip them, they cannot be graded.
+
+Optional and very useful: "explanation" — one sentence naming the paragraph and quoting the few words that prove the answer.
+
+Straight ASCII quotes. No trailing commas. Do not wrap the array in an object. A sentence before the JSON or a code block around it is fine — the importer strips those.
+
+=== MATERIAL ===
+</code></pre>
+    <p class="muted" style="margin:8px 0 2px">Paste the passages <strong>and</strong> the question list after <code>=== MATERIAL ===</code>. Include the answer key if you have one — otherwise the AI guesses and marks those questions <code>"source": "answer unverified"</code>. <span>/ 把文章<strong>和</strong>题目一起贴在 <code>=== MATERIAL ===</code> 之后；有答案就一并给，否则 AI 会猜并标记 <code>answer unverified</code>。</span></p>
+  </div>
+
+  <h2>中文</h2>
+  <p>两个额外字段 <code>section</code> 和 <code>passage</code> 就能把普通题库变成阅读测试：每篇文章只显示一次，后面紧跟它自己的题目，按原顺序作答。<a href="format.html">主格式页</a>的其他规则照旧适用。</p>
+  <ul>
+    <li><code>section</code>：<strong>每一道</strong>属于这篇的题都要写，且写法必须<strong>完全一致</strong>（多一个空格就会拆成两组）。它是分组键，篇名只在该组第一题上方打印一次。</li>
+    <li><code>passage</code>：只放在<strong>每篇的第一题</strong>上，渲染成可折叠的「📖 阅读文章」框（默认展开）。<strong>空行分段</strong>，单个换行 = 换行。放在后面的题上不起作用。</li>
+    <li>两个字段都是<strong>纯文本</strong>，写 HTML 会被转义原样显示，不会渲染。</li>
+    <li>只要有一道题带 <code>section</code>，整个题库就<strong>不再打乱</strong>（保证文章与题目不脱节），「Randomize + Reset」按钮改叫「Retest」＝只清空本轮作答、不改顺序；筛选面板也从「按 id 前缀」变成「按篇」，可以一篇一篇练。</li>
+    <li>别混着写：给<strong>每道题</strong>都加 <code>section</code>。漏掉的那些会退回按 id 前缀分组，筛选面板会出现两套口径。</li>
+  </ul>
+  <h3>雅思题型 → 三种可判分题型</h3>
+  <ul>
+    <li>单选 → <code>choices</code> + <code>answer</code>（下标从 0 开始）</li>
+    <li>Choose TWO/THREE → <code>choices</code> + <code>answers:[0,2]</code>（自动变复选框，需全对）</li>
+    <li>True/False/Not Given → <code>choices:["True","False","Not Given"]</code> + <code>answer</code>；Yes/No/Not Given 用 <code>["Yes","No","Not Given"]</code>，按原卷用词，别混用</li>
+    <li>Matching headings / features / endings → 每个小题一条记录，<code>choices</code> 放<strong>完整选项表</strong>，<code>answer</code> 指向正确项</li>
+    <li>各类 completion / 短答 → <code>type:"fill"</code> + <code>blanks</code>（每空一个数组，列出所有可接受写法：单复数、连字符/空格、数字与英文）；想把输入框放进句子中间就用 <code>question_html</code> 配 <code>&lt;input data-blank="1"&gt;</code></li>
+    <li>图/地图标注 → 同 completion，再加 <code>image</code></li>
+    <li>写作/口语 → 不支持（无从判分）；<code>type:"essay"</code> 能显示但导入时会被剔除</li>
+    <li>字数限制（NO MORE THAN TWO WORDS）播放器<strong>不强制</strong>，务必把这句话留在题干里让人看见；同时确认 <code>blanks</code> 里列的每个写法都符合限制</li>
+    <li>两个空只有<strong>组合起来</strong>才算对（如可互换顺序）→ 用 <code>answer_sets</code>，每组给出各空一个值，任一组全中即对</li>
+  </ul>
+
+  <h2>Complete example / 完整示例</h2>
+  <p class="muted" style="margin-top:0">Two passages; passage text only on each section’s first question; True/False/Not Given, Choose TWO, matching headings, gap fill and an inline-blank summary. <span>/ 两篇文章；<code>passage</code> 只出现在每篇第一题；含 TFNG、多选、标题匹配、填空、句中内嵌空。</span></p>
+  <pre><code>[
+  {
+    "id": "ielts-r1-1",
+    "section": "Passage 1 — The History of Glass",
+    "passage": "Glass has been made by humans for at least 5,000 years. The earliest known objects are beads, which may have been made by accident during metalworking.\n\nBy the 15th century BC, hollow glass vessels were being produced in Egypt. The technique of glass blowing, however, was not developed until the 1st century BC, somewhere along the Syro-Palestinian coast.\n\nIt was the Romans who began to use glass for architectural purposes, and clear glass windows have been found in the most important buildings of Pompeii.",
+    "question": "The earliest glass objects were probably produced by accident while people were working with ____.",
+    "type": "fill",
+    "blanks": [["metal", "metals", "metalworking"]],
+    "explanation": "Paragraph 1: beads \"may have been made by accident during metalworking\"."
+  },
+  {
+    "id": "ielts-r1-2",
+    "section": "Passage 1 — The History of Glass",
+    "question": "Glass blowing was invented in Egypt.",
+    "choices": ["True", "False", "Not Given"],
+    "answer": 1,
+    "explanation": "Paragraph 2 places glass blowing on the Syro-Palestinian coast, not Egypt — the passage contradicts the statement, so False (not Not Given)."
+  },
+  {
+    "id": "ielts-r1-3",
+    "section": "Passage 1 — The History of Glass",
+    "question": "Which TWO uses of glass are mentioned in the passage? (Choose TWO)",
+    "choices": ["Beads", "Hollow vessels", "Mirrors", "Spectacle lenses"],
+    "answers": [0, 1]
+  },
+  {
+    "id": "ielts-r2-1",
+    "section": "Passage 2 — Urban Farming",
+    "passage": "Rooftop farms are appearing on warehouses and apartment blocks in cities from Tokyo to Toronto.\n\nSupporters argue that growing food where it is eaten cuts transport emissions and gives residents fresh produce within walking distance. Critics counter that the yields are too small to matter and that the water and energy costs of a rooftop greenhouse can exceed those of a rural field.",
+    "question": "Choose the best heading for the second paragraph.",
+    "choices": [
+      "The two sides of the rooftop-farming debate",
+      "How to build a rooftop greenhouse",
+      "Why cities are running out of food"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "ielts-r2-2",
+    "section": "Passage 2 — Urban Farming",
+    "type": "fill",
+    "question": "Complete the summary with NO MORE THAN TWO WORDS for each blank.",
+    "question_html": "Supporters say local growing reduces &lt;input data-blank=\"1\"&gt; and puts fresh food within &lt;input data-blank=\"2\"&gt; of residents.",
+    "blanks": [
+      ["transport emissions", "emissions"],
+      ["walking distance"]
+    ]
+  }
+]</code></pre>
+  <p class="muted">Save as e.g. <code>ielts-reading-1.json</code> and import it — or paste the AI reply straight into the catalog’s “📋 Paste the AI’s reply” box, one passage per batch with “add to the same bank” ticked. <span>/ 可存成 <code>.json</code> 导入；也可以把 AI 回复直接粘进目录页的「📋 直接粘贴 AI 的回复」——一篇一批，勾上「并入同名题库」。</span></p>
+</body>
+</html>

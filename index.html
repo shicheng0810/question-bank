@@ -299,6 +299,20 @@
       <input type="file" id="import-file" accept=".json,application/json" data-testid="import-file">
       <a class="go" style="margin-top:0" href="format.html" data-i18n="format_link" data-testid="format-link">JSON format guide →</a>
     </div>
+
+    <details style="margin-top:14px" data-testid="paste-box">
+      <summary style="cursor:pointer;font-weight:650" data-i18n="paste_title">📋 No file? Paste the AI’s reply instead (works on free ChatGPT / Gemini)</summary>
+      <p class="desc" style="margin:8px 0" data-i18n="paste_desc">Copy the whole reply and paste it here — leading/trailing chatter, code fences and even a reply cut off halfway are handled. Long test? Ask for 15 questions at a time, tick “add to the same bank” and paste each batch.</p>
+      <div class="meta-row" style="align-items:center;gap:8px">
+        <input type="text" id="paste-name" data-testid="paste-name" data-i18n-ph="paste_name_ph" placeholder="Bank name" style="flex:1;min-width:160px;padding:7px 9px;border:1px solid var(--border);border-radius:6px">
+        <button class="go" style="margin-top:0" id="paste-go" data-testid="paste-go" data-i18n="paste_go">Import pasted text</button>
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13px;cursor:pointer">
+        <input type="checkbox" id="paste-append" data-testid="paste-append" checked>
+        <span data-i18n="paste_append">Add to the same bank (for pasting a long test in batches)</span>
+      </label>
+      <textarea id="paste-text" data-testid="paste-text" rows="7" data-i18n-ph="paste_ph" placeholder="Paste the AI reply here…" style="width:100%;margin-top:8px;padding:9px;border:1px solid var(--border);border-radius:6px;font-family:ui-monospace,monospace;font-size:12px"></textarea>
+    </details>
     <label id="import-cloud-row" style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--ink);cursor:pointer">
       <input type="checkbox" id="import-to-account" data-testid="import-to-account">
       <span data-i18n="import_to_account">☁️ Save to my account instead — private, opens on any device after you sign in</span>
@@ -379,7 +393,7 @@
             import_desc:"Pick a question-bank .json file \u2014 it is saved in this browser only (nothing is uploaded) and appears above as a Local bank.",
             format_link:"JSON format guide \u2192", local_badge:"Local", local_practice:"Practice \u2192", local_delete:"Delete", local_to_account:"\u2601\uFE0F Save to account",
             import_ok:"Imported \u201C{t}\u201D: {n} questions ready.", import_rej:" ({r} invalid skipped \u2014 see format guide)",
-            err_parse:"Not valid JSON \u2014 check the file.", err_shape:"No valid questions found \u2014 see the JSON format guide.", err_quota:"Browser storage is full \u2014 delete a local bank or shrink images.",
+            paste_title:"\u1F4CB No file? Paste the AI\u2019s reply instead (works on free ChatGPT / Gemini)", paste_desc:"Copy the whole reply and paste it here \u2014 chatter around it, code fences, even a reply cut off halfway are handled. Long test? Ask for 15 questions at a time, tick \u201Cadd to the same bank\u201D and paste each batch.", paste_go:"Import pasted text", paste_append:"Add to the same bank (for pasting a long test in batches)", paste_name_ph:"Bank name", paste_ph:"Paste the AI reply here\u2026", paste_default_name:"My bank", err_paste_empty:"Nothing pasted yet.", import_appended:"Added {a} new \u2014 this bank now has {n} questions.", import_dup:" ({d} already in the bank, skipped)", import_salvaged:" \u26A0 The reply looked cut off, so complete questions were recovered one by one \u2014 ask the AI to continue, then paste the rest with \u201Cadd to the same bank\u201D ticked.", err_parse:"Not valid JSON \u2014 check the file.", err_shape:"No valid questions found \u2014 see the JSON format guide.", err_quota:"Browser storage is full \u2014 delete a local bank or shrink images.",
             confirm_delete:"Delete this local bank? Its practice records stay until re-imported with the same file name.",
             login_btn:"Sign in", account_history:"History", login_title:"Sign in to save your history", login_hint:"Pick a code and remember it - use the same code on any device to find your history. Anyone who knows the code can see that history, so do not reuse a real password.", login_ph:"your code (4+ characters)", login_go:"Enter", login_cancel:"Cancel", login_ing:"Signing in...", login_ok:"\u2705 Signed in", login_fail:"Couldn't sign in, try again.", login_too_short:"Code needs at least 4 characters.", login_rate:"Too many tries - wait a minute.", login_neterr:"Network error, try again later.", login_reminder:"\uD83D\uDCA1 Sign in to save every practice round and reload your history on any device.",
             history_title:"Your practice history", history_sub:"Your latest 10 rounds (oldest dropped). Tap Load to reopen a round with your answers.", hist_loading:"Loading...", hist_empty:"No saved rounds yet - answer a few questions and they will show up here.", hist_load:"Load", hist_neterr:"Couldn't load history.", hist_del_confirm:"Delete this record?", hist_load_fail:"Couldn't load that round.", hist_logout:"Sign out", hist_unanswered:"not started",
@@ -393,7 +407,7 @@
             import_desc:"\u9009\u4E00\u4E2A\u9898\u5E93 .json \u6587\u4EF6 \u2014 \u53EA\u5B58\u5728\u8FD9\u4E2A\u6D4F\u89C8\u5668\u91CC\uFF08\u4E0D\u4E0A\u4F20\uFF09\uFF0C\u5BFC\u5165\u540E\u5728\u4E0A\u65B9\u4EE5\u300C\u672C\u5730\u300D\u5361\u7247\u51FA\u73B0\u3002",
             format_link:"JSON \u683C\u5F0F\u8BF4\u660E \u2192", local_badge:"\u672C\u5730", local_practice:"\u5F00\u59CB\u505A\u9898 \u2192", local_delete:"\u5220\u9664", local_to_account:"\u2601\uFE0F 存到账号",
             import_ok:"\u5DF2\u5BFC\u5165\u300C{t}\u300D\uFF1A{n} \u9898\u53EF\u7528\u3002", import_rej:"\uFF08\u8DF3\u8FC7 {r} \u6761\u4E0D\u5408\u683C\u8BB0\u5F55\uFF0C\u89C1\u683C\u5F0F\u8BF4\u660E\uFF09",
-            err_parse:"\u4E0D\u662F\u5408\u6CD5\u7684 JSON \u6587\u4EF6\u3002", err_shape:"\u6CA1\u6709\u627E\u5230\u53EF\u7528\u9898\u76EE \u2014 \u8BF7\u770B JSON \u683C\u5F0F\u8BF4\u660E\u3002", err_quota:"\u6D4F\u89C8\u5668\u5B58\u50A8\u5DF2\u6EE1 \u2014 \u5220\u4E2A\u672C\u5730\u9898\u5E93\u6216\u51CF\u5C0F\u56FE\u7247\u3002",
+            paste_title:"\u1F4CB \u6CA1\u6709\u6587\u4EF6\uFF1F\u76F4\u63A5\u7C98\u8D34 AI \u7684\u56DE\u590D\uFF08\u514D\u8D39\u7248 ChatGPT / Gemini \u53EF\u7528\uFF09", paste_desc:"\u628A\u6574\u6BB5\u56DE\u590D\u590D\u5236\u8FC7\u6765\u7C98\u5728\u8FD9\u91CC\u2014\u2014\u524D\u540E\u7684\u5BA2\u5957\u8BDD\u3001\u4EE3\u7801\u56F4\u6805\u3001\u751A\u81F3\u88AB\u622A\u65AD\u5728\u534A\u53E5\u7684\u56DE\u590D\u90FD\u80FD\u5904\u7406\u3002\u9898\u591A\u5C31\u8BA9 AI \u6BCF\u6B21\u53EA\u7ED9 15 \u9898\uFF0C\u52FE\u4E0A\u300C\u5E76\u5165\u540C\u540D\u9898\u5E93\u300D\u9010\u6279\u7C98\u3002", paste_go:"\u5BFC\u5165\u7C98\u8D34\u5185\u5BB9", paste_append:"\u5E76\u5165\u540C\u540D\u9898\u5E93\uFF08\u5206\u6279\u7C98\u957F\u5377\u65F6\u52FE\u4E0A\uFF09", paste_name_ph:"\u9898\u5E93\u540D\u79F0", paste_ph:"\u628A AI \u7684\u56DE\u590D\u7C98\u5728\u8FD9\u91CC\u2026", paste_default_name:"\u6211\u7684\u9898\u5E93", err_paste_empty:"\u8FD8\u6CA1\u7C98\u8D34\u5185\u5BB9\u3002", import_appended:"\u65B0\u589E {a} \u9898\u2014\u2014\u8BE5\u9898\u5E93\u73B0\u6709 {n} \u9898\u3002", import_dup:"\uFF08{d} \u9898\u5DF2\u5B58\u5728\uFF0C\u5DF2\u8DF3\u8FC7\uFF09", import_salvaged:" \u26A0 \u56DE\u590D\u770B\u8D77\u6765\u88AB\u622A\u65AD\u4E86\uFF0C\u5DF2\u9010\u6761\u62A2\u6551\u51FA\u5B8C\u6574\u7684\u9898\u2014\u2014\u8BF7\u8BA9 AI \u63A5\u7740\u5199\uFF0C\u5269\u4E0B\u7684\u52FE\u4E0A\u300C\u5E76\u5165\u540C\u540D\u9898\u5E93\u300D\u518D\u7C98\u4E00\u6B21\u3002", err_parse:"\u4E0D\u662F\u5408\u6CD5\u7684 JSON \u6587\u4EF6\u3002", err_shape:"\u6CA1\u6709\u627E\u5230\u53EF\u7528\u9898\u76EE \u2014 \u8BF7\u770B JSON \u683C\u5F0F\u8BF4\u660E\u3002", err_quota:"\u6D4F\u89C8\u5668\u5B58\u50A8\u5DF2\u6EE1 \u2014 \u5220\u4E2A\u672C\u5730\u9898\u5E93\u6216\u51CF\u5C0F\u56FE\u7247\u3002",
             confirm_delete:"\u5220\u9664\u8FD9\u4E2A\u672C\u5730\u9898\u5E93\uFF1F\uFF08\u505A\u9898\u8BB0\u5F55\u4FDD\u7559\uFF0C\u540C\u540D\u91CD\u65B0\u5BFC\u5165\u53EF\u63A5\u7EED\uFF09",
             login_btn:"登录", account_history:"历史", login_title:"登录以保存历史", login_hint:"自定义一个码并记住它——换设备也用同一个码就能找回历史。知道码的人就能看到那份历史，别用你别处的真实密码。", login_ph:"你的码（4 位以上）", login_go:"进入", login_cancel:"取消", login_ing:"登录中...", login_ok:"\u2705 已登录", login_fail:"登录失败，请重试。", login_too_short:"码至少要 4 位。", login_rate:"尝试太频繁，请稍等一分钟。", login_neterr:"网络错误，请稍后再试。", login_reminder:"\uD83D\uDCA1 登录后可保存每次做题、并在任意设备重新加载你的历史。",
             history_title:"你的做题历史", history_sub:"最近 10 轮（超出删最旧）。点「载入」回到那一轮、带上你的作答。", hist_loading:"加载中...", hist_empty:"还没有记录——做几道题就会出现在这里。", hist_load:"载入", hist_neterr:"加载历史失败。", hist_del_confirm:"删除这条记录？", hist_load_fail:"载入这一轮失败。", hist_logout:"退出登录", hist_unanswered:"未开始",
@@ -407,7 +421,7 @@
             import_desc:"Elige un archivo .json \u2014 se guarda solo en este navegador (no se sube nada) y aparece arriba como banco Local.",
             format_link:"Gu\u00EDa del formato JSON \u2192", local_badge:"Local", local_practice:"Practicar \u2192", local_delete:"Eliminar", local_to_account:"\u2601\uFE0F Guardar en cuenta",
             import_ok:"Importado \u201C{t}\u201D: {n} preguntas listas.", import_rej:" ({r} inv\u00E1lidas omitidas \u2014 ver gu\u00EDa)",
-            err_parse:"JSON no v\u00E1lido.", err_shape:"No se encontraron preguntas v\u00E1lidas \u2014 ver la gu\u00EDa del formato.", err_quota:"Almacenamiento del navegador lleno.",
+            paste_title:"\u1F4CB \u00BFSin archivo? Pega la respuesta de la IA (sirve con ChatGPT / Gemini gratis)", paste_desc:"Copia toda la respuesta y p\u00E9gala aqu\u00ED: se admite texto alrededor, bloques de c\u00F3digo e incluso una respuesta cortada a medias. \u00BFExamen largo? Pide 15 preguntas cada vez, marca \u201Ca\u00F1adir al mismo banco\u201D y pega cada lote.", paste_go:"Importar lo pegado", paste_append:"A\u00F1adir al mismo banco (para pegar por lotes)", paste_name_ph:"Nombre del banco", paste_ph:"Pega aqu\u00ED la respuesta de la IA\u2026", paste_default_name:"Mi banco", err_paste_empty:"A\u00FAn no has pegado nada.", import_appended:"{a} nuevas \u2014 este banco tiene ahora {n} preguntas.", import_dup:" ({d} ya estaban, omitidas)", import_salvaged:" \u26A0 La respuesta parec\u00EDa cortada; se recuperaron las preguntas completas una a una \u2014 pide a la IA que contin\u00FAe y pega el resto con \u201Ca\u00F1adir al mismo banco\u201D marcado.", err_parse:"JSON no v\u00E1lido.", err_shape:"No se encontraron preguntas v\u00E1lidas \u2014 ver la gu\u00EDa del formato.", err_quota:"Almacenamiento del navegador lleno.",
             confirm_delete:"\u00BFEliminar este banco local?",
             login_btn:"Entrar", account_history:"Historial", login_title:"Entra para guardar tu historial", login_hint:"Elige un código y recuérdalo - usa el mismo en cualquier dispositivo para encontrar tu historial. Quien conozca el código verá ese historial, así que no uses una contraseña real.", login_ph:"tu código (4+ caracteres)", login_go:"Entrar", login_cancel:"Cancelar", login_ing:"Entrando...", login_ok:"\u2705 Sesión iniciada", login_fail:"No se pudo entrar, reinténtalo.", login_too_short:"El código necesita 4+ caracteres.", login_rate:"Demasiados intentos - espera un minuto.", login_neterr:"Error de red, inténtalo más tarde.", login_reminder:"\uD83D\uDCA1 Inicia sesión para guardar cada ronda y recargar tu historial en cualquier dispositivo.",
             history_title:"Tu historial de práctica", history_sub:"Tus últimas 10 rondas (se elimina la más antigua). Pulsa Cargar para reabrir una ronda con tus respuestas.", hist_loading:"Cargando...", hist_empty:"Aún no hay rondas - responde algunas preguntas y aparecerán aquí.", hist_load:"Cargar", hist_neterr:"No se pudo cargar el historial.", hist_del_confirm:"¿Eliminar este registro?", hist_load_fail:"No se pudo cargar esa ronda.", hist_logout:"Cerrar sesión", hist_unanswered:"sin empezar",
@@ -427,7 +441,6 @@
     var LOCAL_KEY = "qb_local_banks_v1";
     function loadLocalBanks(){ try{ var o = JSON.parse(localStorage.getItem(LOCAL_KEY) || "{}"); return (o && typeof o === "object" && !Array.isArray(o)) ? o : {}; }catch(e){ return {}; } }
     function saveLocalBanks(o){ localStorage.setItem(LOCAL_KEY, JSON.stringify(o)); }
-    function slugLocal(name){ return String(name || "bank").toLowerCase().replace(/\.json$/i, "").replace(/[^a-z0-9_-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40) || "bank"; }
     // 与发布脚本同规则的轻量校验（导入侧提示用；详见 format.html）
     function validateBank(list){
       var valid = [], rejected = 0;
@@ -505,29 +518,118 @@
       el.textContent = text;
       el.style.color = isError ? "var(--danger-ink)" : "var(--ok-ink)";
     }
-    // AI 产出的 .json 常见杂质：① 用三反引号代码围栏包起来（含 json 语言标注）② 包成对象 {questions:[...]}。这里都兜住。
-    // 注意：本段在 catalogHtml 的模板字符串里，绝不能出现裸反引号 —— 用 fromCharCode 取反引号、纯字符串操作（不用正则）。
+    /* TEST-EXPORT START */
+    // 免费额度的 Gemini/ChatGPT 给不出可下载文件，学生只能**复制聊天回复**。那种文本几乎不会是
+    // 干净 JSON：前后带解说（"这是你的题库："）、包在代码围栏里、被输出长度上限**截断在半句**、
+    // 有时还被聊天界面把引号变成弯引号。原实现整体 JSON.parse 一失败就全丢，这是同学导不进来的
+    // 主因之一。这里改成「层层退让 + 抢救」：能整块解析就整块，不能就把已经完整的题目一条条捞出来，
+    // 只丢掉末尾那条残缺的，并把「抢救了/丢了多少」如实报给用户（好让他回去让 AI 续写）。
+    //
+    // 注意：本段在 catalogHtml 的模板字符串里，绝不能出现裸反引号、也不能出现美元加花括号的插值写法
+    // —— 反引号用 String.fromCharCode 取。（这条注释自己写了那个符号就会把模板打断，别问我怎么知道的。）
     var FENCE3 = String.fromCharCode(96, 96, 96); // 三个反引号
+    var LANG_W = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_+-";
+
+    // 本地题库 id。以前非 ASCII 字符被整段剥掉后一律回退成 "bank" —— 结果**所有中文命名的题库
+    // 都塌成同一个 id**，互相覆盖，而「并入同名题库」还会把两个不相干的库并在一起。
+    // 现在：ASCII 部分能留下东西就用它；剥空了就用标题的短哈希，保证不同标题得到不同 id、
+    // 同一标题每次都得到相同 id（分批粘贴要靠这个稳定性）。
+    function slugLocal(name){
+      var raw = String(name || "bank");
+      var ascii = raw.toLowerCase().replace(/\.json$/i, "").replace(/[^a-z0-9_-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40);
+      if (ascii) return ascii;
+      var h = 2166136261, t = raw.replace(/\.json$/i, "");
+      for (var i = 0; i < t.length; i++){ h ^= t.charCodeAt(i); h = (h * 16777619) >>> 0; }
+      return "b-" + h.toString(36);
+    }
+
+    // 去掉代码围栏：**不再要求以围栏开头**（AI 常先写一句解说）。取第一个围栏与最后一个围栏之间的内容。
     function stripCodeFences(text){
       var s = String(text == null ? "" : text).trim();
-      if (s.indexOf(FENCE3) !== 0) return s;            // 不是以围栏开头 → 原样
-      s = s.slice(3);                                    // 去掉开头围栏
-      var last = s.lastIndexOf(FENCE3);                  // 去掉结尾围栏
-      if (last >= 0) s = s.slice(0, last);
-      s = s.trim();
-      // 紧跟围栏的语言标注（json/js…，无论换行还是同一行）：取开头连续字母数字，
-      // 若其后跳过空白是真正的 [ 或 { 就把标注去掉（避免单行「围栏+json+数组」残留 "json " 前缀）。
-      var W = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_+-";
+      var open = s.indexOf(FENCE3);
+      if (open < 0) return s;
+      var rest = s.slice(open + 3);
+      var close = rest.lastIndexOf(FENCE3);
+      if (close >= 0) rest = rest.slice(0, close);
+      rest = rest.replace(/^[ \t]*/, "");
+      // 紧跟围栏的语言标注（json/js…）：取开头连续字母数字，若其后跳过空白是 [ 或 { 就去掉标注
       var m = 0;
-      while (m < s.length && W.indexOf(s.charAt(m)) >= 0) m++;
-      if (m > 0 && m < s.length){
+      while (m < rest.length && LANG_W.indexOf(rest.charAt(m)) >= 0) m++;
+      if (m > 0 && m < rest.length){
         var k2 = m;
-        while (k2 < s.length){ var c = s.charCodeAt(k2); if (c===32||c===9||c===10||c===13) k2++; else break; }
-        var first = s.charAt(k2);
-        if (first === "[" || first === "{") s = s.slice(k2);
+        while (k2 < rest.length){ var c = rest.charCodeAt(k2); if (c===32||c===9||c===10||c===13) k2++; else break; }
+        var f = rest.charAt(k2);
+        if (f === "[" || f === "{") rest = rest.slice(k2);
       }
-      return s.trim();
+      return rest.trim();
     }
+
+    // 从夹在解说文字里的内容中切出 JSON 主体：找第一个 [ 或 {，按引号/转义感知配对括号。
+    // 括号没配平（= 被截断）时返回到文本末尾，交给下游按「完整对象」抢救。
+    function sliceJSONBody(text){
+      var s = String(text == null ? "" : text);
+      var startA = s.indexOf("["), startO = s.indexOf("{");
+      var start = (startA < 0) ? startO : (startO < 0 ? startA : Math.min(startA, startO));
+      if (start < 0) return "";
+      var open = s.charAt(start), close = (open === "[") ? "]" : "}";
+      var depth = 0, inStr = false, esc = false;
+      for (var i = start; i < s.length; i++){
+        var ch = s.charAt(i);
+        if (inStr){
+          if (esc) { esc = false; continue; }
+          if (ch === "\\") { esc = true; continue; }
+          if (ch === '"') inStr = false;
+          continue;
+        }
+        if (ch === '"') { inStr = true; continue; }
+        if (ch === open) depth++;
+        else if (ch === close){ depth--; if (depth === 0) return s.slice(start, i + 1); }
+      }
+      return s.slice(start); // 未配平 → 截断了
+    }
+
+    // 逐条抢救：扫出**任意层级**的每个 { … } 对象分别 parse。
+    // 必须不限层级：AI 常把结果包成 {"questions":[ … ]}，一旦这种输出被截断，外层花括号永不闭合，
+    // 只扫顶层就一条也捞不到（题目对象都在第 2 层）。用开括号栈，每遇 } 就把那一段单独 parse。
+    // 题目对象内部不会再嵌套题目对象，所以「解析成功且像题目」的判定不会重复计数；
+    // 完整的外层壳虽然也会被解析出来，但它不像题目，会被调用方过滤掉。
+    function salvageObjects(body){
+      var out = [], stack = [], inStr = false, esc = false;
+      for (var i = 0; i < body.length; i++){
+        var ch = body.charAt(i);
+        if (inStr){
+          if (esc) { esc = false; continue; }
+          if (ch === "\\") { esc = true; continue; }
+          if (ch === '"') inStr = false;
+          continue;
+        }
+        if (ch === '"') { inStr = true; continue; }
+        if (ch === "{") stack.push({ start: i, childDone: false });
+        else if (ch === "}" && stack.length){
+          var top = stack.pop();
+          try {
+            var o = JSON.parse(body.slice(top.start, i + 1));
+            if (o && typeof o === "object") out.push(o);
+          } catch (e) {}
+          if (stack.length) stack[stack.length - 1].childDone = true; // 标记父层「里面已经收下过完整对象」
+        }
+      }
+      // 未闭合的花括号 = 被截断。判据：**内部没有任何完整子对象**的才算丢了一道题；
+      // 有完整子对象的是外层壳（{"questions":[…]} 这种），把它也算上会让数字虚高。
+      var dropped = 0;
+      for (var k = 0; k < stack.length; k++) if (!stack[k].childDone) dropped++;
+      return { list: out, dropped: dropped };
+    }
+
+    // 弯引号 → 直引号。**只在常规解析都失败后**才尝试，因为题干里正常出现的弯引号不该被改。
+    function straightenQuotes(s){
+      return String(s).replace(/[\u201c\u201d]/g, '"').replace(/[\u2018\u2019]/g, "'");
+    }
+    // 尾随逗号（AI 高频毛病）
+    function dropTrailingCommas(s){
+      return String(s).replace(/,\s*([\]}])/g, "$1");
+    }
+
     function coerceBankArray(parsed){
       if (Array.isArray(parsed)) return parsed;
       if (parsed && typeof parsed === "object"){
@@ -538,40 +640,124 @@
       }
       return null;
     }
+
+    // 把「AI 聊天回复原文」变成题目数组。返回 {list, salvaged, dropped}：
+    //   salvaged=true 表示没能整块解析、是逐条捞出来的（UI 会提示可能被截断、让用户让 AI 续写）
+    //   dropped = 捞不动的残缺记录条数
+    function parseBankFromText(text){
+      var raw = stripCodeFences(text);
+      var body = sliceJSONBody(raw) || raw;
+      var attempts = [body, dropTrailingCommas(body), straightenQuotes(body), dropTrailingCommas(straightenQuotes(body))];
+      for (var i = 0; i < attempts.length; i++){
+        try{
+          var list = coerceBankArray(JSON.parse(attempts[i]));
+          if (list) return { list: list, salvaged: i > 0, dropped: 0 };
+        }catch(e){}
+      }
+      // 整块解析全失败（最常见：输出被长度上限截断在半条题目上）→ 逐条抢救。
+      // 取「捞得最多」的那个修复变体，**不能**在第一个有结果的变体就返回：
+      // 原始文本里若有一条题带尾随逗号，它会被单独跳过，而修过逗号的变体本可以把它救回来。
+      var best = null;
+      for (var j = 0; j < attempts.length; j++){
+        var r = salvageObjects(attempts[j]);
+        // 只认「像题目」的对象，避免把 {"questions":…} 这类外层壳当成一条题
+        var qs = r.list.filter(function(o){
+          return o && (typeof o.question === "string" || Array.isArray(o.choices) || Array.isArray(o.blanks));
+        });
+        if (qs.length && (!best || qs.length > best.list.length)) best = { list: qs, salvaged: true, dropped: r.dropped };
+      }
+      if (best) return best;
+      return { list: null, salvaged: false, dropped: 0 };
+    }
+
+    // 分批粘贴时把新一批并进同名题库：按题干去重（AI 每批都从 q1 开始编号，靠 id 去重会撞车），
+    // id 撞到不同题就自动改名，避免后一批覆盖前一批。
+    function mergeIntoBank(existing, incoming){
+      var out = (existing || []).slice();
+      var seenQ = {}, seenId = {};
+      out.forEach(function(q){
+        seenQ[String(q && q.question || "").replace(/\s+/g, " ").trim().toLowerCase()] = true;
+        seenId[String(q && q.id || "")] = true;
+      });
+      var added = 0, skipped = 0;
+      (incoming || []).forEach(function(q){
+        var key = String(q && q.question || "").replace(/\s+/g, " ").trim().toLowerCase();
+        if (key && seenQ[key]) { skipped++; return; }        // 这批里重复给出的同一道题
+        var id = String(q && q.id || "");
+        if (!id || seenId[id]){                              // id 撞车 → 换一个，不覆盖已有题
+          var n = 2, cand = (id || "q") + "-" + n;
+          while (seenId[cand]) { n++; cand = (id || "q") + "-" + n; }
+          q.id = cand;
+        }
+        seenQ[key] = true; seenId[String(q.id)] = true;
+        out.push(q); added++;
+      });
+      return { questions: out, added: added, skipped: skipped };
+    }
+    /* TEST-EXPORT END */
+    // 文件导入与粘贴导入共用这一条通道（以前只有文件一条路，而免费额度的 AI 给不出文件）。
+    // opts.append=true：把这一批并进同名题库（分批粘贴用），不覆盖。
+    function importBankText(text, title, opts){
+      opts = opts || {};
+      var parsed = parseBankFromText(text);
+      if (!parsed.list){ importMessage(T("err_parse"), true); return false; }
+      var res = validateBank(parsed.list);
+      if (!res.valid.length){ importMessage(T("err_shape"), true); return false; }
+
+      var toAcct = document.getElementById("import-to-account");
+      if (toAcct && toAcct.checked && !opts.append){
+        if (!isLoggedIn()){ openLoginModal(); importMessage(T("cloud_need_login"), true); return false; }
+        uploadBankToAccount(title, res.valid, res.rejected);
+        return true;
+      }
+
+      var id = slugLocal(title);
+      var banks = loadLocalBanks();
+      var note = "", count = res.valid.length;
+      if (opts.append && banks[id] && Array.isArray(banks[id].questions)){
+        var merged = mergeIntoBank(banks[id].questions, res.valid);
+        count = merged.questions.length;
+        note = T("import_appended", { a: merged.added, n: count }) + (merged.skipped ? T("import_dup", { d: merged.skipped }) : "");
+        res.valid = merged.questions;
+      }
+      try{
+        banks[id] = { title: title, questions: res.valid, savedAt: new Date().toISOString() };
+        saveLocalBanks(banks);
+      }catch(e){ importMessage(T("err_quota"), true); return false; }
+      renderLocalBanks();
+      var msg = note || T("import_ok", { t: title, n: count });
+      if (res.rejected) msg += T("import_rej", { r: res.rejected });
+      // 抢救模式：如实告诉用户很可能被截断了，让他回去要剩下的（否则会以为已经全导进来了）
+      if (parsed.salvaged) msg += T("import_salvaged", { d: parsed.dropped });
+      importMessage(msg, false);
+      return true;
+    }
+
     (function bindImport(){
       var input = document.getElementById("import-file");
-      if (!input) return;
-      input.addEventListener("change", function(){
+      if (input) input.addEventListener("change", function(){
         var file = input.files && input.files[0];
         input.value = "";
         if (!file) return;
         var reader = new FileReader();
         reader.onload = function(){
-          var parsed;
-          try{ parsed = JSON.parse(stripCodeFences(reader.result)); }
-          catch(e){ importMessage(T("err_parse"), true); return; }
-          var list = coerceBankArray(parsed);
-          if (!list){ importMessage(T("err_shape"), true); return; }
-          var res = validateBank(list);
-          if (!res.valid.length){ importMessage(T("err_shape"), true); return; }
-          var title = String(file.name || "bank").replace(/\.json$/i, "");
-          var toAcct = document.getElementById("import-to-account");
-          if (toAcct && toAcct.checked){
-            // 上传到账号（私有云端）：未登录先弹登录
-            if (!isLoggedIn()){ openLoginModal(); importMessage(T("cloud_need_login"), true); return; }
-            uploadBankToAccount(title, res.valid, res.rejected);
-            return;
-          }
-          var id = slugLocal(title);
-          var banks = loadLocalBanks();
-          try{
-            banks[id] = { title: title, questions: res.valid, savedAt: new Date().toISOString() };
-            saveLocalBanks(banks);
-          }catch(e){ importMessage(T("err_quota"), true); return; }
-          renderLocalBanks();
-          importMessage(T("import_ok", { t: title, n: res.valid.length }) + (res.rejected ? T("import_rej", { r: res.rejected }) : ""), false);
+          importBankText(reader.result, String(file.name || "bank").replace(/\.json$/i, ""), { append: false });
         };
         reader.readAsText(file);
+      });
+
+      // 粘贴导入：免费额度的主路径 —— 直接把聊天回复整段贴进来，不需要存文件
+      var btn = document.getElementById("paste-go");
+      if (btn) btn.addEventListener("click", function(){
+        var box = document.getElementById("paste-text");
+        var nameEl = document.getElementById("paste-name");
+        var appendEl = document.getElementById("paste-append");
+        var text = box ? box.value : "";
+        if (!String(text).trim()){ importMessage(T("err_paste_empty"), true); return; }
+        var title = String((nameEl && nameEl.value) || "").trim() || T("paste_default_name");
+        if (importBankText(text, title, { append: !!(appendEl && appendEl.checked) })){
+          if (box) box.value = ""; // 清空好接着贴下一批
+        }
       });
     })();
 
