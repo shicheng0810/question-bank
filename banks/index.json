@@ -63,13 +63,33 @@
     "json": "banks/211-sheet-metal.json"
   },
   {
+    "id": "231-ice-rain",
+    "title": "Ice and Rain Protection",
+    "mode": "public",
+    "description": "",
+    "tags": [],
+    "question_count": 25,
+    "has_images": false,
+    "json": "banks/231-ice-rain.json"
+  },
+  {
+    "id": "231-fire-pos-warning",
+    "title": "Fire Prot/Pos & Warning",
+    "mode": "public",
+    "description": "",
+    "tags": [],
+    "question_count": 24,
+    "has_images": false,
+    "json": "banks/231-fire-pos-warning.json"
+  },
+  {
     "id": "all-banks",
     "title": "All Banks · Merged Practice",
     "mode": "public",
     "virtual": true,
     "description": "Pick any combination of banks and practice them together.",
     "tags": [],
-    "question_count": 1587,
+    "question_count": 1636,
     "has_images": true
   }
 ]

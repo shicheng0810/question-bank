@@ -1,0 +1,314 @@
+[
+  {
+    "id": "quiz_231_fp-pw-1",
+    "question": "When working with explosive squibs, what type of PPE precautions you should take?",
+    "choices": [
+      "Wear a grounding wrist strap.",
+      "Not wear synthetic clothing.",
+      "Not wear cotton clothing."
+    ],
+    "answers": [
+      0,
+      1
+    ],
+    "source": [
+      "AMT231 – Quiz – FP/PW Addendum – Q1"
+    ]
+  },
+  {
+    "id": "quiz_231_fp-pw-2",
+    "question": "What color of annunciator signifies a condition that must be dealt with immediately?",
+    "choices": [
+      "Red",
+      "Yellow",
+      "White"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT231 – Quiz – FP/PW Addendum – Q2"
+    ]
+  },
+  {
+    "id": "quiz_231_fp-pw-3",
+    "question": "What color of annunciator signifies a condition that must be monitored?",
+    "choices": [
+      "Red",
+      "Green",
+      "Yellow"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – FP/PW Addendum – Q3"
+    ]
+  },
+  {
+    "id": "quiz_231_fp-pw-4",
+    "question": "Master Warning and Master Caution light sensing systems are interconnected. An illuminated Warning will also cause the Caution to illuminate.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT231 – Quiz – FP/PW Addendum – Q4"
+    ]
+  },
+  {
+    "id": "quiz_231_fire-protection-1",
+    "question": "The types of fire extinguishing agent for aircraft interior fires are",
+    "choices": [
+      "water, dry chemical, methyl alcohol, and chlorine.",
+      "water, carbon tetrachloride, carbon dioxide, and dry chemical.",
+      "water, carbon dioxide, dry chemical, and halogenated hydrocarbon."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Fire Protection – Q1"
+    ]
+  },
+  {
+    "id": "quiz_231_fire-protection-2",
+    "question": "The fire detection system that uses a single wire surrounded by a continuous string of ceramic beads in a tube is the",
+    "choices": [
+      "thermocouple system.",
+      "Fenwal system.",
+      "Kidde system."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT231 – Quiz – Fire Protection – Q2"
+    ]
+  },
+  {
+    "id": "quiz_231_fire-protection-3",
+    "question": "A self-interrogation function may be integrated into which type of system?",
+    "choices": [
+      "Thermal switch type.",
+      "Light refraction type.",
+      "Continuous loop type."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Fire Protection – Q3"
+    ]
+  },
+  {
+    "id": "quiz_231_fire-protection-4",
+    "question": "The proper fire extinguishing agent to use on an aircraft brake fire is",
+    "choices": [
+      "water.",
+      "carbon dioxide.",
+      "dry powder chemical."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Fire Protection – Q4"
+    ]
+  },
+  {
+    "id": "quiz_231_fire-protection-5",
+    "question": "A contaminated carbon monoxide portable test unit would be returned to service by",
+    "choices": [
+      "heating the indicating element to 300 Fahrenheit to reactivate the chemical.",
+      "evacuating the indicating element with CO2.",
+      "installing a new indicating element."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Fire Protection – Q5"
+    ]
+  },
+  {
+    "id": "quiz_231_fire-protection-6",
+    "question": "Smoke detectors which use a measurement of light refraction in the air are called",
+    "choices": [
+      "visual devices.",
+      "electromechanical devices.",
+      "photoelectrical devices."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Fire Protection – Q6"
+    ]
+  },
+  {
+    "id": "quiz_231_fire-protection-7",
+    "question": "When air samples contain carbon monoxide, the tan-color portable carbon monoxide detectors will turn which color?",
+    "choices": [
+      "Pink",
+      "Varying shades of grey",
+      "Blue"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT231 – Quiz – Fire Protection – Q7"
+    ]
+  },
+  {
+    "id": "quiz_231_fire-protection-8",
+    "question": "If a fire extinguisher cartridge is removed from a discharge valve for any reason, it",
+    "choices": [
+      "cannot be used again.",
+      "must be pressure checked.",
+      "should be reinstalled only on the original discharge valve assembly."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Fire Protection – Q8"
+    ]
+  },
+  {
+    "id": "quiz_231_fire-protection-9",
+    "question": "What retains the nitrogen charge and fire-extinguishing agent in a high rate of discharge (HRD) container?",
+    "choices": [
+      "Pressure switch and check tee valve.",
+      "Frangible disk valve.",
+      "Pressure gauge and cartridge."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT231 – Quiz – Fire Protection – Q9"
+    ]
+  },
+  {
+    "id": "quiz_231_fire-protection-10",
+    "question": "Which fire extinguishing agent is considered to be the least toxic?",
+    "choices": [
+      "Bromotrifluoromethane (Halon 1301)",
+      "Bromochloromethane (Halon 1011).",
+      "Carbon Dioxide."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT231 – Quiz – Fire Protection – Q10"
+    ]
+  },
+  {
+    "id": "quiz_231_position-warning-1",
+    "question": "The rotor in an magnesyn remote indicating system uses",
+    "choices": [
+      "a electromagnet.",
+      "a permanent magnet and electromagnet.",
+      "a permanent magnet."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Position & Warning – Q1"
+    ]
+  },
+  {
+    "id": "quiz_231_position-warning-2",
+    "question": "The proximity sensor operates on what principle?",
+    "choices": [
+      "Resistance.",
+      "Inductance.",
+      "Capacitance."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT231 – Quiz – Position & Warning – Q2"
+    ]
+  },
+  {
+    "id": "quiz_231_position-warning-3",
+    "question": "Which of the following functions does a skid control system perform?\n1. Normal skid control\n2. Normal braking.\n3. Fail-safe protection.\n4. Locked-wheel skid control.\n5. Touchdown protection.\n6. Takeoff protection.",
+    "choices": [
+      "1, 2, 5, 6",
+      "1, 2, 3, 4",
+      "1, 3, 4, 5"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Position & Warning – Q3"
+    ]
+  },
+  {
+    "id": "quiz_231_position-warning-4",
+    "question": "The anti-skid system is",
+    "choices": [
+      "an electro-hydraulic system",
+      "an electrical system.",
+      "a hydraulic system"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT231 – Quiz – Position & Warning – Q4"
+    ]
+  },
+  {
+    "id": "quiz_231_position-warning-5",
+    "question": "A warning lamp lights in the cockpit when the anti-skid system is turned off or if there is a system failure.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT231 – Quiz – Position & Warning – Q5"
+    ]
+  },
+  {
+    "id": "quiz_231_position-warning-6",
+    "question": "In a brake anti-skid system, when an approaching skid is sensed, and electrical signal is sent to the skid control valve which",
+    "choices": [
+      "act as a bypass for the debooster cylinders.",
+      "equalizes the hydraulic pressure in adjacent brakes.",
+      "relieves the hydraulic pressure on the brake."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Position & Warning – Q6"
+    ]
+  },
+  {
+    "id": "quiz_231_position-warning-7",
+    "question": "An anti-skid system consists of basically of three components:\n1. Wheel speed sensors\n2. Control box\n3. Control valves",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT231 – Quiz – Position & Warning – Q7"
+    ]
+  },
+  {
+    "id": "quiz_231_position-warning-8",
+    "question": "In flight with the anti-skid armed, current cannot flow to the anti-skid control box because",
+    "choices": [
+      "the landing gear down and lock switch is open.",
+      "the landing gear squat switch is open.",
+      "the landing gear anti-skid valves are open."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT231 – Quiz – Position & Warning – Q8"
+    ]
+  },
+  {
+    "id": "quiz_231_position-warning-9",
+    "question": "The _________ provides a mechanical warning to the pilot when a stall condition is imminent.",
+    "choices": [
+      "vane-type AoA sensor",
+      "probe-type AoA sensor",
+      "stick shaker motor"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Position & Warning – Q9"
+    ]
+  },
+  {
+    "id": "quiz_231_position-warning-10",
+    "question": "The reed-type stall warning system installed in some light aircraft is activated by",
+    "choices": [
+      "static air pressure.",
+      "lower air pressure.",
+      "higher air pressure."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT231 – Quiz – Position & Warning – Q10"
+    ]
+  }
+]
