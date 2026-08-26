@@ -78,7 +78,7 @@
     "mode": "public",
     "description": "",
     "tags": [],
-    "question_count": 24,
+    "question_count": 64,
     "has_images": false,
     "json": "banks/231-fire-pos-warning.json"
   },
@@ -89,7 +89,7 @@
     "virtual": true,
     "description": "Pick any combination of banks and practice them together.",
     "tags": [],
-    "question_count": 1636,
+    "question_count": 1676,
     "has_images": true
   }
 ]
