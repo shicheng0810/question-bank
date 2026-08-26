@@ -314,254 +314,182 @@
   {
     "id": "ass1_231_fireprot-1",
     "question": "A class __ extinguisher would typically be installed in an avionics bay.",
-    "type": "fill",
-    "blanks": [
-      [
-        "C",
-        "class C"
-      ]
+    "choices": [
+      "Class A",
+      "Class B",
+      "Class C",
+      "Class D"
     ],
+    "answer": 2,
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q1"
     ],
-    "explanation": "航电舱是带电设备 → C 类火（PPT slide 4：Class C fire: Electrical fires which involve energized equipment）",
-    "question_html": "A class <input data-blank=\"1\"> extinguisher would typically be installed in an avionics bay."
+    "explanation": "航电舱是带电设备 → C 类火（PPT slide 4：Class C fire: Electrical fires which involve energized equipment）。A=固体、B=易燃液体、D=可燃金属。"
   },
   {
     "id": "ass1_231_fireprot-2",
     "question": "Spot detectors are a type of ____ _____ that are wired in parallel for redundancy.",
-    "type": "fill",
-    "blanks": [
-      [
-        "thermal"
-      ],
-      [
-        "switch",
-        "switches"
-      ]
+    "choices": [
+      "Continuous loop",
+      "Thermal switch",
+      "Photoelectric cell",
+      "Thermocouple"
     ],
+    "answer": 1,
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q2"
     ],
-    "explanation": "PPT slide 12：Spot detector thermal switches … connected in parallel with each other",
-    "question_html": "Spot detectors are a type of <input data-blank=\"1\"> <input data-blank=\"2\"> that are wired in parallel for redundancy."
+    "explanation": "PPT slide 12：Spot detector thermal switches … connected in parallel with each other, and in series with indicator lights"
   },
   {
     "id": "ass1_231_fireprot-3",
     "question": "The _______ fire detection system works on a rate of temperature rise, and compares that to a reference temperature.",
-    "type": "fill",
-    "blanks": [
-      [
-        "thermocouple"
-      ]
+    "choices": [
+      "Kidde",
+      "Fenwal",
+      "Thermocouple",
+      "Lindberg"
     ],
+    "answer": 2,
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q3"
     ],
-    "explanation": "PPT slide 13：热电偶按温升速率报警，热端与参考端有温差才产生电压",
-    "question_html": "The <input data-blank=\"1\"> fire detection system works on a rate of temperature rise, and compares that to a reference temperature."
+    "explanation": "PPT slide 13：热电偶按温升速率报警——热端比参考端升温快才产生电压；缓慢过热不会报警"
   },
   {
     "id": "ass1_231_fireprot-4",
     "question": "As a Fenwal fire loop heats, resistance of the ____ ____ drops, allowing current to flow between the nickel conductor and Inconel wall.",
-    "type": "fill",
-    "blanks": [
-      [
-        "eutectic"
-      ],
-      [
-        "salt"
-      ]
+    "choices": [
+      "Eutectic salt",
+      "Thermistor core",
+      "Helium core",
+      "Nickel conductor"
     ],
+    "answer": 0,
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q4"
     ],
-    "explanation": "PPT slide 9：Inconel 管内填 thermally sensitive eutectic salt，受热熔化后电阻下降",
-    "question_html": "As a Fenwal fire loop heats, resistance of the <input data-blank=\"1\"> <input data-blank=\"2\"> drops, allowing current to flow between the nickel conductor and Inconel wall."
+    "explanation": "PPT slide 9：Fenwal 的 Inconel 管内填 thermally sensitive eutectic salt，受热熔化后电阻下降（thermistor core 是 Kidde 的）"
   },
   {
     "id": "ass1_231_fireprot-5",
     "question": "The ____ ____ type of fire detection system can easily be kinked or dented.",
-    "type": "fill",
-    "blanks": [
-      [
-        "continuous"
-      ],
-      [
-        "loop"
-      ]
+    "choices": [
+      "Optical sensor",
+      "Continuous loop",
+      "Spot detector",
+      "Thermal switch"
     ],
+    "answer": 1,
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q5"
     ],
-    "explanation": "PPT slide 10：Dents or kinks in a continuous loop system can cause intermittent false alarms",
-    "question_html": "The <input data-blank=\"1\"> <input data-blank=\"2\"> type of fire detection system can easily be kinked or dented."
+    "explanation": "PPT slide 10：Dents or kinks in a continuous loop system can cause intermittent false alarms"
   },
   {
     "id": "ass1_231_fireprot-6",
     "question": "A dual-loop system may have an automatic ____-____ function that senses and removes a faulty loop from the cockpit indication circuit.",
-    "type": "fill",
-    "blanks": [
-      [
-        "self"
-      ],
-      [
-        "interrogation"
-      ]
+    "choices": [
+      "Self-balancing",
+      "Self-monitoring",
+      "Self-test",
+      "Self-interrogation"
     ],
+    "answer": 3,
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q6"
     ],
-    "explanation": "FAA-H-8083-31B p977：双回路自动完成回路切换与判断，称 automatic self-interrogation",
-    "question_html": "A dual-loop system may have an automatic <input data-blank=\"1\">-<input data-blank=\"2\"> function that senses and removes a faulty loop from the cockpit indication circuit."
+    "explanation": "FAA-H-8083-31B p977：双回路自动完成回路切换与判断，这个功能叫 automatic self-interrogation"
   },
   {
     "id": "ass1_231_fireprot-7",
     "question": "The Lindberg pneumatic system incorporates ____ and ____ gases within a stainless steel tube.",
-    "type": "fill",
-    "blanks": [
-      [
-        "helium"
-      ],
-      [
-        "hydrogen"
-      ]
+    "choices": [
+      "Helium and hydrogen",
+      "Argon and hydrogen",
+      "Helium and nitrogen",
+      "Nitrogen and helium"
     ],
+    "answer": 0,
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q7"
     ],
-    "explanation": "PPT slide 11：氦气充填管受热增压触发报警；继续受热时芯体释放氢气报火警",
-    "question_html": "The Lindberg pneumatic system incorporates <input data-blank=\"1\"> and <input data-blank=\"2\"> gases within a stainless steel tube.",
-    "answer_sets": [
-      [
-        "helium",
-        "hydrogen"
-      ],
-      [
-        "hydrogen",
-        "helium"
-      ]
-    ]
+    "explanation": "PPT slide 11：氦气充填管受热增压触发报警；继续受热时芯体释放氢气报火警"
   },
   {
     "id": "ass1_231_fireprot-8",
     "question": "In the light refraction type of smoke detector, the _____ ___ detects refracted light from the LED due to smoke particles.",
-    "type": "fill",
-    "blanks": [
-      [
-        "photoelectric",
-        "photo electric"
-      ],
-      [
-        "cell"
-      ]
+    "choices": [
+      "Thermal switch",
+      "Infrared sensor",
+      "Ionization chamber",
+      "Photoelectric cell"
     ],
+    "answer": 3,
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q8"
     ],
-    "explanation": "PPT slide 15：光折射式含 LED 与 photoelectric cell，烟粒把光折射到光电池上",
-    "question_html": "In the light refraction type of smoke detector, the <input data-blank=\"1\"> <input data-blank=\"2\"> detects refracted light from the LED due to smoke particles."
+    "explanation": "PPT slide 15：光折射式含 LED 与 photoelectric cell，烟粒把光折射到光电池上产生电流报警"
   },
   {
     "id": "ass1_231_fireprot-9",
     "question": "The _______ type of smoke detector signals an alarm when it senses a change in electrical flow across two plates.",
-    "type": "fill",
-    "blanks": [
-      [
-        "ionization",
-        "ionisation"
-      ]
+    "choices": [
+      "Ionization",
+      "Optical flame",
+      "Light refraction",
+      "Carbon monoxide"
     ],
+    "answer": 0,
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q9"
     ],
-    "explanation": "PPT slide 16：电离式靠两带电极板间离子密度下降报警",
-    "question_html": "The <input data-blank=\"1\"> type of smoke detector signals an alarm when it senses a change in electrical flow across two plates."
+    "explanation": "PPT slide 16：电离式靠两带电极板间离子密度下降报警，供电 28V DC"
   },
   {
     "id": "ass1_231_fireprot-10",
     "question": "On reciprocating engine aircraft with exhaust shroud heaters, ___ ___ detectors are installed in the cockpit and cabin.",
-    "type": "fill",
-    "blanks": [
-      [
-        "carbon"
-      ],
-      [
-        "monoxide"
-      ]
+    "choices": [
+      "Flame",
+      "Carbon dioxide",
+      "Carbon monoxide",
+      "Smoke"
     ],
+    "answer": 2,
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q10"
     ],
-    "explanation": "PPT slide 18：装排气套管加温器的活塞机，座舱与驾驶舱装 CO 探测器",
-    "question_html": "On reciprocating engine aircraft with exhaust shroud heaters, <input data-blank=\"1\"> <input data-blank=\"2\"> detectors are installed in the cockpit and cabin."
+    "explanation": "PPT slide 18：装排气套管加温器或燃烧加温器的活塞机，座舱与驾驶舱装 CO 探测器"
   },
   {
     "id": "ass2_231_fireprot-1",
     "question": "The electronic processor for the ____ ___ is programmed to ignore sunlight and incandescent light wavelengths.",
-    "type": "fill",
-    "blanks": [
-      [
-        "flame",
-        "optical"
-      ],
-      [
-        "detector",
-        "sensor"
-      ]
+    "choices": [
+      "Ionization smoke detector",
+      "Thermocouple detector",
+      "Flame detector (optical sensor)",
+      "Continuous loop"
     ],
+    "answer": 2,
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q1"
     ],
-    "explanation": "PPT slide 17 + 8083-31B p980：Optical sensors, often referred to as flame detectors；处理器忽略阳光与白炽灯波长",
-    "question_html": "The electronic processor for the <input data-blank=\"1\"> <input data-blank=\"2\"> is programmed to ignore sunlight and incandescent light wavelengths.",
-    "answer_sets": [
-      [
-        "flame",
-        "detector"
-      ],
-      [
-        "optical",
-        "sensor"
-      ]
-    ]
+    "explanation": "PPT slide 17 + 8083-31B p980：Optical sensors, often referred to as flame detectors；处理器识别烃类火焰的时间特征，忽略阳光与白炽灯波长"
   },
   {
     "id": "ass2_231_fireprot-2",
     "question": "Portable carbon monoxide detectors will turn ___ or ___ depending on level of CO concentration.",
-    "type": "fill",
-    "blanks": [
-      [
-        "gray",
-        "grey"
-      ],
-      [
-        "black"
-      ]
+    "choices": [
+      "Gray or black",
+      "Blue or green",
+      "Yellow or brown",
+      "Pink or red"
     ],
+    "answer": 0,
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q2"
     ],
-    "explanation": "PPT slide 18：染成褐色的硅胶晶体遇 CO 变灰、甚至变黑，深浅与浓度成正比",
-    "question_html": "Portable carbon monoxide detectors will turn <input data-blank=\"1\"> or <input data-blank=\"2\"> depending on level of CO concentration.",
-    "answer_sets": [
-      [
-        "gray",
-        "black"
-      ],
-      [
-        "grey",
-        "black"
-      ],
-      [
-        "black",
-        "gray"
-      ],
-      [
-        "black",
-        "grey"
-      ]
-    ]
+    "explanation": "PPT slide 18：染成褐色（tan）的硅胶晶体遇 CO 变灰、甚至变黑，深浅与浓度成正比"
   },
   {
     "id": "ass2_231_fireprot-3",
@@ -579,103 +507,76 @@
   {
     "id": "ass2_231_fireprot-4",
     "question": "Despite its ozone-depleting characteristic, the most common low toxicity extinguishing agent currently used is Halon _____.",
-    "type": "fill",
-    "blanks": [
-      [
-        "1301"
-      ]
+    "choices": [
+      "1202",
+      "1301",
+      "1011",
+      "104"
     ],
+    "answer": 1,
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q4"
     ],
-    "explanation": "PPT slide 20 + 同库 Quiz Q10：Halon 1301（Bromotrifluoromethane）毒性最低、最常用",
-    "question_html": "Despite its ozone-depleting characteristic, the most common low toxicity extinguishing agent currently used is Halon <input data-blank=\"1\">."
+    "explanation": "PPT slide 20 + 同库 Quiz Q10：Halon 1301（Bromotrifluoromethane）毒性最低、最常用；1011（Bromochloromethane）等毒性更高"
   },
   {
     "id": "ass2_231_fireprot-5",
     "question": "The ___ ___ ____ spherical bottle are filled with halogenated hydrocarbons and nitrogen.",
-    "type": "fill",
-    "blanks": [
-      [
-        "high"
-      ],
-      [
-        "rate"
-      ],
-      [
-        "discharge"
-      ]
+    "choices": [
+      "High rate diffusion",
+      "Halon rate discharge",
+      "High pressure discharge",
+      "High rate discharge"
     ],
+    "answer": 3,
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q5"
     ],
-    "explanation": "PPT slide 24：High-Rate Discharge（HRD）瓶充卤代烃 + 氮气增压",
-    "question_html": "The <input data-blank=\"1\"> <input data-blank=\"2\"> <input data-blank=\"3\"> spherical bottle are filled with halogenated hydrocarbons and nitrogen."
+    "explanation": "PPT slide 24：High-Rate Discharge（HRD）瓶充卤代烃 + 氮气增压"
   },
   {
     "id": "ass2_231_fireprot-6",
     "question": "If an extinguisher bottle has overheated, a ___ ___ connected to the relief fitting line will be ruptured or missing.",
-    "type": "fill",
-    "blanks": [
-      [
-        "red"
-      ],
-      [
-        "disc",
-        "disk"
-      ]
+    "choices": [
+      "Green disc",
+      "Red disc",
+      "Yellow disc"
     ],
+    "answer": 1,
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q6"
     ],
-    "explanation": "8083-31B p985：Thermal Discharge Indicator (Red Disc) 接在容器泄压接头上，过热排放时红盘被吹掉（PPT slide 26 同）",
-    "question_html": "If an extinguisher bottle has overheated, a <input data-blank=\"1\"> <input data-blank=\"2\"> connected to the relief fitting line will be ruptured or missing."
+    "explanation": "8083-31B p985：Thermal Discharge Indicator (Red Disc) 接在容器泄压接头上，过热排放时红盘被吹掉。黄盘=机组主动释放，绿色=系统可用（PPT slide 26）"
   },
   {
     "id": "ass2_231_fireprot-7",
     "question": "The explosive device on the fire bottle that releases the extinguishing agent is called the ____ or ___.",
-    "type": "fill",
-    "blanks": [
-      [
-        "squib"
-      ],
-      [
-        "cartridge"
-      ]
+    "choices": [
+      "Frangible disc or seal",
+      "Squib or cartridge",
+      "Primer or detonator",
+      "Solenoid or actuator"
     ],
+    "answer": 1,
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q7"
     ],
-    "explanation": "PPT slide 25：SQUIB 是电点火的爆炸式药筒，用来破封释放灭火剂",
-    "question_html": "The explosive device on the fire bottle that releases the extinguishing agent is called the <input data-blank=\"1\"> or <input data-blank=\"2\">.",
-    "answer_sets": [
-      [
-        "squib",
-        "cartridge"
-      ],
-      [
-        "cartridge",
-        "squib"
-      ]
-    ]
+    "explanation": "PPT slide 25：SQUIB 是电点火的爆炸式药筒（cartridge），用来破封释放灭火剂"
   },
   {
     "id": "ass2_231_fireprot-8",
     "question": "An intentional discharge of the extinguishing system will be indicated by the absence of what?",
-    "type": "fill",
-    "blanks": [
-      [
-        "yellow disk",
-        "yellow disc",
-        "the yellow disk",
-        "the yellow disc",
-        "yellow"
-      ]
+    "choices": [
+      "The pressure gauge",
+      "The red disc",
+      "The yellow disc",
+      "The green disc"
     ],
+    "answer": 2,
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q8"
     ],
-    "explanation": "PPT slide 26：机组主动释放 → 机身侧面的 YELLOW 盘被吹掉（过热排放则是红盘）"
+    "explanation": "PPT slide 26：机组主动释放 → 机身侧面的 YELLOW 盘被吹掉；过热排放才是红盘"
   },
   {
     "id": "ass2_231_fireprot-9",
@@ -706,300 +607,242 @@
   {
     "id": "ass1_231_poswarn-1",
     "question": "When throttles are advanced during takeoff roll with improper flaps, speed brakes, and stab trim settings, the ___ warning system will activate to alert the aircrew.",
-    "type": "fill",
-    "blanks": [
-      [
-        "takeoff",
-        "take off",
-        "take-off"
-      ]
+    "choices": [
+      "Takeoff",
+      "Landing gear",
+      "Stall",
+      "Master caution"
     ],
+    "answer": 0,
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q1"
     ],
-    "explanation": "PPT slide 5-6：起飞警告系统由推力杆上的开关触发，构型不对即发声响警告",
-    "question_html": "When throttles are advanced during takeoff roll with improper flaps, speed brakes, and stab trim settings, the <input data-blank=\"1\"> warning system will activate to alert the aircrew."
+    "explanation": "PPT slide 5-6：起飞警告系统由推力杆上的开关触发，襟翼/减速板/配平构型不对即发声响警告"
   },
   {
     "id": "ass1_231_poswarn-2",
     "question": "The ____ _____ provides a mechanical back and forth motion warning, alerting the pilot of an imminent stall condition.",
-    "type": "fill",
-    "blanks": [
-      [
-        "stick"
-      ],
-      [
-        "shaker"
-      ]
+    "choices": [
+      "Reed-type warning",
+      "Stick shaker",
+      "Stick pusher",
+      "Angle of attack vane"
     ],
+    "answer": 1,
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q2"
     ],
-    "explanation": "PPT slide 4：stick shaker 用偏心电机抖动驾驶杆提醒机组",
-    "question_html": "The <input data-blank=\"1\"> <input data-blank=\"2\"> provides a mechanical back and forth motion warning, alerting the pilot of an imminent stall condition."
+    "explanation": "PPT slide 4：stick shaker 用偏心电机抖动驾驶杆提醒机组（stick pusher 则是把杆推前压低机头）"
   },
   {
     "id": "ass1_231_poswarn-3",
     "question": "When the target comes within range of the _____ _____, a reduced voltage is detected by the gear logic unit.",
-    "type": "fill",
-    "blanks": [
-      [
-        "proximity"
-      ],
-      [
-        "sensor",
-        "switch"
-      ]
+    "choices": [
+      "Proximity sensor",
+      "Squat switch",
+      "Wheel speed transducer",
+      "Microswitch"
     ],
+    "answer": 0,
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q3"
     ],
-    "explanation": "PPT slide 14：接近传感器靠电磁与铁质靶标工作，靶标进入范围后基准电压降低送给起落架逻辑组件",
-    "question_html": "When the target comes within range of the <input data-blank=\"1\"> <input data-blank=\"2\">, a reduced voltage is detected by the gear logic unit."
+    "explanation": "PPT slide 14：接近传感器靠电磁与铁质靶标工作，靶标进入范围后磁场被吸收、基准电压降低送给起落架逻辑组件"
   },
   {
     "id": "ass1_231_poswarn-4",
     "question": "During gear retraction or extension, the indicators may blink or may show diagonal lines, commonly known as a ____ ______.",
-    "type": "fill",
-    "blanks": [
-      [
-        "barber"
-      ],
-      [
-        "pole"
-      ]
+    "choices": [
+      "Candy stripe",
+      "Barber pole",
+      "Transit bar",
+      "Gear disagree"
     ],
+    "answer": 1,
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q4"
     ],
-    "explanation": "8083-31B p754：起落架未到位时用 barber pole 显示（斜线），指示灯闪烁也表示 in transit",
-    "question_html": "During gear retraction or extension, the indicators may blink or may show diagonal lines, commonly known as a <input data-blank=\"1\"> <input data-blank=\"2\">."
+    "explanation": "8083-31B p754：起落架未上锁/未下锁时用 barber pole 显示（斜线）；指示灯闪烁同样表示 in transit"
   },
   {
     "id": "ass1_231_poswarn-5",
     "question": "In the ______ remote indicating system, an electromagnet is attached to the rotor shaft of the transmitter and indicator.",
-    "type": "fill",
-    "blanks": [
-      [
-        "autosyn"
-      ]
+    "choices": [
+      "Autosyn",
+      "Synchro-tel",
+      "Magnesyn",
+      "DC selsyn"
     ],
+    "answer": 0,
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q5"
     ],
-    "explanation": "PPT slide 12：Autosyn 的发送机与指示器转子是电磁铁（magnesyn 用永磁）",
-    "question_html": "In the <input data-blank=\"1\"> remote indicating system, an electromagnet is attached to the rotor shaft of the transmitter and indicator."
+    "explanation": "PPT slide 12：Autosyn 的发送机与指示器转子是电磁铁；magnesyn 用永磁"
   },
   {
     "id": "ass1_231_poswarn-6",
     "question": "During maximum effective braking on an aircraft, the wheel speed is just below a preset allowable rate of _______.",
-    "type": "fill",
-    "blanks": [
-      [
-        "deceleration"
-      ]
+    "choices": [
+      "Acceleration",
+      "Rotation",
+      "Slippage",
+      "Deceleration"
     ],
+    "answer": 3,
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q6"
     ],
-    "explanation": "8083-31B p791：每个机轮被监控是否出现快于预设值的减速率；PPT slide 19：把机轮控制在打滑点略下方最有效",
-    "question_html": "During maximum effective braking on an aircraft, the wheel speed is just below a preset allowable rate of <input data-blank=\"1\">."
+    "explanation": "8083-31B p791：每个机轮被监控是否出现快于预设值的减速率；PPT slide 19：把机轮控制在打滑点略下方最有效"
   },
   {
     "id": "ass1_231_poswarn-7",
     "question": "In the magnesyn remote indicating system, the rotor uses a ____ ____.",
-    "type": "fill",
-    "blanks": [
-      [
-        "permanent"
-      ],
-      [
-        "magnet"
-      ]
+    "choices": [
+      "Toroidal coil",
+      "Permanent magnet",
+      "Electromagnet",
+      "Resistance winding"
     ],
+    "answer": 1,
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q7"
     ],
-    "explanation": "PPT slide 11：Magnesyn systems use permanent magnet rotors",
-    "question_html": "In the magnesyn remote indicating system, the rotor uses a <input data-blank=\"1\"> <input data-blank=\"2\">."
+    "explanation": "PPT slide 11：Magnesyn systems use permanent magnet rotors；发送机磁体通常比指示器磁体大"
   },
   {
     "id": "ass1_231_poswarn-8",
     "question": "An anti-skid ____ ___ can simulate transducer outputs, flight/ground parameters, and deceleration rates for system operational checks.",
-    "type": "fill",
-    "blanks": [
-      [
-        "test"
-      ],
-      [
-        "set",
-        "box",
-        "unit"
-      ]
+    "choices": [
+      "Control valve",
+      "Wheel transducer",
+      "Test set",
+      "Control box"
     ],
+    "answer": 2,
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q8"
     ],
-    "explanation": "PPT slide 21：防滑测试盒可模拟轮速传感器输出、减速率与空/地状态，便于停机位排故",
-    "question_html": "An anti-skid <input data-blank=\"1\"> <input data-blank=\"2\"> can simulate transducer outputs, flight/ground parameters, and deceleration rates for system operational checks."
+    "explanation": "PPT slide 21：停机位无法复现空中故障，故有测试盒可模拟轮速传感器输出、减速率与空/地状态"
   },
   {
     "id": "ass1_231_poswarn-9",
     "question": "In a ___ ___ transmitter, the resistance winding receives voltage from the contact arm through the brushes.",
-    "type": "fill",
-    "blanks": [
-      [
-        "DC",
-        "D C"
-      ],
-      [
-        "selsyn"
-      ]
+    "choices": [
+      "DC selsyn",
+      "AC magnesyn",
+      "AC autosyn",
+      "AC synchro"
     ],
+    "answer": 0,
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q9"
     ],
-    "explanation": "PPT slide 8-9：DC selsyn 发送机由可转动触臂经电刷向环形电阻绕组供电",
-    "question_html": "In a <input data-blank=\"1\"> <input data-blank=\"2\"> transmitter, the resistance winding receives voltage from the contact arm through the brushes."
+    "explanation": "PPT slide 8-9：DC selsyn 发送机由可转动触臂经电刷向环形电阻绕组供电，绕组按 120° 三点分接"
   },
   {
     "id": "ass1_231_poswarn-10",
     "question": "On takeoff, after weight-off-wheels (strut extension), the ___ ___ system is deactivated, regardless of the switch position in the cockpit.",
-    "type": "fill",
-    "blanks": [
-      [
-        "anti",
-        "antiskid",
-        "anti-skid"
-      ],
-      [
-        "skid",
-        "system"
-      ]
+    "choices": [
+      "Gear warning",
+      "Stall warning",
+      "Anti-skid",
+      "Takeoff warning"
     ],
+    "answer": 2,
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q10"
     ],
-    "explanation": "PPT slide 18：离地后挤压开关（squat/WOW switch）告知防滑控制盒断电，液压阀不再给刹车供压",
-    "question_html": "On takeoff, after weight-off-wheels (strut extension), the <input data-blank=\"1\"> <input data-blank=\"2\"> system is deactivated, regardless of the switch position in the cockpit.",
-    "answer_sets": [
-      [
-        "anti",
-        "skid"
-      ],
-      [
-        "antiskid",
-        "system"
-      ],
-      [
-        "anti-skid",
-        "system"
-      ]
-    ]
+    "explanation": "PPT slide 18：离地后挤压开关（squat / gear safety / WOW switch）告知防滑控制盒断电液压阀，刹车不再受压"
   },
   {
     "id": "ass1_231_poswarn-11",
     "question": "The conventional means of sensing landing gear position is the low-cost __________.",
-    "type": "fill",
-    "blanks": [
-      [
-        "microswitch",
-        "micro switch",
-        "microswitches",
-        "micro-switch"
-      ]
+    "choices": [
+      "Microswitch",
+      "Proximity sensor",
+      "Potentiometer",
+      "Selsyn transmitter"
     ],
+    "answer": 0,
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q11"
     ],
-    "explanation": "PPT slide 14：通用航空与较老的大型运输机用低成本微动开关感应起落架位置",
-    "question_html": "The conventional means of sensing landing gear position is the low-cost <input data-blank=\"1\">."
+    "explanation": "PPT slide 14：通用航空与较老的大型运输机用低成本微动开关；现代大型机多改用接近传感器以消除磨损与腐蚀失效点"
   },
   {
     "id": "ass1_231_poswarn-12",
     "question": "The ____ _____ drops the aircraft nose to prevent a stall condition.",
-    "type": "fill",
-    "blanks": [
-      [
-        "stick"
-      ],
-      [
-        "pusher"
-      ]
+    "choices": [
+      "Stick shaker",
+      "Elevator trim",
+      "Stick pusher",
+      "Reed warning"
     ],
+    "answer": 2,
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q12"
     ],
-    "explanation": "PPT slide 4：stick pusher 把驾驶杆向前推、压低机头以改出失速",
-    "question_html": "The <input data-blank=\"1\"> <input data-blank=\"2\"> drops the aircraft nose to prevent a stall condition."
+    "explanation": "PPT slide 4：stick pusher 把驾驶杆向前推、压低机头以改出失速（stick shaker 只抖动提醒）"
   },
   {
     "id": "ass1_231_poswarn-13",
     "question": "The ___-___ stall warning device operates on the same principle as a woodwind instrument.",
-    "type": "fill",
-    "blanks": [
-      [
-        "reed"
-      ],
-      [
-        "type"
-      ]
+    "choices": [
+      "Probe-type",
+      "Vane-type",
+      "Switch-type",
+      "Reed-type"
     ],
+    "answer": 3,
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q13"
     ],
-    "explanation": "PPT slide 3：簧片式失速warning 靠机翼前缘开口处负压吸吮使簧片发声，原理同木管乐器",
-    "question_html": "The <input data-blank=\"1\">-<input data-blank=\"2\"> stall warning device operates on the same principle as a woodwind instrument."
+    "explanation": "PPT slide 3：簧片式靠机翼前缘开口处的负压吸吮使簧片振动发声，原理同木管乐器"
   },
   {
     "id": "ass1_231_poswarn-14",
     "question": "The probe-type sensor picks up differing air pressures that act on a paddle, which in turn moves a __________.",
-    "type": "fill",
-    "blanks": [
-      [
-        "potentiometer",
-        "pot"
-      ]
+    "choices": [
+      "Microswitch",
+      "Reed",
+      "Synchro rotor",
+      "Potentiometer"
     ],
+    "answer": 3,
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q14"
     ],
-    "explanation": "PPT slide 2：探头式把不同气压作用于内部叶片，叶片再带动电位计（vane 式则直接转动电位计）",
-    "question_html": "The probe-type sensor picks up differing air pressures that act on a paddle, which in turn moves a <input data-blank=\"1\">."
+    "explanation": "PPT slide 2：探头式把不同气压作用于内部叶片，叶片再带动电位计；叶片式（vane）则直接随相对风转动电位计"
   },
   {
     "id": "ass1_231_poswarn-15",
     "question": "A maintenance panel is included in the ______ system, and it contains built-in test capability for mechanics to perform electronic checks on aircraft indicating and warning systems.",
-    "type": "fill",
-    "blanks": [
-      [
-        "ECAM",
-        "E C A M"
-      ]
+    "choices": [
+      "ECAM",
+      "ADC",
+      "FDR",
+      "FCC"
     ],
+    "answer": 0,
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q15"
     ],
-    "explanation": "PPT slide 7：ECAM 的维护面板通过 BITE（机内自检）供机务测试指示与警告系统",
-    "question_html": "A maintenance panel is included in the <input data-blank=\"1\"> system, and it contains built-in test capability for mechanics to perform electronic checks on aircraft indicating and warning systems."
+    "explanation": "PPT slide 7：ECAM（电子集中飞机监控）的维护面板通过 BITE（机内自检设备）供机务测试指示与警告系统"
   },
   {
     "id": "ass_231_fppw-1",
     "question": "An important consideration when working with HRD bottle squibs is to eliminate _______ _____ from your person.",
-    "type": "fill",
-    "blanks": [
-      [
-        "static"
-      ],
-      [
-        "electricity"
-      ]
+    "choices": [
+      "Residual pressure",
+      "Loose hardware",
+      "Stray voltage",
+      "Static electricity"
     ],
+    "answer": 3,
     "source": [
       "AMT231 – Assignment – Fire Protection/Pos & Warning – Q1"
     ],
-    "explanation": "MACS 补充 slide 2：药筒含爆炸药，微小电弧即可点燃 → 必须消除静电（接地手环 + 天然纤维衣物）",
-    "question_html": "An important consideration when working with HRD bottle squibs is to eliminate <input data-blank=\"1\"> <input data-blank=\"2\"> from your person."
+    "explanation": "MACS 补充 slide 2：药筒含爆炸药，微小电弧即可点燃 → 必须消除静电（接地手环 + 天然纤维衣物，不穿化纤）"
   },
   {
     "id": "ass_231_fppw-2",
@@ -1017,47 +860,32 @@
   {
     "id": "ass_231_fppw-3",
     "question": "White-colored indications present operational information, also known as _______ data.",
-    "type": "fill",
-    "blanks": [
-      [
-        "advisory"
-      ]
+    "choices": [
+      "Caution",
+      "Warning",
+      "Advisory",
+      "Normal"
     ],
+    "answer": 2,
     "source": [
       "AMT231 – Assignment – Fire Protection/Pos & Warning – Q3"
     ],
-    "explanation": "MACS 补充 slide 3：白色（或上述三色以外）= advisory data，提供运行信息，通常是文字或数字",
-    "question_html": "White-colored indications present operational information, also known as <input data-blank=\"1\"> data."
+    "explanation": "MACS 补充 slide 3：白色（或红黄绿以外）= advisory data，提供运行信息，通常是文字或数字"
   },
   {
     "id": "ass_231_fppw-4",
     "question": "If the Master Warning light illuminates in flight, there is a discrepancy requiring ______ ______.",
-    "type": "fill",
-    "blanks": [
-      [
-        "immediate",
-        "corrective"
-      ],
-      [
-        "attention",
-        "action"
-      ]
+    "choices": [
+      "Continued monitoring",
+      "Immediate attention",
+      "Maintenance logging",
+      "Crew coordination"
     ],
+    "answer": 1,
     "source": [
       "AMT231 – Assignment – Fire Protection/Pos & Warning – Q4"
     ],
-    "explanation": "MACS 补充 slide 3-4：红色 Warning = requires immediate attention/corrective action",
-    "question_html": "If the Master Warning light illuminates in flight, there is a discrepancy requiring <input data-blank=\"1\"> <input data-blank=\"2\">.",
-    "answer_sets": [
-      [
-        "immediate",
-        "attention"
-      ],
-      [
-        "corrective",
-        "action"
-      ]
-    ]
+    "explanation": "MACS 补充 slide 3-4：红色 Warning = requires immediate attention/corrective action；黄色 Caution 才是需要持续监控"
   },
   {
     "id": "ass_231_fppw-5",
