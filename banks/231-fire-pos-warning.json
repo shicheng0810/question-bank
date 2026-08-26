@@ -324,7 +324,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q1"
     ],
-    "explanation": "航电舱是带电设备 → C 类火（PPT slide 4：Class C fire: Electrical fires which involve energized equipment）。A=固体、B=易燃液体、D=可燃金属。"
+    "explanation": "An avionics bay contains energized electrical equipment. PPT slide 4: Class C fires are electrical fires involving energized equipment (A = solids, B = flammable liquids, D = burning metals such as magnesium)."
   },
   {
     "id": "ass1_231_fireprot-2",
@@ -339,7 +339,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q2"
     ],
-    "explanation": "PPT slide 12：Spot detector thermal switches … connected in parallel with each other, and in series with indicator lights"
+    "explanation": "PPT slide 12: spot detector thermal switches are heat-sensitive units wired in parallel with each other and in series with the indicator lights, so any one switch closing signals a fire."
   },
   {
     "id": "ass1_231_fireprot-3",
@@ -354,7 +354,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q3"
     ],
-    "explanation": "PPT slide 13：热电偶按温升速率报警——热端比参考端升温快才产生电压；缓慢过热不会报警"
+    "explanation": "PPT slide 13: the thermocouple responds to the RATE of temperature rise. Voltage is produced only when the hot junction heats faster than the reference junction, so a slow overheat produces no warning."
   },
   {
     "id": "ass1_231_fireprot-4",
@@ -369,7 +369,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q4"
     ],
-    "explanation": "PPT slide 9：Fenwal 的 Inconel 管内填 thermally sensitive eutectic salt，受热熔化后电阻下降（thermistor core 是 Kidde 的）"
+    "explanation": "PPT slide 9: the Fenwal loop is an Inconel tube packed with thermally sensitive eutectic salt. Heat melts the salt, its resistance drops, and current flows between the nickel center conductor and the tube wall. (A thermistor core is what the Kidde system uses.)"
   },
   {
     "id": "ass1_231_fireprot-5",
@@ -384,7 +384,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q5"
     ],
-    "explanation": "PPT slide 10：Dents or kinks in a continuous loop system can cause intermittent false alarms"
+    "explanation": "PPT slide 10: dents or kinks in a continuous-loop element can cause intermittent false alarms, because the element is a slender tube routed around the nacelle."
   },
   {
     "id": "ass1_231_fireprot-6",
@@ -399,7 +399,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q6"
     ],
-    "explanation": "FAA-H-8083-31B p977：双回路自动完成回路切换与判断，这个功能叫 automatic self-interrogation"
+    "explanation": "FAA-H-8083-31B p.977: a dual-loop system performs the loop switching and decision making that the crew would otherwise do. That function is called automatic self-interrogation."
   },
   {
     "id": "ass1_231_fireprot-7",
@@ -414,7 +414,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q7"
     ],
-    "explanation": "PPT slide 11：氦气充填管受热增压触发报警；继续受热时芯体释放氢气报火警"
+    "explanation": "PPT slide 11: the Lindberg/Systron-Donner element is a helium-filled tube. Heating raises the gas pressure until the alarm switch closes; on further heating the core releases hydrogen to signal an actual fire."
   },
   {
     "id": "ass1_231_fireprot-8",
@@ -429,7 +429,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q8"
     ],
-    "explanation": "PPT slide 15：光折射式含 LED 与 photoelectric cell，烟粒把光折射到光电池上产生电流报警"
+    "explanation": "PPT slide 15: the light-refraction detector pairs an LED with a photoelectric cell. Smoke particles refract the LED light onto the cell, which then produces the current that triggers the alarm."
   },
   {
     "id": "ass1_231_fireprot-9",
@@ -444,7 +444,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q9"
     ],
-    "explanation": "PPT slide 16：电离式靠两带电极板间离子密度下降报警，供电 28V DC"
+    "explanation": "PPT slide 16: the ionization detector alarms on a reduction in ion density flowing between two electrically charged plates. It runs on 28V DC aircraft power."
   },
   {
     "id": "ass1_231_fireprot-10",
@@ -459,7 +459,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #1 – Q10"
     ],
-    "explanation": "PPT slide 18：装排气套管加温器或燃烧加温器的活塞机，座舱与驾驶舱装 CO 探测器"
+    "explanation": "PPT slide 18: carbon monoxide detectors are installed in the cabin and flight deck, especially on reciprocating-engine aircraft with exhaust shroud or combustion heaters, where exhaust gas can leak into the cabin air."
   },
   {
     "id": "ass2_231_fireprot-1",
@@ -474,7 +474,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q1"
     ],
-    "explanation": "PPT slide 17 + 8083-31B p980：Optical sensors, often referred to as flame detectors；处理器识别烃类火焰的时间特征，忽略阳光与白炽灯波长"
+    "explanation": "PPT slide 17 and FAA-H-8083-31B p.980: \"Optical sensors, often referred to as flame detectors.\" The processor recognizes the time signatures of known hydrocarbon flames and ignores sunlight and incandescent light wavelengths."
   },
   {
     "id": "ass2_231_fireprot-2",
@@ -489,7 +489,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q2"
     ],
-    "explanation": "PPT slide 18：染成褐色（tan）的硅胶晶体遇 CO 变灰、甚至变黑，深浅与浓度成正比"
+    "explanation": "PPT slide 18: the tan indicator dye on the silica-gel crystals turns gray and then black, and the progression from gray to black is proportional to the CO concentration."
   },
   {
     "id": "ass2_231_fireprot-3",
@@ -502,7 +502,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q3"
     ],
-    "explanation": "PPT slide 18：被污染的 CO 检测器要**换新的指示元件**，不是加热复原"
+    "explanation": "False. PPT slide 18: a contaminated carbon monoxide test unit is returned to service by installing a NEW indicating element, not by heating the old one."
   },
   {
     "id": "ass2_231_fireprot-4",
@@ -517,7 +517,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q4"
     ],
-    "explanation": "PPT slide 20 + 同库 Quiz Q10：Halon 1301（Bromotrifluoromethane）毒性最低、最常用；1011（Bromochloromethane）等毒性更高"
+    "explanation": "PPT slide 20: modern built-in systems are charged with Halon 1301 or 1211. Halon 1301 (bromotrifluoromethane) is the least toxic and the most common; agents such as Halon 1011 (bromochloromethane) are more toxic."
   },
   {
     "id": "ass2_231_fireprot-5",
@@ -532,7 +532,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q5"
     ],
-    "explanation": "PPT slide 24：High-Rate Discharge（HRD）瓶充卤代烃 + 氮气增压"
+    "explanation": "PPT slide 24: high-rate discharge (HRD) bottles are spherical containers charged with a halogenated hydrocarbon agent and pressurized with nitrogen."
   },
   {
     "id": "ass2_231_fireprot-6",
@@ -546,7 +546,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q6"
     ],
-    "explanation": "8083-31B p985：Thermal Discharge Indicator (Red Disc) 接在容器泄压接头上，过热排放时红盘被吹掉。黄盘=机组主动释放，绿色=系统可用（PPT slide 26）"
+    "explanation": "FAA-H-8083-31B p.985: the thermal discharge indicator is connected to the container relief fitting and ejects a RED disc when the contents dump overboard because of excessive heat. Yellow means the crew discharged it deliberately; green means the system is ready for use (PPT slide 26)."
   },
   {
     "id": "ass2_231_fireprot-7",
@@ -561,7 +561,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q7"
     ],
-    "explanation": "PPT slide 25：SQUIB 是电点火的爆炸式药筒（cartridge），用来破封释放灭火剂"
+    "explanation": "PPT slide 25: the squib (also called the cartridge) is an electrically actuated explosive device that breaks the seal on the HRD bottle to release the agent."
   },
   {
     "id": "ass2_231_fireprot-8",
@@ -576,7 +576,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q8"
     ],
-    "explanation": "PPT slide 26：机组主动释放 → 机身侧面的 YELLOW 盘被吹掉；过热排放才是红盘"
+    "explanation": "PPT slide 26: an intentional discharge blows out the YELLOW disc on the side of the fuselage, so its absence indicates the crew fired the system. A missing RED disc would instead mean a thermal (overheat) discharge."
   },
   {
     "id": "ass2_231_fireprot-9",
@@ -589,7 +589,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q9"
     ],
-    "explanation": "PPT slide 24：按环境温度修正后压力不在最小/最大限值之间，容器必须更换"
+    "explanation": "True. PPT slide 24: if the pressure, corrected for ambient temperature, is not between the minimum and maximum limits, the container must be replaced rather than serviced."
   },
   {
     "id": "ass2_231_fireprot-10",
@@ -602,7 +602,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection – #2 – Q10"
     ],
-    "explanation": "PPT slide 25：药筒一旦从排放阀取下就不得用于另一个排放阀——触点伸出长度各不相同，混用可能不导通"
+    "explanation": "False. PPT slide 25: a cartridge removed from a discharge valve must not be used in another discharge valve assembly. The contact point protrudes a different distance on each unit, so a mismatched pair may not make continuity."
   },
   {
     "id": "ass1_231_poswarn-1",
@@ -617,7 +617,7 @@
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q1"
     ],
-    "explanation": "PPT slide 5-6：起飞警告系统由推力杆上的开关触发，襟翼/减速板/配平构型不对即发声响警告"
+    "explanation": "PPT slides 5-6: the takeoff warning system is armed by a switch on the thrust lever. If the trim, speed brakes, or flaps are not set for takeoff when the thrust lever is advanced, an aural warning sounds."
   },
   {
     "id": "ass1_231_poswarn-2",
@@ -632,7 +632,7 @@
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q2"
     ],
-    "explanation": "PPT slide 4：stick shaker 用偏心电机抖动驾驶杆提醒机组（stick pusher 则是把杆推前压低机头）"
+    "explanation": "PPT slide 4: the stick shaker uses an imbalanced motor to physically shake the control column and alert an inattentive crew. (The stick pusher instead moves the column forward.)"
   },
   {
     "id": "ass1_231_poswarn-3",
@@ -647,7 +647,7 @@
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q3"
     ],
-    "explanation": "PPT slide 14：接近传感器靠电磁与铁质靶标工作，靶标进入范围后磁场被吸收、基准电压降低送给起落架逻辑组件"
+    "explanation": "PPT slide 14: a proximity sensor works magnetically with an electromagnet and a ferrous target. When the target comes into range the magnetic field is absorbed and the reference voltage sent to the gear logic unit is reduced."
   },
   {
     "id": "ass1_231_poswarn-4",
@@ -662,7 +662,7 @@
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q4"
     ],
-    "explanation": "8083-31B p754：起落架未上锁/未下锁时用 barber pole 显示（斜线）；指示灯闪烁同样表示 in transit"
+    "explanation": "FAA-H-8083-31B p.754: barber pole displays are used when a gear is not up or down and locked, and blinking indicator lights likewise mean gear in transit."
   },
   {
     "id": "ass1_231_poswarn-5",
@@ -677,7 +677,7 @@
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q5"
     ],
-    "explanation": "PPT slide 12：Autosyn 的发送机与指示器转子是电磁铁；magnesyn 用永磁"
+    "explanation": "PPT slide 12: autosyn transmitters and indicators use ELECTROmagnet rotors. Magnesyn systems use permanent magnet rotors instead."
   },
   {
     "id": "ass1_231_poswarn-6",
@@ -692,7 +692,7 @@
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q6"
     ],
-    "explanation": "8083-31B p791：每个机轮被监控是否出现快于预设值的减速率；PPT slide 19：把机轮控制在打滑点略下方最有效"
+    "explanation": "FAA-H-8083-31B p.791: each wheel is monitored for a deceleration rate faster than a preset rate. PPT slide 19: the system holds the wheel just below the skid point, which gives the most effective braking."
   },
   {
     "id": "ass1_231_poswarn-7",
@@ -707,7 +707,7 @@
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q7"
     ],
-    "explanation": "PPT slide 11：Magnesyn systems use permanent magnet rotors；发送机磁体通常比指示器磁体大"
+    "explanation": "PPT slide 11: magnesyn systems use permanent magnet rotors. The transmitter magnet is usually larger than the indicator magnet, but the indicator rotor still adopts the same angle of deflection."
   },
   {
     "id": "ass1_231_poswarn-8",
@@ -722,7 +722,7 @@
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q8"
     ],
-    "explanation": "PPT slide 21：停机位无法复现空中故障，故有测试盒可模拟轮速传感器输出、减速率与空/地状态"
+    "explanation": "PPT slide 21: in-flight failures cannot be duplicated at the parking spot, so an anti-skid test set is used to simulate wheel-speed transducer output, deceleration rates, and flight or ground parameters."
   },
   {
     "id": "ass1_231_poswarn-9",
@@ -737,7 +737,7 @@
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q9"
     ],
-    "explanation": "PPT slide 8-9：DC selsyn 发送机由可转动触臂经电刷向环形电阻绕组供电，绕组按 120° 三点分接"
+    "explanation": "PPT slides 8-9: in a DC selsyn transmitter a rotatable contact arm feeds voltage through its brushes into a circular resistance winding, which is tapped off in three places about 120 degrees apart."
   },
   {
     "id": "ass1_231_poswarn-10",
@@ -752,7 +752,7 @@
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q10"
     ],
-    "explanation": "PPT slide 18：离地后挤压开关（squat / gear safety / WOW switch）告知防滑控制盒断电液压阀，刹车不再受压"
+    "explanation": "PPT slide 18: once the strut extends (weight off wheels) the squat switch - also called the gear safety, ground safety, or WOW switch - tells the anti-skid control box to de-energize the valves, so the anti-skid system is deactivated no matter how the cockpit switch is set."
   },
   {
     "id": "ass1_231_poswarn-11",
@@ -767,7 +767,7 @@
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q11"
     ],
-    "explanation": "PPT slide 14：通用航空与较老的大型运输机用低成本微动开关；现代大型机多改用接近传感器以消除磨损与腐蚀失效点"
+    "explanation": "PPT slide 14: typical GA aircraft and older large transports use cost-effective microswitches to sense gear position. Many modern transports use proximity sensors instead, which removes the wear and corrosion failure points."
   },
   {
     "id": "ass1_231_poswarn-12",
@@ -782,7 +782,7 @@
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q12"
     ],
-    "explanation": "PPT slide 4：stick pusher 把驾驶杆向前推、压低机头以改出失速（stick shaker 只抖动提醒）"
+    "explanation": "PPT slide 4: the stick pusher physically moves the control column forward, pushing the nose down to correct the stall. The stick shaker only vibrates the column as a warning."
   },
   {
     "id": "ass1_231_poswarn-13",
@@ -797,7 +797,7 @@
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q13"
     ],
-    "explanation": "PPT slide 3：簧片式靠机翼前缘开口处的负压吸吮使簧片振动发声，原理同木管乐器"
+    "explanation": "PPT slide 3: as the angle of attack nears a stall, low pressure over an opening in the wing leading edge creates a suction that audibly vibrates a reed - the same principle as a woodwind instrument."
   },
   {
     "id": "ass1_231_poswarn-14",
@@ -812,7 +812,7 @@
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q14"
     ],
-    "explanation": "PPT slide 2：探头式把不同气压作用于内部叶片，叶片再带动电位计；叶片式（vane）则直接随相对风转动电位计"
+    "explanation": "PPT slide 2: the probe-type sensor feeds dissimilar air pressures against an internal paddle, which repositions a potentiometer. The vane-type instead rotates with the relative wind to reposition the pot directly."
   },
   {
     "id": "ass1_231_poswarn-15",
@@ -827,7 +827,7 @@
     "source": [
       "AMT231 – Assignment – Position & Warning – #1 – Q15"
     ],
-    "explanation": "PPT slide 7：ECAM（电子集中飞机监控）的维护面板通过 BITE（机内自检设备）供机务测试指示与警告系统"
+    "explanation": "PPT slide 7: the ECAM (electronic centralized aircraft monitor) includes a maintenance panel that lets mechanics test the indicating and warning systems through a built-in test equipment (BITE) function."
   },
   {
     "id": "ass_231_fppw-1",
@@ -842,7 +842,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection/Pos & Warning – Q1"
     ],
-    "explanation": "MACS 补充 slide 2：药筒含爆炸药，微小电弧即可点燃 → 必须消除静电（接地手环 + 天然纤维衣物，不穿化纤）"
+    "explanation": "MACS supplement slide 2: the cartridge/squib holds an explosive charge and even a small arcing voltage can fire it, so every source of static electricity must be removed - hence grounding wrist straps and natural-fiber clothing rather than synthetics."
   },
   {
     "id": "ass_231_fppw-2",
@@ -855,7 +855,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection/Pos & Warning – Q2"
     ],
-    "explanation": "MACS 补充 slide 3：绿色 = 正常状态，例如起落架放下并锁定；巡航时起落架收起，故不应亮绿"
+    "explanation": "True. MACS supplement slide 3: green means a satisfactory or normal condition, for example gear down and locked. At cruise the gear is retracted, so a green gear indication would be wrong."
   },
   {
     "id": "ass_231_fppw-3",
@@ -870,7 +870,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection/Pos & Warning – Q3"
     ],
-    "explanation": "MACS 补充 slide 3：白色（或红黄绿以外）= advisory data，提供运行信息，通常是文字或数字"
+    "explanation": "MACS supplement slide 3: white (or any color other than red, yellow, or green) is advisory data that provides operational information, typically text or numbers."
   },
   {
     "id": "ass_231_fppw-4",
@@ -885,7 +885,7 @@
     "source": [
       "AMT231 – Assignment – Fire Protection/Pos & Warning – Q4"
     ],
-    "explanation": "MACS 补充 slide 3-4：红色 Warning = requires immediate attention/corrective action；黄色 Caution 才是需要持续监控"
+    "explanation": "MACS supplement slides 3-4: red is a WARNING and requires immediate attention or corrective action. Yellow is the CAUTION color, and that is the one meaning a serious condition to be monitored."
   },
   {
     "id": "ass_231_fppw-5",
@@ -898,6 +898,6 @@
     "source": [
       "AMT231 – Assignment – Fire Protection/Pos & Warning – Q5"
     ],
-    "explanation": "MACS 补充 slide 4：先按 Master 确认并熄灯，再逐面板查找亮起的分系统告警——不是修好之后才按"
+    "explanation": "False. MACS supplement slide 4: you press the Master light FIRST to acknowledge and extinguish it, then scan the panels to find the lit annunciator. You do not wait until the discrepancy is repaired."
   }
 ]
