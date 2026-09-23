@@ -116,8 +116,6 @@
     /* 登录 / 做题历史 */
     #account-btn{height:36px; padding:0 12px; border-radius:10px; border:1px solid var(--border-strong); background:var(--card); color:var(--ink); font-size:13px; font-weight:650; cursor:pointer; display:inline-flex; align-items:center; gap:6px; box-shadow:var(--shadow-sm); max-width:260px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
     #account-btn:hover{background:var(--muted-bg)}
-    #admin-link{height:36px; padding:0 12px; border-radius:10px; border:1px solid var(--border-strong); background:var(--card); color:var(--ink); font-size:13px; font-weight:650; display:inline-flex; align-items:center; text-decoration:none; box-shadow:var(--shadow-sm); white-space:nowrap}
-    #admin-link:hover{background:var(--muted-bg)}
     .login-reminder{display:flex; align-items:center; gap:12px; flex-wrap:wrap; background:var(--ok-bg); border:1px solid var(--ok-border); color:var(--ok-ink); padding:10px 14px; border-radius:12px; margin:-6px 0 18px; font-size:13.5px; line-height:1.5}
     .login-reminder span{flex:1; min-width:200px}
     .qb-ov{position:fixed; inset:0; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center; padding:18px; z-index:50}
@@ -158,7 +156,6 @@
     <div class="topbar-controls">
       <button id="theme-toggle" type="button" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">🌙</button>
       <button id="account-btn" type="button" onclick="onAccountBtn()" data-testid="account-btn" title="Sign in / history">👤 <span id="account-label">Sign in</span></button>
-      <a id="admin-link" href="https://question-bank-admin-auth-production.shicheng-1cb.workers.dev/admin/" target="_blank" rel="noopener noreferrer">管理员 / Admin</a>
       <label class="lang">🌐
         <select id="ui-lang" onchange="setLang(this.value)" data-testid="ui-lang-select">
           <option value="en">English</option>
