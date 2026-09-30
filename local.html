@@ -317,6 +317,96 @@
     @media (max-width:720px){ #qp-filter{display:inline-flex} }
     #qb-filter-pop .btn{display:block;width:100%;margin:6px 0;text-align:left}
   </style>
+  <style id="qb-study-design">
+    /* Study surface: portable visual layer; question and storage contracts stay intact. */
+    :root{
+      --bg:#f7f5ef;--card:#fffefa;--card-2:#f1f2ec;--ink:#132b3a;--ink-soft:#344c57;--muted:#61716e;
+      --border:#dce2d9;--border-strong:#bccbc2;--brand:#19685a;--brand-strong:#125347;
+      --brand-weak:#eaf3ec;--brand-ring:rgba(25,104,90,.18);--particle-rgb:25,104,90;
+      --badge-bg:#edf1ed;--badge-ink:#41594d;--badge-border:#dce4db;--hover:#edf2eb;--glow:transparent;
+      --shadow-sm:none;--shadow-md:0 6px 22px rgba(19,43,58,.07);--shadow-lg:0 18px 48px rgba(19,43,58,.16);
+      --radius:16px;--radius-sm:10px;--radius-xs:8px;
+    }
+    html[data-theme="dark"]{
+      --bg:#101b20;--card:#17272d;--card-2:#1c3035;--ink:#e8eee8;--ink-soft:#c2d2ce;--muted:#a1b5ae;
+      --border:#30474b;--border-strong:#4a6464;--brand:#83cbb4;--brand-strong:#a2dec8;--on-brand:#102820;
+      --brand-weak:#203e36;--brand-ring:rgba(131,203,180,.23);--particle-rgb:131,203,180;
+      --badge-bg:#243a3a;--badge-ink:#bfd2ca;--badge-border:#3a5050;--hover:#233b3d;--glow:transparent;
+      --shadow-sm:none;--shadow-md:0 6px 22px rgba(0,0,0,.18);--shadow-lg:0 18px 48px rgba(0,0,0,.32);
+    }
+    body{max-width:1040px;padding:24px 28px 64px;background:var(--bg);line-height:1.65}
+    .app-header{padding:0 0 24px;border:0;border-bottom:1px solid var(--border);border-radius:0;background:transparent;gap:20px;margin-bottom:24px;align-items:flex-start}
+    .header-left{flex:1 1 380px;flex-wrap:wrap;gap:14px}
+    .header-left h1{font-size:clamp(1.55rem,3.5vw,2.25rem);font-weight:720;letter-spacing:-.04em;line-height:1.18;flex-basis:100%;overflow-wrap:anywhere}
+    .header-left #back-catalog{border:0;background:transparent;padding:0;min-height:44px;color:var(--muted);font-size:13px}
+    .controls{gap:6px;padding-top:3px;max-width:100%}
+    .controls .btn{background:transparent;border-color:transparent;font-size:12.5px}
+    .controls .btn:hover{background:var(--hover);border-color:var(--border)}
+    .btn{min-height:44px;padding:11px 14px;letter-spacing:-.01em;font-weight:600;box-shadow:none}
+    .btn-sm{min-height:44px;font-size:12.5px}
+    .controls .btn,.controls #ui-lang{height:44px}
+    #qb-menu-btn{min-width:44px}
+    .qb-menu .qb-menu-item,#qb-menu #theme-toggle,#qb-menu #motion-toggle{min-height:44px}
+    #qb-menu #ui-lang{min-height:44px;max-width:140px}
+    .toolbar{padding:16px 0 20px;gap:8px;margin:0;align-items:center;border-bottom:1px solid var(--border)}
+    .toolbar .btn{background:transparent;border-color:var(--border);font-size:12.5px}
+    .toolbar .btn:hover{background:var(--hover);border-color:var(--border-strong)}
+    #btn-wrong,#btn-star,#btn-recap{color:var(--brand);border-color:var(--border-strong)}
+    #stats{flex-basis:100%;margin:4px 0 0;font-size:12.5px;font-weight:500}
+    .filter-row{display:flex;flex-wrap:wrap;align-items:flex-start;gap:10px;margin-bottom:0}
+    .filter-row>.filter-panel{flex:1 1 360px;width:auto;border-radius:10px;box-shadow:none}
+    summary.btn{min-height:48px;background:transparent;padding:14px 16px;font-size:13px}
+    .filter-label{min-height:44px}
+    .filter-row>#coffee-btn.coffee-fab,.filter-row>#coffee-btn.coffee-fab.wiggle{
+      position:static;top:auto;right:auto;z-index:auto;min-height:48px;padding:10px 14px;border-radius:10px;
+      border:1px solid var(--border);background:transparent;color:var(--muted);font-size:12px;font-weight:500;box-shadow:none;animation:none;transform:none;
+    }
+    .filter-row>#coffee-btn.coffee-fab:hover{background:var(--hover);filter:none;transform:none}
+    #coffee-btn.coffee-fab .cf-text{display:inline}#coffee-btn.coffee-fab .cf-emoji{font-size:15px}
+    .quiz-progress{padding:15px 0 14px;margin-bottom:24px;background:var(--bg);border-bottom:1px solid var(--border)}
+    .qp-bar{height:4px;border:0;background:var(--border)}
+    .qp-meta{flex-wrap:wrap;justify-content:flex-start;gap:6px;margin-top:10px}
+    #qp-text{margin-right:auto;min-width:120px;font-variant-numeric:tabular-nums}
+    .qp-meta .btn{border-color:transparent;background:transparent;font-size:12px;padding:8px 10px}
+    .qp-meta .btn:hover{background:var(--hover);border-color:var(--border)}
+    .question-card{padding:24px 28px;margin-bottom:18px;border-radius:16px;box-shadow:none;scroll-margin-top:140px}
+    .question-header{margin-bottom:12px;gap:10px;flex-wrap:wrap}
+    .q-badge{font-size:11px;font-weight:650;letter-spacing:.035em;padding:4px 9px;border-radius:5px}
+    .question-text{font-size:18px;font-weight:600;line-height:1.65;letter-spacing:-.012em;margin:8px 0 18px;overflow-wrap:anywhere}
+    .choice-item{margin:9px 0}
+    .choice-btn{padding:15px 16px;min-height:52px;line-height:1.65;font-size:15px;gap:12px;background:transparent;overflow-wrap:anywhere}
+    .choice-btn.selected{box-shadow:inset 3px 0 0 var(--brand)}
+    .choice-btn.is-correct,.choice-btn.is-wrong{box-shadow:none}
+    .star-btn{width:44px;height:44px;border-radius:8px}
+    .action-bar{margin-top:20px;padding-top:16px;border-top:1px solid var(--border);gap:8px}
+    .action-bar .btn{font-size:12.5px}
+    .meta,.qb-source{font-size:12px;line-height:1.7}
+    .qb-source>summary{min-height:44px;display:list-item;padding-top:10px}
+    .qb-report-btn{min-height:44px;min-width:44px}
+    .qb-blank,.fill-input,.unlock-input{min-height:44px;max-width:100%;min-width:0}
+    .fill-input{flex-basis:200px}.unlock-input{flex-basis:220px}
+    .qb-section-title{font-size:16px;border-bottom:1px solid var(--border-strong);padding-bottom:12px}
+    .qb-sheet-grid{grid-template-columns:repeat(auto-fill,minmax(44px,1fr))}.qb-cell{height:44px}
+    .qb-x{min-width:44px;min-height:44px}
+    .tut-overlay .tut-card{border-radius:16px;padding:26px;max-height:85dvh;overflow:auto}
+    .tut-overlay .tut-card h2{font-size:1.45rem;letter-spacing:-.025em}
+    :where(button,a,input,select,textarea,summary):focus-visible{outline:3px solid var(--brand);outline-offset:3px}
+    @media(max-width:720px){
+      body{padding:18px 16px 48px}.app-header{gap:10px;padding-bottom:18px;margin-bottom:18px}
+      .header-left{flex-basis:100%;gap:6px}.controls{width:100%;justify-content:flex-end}
+      .question-card{padding:20px}.question-text{font-size:17px}.toolbar{padding-top:14px}
+      .qp-meta{gap:3px}.qp-meta .btn{padding:8px}#qp-text{flex-basis:100%;margin:0 0 2px}
+      .filter-row>.filter-panel{flex:1 1 200px;min-width:0}
+      .filter-row>#coffee-btn.coffee-fab{flex:0 0 44px;width:44px;min-height:48px;padding:8px;justify-content:center}
+      #coffee-btn.coffee-fab .cf-text{display:none}
+      .quiz-progress{margin-bottom:18px}.question-card{scroll-margin-top:165px}
+      .tut-overlay{padding:12px}.tut-overlay .tut-card{padding:20px;margin-bottom:2vh}
+      .tut-actions{flex-wrap:wrap}.qb-hist-row{flex-wrap:wrap}.qb-hist-main{flex-basis:100%}
+    }
+    html[data-motion="off"] .coffee-card *,html[data-motion="reduced"] .coffee-card *{animation:none!important;transition:none!important}
+    html[data-motion="off"] .barista.brewed .steam,html[data-motion="reduced"] .barista.brewed .steam{opacity:.35}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+  </style>
 </head>
 <body>
   <section id="unlock-panel" class="unlock-panel" hidden>
@@ -374,7 +464,7 @@
       </div>
     </details>
     <button class="coffee-fab" id="coffee-btn" type="button" onclick="openCoffee()" data-testid="coffee-btn" hidden aria-label="Buy me a coffee">
-      <span class="cf-emoji" aria-hidden="true">☕</span><span class="cf-text" data-i18n="coffee_fab">Click me for fun!</span>
+      <span class="cf-emoji" aria-hidden="true">☕</span><span class="cf-text" data-i18n="coffee_fab">Buy me a coffee</span>
     </button>
   </div>
 
@@ -735,7 +825,7 @@
 
     /* ------------------ 反馈配置（构建时注入；未注入则降级为 mailto/剪贴板，按钮永不失效） ------------------ */
     // 裸 marker（与题库 payload 同模式）：构建时被替换成 JS 对象字面量；所有消费路径都会替换。
-    const RAW_FEEDBACK_CONFIG = {"endpoint":"https://question-bank-78u.pages.dev/api/feedback","email":"","turnstile_site_key":"","app_version":"site"};
+    const RAW_FEEDBACK_CONFIG = {"endpoint":"https://question-bank-78u.pages.dev/api/feedback","email":"","turnstile_site_key":"","app_version":"db45fb802375f694857e4108ed1dcd8aeb6a7f63"};
     let FEEDBACK_CONFIG = { endpoint: "", email: "", turnstile_site_key: "", app_version: "dev" };
     try {
       if (RAW_FEEDBACK_CONFIG && typeof RAW_FEEDBACK_CONFIG === "object") {
@@ -855,7 +945,7 @@
         coffee_toast_title: "Nice — you finished the whole set! 🎉",
         coffee_toast_sub: "Enjoying this? A coffee keeps it growing.",
         coffee_toast_go: "☕ Coffee", coffee_toast_dismiss: "Maybe later",
-        guide_html: '<li data-coffee style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--locked-bg);border:1px solid var(--locked-border);border-radius:10px"><strong>☕ Buy me a coffee — the button at the top-right!</strong> This bank is free and ad-free, built by one person. Tap <strong>☕</strong>, watch a fresh coffee get made, then tip <strong>$5 / $10 / $20</strong> or any amount via PayPal. Totally optional — it keeps this bank caffeinated and growing. 🙏</li><li data-feedback style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Feedback &amp; ⚐ Report — the most useful buttons here!</strong> Found a wrong answer, a typo, or anything confusing? Tap <strong>💬 Feedback</strong> at the top, or <strong>⚐ Report</strong> on any question card. Your message reaches the author in seconds and <strong>actually gets fixed</strong> — every report makes this bank better for the next person. No sign-up, takes 5 seconds. Please use it!</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 Sign in — save &amp; reload your history!</strong> Tap <strong>👤</strong> at the top and pick a personal code (great on phones — no email, no password reset). Then every round you do is saved automatically, and you can <strong>reload any of your last 10 rounds on any device</strong> — your answers come back exactly as you left them. The same code shows the same history everywhere.</li><li><strong>Theme (🌙 / ☀️)</strong>: switch between light and dark — your choice is saved and follows your system setting by default. The 🌐 menu beside it changes the interface language.</li><li><strong>✨ Animations</strong>: cycles the animation level — full ✨ → reduced (button dims) → off; your choice is saved and applies everywhere.</li><li><strong>← Catalog</strong>: go back to the bank list to switch to a different question bank, or open several at once and practice them merged.</li><li><strong>Filter Question Banks (Select All / Select None / Confirm)</strong>: tick the question sets you want to practice — combine as many as you like — then press Confirm. Opening several banks together merges duplicate questions automatically; a password-protected bank asks for its password once before it joins.</li><li><strong>Randomize + Reset</strong>: shuffle the questions in the current scope and clear this round’s selections.</li><li><strong>Auto Submit</strong>: when ON, clicking a choice grades it instantly (no Submit needed).</li><li><strong>Progress bar &amp; “Next unanswered →”</strong>: the sticky bar at the top of the list shows how many questions you’ve answered so far; tap <strong>Next unanswered →</strong> to jump straight to the next one you haven’t submitted yet.</li><li><strong>▦ Answer sheet</strong>: opens a mini-map of the current list — green = correct, red = wrong, small dot = starred; tap any cell to jump straight to that question.</li><li><strong>⌨️ Keyboard shortcuts</strong>: press <strong>?</strong> to see the full sheet — J/K move between questions, 1-9 pick an option, Enter submits, F stars, N jumps to the next unanswered, R redoes.</li><li><strong>Session recap</strong>: a summary of this sitting — questions answered, accuracy, time spent, this session’s wrong answers (tap one to revisit it) and your practice calendar.</li><li><strong>🎯 Daily goal</strong>: set how many questions you want to practice per day; the counter next to 🎯 fills up as you answer and celebrates when you reach it.</li><li><strong>Random Choose 150</strong>: draw 150 questions from the current scope, weighted toward the ones you’ve practiced least; press it again (it turns into <strong>· Reroll</strong>) for a fresh draw. Hidden when the scope has 150 questions or fewer.</li><li><strong>Back to Current 150</strong>: return to this round’s draw (hidden until you’ve drawn one).</li><li><strong>Wrong Only (N)</strong>: show only wrong answers in the current scope; answering correctly does NOT remove a question — use <strong>Remove from wrong</strong> on its card, or <strong>Remove all from wrong</strong> to clear the whole list at once.</li><li><strong>Star Only (N)</strong>: show only starred questions; tap <strong>☆</strong> on any card to star/unstar, or <strong>Unstar all</strong> to clear them at once.</li><li><strong>Back to All</strong>: leave the wrong/star/draw view and return to the full filtered list.</li><li><strong>Clear choices for this list</strong>: clear all selected answers in the current list (wrong/star records are kept).</li><li><strong>Submit Answer / Redo</strong>: grade this question; Redo lets you answer it again.</li><li><strong>Show Correct Answers</strong>: after submitting a fill-in question, optionally reveal the accepted answers. Grading ignores case, extra spaces and spacing (<code>check list</code> = <code>checklist</code>), and treats equal numbers as equal (<code>1,000</code> = <code>1000</code>).</li><li><strong>Stats line</strong> (next to the toolbar): shows how many questions are in view, your running score and accuracy, and how many wrong answers remain in the current scope.</li>',
+        guide_html: '<li data-coffee style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--locked-bg);border:1px solid var(--locked-border);border-radius:10px"><strong>☕ Buy me a coffee — the button beside the bank filter</strong> This bank is free and ad-free, built by one person. Tap <strong>☕</strong>, watch a fresh coffee get made, then tip <strong>$5 / $10 / $20</strong> or any amount via PayPal. Totally optional — it keeps this bank caffeinated and growing. 🙏</li><li data-feedback style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Feedback &amp; ⚐ Report — the most useful buttons here!</strong> Found a wrong answer, a typo, or anything confusing? Tap <strong>💬 Feedback</strong> at the top, or <strong>⚐ Report</strong> on any question card. Your message reaches the author in seconds and <strong>actually gets fixed</strong> — every report makes this bank better for the next person. No sign-up, takes 5 seconds. Please use it!</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 Sign in — save &amp; reload your history!</strong> Tap <strong>👤</strong> at the top and pick a personal code (great on phones — no email, no password reset). Then every round you do is saved automatically, and you can <strong>reload any of your last 10 rounds on any device</strong> — your answers come back exactly as you left them. The same code shows the same history everywhere.</li><li><strong>Theme (🌙 / ☀️)</strong>: switch between light and dark — your choice is saved and follows your system setting by default. The 🌐 menu beside it changes the interface language.</li><li><strong>✨ Animations</strong>: cycles the animation level — full ✨ → reduced (button dims) → off; your choice is saved and applies everywhere.</li><li><strong>← Catalog</strong>: go back to the bank list to switch to a different question bank, or open several at once and practice them merged.</li><li><strong>Filter Question Banks (Select All / Select None / Confirm)</strong>: tick the question sets you want to practice — combine as many as you like — then press Confirm. Opening several banks together merges duplicate questions automatically; a password-protected bank asks for its password once before it joins.</li><li><strong>Randomize + Reset</strong>: shuffle the questions in the current scope and clear this round’s selections.</li><li><strong>Auto Submit</strong>: when ON, clicking a choice grades it instantly (no Submit needed).</li><li><strong>Progress bar &amp; “Next unanswered →”</strong>: the sticky bar at the top of the list shows how many questions you’ve answered so far; tap <strong>Next unanswered →</strong> to jump straight to the next one you haven’t submitted yet.</li><li><strong>▦ Answer sheet</strong>: opens a mini-map of the current list — green = correct, red = wrong, small dot = starred; tap any cell to jump straight to that question.</li><li><strong>⌨️ Keyboard shortcuts</strong>: press <strong>?</strong> to see the full sheet — J/K move between questions, 1-9 pick an option, Enter submits, F stars, N jumps to the next unanswered, R redoes.</li><li><strong>Session recap</strong>: a summary of this sitting — questions answered, accuracy, time spent, this session’s wrong answers (tap one to revisit it) and your practice calendar.</li><li><strong>🎯 Daily goal</strong>: set how many questions you want to practice per day; the counter next to 🎯 fills up as you answer and celebrates when you reach it.</li><li><strong>Random Choose 150</strong>: draw 150 questions from the current scope, weighted toward the ones you’ve practiced least; press it again (it turns into <strong>· Reroll</strong>) for a fresh draw. Hidden when the scope has 150 questions or fewer.</li><li><strong>Back to Current 150</strong>: return to this round’s draw (hidden until you’ve drawn one).</li><li><strong>Wrong Only (N)</strong>: show only wrong answers in the current scope; answering correctly does NOT remove a question — use <strong>Remove from wrong</strong> on its card, or <strong>Remove all from wrong</strong> to clear the whole list at once.</li><li><strong>Star Only (N)</strong>: show only starred questions; tap <strong>☆</strong> on any card to star/unstar, or <strong>Unstar all</strong> to clear them at once.</li><li><strong>Back to All</strong>: leave the wrong/star/draw view and return to the full filtered list.</li><li><strong>Clear choices for this list</strong>: clear all selected answers in the current list (wrong/star records are kept).</li><li><strong>Submit Answer / Redo</strong>: grade this question; Redo lets you answer it again.</li><li><strong>Show Correct Answers</strong>: after submitting a fill-in question, optionally reveal the accepted answers. Grading ignores case, extra spaces and spacing (<code>check list</code> = <code>checklist</code>), and treats equal numbers as equal (<code>1,000</code> = <code>1000</code>).</li><li><strong>Stats line</strong> (next to the toolbar): shows how many questions are in view, your running score and accuracy, and how many wrong answers remain in the current scope.</li>',
       },
       zh: {
         title_h1: "AMT 题库练习",
@@ -952,7 +1042,7 @@
         coffee_toast_title: "漂亮 —— 这一整套你都做完了！🎉",
         coffee_toast_sub: "喜欢的话，一杯咖啡能让它继续长大。",
         coffee_toast_go: "☕ 咖啡", coffee_toast_dismiss: "下次吧",
-        guide_html: '<li data-coffee style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--locked-bg);border:1px solid var(--locked-border);border-radius:10px"><strong>☕ 请我喝杯咖啡 —— 右上角那个按钮！</strong> 这个题库免费、无广告，一个人做的。点 <strong>☕</strong> 看一杯咖啡现做出来，然后用 PayPal 打赏 <strong>$5 / $10 / $20</strong> 或任意金额。完全自愿 —— 它能让题库继续有咖啡因、继续长大。🙏</li><li data-feedback style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 反馈 &amp; ⚐ 报错 —— 这里最有用的按钮！</strong> 发现答案错了、有错别字、或哪里看不懂？点顶部的 <strong>💬 反馈</strong>，或任意题卡上的 <strong>⚐ 报错</strong>。你的留言几秒内直达作者、<strong>真的会被修</strong> —— 每一条都让题库对下一个人更好用。免注册、5 秒搞定，欢迎多用！</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 登录 —— 保存并重新加载你的历史！</strong> 点顶部 <strong>👤</strong> 设一个自定义码（手机也好用 —— 免邮箱、不用找回密码）。登录后每一轮做题都会自动保存，你可以<strong>在任意设备重新加载最近 10 次做题记录</strong> —— 作答会原样回来。同一个码在哪儿都看到同一份历史。</li><li><strong>主题（🌙 / ☀️）</strong>：切换浅色/深色，选择会被记住，默认跟随系统设置。旁边的 🌐 菜单切换界面语言。</li><li><strong>✨ 动效开关</strong>：循环切换动效级别——完整 ✨ → 精简（按钮变淡）→ 关闭；选择会被记住，全站生效。</li><li><strong>← 返回目录</strong>：回到题库列表换一个题库，或一次打开多个题库合并练习。</li><li><strong>筛选题库（全选 / 全不选 / 确认）</strong>：勾选要练习的题套（可任意组合多个），点确认生效。多个题库一起打开时会自动合并去重；加密题库会先要一次密码再加入。</li><li><strong>打乱并重置</strong>：把当前范围内的题目重新打乱，并清空本轮所有选择。</li><li><strong>自动提交</strong>：开启后点选项即自动判分，不用再按提交。</li><li><strong>进度条 &amp; 「跳到下一道未答 →」</strong>：列表顶部的吸顶进度条显示当前列表已答多少题；点<strong>跳到下一道未答 →</strong>直接跳到下一道还没提交的题。</li><li><strong>▦ 答题卡</strong>：打开当前列表的缩略网格——绿=答对、红=答错、小点=已收藏；点任意格子直接跳到那道题。</li><li><strong>⌨️ 键盘快捷键</strong>：按 <strong>?</strong> 查看完整速查表——J/K 在题目间移动、1-9 选选项、Enter 提交、F 收藏、N 跳到下一未答、R 重做。</li><li><strong>本轮小结</strong>：本次做题的小结——答题数、正确率、用时、本次错题（点击可回看）以及练习日历。</li><li><strong>🎯 今日目标</strong>：设定每天想练多少题；🎯 旁的计数随作答增长，达标时会小小庆祝一下。</li><li><strong>随机抽 150 题</strong>：从当前范围按「做得少优先」的权重随机抽 150 题；再点一次（按钮会变成<strong>· 重抽</strong>）换一批。范围不足 150 题时不显示。</li><li><strong>回到本轮 150 题</strong>：回到本轮已抽中的那 150 题（没有抽过时不显示）。</li><li><strong>只看错题（N）</strong>：只显示当前范围内的错题；答对不会自动移出，需手动点题卡上的<strong>移出错题</strong>，或用<strong>全部移出错题</strong>一次清空整列。</li><li><strong>只看收藏（N）</strong>：只显示收藏的题；点题卡右上角 <strong>☆</strong> 收藏/取消，或用<strong>全部取消收藏</strong>一次清空。</li><li><strong>返回全部</strong>：从错题/收藏/抽题视图回到当前筛选范围的完整列表。</li><li><strong>清空本列表的已选答案</strong>：清空当前列表里所有题的已选答案（不动错题/收藏记录）。</li><li><strong>提交答案 / 重做</strong>：提交本题判分；重做可再答一次。</li><li><strong>显示参考答案</strong>：填空题提交后可选择性显示参考答案。判分忽略大小写、多余空格，也忽略空格有无（<code>check list</code> = <code>checklist</code>），数值相等即算对（<code>1,000</code> = <code>1000</code>）。</li><li><strong>统计行</strong>（工具栏旁）：显示当前列表题数、累计得分与正确率，以及当前范围内还剩多少错题。</li>',
+        guide_html: '<li data-coffee style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--locked-bg);border:1px solid var(--locked-border);border-radius:10px"><strong>☕ 请我喝杯咖啡 —— 题库筛选旁的按钮</strong> 这个题库免费、无广告，一个人做的。点 <strong>☕</strong> 看一杯咖啡现做出来，然后用 PayPal 打赏 <strong>$5 / $10 / $20</strong> 或任意金额。完全自愿 —— 它能让题库继续有咖啡因、继续长大。🙏</li><li data-feedback style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 反馈 &amp; ⚐ 报错 —— 这里最有用的按钮！</strong> 发现答案错了、有错别字、或哪里看不懂？点顶部的 <strong>💬 反馈</strong>，或任意题卡上的 <strong>⚐ 报错</strong>。你的留言几秒内直达作者、<strong>真的会被修</strong> —— 每一条都让题库对下一个人更好用。免注册、5 秒搞定，欢迎多用！</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 登录 —— 保存并重新加载你的历史！</strong> 点顶部 <strong>👤</strong> 设一个自定义码（手机也好用 —— 免邮箱、不用找回密码）。登录后每一轮做题都会自动保存，你可以<strong>在任意设备重新加载最近 10 次做题记录</strong> —— 作答会原样回来。同一个码在哪儿都看到同一份历史。</li><li><strong>主题（🌙 / ☀️）</strong>：切换浅色/深色，选择会被记住，默认跟随系统设置。旁边的 🌐 菜单切换界面语言。</li><li><strong>✨ 动效开关</strong>：循环切换动效级别——完整 ✨ → 精简（按钮变淡）→ 关闭；选择会被记住，全站生效。</li><li><strong>← 返回目录</strong>：回到题库列表换一个题库，或一次打开多个题库合并练习。</li><li><strong>筛选题库（全选 / 全不选 / 确认）</strong>：勾选要练习的题套（可任意组合多个），点确认生效。多个题库一起打开时会自动合并去重；加密题库会先要一次密码再加入。</li><li><strong>打乱并重置</strong>：把当前范围内的题目重新打乱，并清空本轮所有选择。</li><li><strong>自动提交</strong>：开启后点选项即自动判分，不用再按提交。</li><li><strong>进度条 &amp; 「跳到下一道未答 →」</strong>：列表顶部的吸顶进度条显示当前列表已答多少题；点<strong>跳到下一道未答 →</strong>直接跳到下一道还没提交的题。</li><li><strong>▦ 答题卡</strong>：打开当前列表的缩略网格——绿=答对、红=答错、小点=已收藏；点任意格子直接跳到那道题。</li><li><strong>⌨️ 键盘快捷键</strong>：按 <strong>?</strong> 查看完整速查表——J/K 在题目间移动、1-9 选选项、Enter 提交、F 收藏、N 跳到下一未答、R 重做。</li><li><strong>本轮小结</strong>：本次做题的小结——答题数、正确率、用时、本次错题（点击可回看）以及练习日历。</li><li><strong>🎯 今日目标</strong>：设定每天想练多少题；🎯 旁的计数随作答增长，达标时会小小庆祝一下。</li><li><strong>随机抽 150 题</strong>：从当前范围按「做得少优先」的权重随机抽 150 题；再点一次（按钮会变成<strong>· 重抽</strong>）换一批。范围不足 150 题时不显示。</li><li><strong>回到本轮 150 题</strong>：回到本轮已抽中的那 150 题（没有抽过时不显示）。</li><li><strong>只看错题（N）</strong>：只显示当前范围内的错题；答对不会自动移出，需手动点题卡上的<strong>移出错题</strong>，或用<strong>全部移出错题</strong>一次清空整列。</li><li><strong>只看收藏（N）</strong>：只显示收藏的题；点题卡右上角 <strong>☆</strong> 收藏/取消，或用<strong>全部取消收藏</strong>一次清空。</li><li><strong>返回全部</strong>：从错题/收藏/抽题视图回到当前筛选范围的完整列表。</li><li><strong>清空本列表的已选答案</strong>：清空当前列表里所有题的已选答案（不动错题/收藏记录）。</li><li><strong>提交答案 / 重做</strong>：提交本题判分；重做可再答一次。</li><li><strong>显示参考答案</strong>：填空题提交后可选择性显示参考答案。判分忽略大小写、多余空格，也忽略空格有无（<code>check list</code> = <code>checklist</code>），数值相等即算对（<code>1,000</code> = <code>1000</code>）。</li><li><strong>统计行</strong>（工具栏旁）：显示当前列表题数、累计得分与正确率，以及当前范围内还剩多少错题。</li>',
       },
       es: {
         title_h1: "Práctica del banco de preguntas AMT",
@@ -1049,7 +1139,7 @@
         coffee_toast_title: "¡Bien — completaste todo el conjunto! 🎉",
         coffee_toast_sub: "¿Te gusta? Un café lo mantiene creciendo.",
         coffee_toast_go: "☕ Café", coffee_toast_dismiss: "Quizá luego",
-        guide_html: '<li data-coffee style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--locked-bg);border:1px solid var(--locked-border);border-radius:10px"><strong>☕ Invítame a un café — ¡el botón de arriba a la derecha!</strong> Este banco es gratis y sin anuncios, hecho por una sola persona. Toca <strong>☕</strong>, mira cómo se prepara un café recién hecho y luego deja <strong>$5 / $10 / $20</strong> o lo que quieras por PayPal. Totalmente opcional — mantiene este banco con cafeína y creciendo. 🙏</li><li data-feedback style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Comentarios y ⚐ Reportar — ¡los botones más útiles!</strong> ¿Una respuesta incorrecta, una errata o algo confuso? Toca <strong>💬 Comentarios</strong> arriba, o <strong>⚐ Reportar</strong> en cualquier tarjeta. Tu mensaje llega al autor en segundos y <strong>de verdad se corrige</strong> — cada reporte mejora este banco para el siguiente. Sin registro, 5 segundos. ¡Úsalo!</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 Inicia sesión — ¡guarda y recarga tu historial!</strong> Toca <strong>👤</strong> arriba y elige un código personal (ideal para móviles — sin correo, sin recuperar contraseña). Cada ronda se guarda sola y puedes <strong>recargar cualquiera de tus últimas 10 rondas en cualquier dispositivo</strong> — tus respuestas vuelven tal como las dejaste. El mismo código muestra el mismo historial en todas partes.</li><li><strong>Tema (🌙 / ☀️)</strong>: cambia entre claro y oscuro — tu elección se guarda y sigue el sistema por defecto. El menú 🌐 al lado cambia el idioma.</li><li><strong>✨ Animaciones</strong>: alterna el nivel de animaciones — completas ✨ → reducidas (el botón se atenúa) → desactivadas; tu elección se guarda y aplica en todo el sitio.</li><li><strong>← Catálogo</strong>: vuelve a la lista de bancos para cambiar de banco, o abre varios a la vez y practícalos combinados.</li><li><strong>Filtrar bancos (Seleccionar todo / Ninguno / Confirmar)</strong>: marca los conjuntos que quieras practicar — combina varios — y pulsa Confirmar. Al abrir varios bancos juntos se fusionan los duplicados automáticamente; un banco protegido pide su contraseña una vez antes de unirse.</li><li><strong>Mezclar y reiniciar</strong>: baraja las preguntas del alcance actual y borra las selecciones de esta ronda.</li><li><strong>Envío automático</strong>: al activarlo, hacer clic en una opción califica al instante.</li><li><strong>Barra de progreso y “Siguiente sin responder →”</strong>: la barra fija de arriba muestra cuántas preguntas de la lista has respondido; toca <strong>Siguiente sin responder →</strong> para saltar a la próxima que aún no hayas enviado.</li><li><strong>▦ Hoja de respuestas</strong>: abre un minimapa de la lista actual — verde = correcta, rojo = incorrecta, punto = favorita; toca una celda para saltar a esa pregunta.</li><li><strong>⌨️ Atajos de teclado</strong>: pulsa <strong>?</strong> para ver la hoja completa — J/K mueven entre preguntas, 1-9 eligen opción, Enter envía, F marca favorita, N salta a la siguiente sin responder, R rehace.</li><li><strong>Resumen</strong>: resumen de esta sesión — respondidas, precisión, tiempo, tus falladas de la sesión (toca una para volver) y tu calendario de práctica.</li><li><strong>🎯 Meta diaria</strong>: fija cuántas preguntas quieres practicar al día; el contador junto a 🎯 avanza al responder y celebra cuando la logras.</li><li><strong>150 al azar</strong>: sortea 150 preguntas del alcance actual, priorizando las menos practicadas; púlsalo otra vez (pasa a <strong>· Repetir</strong>) para un nuevo sorteo. Oculto si hay 150 o menos.</li><li><strong>Volver a las 150</strong>: regresa al sorteo de esta ronda (oculto hasta que sortees uno).</li><li><strong>Solo errores (N)</strong>: muestra solo tus errores; acertar NO los quita — usa <strong>Quitar de errores</strong> en la tarjeta, o <strong>Quitar todo de errores</strong> para vaciar la lista de una vez.</li><li><strong>Solo favoritas (N)</strong>: muestra solo las marcadas; toca <strong>☆</strong> en cualquier tarjeta, o <strong>Quitar todas las favoritas</strong> para vaciarlas de una vez.</li><li><strong>Volver a todo</strong>: sal de la vista de errores/favoritas/sorteo y vuelve a la lista completa.</li><li><strong>Borrar selecciones de esta lista</strong>: borra todas las respuestas seleccionadas de la lista actual (se conservan errores/favoritas).</li><li><strong>Enviar respuesta / Rehacer</strong>: califica la pregunta; Rehacer permite contestarla de nuevo.</li><li><strong>Mostrar respuestas</strong>: tras enviar una pregunta de rellenar, muestra las respuestas aceptadas. La calificación ignora mayúsculas y espacios (<code>check list</code> = <code>checklist</code>) y trata como iguales los números equivalentes (<code>1,000</code> = <code>1000</code>).</li><li><strong>Línea de estadísticas</strong> (junto a la barra): muestra cuántas preguntas hay en vista, tu puntuación y precisión, y cuántos errores quedan en el alcance actual.</li>',
+        guide_html: '<li data-coffee style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--locked-bg);border:1px solid var(--locked-border);border-radius:10px"><strong>☕ Invítame a un café — el botón junto al filtro</strong> Este banco es gratis y sin anuncios, hecho por una sola persona. Toca <strong>☕</strong>, mira cómo se prepara un café recién hecho y luego deja <strong>$5 / $10 / $20</strong> o lo que quieras por PayPal. Totalmente opcional — mantiene este banco con cafeína y creciendo. 🙏</li><li data-feedback style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--brand-weak);border:1px solid var(--brand);border-radius:10px"><strong>💬 Comentarios y ⚐ Reportar — ¡los botones más útiles!</strong> ¿Una respuesta incorrecta, una errata o algo confuso? Toca <strong>💬 Comentarios</strong> arriba, o <strong>⚐ Reportar</strong> en cualquier tarjeta. Tu mensaje llega al autor en segundos y <strong>de verdad se corrige</strong> — cada reporte mejora este banco para el siguiente. Sin registro, 5 segundos. ¡Úsalo!</li><li style="list-style:none;margin:0 0 12px -18px;padding:11px 14px;background:var(--ok-bg);border:1px solid var(--ok-border);border-radius:10px"><strong>👤 Inicia sesión — ¡guarda y recarga tu historial!</strong> Toca <strong>👤</strong> arriba y elige un código personal (ideal para móviles — sin correo, sin recuperar contraseña). Cada ronda se guarda sola y puedes <strong>recargar cualquiera de tus últimas 10 rondas en cualquier dispositivo</strong> — tus respuestas vuelven tal como las dejaste. El mismo código muestra el mismo historial en todas partes.</li><li><strong>Tema (🌙 / ☀️)</strong>: cambia entre claro y oscuro — tu elección se guarda y sigue el sistema por defecto. El menú 🌐 al lado cambia el idioma.</li><li><strong>✨ Animaciones</strong>: alterna el nivel de animaciones — completas ✨ → reducidas (el botón se atenúa) → desactivadas; tu elección se guarda y aplica en todo el sitio.</li><li><strong>← Catálogo</strong>: vuelve a la lista de bancos para cambiar de banco, o abre varios a la vez y practícalos combinados.</li><li><strong>Filtrar bancos (Seleccionar todo / Ninguno / Confirmar)</strong>: marca los conjuntos que quieras practicar — combina varios — y pulsa Confirmar. Al abrir varios bancos juntos se fusionan los duplicados automáticamente; un banco protegido pide su contraseña una vez antes de unirse.</li><li><strong>Mezclar y reiniciar</strong>: baraja las preguntas del alcance actual y borra las selecciones de esta ronda.</li><li><strong>Envío automático</strong>: al activarlo, hacer clic en una opción califica al instante.</li><li><strong>Barra de progreso y “Siguiente sin responder →”</strong>: la barra fija de arriba muestra cuántas preguntas de la lista has respondido; toca <strong>Siguiente sin responder →</strong> para saltar a la próxima que aún no hayas enviado.</li><li><strong>▦ Hoja de respuestas</strong>: abre un minimapa de la lista actual — verde = correcta, rojo = incorrecta, punto = favorita; toca una celda para saltar a esa pregunta.</li><li><strong>⌨️ Atajos de teclado</strong>: pulsa <strong>?</strong> para ver la hoja completa — J/K mueven entre preguntas, 1-9 eligen opción, Enter envía, F marca favorita, N salta a la siguiente sin responder, R rehace.</li><li><strong>Resumen</strong>: resumen de esta sesión — respondidas, precisión, tiempo, tus falladas de la sesión (toca una para volver) y tu calendario de práctica.</li><li><strong>🎯 Meta diaria</strong>: fija cuántas preguntas quieres practicar al día; el contador junto a 🎯 avanza al responder y celebra cuando la logras.</li><li><strong>150 al azar</strong>: sortea 150 preguntas del alcance actual, priorizando las menos practicadas; púlsalo otra vez (pasa a <strong>· Repetir</strong>) para un nuevo sorteo. Oculto si hay 150 o menos.</li><li><strong>Volver a las 150</strong>: regresa al sorteo de esta ronda (oculto hasta que sortees uno).</li><li><strong>Solo errores (N)</strong>: muestra solo tus errores; acertar NO los quita — usa <strong>Quitar de errores</strong> en la tarjeta, o <strong>Quitar todo de errores</strong> para vaciar la lista de una vez.</li><li><strong>Solo favoritas (N)</strong>: muestra solo las marcadas; toca <strong>☆</strong> en cualquier tarjeta, o <strong>Quitar todas las favoritas</strong> para vaciarlas de una vez.</li><li><strong>Volver a todo</strong>: sal de la vista de errores/favoritas/sorteo y vuelve a la lista completa.</li><li><strong>Borrar selecciones de esta lista</strong>: borra todas las respuestas seleccionadas de la lista actual (se conservan errores/favoritas).</li><li><strong>Enviar respuesta / Rehacer</strong>: califica la pregunta; Rehacer permite contestarla de nuevo.</li><li><strong>Mostrar respuestas</strong>: tras enviar una pregunta de rellenar, muestra las respuestas aceptadas. La calificación ignora mayúsculas y espacios (<code>check list</code> = <code>checklist</code>) y trata como iguales los números equivalentes (<code>1,000</code> = <code>1000</code>).</li><li><strong>Línea de estadísticas</strong> (junto a la barra): muestra cuántas preguntas hay en vista, tu puntuación y precisión, y cuántos errores quedan en el alcance actual.</li>',
       },
     };
     let uiLang = (function(){ try{ const v = localStorage.getItem(UI_LANG_KEY); return I18N[v] ? v : "en"; }catch(_e){ return "en"; } })();
@@ -1078,6 +1168,9 @@
                  .replace("旁边的 🌐 菜单切换界面语言。", "")
                  .replace(" El menú 🌐 al lado cambia el idioma.", "");
         }
+        // Keep optional support after the learning controls in every language.
+        const coffeeGuide = gh.match(/<li data-coffee[\s\S]*?<\/li>/);
+        if (coffeeGuide) gh = gh.replace(coffeeGuide[0], "") + coffeeGuide[0];
         guideList.innerHTML = gh;
       }
       const sel = document.getElementById("ui-lang");
@@ -3270,45 +3363,34 @@
     }
 
     /* ------------------ 新手教程（首次打开，英文，可 Skip） ------------------ */
-    // v3：把「☕ Buy me a coffee」做成教程第一页（咖啡师现做动画）。bump 版本号让老用户也再弹一次。
+    // Keep the existing completion key; returning learners do not repeat the tour.
     const TUTORIAL_KEY = "qb_tutorial_done_v3"; // 故意不带命名空间：同域名任意题库页看过一次即可
     const TUTORIAL_STEPS = [
-      { title: "☕ Buy me a coffee",
-        body: "This question bank is free, ad-free and built by one person. The ☕ button (top-right) makes a fresh coffee just for you, then lets you tip $5/$10/$20 or any amount via PayPal — it keeps this bank caffeinated and growing. Totally optional, but it means a lot. 🙏",
-        sel: "#coffee-btn" },
-      { title: "⭐ Found an error? Tell me — this really works!",
-        body: "The single most useful button here. Tap 💬 Feedback at the top, or ⚐ Report on any question card, to flag a wrong answer, a typo, or anything unclear. Your message reaches me in seconds and I actually fix it — every report makes this bank better for the next person. No sign-up, takes 5 seconds. Please use it!",
-        sel: "#suggest-btn" },
-      { title: "👤 Sign in to save your history",
-        body: "Tap 👤 at the top and pick a personal code — great on phones, no email or password reset. Every round you answer is then saved automatically, and you can reload any of your last 10 rounds on any device — your answers come back exactly as you left them. The same code shows the same history everywhere, so you can sign in from the catalog page too.",
-        sel: "#account-btn" },
-      { title: "Welcome 👋",
-        body: "Every question lives on this single page — scroll and answer at your own pace. Wrong answers, starred questions and attempt counts are saved on this device automatically. Open the ☰ menu (top-right) to switch language, toggle light/dark 🌙, adjust ✨ animations, reopen this tour, or open the Button Guide.",
+      { title: "Welcome to your practice",
+        body: "Take one question at a time. Choose your question banks in the filter, then scroll and practice at your own pace. Your mistakes and stars are saved on this device.",
+        zh: ["欢迎开始练习", "一次专注一道题。通过筛选选择题库，再按自己的节奏作答。错题和收藏会自动保存在当前设备。"],
+        es: ["Tu espacio de práctica", "Concéntrate en una pregunta a la vez. Elige los bancos con el filtro y practica a tu ritmo. Los errores y favoritos se guardan en este dispositivo."],
         sel: null },
-      { title: "☰ Menu — language, theme & more",
-        body: "Tap the ☰ button at the top to open the menu: switch language (English / 中文 / Español), toggle 🌙 light or dark, adjust ✨ animations, open the Button Guide, or reopen this tutorial anytime.",
-        sel: "#qb-menu-btn" },
-      { title: "Pick your question banks",
-        body: "Open “Filter Question Banks”, tick one or several question sets (you can combine multiple banks and practice them together), then press Confirm.",
-        sel: ".filter-panel" },
-      { title: "Shuffle & start",
-        body: "“Randomize + Reset” shuffles the questions in the current scope and clears this round's selections.",
-        sel: "#btn-random" },
       { title: "Answering",
-        body: "Click a choice, then press “Submit Answer” — or turn on Auto Submit to grade instantly. Fill-in answers ignore case and spacing (check list = checklist); after submitting you can reveal answers with “Show Correct Answers”.",
+        body: "Choose an answer, then press “Submit Answer”. Auto Submit grades as soon as you choose. After submitting, use “Show Correct Answers” to reveal the answer and any explanation.",
+        zh: ["如何作答", "选择答案后点击“提交答案”。开启自动提交后，选择即评分。提交后可点击“显示正确答案”查看答案及已有解析。"],
+        es: ["Cómo responder", "Elige una opción y pulsa “Enviar respuesta”. El envío automático evalúa al elegir. Después, muestra las respuestas correctas para ver la solución y las explicaciones disponibles."],
         sel: "#btn-auto" },
       { title: "Track your progress",
-        body: "A sticky bar at the top of the list shows how many questions you've answered. Tap “Next unanswered →” to jump straight to the next question you haven't submitted yet — handy in a long list.",
+        body: "The progress bar keeps your place. Use “Next unanswered” to continue, the answer sheet to jump between questions, and Session recap to review your round.",
+        zh: ["掌握练习进度", "进度条显示作答进展。“下一道未答题”帮你继续练习，答题卡可快速跳转，练习总结可回顾本轮表现。"],
+        es: ["Sigue tu progreso", "La barra muestra tu avance. Continúa con la siguiente pregunta sin responder, salta entre preguntas con la hoja de respuestas y revisa la ronda con el resumen."],
         sel: "#quiz-progress" },
-      { title: "Star questions ⭐",
-        body: "Tap the ☆ in a question card's corner to bookmark it — tap again to remove. Open “Star Only” in the toolbar to revisit your starred questions anytime. Stars are saved on this device automatically.",
-        sel: ".question-card .star-btn" },
       { title: "Review what you missed",
-        body: "“Wrong Only” re-practices your mistakes — a question stays there until you press “Remove from wrong” on its card. “Back to All” returns to the full filtered list.",
+        body: "Use “Wrong Only” to revisit mistakes, or star a question and return with “Star Only”. Remove a question from your wrong list on its card when you are ready. “Back to All” restores the full list.",
+        zh: ["回顾与巩固", "通过“只看错题”复习错误，或收藏题目后通过“只看收藏”重练。掌握后可在题卡中移出错题。“返回全部”恢复完整列表。"],
+        es: ["Repasa y consolida", "Revisa tus errores o marca preguntas como favoritas para volver a ellas. Retira una pregunta de la lista de errores desde su tarjeta cuando estés listo. Vuelve a todas para ver la lista completa."],
         sel: "#btn-wrong" },
-      { title: "Random 150",
-        body: "When more than 150 questions are in scope, “Random Choose 150” draws an exam-sized set weighted toward questions you've practiced least; press it again for a fresh reroll. “Back to Current 150” returns to the same draw. (Hidden when the scope has 150 questions or fewer.)",
-        sel: "#btn-random150" },
+      { title: "Make this space yours",
+        body: "Open the menu for language, theme, animation settings and the full Button Guide. Sign in for practice history, or use Feedback to suggest a correction. Optional coffee support is beside the bank filter.",
+        zh: ["按你的习惯练习", "菜单中可调整语言、主题与动效，并查看完整按钮说明。登录可查看练习历史，反馈可提交修正建议。题库筛选旁提供可选咖啡支持。"],
+        es: ["Practica a tu manera", "Abre el menú para ajustar idioma, tema y animaciones o consultar la guía. Inicia sesión para el historial y envía sugerencias con Comentarios. El apoyo opcional con un café está junto al filtro."],
+        sel: "#qb-menu-btn" },
     ];
     let tutorialStepIdx = 0;
     let tutorialHighlighted = null;
@@ -3328,11 +3410,15 @@
       if (!steps.length){ endTutorial(); return; }
       if (tutorialStepIdx >= steps.length) tutorialStepIdx = steps.length - 1;
       const step = steps[tutorialStepIdx];
-      document.getElementById("tut-step-label").textContent = `Step ${tutorialStepIdx + 1} / ${steps.length}`;
-      document.getElementById("tut-title").textContent = step.title;
-      document.getElementById("tut-body").textContent = step.body;
+      const tourLang = uiLang;
+      const tourCopy = step[tourLang];
+      document.getElementById("tut-step-label").textContent = `${tourLang === "zh" ? "步骤" : tourLang === "es" ? "Paso" : "Step"} ${tutorialStepIdx + 1} / ${steps.length}`;
+      document.getElementById("tut-title").textContent = tourCopy ? tourCopy[0] : step.title;
+      document.getElementById("tut-body").textContent = tourCopy ? tourCopy[1] : step.body;
       document.getElementById("tut-back").hidden = tutorialStepIdx === 0;
-      document.getElementById("tut-next").textContent = tutorialStepIdx === steps.length - 1 ? "Done" : "Next";
+      document.getElementById("tut-skip").textContent = tourLang === "zh" ? "跳过" : tourLang === "es" ? "Omitir" : "Skip";
+      document.getElementById("tut-back").textContent = tourLang === "zh" ? "上一步" : tourLang === "es" ? "Atrás" : "Back";
+      document.getElementById("tut-next").textContent = tutorialStepIdx === steps.length - 1 ? (tourLang === "zh" ? "开始练习" : tourLang === "es" ? "Listo" : "Done") : (tourLang === "zh" ? "下一步" : tourLang === "es" ? "Siguiente" : "Next");
       tutorialClearHighlight();
       if (step.sel){
         const el = document.querySelector(step.sel);
@@ -4154,4 +4240,3 @@
 
 </body>
 </html>
-
