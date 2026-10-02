@@ -939,9 +939,9 @@
       if(key==='conflicts')return uiLang==='zh'?'收藏冲突':uiLang==='es'?'Conflictos de favoritos':'Star conflicts';
       if(key==='cloudRecovery')return uiLang==='zh'?'恢复云端截点':uiLang==='es'?'Recuperar corte de nube':'Recover cloud checkpoint';
       const copy = {
-        en:{initializing:"Opening local learning storage…",saving:"Saving on this device…",saved:"Saved on this device · sync is separate",error:"Not saved: ",closed:"Learning writer closed",history:"Learning history",backup:"Export backup",restore:"Import backup",importBank:"Register & save a new JSON bank",missing:"Registered bank content is not available offline yet.",unsupported:"This bank has no registered v2 content. Protected/shared legacy practice is not enabled in this candidate.",empty:"Import a new bank explicitly. Existing localStorage banks are not migrated.",quarantine:"Account backup isolated. Online tombstone reconciliation is required before activation."},
-        zh:{initializing:"正在打开本地学习存储…",saving:"正在保存到本设备…",saved:"已保存到本设备 · 云同步另行处理",error:"未保存：",closed:"学习写者已关闭",history:"学习历史",backup:"导出备份",restore:"导入备份",importBank:"注册并保存新 JSON 题库",missing:"本设备尚无可离线使用的注册题库正文。",unsupported:"此题库没有 v2 注册正文。本候选尚未支持受保护或旧分享题库。",empty:"请明确导入新题库；不会迁移已有 localStorage 题库。",quarantine:"账号备份已隔离；联网核对最新墓碑前不会激活。"},
-        es:{initializing:"Abriendo almacenamiento local…",saving:"Guardando en este dispositivo…",saved:"Guardado en este dispositivo · sincronización aparte",error:"No guardado: ",closed:"Escritor cerrado",history:"Historial de aprendizaje",backup:"Exportar copia",restore:"Importar copia",importBank:"Registrar y guardar un banco JSON nuevo",missing:"El contenido registrado aún no está disponible sin conexión.",unsupported:"Este banco no tiene contenido v2 registrado. Bancos protegidos/compartidos antiguos no están habilitados.",empty:"Importa un banco nuevo explícitamente. No se migran bancos de localStorage.",quarantine:"Copia de cuenta aislada; requiere comprobar las eliminaciones en línea."}
+        en:{initializing:"Opening local learning storage…","waiting-writer":"Waiting for another page’s editing lock to release (about 15 seconds after it leaves). An active page may keep the lock; recovery can time out.",saving:"Saving on this device…",saved:"Saved on this device · sync is separate",error:"Not saved: ",closed:"Learning writer closed",history:"Learning history",backup:"Export backup",restore:"Import backup",importBank:"Register & save a new JSON bank",missing:"Registered bank content is not available offline yet.",unsupported:"This bank has no registered v2 content. Protected/shared legacy practice is not enabled in this candidate.",empty:"Import a new bank explicitly. Existing localStorage banks are not migrated.",quarantine:"Account backup isolated. Online tombstone reconciliation is required before activation."},
+        zh:{initializing:"正在打开本地学习存储…","waiting-writer":"正在等待其他页面释放编辑权限（离页后最多约15秒）。若另一页面仍在编辑，恢复可能超时。",saving:"正在保存到本设备…",saved:"已保存到本设备 · 云同步另行处理",error:"未保存：",closed:"学习写者已关闭",history:"学习历史",backup:"导出备份",restore:"导入备份",importBank:"注册并保存新 JSON 题库",missing:"本设备尚无可离线使用的注册题库正文。",unsupported:"此题库没有 v2 注册正文。本候选尚未支持受保护或旧分享题库。",empty:"请明确导入新题库；不会迁移已有 localStorage 题库。",quarantine:"账号备份已隔离；联网核对最新墓碑前不会激活。"},
+        es:{initializing:"Abriendo almacenamiento local…","waiting-writer":"Esperando que otra página libere la edición (unos 15 segundos tras salir). Una página activa puede mantener el bloqueo; la recuperación puede agotar el tiempo.",saving:"Guardando en este dispositivo…",saved:"Guardado en este dispositivo · sincronización aparte",error:"No guardado: ",closed:"Escritor cerrado",history:"Historial de aprendizaje",backup:"Exportar copia",restore:"Importar copia",importBank:"Registrar y guardar un banco JSON nuevo",missing:"El contenido registrado aún no está disponible sin conexión.",unsupported:"Este banco no tiene contenido v2 registrado. Bancos protegidos/compartidos antiguos no están habilitados.",empty:"Importa un banco nuevo explícitamente. No se migran bancos de localStorage.",quarantine:"Copia de cuenta aislada; requiere comprobar las eliminaciones en línea."}
       }; return (copy[typeof uiLang === 'string' ? uiLang : 'en'] || copy.en)[key] || key;
     }
     function dataV2Status(value){ if(value.state==='closed')QUESTION_RASTER_DISPLAY?.clear();if(value.state==='saving')dataV2InvalidateSync();const node=document.getElementById('qb-v2-save-status'); if(node) {node.textContent=dataV2Text(value.state)+(value.error ? value.error : '');node.dataset.state=value.state;} }
@@ -966,7 +966,8 @@
       updateAuthUI();
     }
     async function ensureDataV2Session(){
-      if(DATA_V2_SESSION) return DATA_V2_SESSION;
+      if(DATA_V2_SESSION && !DATA_V2_SESSION.snapshot().closed) return DATA_V2_SESSION;
+      if(DATA_V2_SESSION){DATA_V2_SESSION=null;DATA_V2_SESSION_READY=null;DATA_V2_SESSION_BOUND=false;}
       if(DATA_V2_SESSION_READY) return DATA_V2_SESSION_READY;
       installDataV2Tools();
       const generation=DATA_V2_SESSION_GENERATION;
@@ -1015,6 +1016,20 @@
     }
     async function dataV2Local(){
       const generation=DATA_V2_SESSION_GENERATION;showQuizApp();const session=await ensureDataV2Session();if(!dataV2Current(generation,session))return;
+      const action=new URLSearchParams(location.search).get('workbench');
+      if(action){
+        const params=new URLSearchParams(location.search),current=()=>dataV2Current(generation,session);
+        if(action==='history'){const attempt=params.get('attempt');if(attempt)await dataV2LoadHistory(attempt);else await dataV2History();return;}
+        if(action==='legacy-local'){await dataV2History();return;}
+        if(action==='recovery'){document.getElementById('quiz').textContent=uiLang==='zh'?'请点击“恢复云端截点”，或使用上方导入/同步/历史工具。':'Use Recover cloud checkpoint, import, sync or history above.';dataV2Status({state:'idle'});return;}
+        if(action==='legacy-bank'||action==='legacy-history'){
+          const client=await dataV2LegacyClient(),id=params.get('id');let cursor=null,item=null;
+          for(let page=0;page<20;page++){const result=await (action==='legacy-bank'?client.listBanks:client.listHistory)({limit:5,cursor});if(!current())return;item=result.items.find(row=>row.id===id);if(item||result.nextCursor===null)break;cursor=result.nextCursor;}
+          if(!item)throw new Error('ARCHIVED_REFERENCE_NOT_FOUND');
+          if(action==='legacy-bank')await dataV2LegacyPracticeBank(item,current);else await dataV2LegacyRestoreHistory(item,current);return;
+        }
+        throw new Error('UNSUPPORTED_WORKBENCH_ACTION');
+      }
       const records=(await session.repository.readRecords('bank_revisions')).filter(row=>['private','protected'].includes(row.metadata.visibility));if(!dataV2Current(generation,session))return;
       const requested=new URLSearchParams(location.search).get('bank');
       const chosen=records.find(row=>row.bankUid===requested);
@@ -1347,7 +1362,14 @@
       if (ACCOUNT_V2_RESUME_EPOCH === before.epoch){ renderCandidateAccountRecovery(before); return Promise.resolve(before); }
       ACCOUNT_V2_RESUME_EPOCH = before.epoch;
       const controller=ACCOUNT_V2;
-      const flight=controller.resume().then(next => { if (ACCOUNT_V2===controller && controller.snapshot().epoch===next.epoch) { ACCOUNT_V2_STATE = next; ACCOUNT_V2_RESUME_EPOCH=next.epoch; renderCandidateAccountRecovery(next); } return next; }).catch(error => {
+      const flight=Promise.resolve().then(async()=>{
+        // Resume advances the account epoch. Release while the old epoch and
+        // session guard are still current, before subscription resets close it.
+        const session=DATA_V2_SESSION;
+        if(session&&!session.snapshot().closed)await session.pauseWriting();
+        if(ACCOUNT_V2!==controller||controller.snapshot().epoch!==before.epoch||JSON.stringify(controller.snapshot().owner)!==JSON.stringify(before.owner))return null;
+        return controller.resume();
+      }).then(next => { if (next && ACCOUNT_V2===controller && controller.snapshot().epoch===next.epoch) { ACCOUNT_V2_STATE = next; ACCOUNT_V2_RESUME_EPOCH=next.epoch; renderCandidateAccountRecovery(next); } return next; }).catch(error => {
         if(ACCOUNT_V2===controller)ACCOUNT_V2_RESUME_EPOCH=null;
         if (!ACCOUNT_V2 || (error && error.code === "STALE_REQUEST")) return;
         const next = ACCOUNT_V2.snapshot(); ACCOUNT_V2_STATE = next; renderCandidateAccountRecovery(next); return next;
@@ -1373,9 +1395,9 @@
             renderCandidateAccountRecovery(next);
           });
           ["focus", "pageshow"].forEach(function(eventName){
-            globalThis.addEventListener(eventName, function(){
+            globalThis.addEventListener(eventName, function(event){
               if (!ACCOUNT_V2 || ACCOUNT_V2_UI_OPERATION) { if (ACCOUNT_V2) updateAuthUI(); return; }
-              ACCOUNT_V2_READY.then(function(controller){if(controller===ACCOUNT_V2&&!ACCOUNT_V2_UI_OPERATION)resumeCandidateAccountRecovery(eventName);});
+              ACCOUNT_V2_READY.then(async function(controller){if(controller!==ACCOUNT_V2||ACCOUNT_V2_UI_OPERATION)return;await resumeCandidateAccountRecovery(eventName);if(eventName==='pageshow'&&event.persisted&&DATA_V2_ENABLED&&DATA_V2_SESSION?.snapshot().closed){DATA_V2_SESSION_GENERATION++;DATA_V2_BOOT_SEQUENCE++;DATA_V2_SESSION=null;DATA_V2_SESSION_READY=null;DATA_V2_SESSION_BOUND=false;if(/\/local(?:\.html)?$/.test(location.pathname))await dataV2Local();else if(DATA_V2_BODIES.length)await startDataV2Quiz(DATA_V2_BODIES.flatMap(bank=>structuredClone(bank.content.questions)));}}).catch(error=>{if(DATA_V2_ENABLED)dataV2Status({state:'error',error:error.code||error.message});});
             });
           });
           return ACCOUNT_V2.resume().then(function(next){ACCOUNT_V2_STATE=next;ACCOUNT_V2_RESUME_EPOCH=next.epoch;DATA_V2_ACCOUNT_INITIALIZED=true;return ACCOUNT_V2;}).catch(function(error){if(error&&error.code==='STALE_REQUEST'){DATA_V2_ACCOUNT_INITIALIZED=true;return ACCOUNT_V2;}throw error;});
@@ -1423,8 +1445,8 @@
       const sheetGrid = document.getElementById("qb-sheet-grid"); if (sheetGrid) sheetGrid.innerHTML = "";
       closeHistory();
       // Do not read, delete, or restore the legacy qb_restore entry in candidate mode.
-      if(DATA_V2_ENABLED&&!sameOwner&&(location.pathname.endsWith('/local.html')||DATA_V2_BODIES.some(bank=>!bank.staticRef))){
-        if(location.pathname.endsWith('/local.html')){const url=new URL(location.href);url.searchParams.delete('bank');history.replaceState(history.state,'',url);}
+      if(DATA_V2_ENABLED&&!sameOwner&&(/\/local(?:\.html)?$/.test(location.pathname)||DATA_V2_BODIES.some(bank=>!bank.staticRef))){
+        if(/\/local(?:\.html)?$/.test(location.pathname)){const url=new URL(location.href);url.searchParams.delete('bank');history.replaceState(history.state,'',url);}
         DATA_V2_BODIES=[];RAW_QUESTION_BANK=[];QUESTION_BANK=[];
         startLegacyQuiz([]);setPageHeading(uiLang==='zh'?'请选择题库':uiLang==='es'?'Elige un banco':'Choose a bank');
         const quiz=document.getElementById('quiz');if(quiz)quiz.textContent=uiLang==='zh'?'身份已改变。请选择该身份的题库或明确注册新 JSON；不会自动认领之前的私有资料。':uiLang==='es'?'La identidad cambió. Elige su banco o registra un JSON nuevo; los datos privados anteriores no se transfieren.':'Identity changed. Choose this owner’s bank or explicitly register a new JSON; prior private data is not transferred.';

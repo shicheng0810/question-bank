@@ -15259,7 +15259,7 @@ async function z1({ owner: t = null, signal: e, isCurrent: a = () => !0, onStatu
         break;
       } catch (le) {
         if (le.code !== "LEASE_BUSY" || Date.now() >= H) throw le;
-        h("saving", le), await new Promise((j) => setTimeout(j, 250)), T();
+        h("waiting-writer"), await new Promise((j) => setTimeout(j, 250)), T();
       }
     T(), p = setInterval(() => {
       c || !r || F(async () => {
@@ -15467,6 +15467,11 @@ async function z1({ owner: t = null, signal: e, isCurrent: a = () => !0, onStatu
     },
     async cleanupDeletedOwner(K) {
       return clearInterval(p), c = !0, y.cleanupDeletedOwner(K);
+    },
+    pauseWriting() {
+      return F(async () => {
+        clearInterval(p), p = null, r && (await R.releaseWriter({ token: r }), r = null);
+      }, !1);
     },
     async flush() {
       if (await f, T(), I) throw I;

@@ -479,7 +479,7 @@
       </div>
     </div>
   </div>
-  <div id="account-v2-learning-notice" hidden style="margin:14px 0;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--muted);font-size:13px">Candidate account mode: practice progress is memory-only in this release; it is not saved or synced.</div>
+  <div id="account-v2-learning-notice" hidden style="margin:14px 0;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--muted);font-size:13px">Saved on this device; cloud sync requires confirmation. Original archives are retained.</div>
 
   <button class="coffee-fab" id="coffee-btn" type="button" onclick="openCoffee()" data-testid="coffee-btn" aria-label="Buy me a coffee">
     <span class="cf-emoji" aria-hidden="true">☕</span><span class="cf-text" data-i18n="coffee_fab">Click me for fun!</span>
@@ -718,7 +718,7 @@
     function renderLocalBanks(){
       var grid = document.getElementById("local-grid");
       if (!grid) return;
-      if (ACCOUNT_V2_CANDIDATE){ grid.hidden = true; grid.innerHTML = ""; return; }
+      if (ACCOUNT_V2_CANDIDATE){ grid.hidden = false; catalogV2Refresh(); return; }
       var banks = loadLocalBanks();
       var ids = Object.keys(banks);
       grid.innerHTML = ids.map(function(id){
@@ -939,7 +939,7 @@
     // 文件导入与粘贴导入共用这一条通道（以前只有文件一条路，而免费额度的 AI 给不出文件）。
     // opts.append=true：把这一批并进同名题库（分批粘贴用），不覆盖。
     function importBankText(text, title, opts){
-      if (ACCOUNT_V2_CANDIDATE){ importMessage("Local import is unavailable in candidate mode.", true); return false; }
+      if (ACCOUNT_V2_CANDIDATE){ if(!globalThis.QB_DATA_V2_CONFIG.enabled){importMessage('Learning storage is not enabled.',true);return false;}return catalogV2Import(text,title,opts||{}); }
       opts = opts || {};
       var parsed = parseBankFromText(text);
       if (!parsed.list){ importMessage(T("err_parse"), true); return false; }
@@ -990,14 +990,14 @@
 
       // 粘贴导入：免费额度的主路径 —— 直接把聊天回复整段贴进来，不需要存文件
       var btn = document.getElementById("paste-go");
-      if (btn) btn.addEventListener("click", function(){
+      if (btn) btn.addEventListener("click", async function(){
         var box = document.getElementById("paste-text");
         var nameEl = document.getElementById("paste-name");
         var appendEl = document.getElementById("paste-append");
         var text = box ? box.value : "";
         if (!String(text).trim()){ importMessage(T("err_paste_empty"), true); return; }
         var title = String((nameEl && nameEl.value) || "").trim() || T("paste_default_name");
-        if (importBankText(text, title, { append: !!(appendEl && appendEl.checked) })){
+        if (await importBankText(text, title, { append: !!(appendEl && appendEl.checked) })){
           if (box) box.value = ""; // 清空好接着贴下一批
         }
       });
@@ -1007,6 +1007,7 @@
       document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
       renderLocalBanks(); // 本地卡片直接用 T() 重建
       document.querySelectorAll("[data-i18n]").forEach(function(el){ el.textContent = T(el.getAttribute("data-i18n")); });
+      if(ACCOUNT_V2_CANDIDATE&&globalThis.QB_DATA_V2_CONFIG.enabled){var pasteDescription=document.querySelector('[data-i18n="paste_desc"]');if(pasteDescription)pasteDescription.textContent=catalogV2Text('Each import creates a new bank copy. Combine batches before importing; appending is not available yet.','每次导入创建新版副本；请先合并分批内容。分批追加暂不可用。','Cada importación crea una copia nueva. Combina los lotes antes; añadir no está disponible.');var appendLabel=document.querySelector('[data-i18n="paste_append"]');if(appendLabel)appendLabel.textContent=catalogV2Text('Appending is not available in the new system','新版暂不支持分批追加','Añadir lotes no está disponible en el sistema nuevo');}
       document.querySelectorAll("[data-i18n-ph]").forEach(function(el){ el.setAttribute("placeholder", T(el.getAttribute("data-i18n-ph"))); });
       document.querySelectorAll("[data-qcount]").forEach(function(el){ el.textContent = T("count", { n: el.getAttribute("data-qcount") }); });
       document.querySelectorAll("[data-progress-for]").forEach(function(el){
@@ -1140,14 +1141,24 @@
         var hint = document.getElementById("catalog-login-hint");
         var sub = document.getElementById("catalog-sub");
         var notice = document.getElementById("account-v2-learning-notice");
+        if(!globalThis.QB_DATA_V2_CONFIG.enabled){
+          if(notice)notice.hidden=false;if(title)title.textContent='Account access';if(hint)hint.textContent=T('account_recovery_tab_session')+' Practice is memory-only; learning storage is not enabled.';if(sub)sub.textContent='Public banks remain available. Learning storage is not enabled.';
+          ['local-grid','cloud-box'].forEach(function(id){var node=document.getElementById(id);if(node)node.hidden=true;});var disabledImport=document.querySelector('[data-testid="import-box"]');if(disabledImport)disabledImport.hidden=true;
+          var accountOnlyReady=ACCOUNT_V2_STATE&&ACCOUNT_V2_STATE.phase==='ready',accountOnlyBusy=!!(ACCOUNT_V2_STATE&&['authenticating','checking','deleting'].includes(ACCOUNT_V2_STATE.phase)),accountOnlyBlocked=candidateRecoveryBlocksControls(ACCOUNT_V2_STATE)||ACCOUNT_V2_LOAD_ERROR;
+          if(lbl)lbl.textContent=sp?'Shared practice':accountOnlyReady?'Account':'Sign in';var accountOnlyButton=document.getElementById('account-btn');if(accountOnlyButton)accountOnlyButton.title=accountOnlyReady?'Account':T('login_btn');var accountOnlyRegister=document.getElementById('register-go');if(accountOnlyRegister)accountOnlyRegister.hidden=false;
+          ['account-btn','login-go','register-go','catalog-public-share-go'].forEach(function(id){var node=document.getElementById(id);if(node)node.disabled=accountOnlyBusy||accountOnlyBlocked;});var accountOnlyReminder=document.getElementById('login-reminder');if(accountOnlyReminder)accountOnlyReminder.hidden=true;
+          renderCandidateAccountRecovery(ACCOUNT_V2_STATE);return;
+        }
         if (title) title.textContent = "Account access";
-        if (hint) hint.textContent = T("account_recovery_tab_session") + " " + "Sign in or create an empty account. Catalog practice remains memory-only and is not saved or synced.";
-        if (sub) sub.textContent = "Public question banks remain available. Candidate account mode does not save, sync, or load learning history.";
-        if (notice) notice.hidden = false;
+        if (hint) hint.textContent = T("account_recovery_tab_session")+' '+catalogV2Text('Import saves on this device first; cloud sync requires confirmation.','导入先保存本机，云同步需明确确认。','La importación guarda primero en este dispositivo; la nube requiere confirmación.');
+        if (sub) sub.textContent = catalogV2Text('Private banks, imports and scores. Original cloud records remain read-only archives.','新版私有题库、导入与历史成绩。旧云资料保留为只读归档。','Bancos privados, importaciones y notas. Los archivos originales son de solo lectura.');
+        if (notice){ notice.hidden = false; notice.textContent = catalogV2Text('Device save and cloud sync are separate. Original records are not overwritten.','本机保存与云同步分开。原资料不会覆盖。','Guardado local y sincronización separados. Los originales no se sobrescriben.'); }
         var reg = document.getElementById("register-go"); if (reg) reg.hidden = false;
-        var local = document.getElementById("local-grid"); if (local) local.hidden = true;
-        var importer = document.querySelector('[data-testid="import-box"]'); if (importer) importer.hidden = true;
-        var cloud = document.getElementById("cloud-box"); if (cloud) cloud.hidden = true;
+        var local = document.getElementById("local-grid"); if (local) local.hidden = false;
+        var importer = document.querySelector('[data-testid="import-box"]'); if (importer) importer.hidden = false;
+        var append = document.getElementById('paste-append');if(append){append.checked=false;append.disabled=true;append.title='新版每次导入为新题库；分批追加尚未启用，不会覆盖已有题库。';}
+        var cloud = document.getElementById("cloud-box"); if (cloud) cloud.hidden = false;
+        catalogV2Refresh();
         var reminder = document.getElementById("login-reminder"); if (reminder) reminder.hidden = true;
         if (sp){ if (lbl) lbl.textContent = "Shared practice"; return; }
         var ready = ACCOUNT_V2_STATE && ACCOUNT_V2_STATE.phase === "ready";
@@ -1155,6 +1166,8 @@
         var candidateButton = document.getElementById("account-btn"); if (candidateButton) candidateButton.title = ready ? "Account" : T("login_btn");
         var busy = !!(ACCOUNT_V2_STATE && ["authenticating", "checking", "deleting"].includes(ACCOUNT_V2_STATE.phase));
         var blocked = candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR;
+        var learningBlocked=busy||blocked||!ACCOUNT_V2_STATE||!['guest','ready'].includes(ACCOUNT_V2_STATE.phase);
+        ['import-file','paste-go','catalog-v2-sync'].forEach(function(id){var control=document.getElementById(id);if(control)control.disabled=learningBlocked||(id==='catalog-v2-sync'&&CATALOG_V2_RETRY_KEY===catalogV2Key()&&Date.now()<CATALOG_V2_RETRY_AT);});
         ["account-btn", "login-go", "register-go", "catalog-public-share-go"].forEach(function(id){ var control = document.getElementById(id); if (control) control.disabled = busy || blocked; });
         renderCandidateAccountRecovery(ACCOUNT_V2_STATE);
         return;
@@ -1273,7 +1286,7 @@
           if (!bindAccountV2UiOperation(loginOperation, controller) || !accountV2UiOperationAcceptsTransition(loginOperation)) return;
           await controller.login(code);
           if (!accountV2UiOperationIsCurrent(loginOperation)) return;
-          loginStatus("Signed in. Catalog practice remains memory-only.", "ok"); closeLoginModal();
+          loginStatus(globalThis.QB_DATA_V2_CONFIG.enabled?catalogV2Text('Signed in. Device save and cloud sync are separate.','已登录。本机保存与云同步分开。','Sesión iniciada. Guardado local y nube separados.'):'Signed in. Catalog practice remains memory-only.', "ok"); closeLoginModal();
         }catch(e){ if (accountV2UiOperationOwns(loginOperation) && (loginOperation.epoch === null || accountV2UiOperationIsCurrent(loginOperation))) loginStatus(accountV2ErrorText(e), "err"); }
         finally { if (accountV2UiOperationOwns(loginOperation) && (loginOperation.epoch === null || accountV2UiOperationIsCurrent(loginOperation))){ if (candidateButton) candidateButton.disabled = false; finishAccountV2UiOperation(loginOperation); } }
         return;
@@ -1317,7 +1330,7 @@
         if (!bindAccountV2UiOperation(operation, controller) || !accountV2UiOperationAcceptsTransition(operation)) return;
         var result = await controller.register(code, function(){ if (!accountV2UiOperationIsCurrent(operation)) return Promise.resolve(false); return Promise.resolve(window.confirm("Create a new empty account for this code? Existing data is never restored.")); });
         if (!accountV2UiOperationIsCurrent(operation)) return;
-        if (result && result.cancelled) loginStatus("Registration cancelled.", ""); else { loginStatus("New empty account created. Catalog practice remains memory-only.", "ok"); closeLoginModal(); }
+        if (result && result.cancelled) loginStatus("Registration cancelled.", ""); else { loginStatus(globalThis.QB_DATA_V2_CONFIG.enabled?catalogV2Text('New empty account created. Import and cloud sync are explicit actions.','已创建空账号。导入与云同步需明确操作。','Cuenta vacía creada. Importación y sincronización son explícitas.'):'New empty account created. Catalog practice remains memory-only.', "ok"); closeLoginModal(); }
       }catch(e){ if (accountV2UiOperationOwns(operation) && (operation.epoch === null || accountV2UiOperationIsCurrent(operation))) loginStatus(accountV2ErrorText(e), "err"); }
       finally { if (accountV2UiOperationOwns(operation) && (operation.epoch === null || accountV2UiOperationIsCurrent(operation))){ if (button) button.disabled = false; finishAccountV2UiOperation(operation); } }
     }
@@ -1356,6 +1369,91 @@
       catch(e){ if (e && e.code !== "STALE_REQUEST" && accountV2UiOperationIsCurrent(operation)) { loginStatus(accountV2ErrorText(e), "err"); updateAuthUI(); } }
       finally { if (accountV2UiOperationIsCurrent(operation)){ updateAuthUI(); finishAccountV2UiOperation(operation); } }
     }
+    var CATALOG_V2_SESSION = null, CATALOG_V2_KEY = null, CATALOG_V2_SEQUENCE = 0, CATALOG_V2_FLIGHT = null, CATALOG_V2_HISTORY_SEQUENCE = 0, CATALOG_V2_PAGE_EPOCH = 0, CATALOG_V2_RETRY_KEY = null, CATALOG_V2_RETRY_AT = 0, CATALOG_V2_PAGE_ACTIVE = true;
+    function catalogV2Text(en,zh,es){return lang==='zh'?zh:lang==='es'?es:en;}
+    function catalogV2Key(){ return JSON.stringify([CATALOG_V2_PAGE_EPOCH,ACCOUNT_V2_STATE && ACCOUNT_V2_STATE.epoch, ACCOUNT_V2_STATE && ACCOUNT_V2_STATE.phase, ACCOUNT_V2_STATE && ACCOUNT_V2_STATE.owner]); }
+    function catalogV2Current(key){ return key === catalogV2Key() && !!ACCOUNT_V2_STATE && ['guest','ready'].includes(ACCOUNT_V2_STATE.phase) && !ACCOUNT_V2_LOAD_ERROR && !candidateRecoveryBlocksControls(ACCOUNT_V2_STATE); }
+    function catalogV2UICurrent(key){return CATALOG_V2_PAGE_ACTIVE&&catalogV2Current(key);}
+    async function catalogV2Session(){
+      await ACCOUNT_V2_READY;
+      var key=catalogV2Key();
+      if(!catalogV2Current(key) || (ACCOUNT_V2_STATE && ACCOUNT_V2_STATE.owner && ACCOUNT_V2_STATE.phase !== 'ready')) throw new Error('ACCOUNT_RECOVERY_BLOCKED');
+      if(CATALOG_V2_SESSION && CATALOG_V2_KEY===key)return CATALOG_V2_SESSION;
+      if(CATALOG_V2_FLIGHT && CATALOG_V2_FLIGHT.key===key)return CATALOG_V2_FLIGHT.promise;
+      if(CATALOG_V2_SESSION)CATALOG_V2_SESSION.close(); CATALOG_V2_SESSION=null;CATALOG_V2_KEY=key;
+      var flight={key:key};CATALOG_V2_FLIGHT=flight;flight.promise=(async function(){
+      var mod=await import('./browser/data-v2.js'),state=ACCOUNT_V2_STATE,owner=state&&state.owner?{ownerKind:'account',accountId:state.owner.accountId,accountGeneration:state.owner.accountGeneration}:null;
+      if(!catalogV2UICurrent(key))throw new Error('STALE_REQUEST');
+      var session=await mod.createLearningSession({owner:owner,isCurrent:function(){return catalogV2Current(key);}});
+      if(!catalogV2UICurrent(key)){session.close();throw new Error('STALE_REQUEST');}
+      CATALOG_V2_SESSION=session;return session;
+      })().finally(function(){if(CATALOG_V2_FLIGHT===flight)CATALOG_V2_FLIGHT=null;});return flight.promise;
+    }
+    // LearningSession owns pagehide writer-release; do not close before its
+    // listener can release the lease. BFCache returns must open a fresh handle.
+    globalThis.addEventListener('pagehide',function(){CATALOG_V2_PAGE_ACTIVE=false;CATALOG_V2_SEQUENCE++;CATALOG_V2_HISTORY_SEQUENCE++;CATALOG_V2_SESSION=null;CATALOG_V2_FLIGHT=null;});
+    // Advance the page key only on return, after pagehide's writer release.
+    globalThis.addEventListener('pageshow',function(event){CATALOG_V2_PAGE_ACTIVE=true;if(event.persisted&&ACCOUNT_V2_CANDIDATE){CATALOG_V2_PAGE_EPOCH++;CATALOG_V2_SESSION=null;CATALOG_V2_FLIGHT=null;catalogV2Refresh();}});
+    async function catalogV2Legacy(){var mod=await import('./browser/legacy-migration-client.js');return mod.createLegacyMigrationClient({apiBase:QB_API_BASE,allowMirrorApi:location.origin==='https://shicheng0810.github.io'&&QB_API_BASE==='https://question-bank-78u.pages.dev/api',transport:function(command){return ACCOUNT_V2.authenticatedTransport(command);}});}
+    function catalogV2Error(node,text,testid){if(!node)return;node.replaceChildren();var p=document.createElement('p');p.textContent=text;p.dataset.testid=testid;p.setAttribute('role','alert');node.append(p);}
+    function catalogV2Card(grid,title,count,href,source){var card=document.createElement('div');card.className='card';card.dataset.testid='catalog-v2-bank-card';card.dataset.source=source;var heading=document.createElement('h2');heading.textContent=title;var note=document.createElement('p');note.textContent=source+' · '+count;var link=document.createElement('a');link.className='go';link.href=href;link.textContent=catalogV2Text('Open bank','打开题库','Abrir banco');card.append(heading,note,link);grid.append(card);return card;}
+    async function catalogV2Refresh(){
+      if(!globalThis.QB_DATA_V2_CONFIG.enabled)return;
+      var key=catalogV2Key(),sequence=++CATALOG_V2_SEQUENCE,grid=document.getElementById('local-grid'),cloud=document.getElementById('cloud-grid');
+      if(grid)grid.replaceChildren();if(cloud)cloud.replaceChildren();
+      if(CATALOG_V2_KEY!==key){CATALOG_V2_HISTORY_SEQUENCE++;var oldHistory=document.getElementById('history-list');if(oldHistory)oldHistory.replaceChildren();var modal=document.getElementById('history-modal');if(modal)modal.hidden=true;var statusNode=document.getElementById('catalog-v2-status');if(statusNode){statusNode.dataset.state='idle';statusNode.textContent=catalogV2Text('Identity changed; sync is not confirmed.','身份已更新；云同步状态需重新确认。','Identidad cambiada; sincronización sin confirmar.');}}
+      if(CATALOG_V2_KEY!==key && CATALOG_V2_SESSION){CATALOG_V2_SESSION.close();CATALOG_V2_SESSION=null;}
+      var notice=document.getElementById('account-v2-learning-notice');
+      if(notice&&!document.getElementById('catalog-v2-sync')){
+        var group=document.createElement('div');group.className='qb-acts';group.style.cssText='display:flex;gap:10px;flex-wrap:wrap;margin:12px 0';
+        var button=document.createElement('button');button.className='qb-btn';button.id='catalog-v2-sync';button.dataset.testid='catalog-v2-sync';button.textContent=catalogV2Text('Sync private banks / progress','同步账号私库 / 进度','Sincronizar bancos / progreso');button.onclick=catalogV2Sync;
+        var status=document.createElement('span');status.id='catalog-v2-status';status.dataset.testid='catalog-v2-status';status.role='status';status.textContent=catalogV2Text('Device saved ≠ cloud confirmed','本机保存与云确认分开','Guardado local ≠ nube confirmada');
+        var historyButton=document.createElement('button');historyButton.className='qb-btn';historyButton.dataset.testid='catalog-v2-history';historyButton.textContent=catalogV2Text('History / original archives','历史成绩 / 旧归档','Historial / archivos originales');historyButton.onclick=function(){var modal=document.getElementById('history-modal');modal.hidden=false;catalogV2History();};
+        var recovery=document.createElement('a');recovery.className='qb-btn';recovery.href='local.html?workbench=recovery';recovery.textContent=catalogV2Text('Cloud recovery / workbench','恢复云端资料 / 完整工作台','Recuperación de nube / herramientas');group.append(button,status,historyButton,recovery);notice.after(group);
+      }
+      var syncButton=document.getElementById('catalog-v2-sync'),historyControl=document.querySelector('[data-testid="catalog-v2-history"]'),recoveryControl=document.querySelector('a[href="local.html?workbench=recovery"]');
+      if(syncButton)syncButton.textContent=catalogV2Text('Sync private banks / progress','同步账号私库 / 进度','Sincronizar bancos / progreso');if(historyControl)historyControl.textContent=catalogV2Text('History / original archives','历史成绩 / 旧归档','Historial / archivos originales');if(recoveryControl)recoveryControl.textContent=catalogV2Text('Cloud recovery / workbench','恢复云端资料 / 完整工作台','Recuperación de nube / herramientas');
+      try{var session=await catalogV2Session(),records=await session.repository.readRecords('bank_revisions');if(sequence!==CATALOG_V2_SEQUENCE||!catalogV2Current(key))return;
+        var seen=new Set();records.filter(function(r){return ['private','protected'].includes(r.metadata.visibility);}).reverse().forEach(function(r){if(seen.has(r.bankUid))return;seen.add(r.bankUid);catalogV2Card(grid,r.metadata.title,r.metadata.questionCount,'local.html?bank='+encodeURIComponent(r.bankUid),session.owner.ownerKind==='account'?'account':'device');});
+        if(!seen.size){var empty=document.createElement('p');empty.textContent=catalogV2Text('No new private banks for this identity on this device. Import or recover cloud data.','此身份在本设备暂无新版私库；可导入或恢复云端资料。','No hay bancos nuevos locales para esta identidad. Importa o recupera la nube.');grid.append(empty);}
+        var old;try{old=JSON.parse(localStorage.getItem(LOCAL_KEY)||'{}');}catch(e){old={};}
+        Object.keys(old).forEach(function(id){var r=old[id];if(r&&Array.isArray(r.questions)){var card=catalogV2Card(grid,r.title||id,r.questions.length,'local.html?workbench=legacy-local','legacy-device');card.querySelector('a').textContent=catalogV2Text('Archive original browser data','归档本机原资料','Archivar datos originales');var copy=document.createElement('button');copy.className='qb-btn';copy.dataset.testid='catalog-v2-import-legacy-copy';copy.textContent=catalogV2Text('Keep original & import a new playable copy','保留原数据并导入新版副本','Conservar original e importar copia');copy.onclick=function(){if(!catalogV2Current(key))return;var source;try{source=JSON.parse(localStorage.getItem(LOCAL_KEY)||'{}')[id];}catch(e){}if(!source||!Array.isArray(source.questions)){importMessage('Original bank unavailable; nothing was changed.',true);return;}if(!confirm(catalogV2Text('Import into the current identity? Original data will remain unchanged.','导入到当前身份？原数据保持不变。','¿Importar a la identidad actual? El original no cambia.')))return;catalogV2Import(JSON.stringify(source.questions),source.title||id,{append:false});};card.append(copy);}});
+        if(!isLoggedIn()){cloud.textContent=catalogV2Text('Sign in to read original account archives. Device import is not cloud upload.','登录后可读取账号旧归档；本机导入不等于云端上传。','Inicia sesión para leer archivos originales. Importación local no es subida.');return;}
+        var client=await catalogV2Legacy(),cursor=null;
+        for(var page=0;page<20;page++){var result=await client.listBanks({limit:5,cursor:cursor});if(sequence!==CATALOG_V2_SEQUENCE||!catalogV2Current(key))return;result.items.forEach(function(r){catalogV2Card(cloud,r.title||r.id,r.count,'local.html?workbench=legacy-bank&id='+encodeURIComponent(r.id),'legacy-account (只读来源)');});if(result.nextCursor===null)break;cursor=result.nextCursor;}
+        if(!cloud.children.length)cloud.textContent=catalogV2Text('No private banks in original archives. Use cloud recovery for new cloud data.','旧归档中没有私库。新版云资料请使用云端恢复。','No hay bancos en archivos originales. Recupera la nube para datos nuevos.');
+      }catch(error){if(sequence!==CATALOG_V2_SEQUENCE||!catalogV2Current(key))return;catalogV2Error(cloud,'资料读取失败，不能据此认定为空；请登录或重试。','catalog-v2-archive-error');}
+    }
+    async function catalogV2Import(text,title,opts){
+      var accountTarget=document.getElementById('import-to-account');
+      if((opts.sync||(accountTarget&&accountTarget.checked))&&!isLoggedIn()){importMessage(catalogV2Text('Sign in first, then import an account copy. No guest bank was uploaded.','请先登录，再导入账号副本。没有上传访客题库。','Inicia sesión primero y vuelve a importar una copia de cuenta. No se subió un banco visitante.'),true);openLoginModal();return false;}
+      if(typeof text!=='string'||text.length>16*1024*1024){importMessage('导入超过安全大小上限，未保存。',true);return false;}
+      if(opts.append){importMessage(catalogV2Text('Appending is not enabled. Combine JSON and import a new bank; existing banks were not overwritten.','新版分批追加尚未启用；请合并 JSON 后导入为新题库。未覆盖任何现有题库。','Añadir lotes no está habilitado. Combina JSON e importa un banco nuevo; nada fue sobrescrito.'),true);return false;}
+      var parsed=parseBankFromText(text);if(!parsed.list){importMessage(T('err_parse'),true);return false;}var checked=validateBank(parsed.list);if(!checked.valid.length){importMessage(T('err_shape'),true);return false;}
+      var key=catalogV2Key();try{var session=await catalogV2Session(),mod=await import('./browser/data-v2.js');if(!catalogV2UICurrent(key))return false;var imported=await mod.registerImportedBank(checked.valid,{title:title,sourceOrigin:location.origin});if(!catalogV2UICurrent(key))return false;await session.startBank([{content:imported.content}]);await session.pauseWriting();if(!catalogV2UICurrent(key))return false;
+        importMessage(catalogV2Text('Saved on this device','已保存到本设备','Guardado en este dispositivo')+' ('+checked.valid.length+'). '+catalogV2Text('Cloud sync is not confirmed.','未确认云同步。','La nube no está confirmada.')+(checked.rejected?' '+catalogV2Text('Rejected','已拒绝','Rechazadas')+': '+checked.rejected:'')+(parsed.salvaged?' '+catalogV2Text('Input may be truncated; combine the remaining content and import a new copy.','输入可能被截断；请补齐合并后导入新副本。','El texto puede estar truncado; combina el resto e importa una copia nueva.'):''),false);await catalogV2Refresh();
+        var toAccount=document.getElementById('import-to-account');if(opts.sync||(toAccount&&toAccount.checked))await catalogV2Sync();return true;
+      }catch(error){if(catalogV2UICurrent(key))importMessage('导入未完成；请重试或检查账户恢复状态。',true);return false;}
+    }
+    async function catalogV2Sync(){
+      var node=document.getElementById('catalog-v2-status'),key=catalogV2Key();
+      if(CATALOG_V2_RETRY_KEY===key&&Date.now()<CATALOG_V2_RETRY_AT)return;
+      if(!isLoggedIn()){if(node)node.textContent=catalogV2Text('Sign in; local data has not been uploaded.','需要登录；本机资料尚未上传。','Inicia sesión; los datos locales no se han subido.');openLoginModal();return;}
+      try{var session=await catalogV2Session(),mod=await import('./browser/data-v2.js');await session.flush();if(!catalogV2UICurrent(key))return;node.dataset.state='syncing';node.textContent=catalogV2Text('Syncing…','同步中…','Sincronizando…');
+        var result=await mod.createSyncV2Coordinator({account:ACCOUNT_V2,repository:session.repository}).runOnce();if(!catalogV2UICurrent(key))return;
+        node.dataset.state=result.synced?'synced':result.paused?'paused':'pending';
+        if(result.paused&&result.reason==='RATE_LIMITED'){
+          var seconds=Number.isSafeInteger(result.retryAfter)&&result.retryAfter>0?result.retryAfter:null;
+          node.textContent=catalogV2Text('Rate limited; retry after ','限流，请在以下秒数后重试：','Límite alcanzado; reintenta después de ')+(seconds===null?'—':seconds)+' s';
+          if(seconds!==null){CATALOG_V2_RETRY_KEY=key;CATALOG_V2_RETRY_AT=Date.now()+seconds*1000;var syncButton=document.getElementById('catalog-v2-sync');syncButton.disabled=true;setTimeout(function(){if(catalogV2UICurrent(key)&&Date.now()>=CATALOG_V2_RETRY_AT)syncButton.disabled=false;},seconds*1000+20);}
+        }else node.textContent=result.synced?catalogV2Text('Cloud confirmed synced','云端已确认同步','Nube sincronizada y confirmada'):catalogV2Text('Pending changes; sync again','仍有待同步资料；请再次同步。','Cambios pendientes; sincroniza otra vez');
+        await catalogV2Refresh();if(!catalogV2UICurrent(key))return;var modal=document.getElementById('history-modal');if(modal&&!modal.hidden)await catalogV2History();
+      }catch(error){if(catalogV2UICurrent(key)){node.dataset.state='error';node.textContent=catalogV2Text('Cloud sync failed; device data is retained.','云同步失败；本机资料仍保留。','Falló la sincronización; los datos locales se conservan.');}}
+    }
+    async function catalogV2History(){var box=document.getElementById('history-list'),key=catalogV2Key(),sequence=++CATALOG_V2_HISTORY_SEQUENCE;var current=function(){return sequence===CATALOG_V2_HISTORY_SEQUENCE&&catalogV2UICurrent(key);};box.textContent=catalogV2Text('Loading history…','正在读取历史…','Cargando historial…');try{var session=await catalogV2Session(),bundles=await session.history(),bankRecords=await session.repository.readRecords('bank_revisions');if(!current())return;box.replaceChildren();bundles.forEach(function(bundle){var names=Array.from(new Set(bundle.scope.map(function(ref){var uid=ref.questionKey.split('/')[0],record=bankRecords.find(function(r){return r.bankUid===uid;});return record?record.metadata.title:uid;})));var row=document.createElement('div');row.dataset.testid='catalog-v2-history-row';var link=document.createElement('a');link.href='local.html?workbench=history&attempt='+encodeURIComponent(bundle.attempt.attemptId);link.textContent=names.join(' + ')+' · '+bundle.attempt.status+' · '+bundle.progress.firstCorrect+'/'+bundle.progress.firstAnswered+' · '+fmtHistTime(bundle.attempt.startedAt);row.append(link);box.append(row);});
+      if(isLoggedIn()){var client=await catalogV2Legacy(),cursor=null;for(var page=0;page<20;page++){var result=await client.listHistory({limit:5,cursor:cursor});if(!current())return;result.items.forEach(function(r){var row=document.createElement('div');row.dataset.testid='catalog-v2-history-row';row.dataset.source='legacy-account';var link=document.createElement('a');link.href='local.html?workbench=legacy-history&id='+encodeURIComponent(r.id);link.textContent=catalogV2Text('Original archive (read-only)','旧归档（只读）','Archivo original (solo lectura)')+' · '+(r.title||r.bank_id||'');var score=document.createElement('span');score.dataset.testid='catalog-v2-original-score';score.textContent=catalogV2Text('Original score not loaded','原成绩待读取','Nota original sin cargar');var read=document.createElement('button');read.className='qb-btn';read.dataset.testid='catalog-v2-read-original-score';read.textContent=catalogV2Text('Read original score','读取原成绩','Leer nota original');read.onclick=async function(){read.disabled=true;try{var loaded=await client.readHistory(r.id);if(!current())return;var value=loaded.record.score;score.textContent=value&&Number.isFinite(value.correct)&&Number.isFinite(value.answered)?value.correct+'/'+value.answered+' · '+value.total:catalogV2Text('Original record contains no score','原记录无成绩字段','El original no contiene nota');}catch(error){if(current())score.textContent=catalogV2Text('Original score read failed; retry','原成绩读取失败；请重试','No se pudo leer la nota; reintenta');}finally{if(current())read.disabled=false;}};row.append(link,score,read);box.append(row);});if(result.nextCursor===null)break;cursor=result.nextCursor;}}
+      if(!box.children.length)box.textContent='暂无历史记录。';
+    }catch(error){if(current()){var p=document.createElement('p');p.dataset.testid='catalog-v2-history-error';p.role='alert';p.textContent='历史读取失败，不能据此认定为空；本机记录未删除。';box.append(p);}}}
     function fmtHistTime(ts){ try{ return new Date(ts).toLocaleString(); }catch(e){ return ""; } }
     function openHistory(){
       if (ACCOUNT_V2_CANDIDATE && (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR)){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; }
@@ -1366,7 +1464,7 @@
     function closeHistory(){ var m = document.getElementById("history-modal"); if (m) m.hidden = true; }
     function renderHistoryList(){
       var box = document.getElementById("history-list"); if (!box) return;
-      if (ACCOUNT_V2_CANDIDATE){ box.innerHTML = '<div class="qb-hint" style="padding:6px">History is unavailable in candidate mode; practice is memory-only.</div>'; return; }
+      if (ACCOUNT_V2_CANDIDATE){ catalogV2History(); return; }
       box.innerHTML = '<div class="qb-hint" style="padding:6px">' + escHtml(T("hist_loading")) + '</div>';
       fetch(QB_API_BASE + "/history", { headers: authHeaders() })
         .then(function(res){
@@ -1418,7 +1516,7 @@
 
     /* ---- 私有题库：上传到账号（云端私有），登录后任意设备打开 ---- */
     function uploadBankToAccount(title, questions, rejected, opts){
-      if (ACCOUNT_V2_CANDIDATE){ importMessage("Cloud banks are unavailable in candidate mode.", true); return; }
+      if (ACCOUNT_V2_CANDIDATE){ catalogV2Import(JSON.stringify(questions),title,{sync:true}); return; }
       opts = opts || {};
       importMessage(T("cloud_uploading"), false);
       fetch(QB_API_BASE + "/banks", { method:"POST", headers:Object.assign({"Content-Type":"application/json"}, authHeaders()), body: JSON.stringify({ bank: { id: slugLocal(title), title: title, questions: questions } }) })
@@ -1480,7 +1578,7 @@
     function renderCloudBanks(){
       var box = document.getElementById("cloud-box");
       var grid = document.getElementById("cloud-grid");
-      if (ACCOUNT_V2_CANDIDATE){ if (box) box.hidden = true; if (grid) grid.innerHTML = ""; return; }
+      if (ACCOUNT_V2_CANDIDATE){ if (box) box.hidden = false; catalogV2Refresh(); return; }
       if (!grid) return;
       if (!isLoggedIn()){ if (box) box.hidden = true; return; }
       fetch(QB_API_BASE + "/banks", { headers: authHeaders() })
