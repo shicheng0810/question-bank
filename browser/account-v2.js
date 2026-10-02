@@ -20,22 +20,22 @@ const It = Object.freeze({
   maxArrayItems: 1e5,
   maxStringUtf8Bytes: 100 * 1024 * 1024,
   maxCanonicalUtf8Bytes: 100 * 1024 * 1024
-}), Xt = Object.freeze(["sourceKey", "legacyRevision", "legacyId"]), Tt = new TextEncoder(), Wt = /* @__PURE__ */ new Set(["__proto__", "prototype", "constructor"]);
+}), Xt = Object.freeze(["sourceKey", "legacyRevision", "legacyId"]), pt = new TextEncoder(), Wt = /* @__PURE__ */ new Set(["__proto__", "prototype", "constructor"]);
 class Yt extends Error {
   /** @param {string} code @param {string} path @param {string} message */
   constructor(n, o, s) {
     super(s), this.name = "AppDataValidationError", this.code = n, this.path = o;
   }
 }
-function m(e, n, o) {
+function S(e, n, o) {
   throw new Yt(e, n, o);
 }
-function pt(e) {
-  return typeof e != "string" && m("type", "$", "UTF-8 length requires a string"), Tt.encode(e).byteLength;
+function Tt(e) {
+  return typeof e != "string" && S("type", "$", "UTF-8 length requires a string"), pt.encode(e).byteLength;
 }
 function et(e, n, o) {
-  const s = pt(e);
-  return s > o.maxStringUtf8Bytes && m("utf8_limit", n, "string exceeds the configured UTF-8 limit"), s;
+  const s = Tt(e);
+  return s > o.maxStringUtf8Bytes && S("utf8_limit", n, "string exceeds the configured UTF-8 limit"), s;
 }
 function Zt(e) {
   if (e === "0") return !0;
@@ -78,16 +78,16 @@ class en {
   }
   /** @param {string} part @param {string} path @param {CanonicalLimits} limits */
   append(n, o, s) {
-    const u = pt(n);
-    u > s.maxCanonicalUtf8Bytes - this.bytes && m("utf8_limit", o, "canonical JSON exceeds the total AppData bound"), this.parts.push(n), this.bytes += u;
+    const u = Tt(n);
+    u > s.maxCanonicalUtf8Bytes - this.bytes && S("utf8_limit", o, "canonical JSON exceeds the total AppData bound"), this.parts.push(n), this.bytes += u;
   }
   /** @returns {Uint8Array} */
   finish() {
-    return Tt.encode(this.parts.join(""));
+    return pt.encode(this.parts.join(""));
   }
 }
-function De(e, n, o, s, u, d) {
-  if (o > d.maxDepth && m("depth_limit", n, "value exceeds configured nesting depth"), e === null) {
+function xe(e, n, o, s, u, d) {
+  if (o > d.maxDepth && S("depth_limit", n, "value exceeds configured nesting depth"), e === null) {
     u.append("null", n, d);
     return;
   }
@@ -96,56 +96,56 @@ function De(e, n, o, s, u, d) {
     return;
   }
   if (typeof e == "string") {
-    et(e, n, d), tt(e) > d.maxCanonicalUtf8Bytes - u.bytes && m("utf8_limit", n, "canonical JSON exceeds the total AppData bound"), u.append(JSON.stringify(e), n, d);
+    et(e, n, d), tt(e) > d.maxCanonicalUtf8Bytes - u.bytes && S("utf8_limit", n, "canonical JSON exceeds the total AppData bound"), u.append(JSON.stringify(e), n, d);
     return;
   }
   if (typeof e == "number") {
-    Number.isFinite(e) || m("finite_number", n, "must be a finite number"), u.append(JSON.stringify(Object.is(e, -0) ? 0 : e), n, d);
+    Number.isFinite(e) || S("finite_number", n, "must be a finite number"), u.append(JSON.stringify(Object.is(e, -0) ? 0 : e), n, d);
     return;
   }
-  if ((typeof e != "object" || e === null) && m("type", n, "value is not JSON data"), s.has(e) && m("cycle", n, "cyclic values are not JSON data"), s.add(e), Array.isArray(e)) {
-    Object.getPrototypeOf(e) !== Array.prototype && m("prototype", n, "array must use Array.prototype");
+  if ((typeof e != "object" || e === null) && S("type", n, "value is not JSON data"), s.has(e) && S("cycle", n, "cyclic values are not JSON data"), s.add(e), Array.isArray(e)) {
+    Object.getPrototypeOf(e) !== Array.prototype && S("prototype", n, "array must use Array.prototype");
     const E = (
       /** @type {Record<string, PropertyDescriptor>} */
       Object.getOwnPropertyDescriptors(e)
     ), g = E.length;
-    (!g || !Object.hasOwn(g, "value") || typeof g.value != "number") && m("descriptor", n, "array length must be a data property");
+    (!g || !Object.hasOwn(g, "value") || typeof g.value != "number") && S("descriptor", n, "array length must be a data property");
     const y = g.value;
-    (!Number.isSafeInteger(y) || y > d.maxArrayItems) && m("array_limit", n, "array exceeds configured item limit");
+    (!Number.isSafeInteger(y) || y > d.maxArrayItems) && S("array_limit", n, "array exceeds configured item limit");
     for (const A of Reflect.ownKeys(E)) {
       if (A === "length") continue;
-      (typeof A != "string" || !Zt(A) || Number(A) >= y) && m("array_property", n, "arrays may not have non-index properties");
+      (typeof A != "string" || !Zt(A) || Number(A) >= y) && S("array_property", n, "arrays may not have non-index properties");
       const I = E[A];
-      (!I || !Object.hasOwn(I, "value") || !I.enumerable) && m("accessor", `${n}[${A}]`, "array elements must be enumerable data properties");
+      (!I || !Object.hasOwn(I, "value") || !I.enumerable) && S("accessor", `${n}[${A}]`, "array elements must be enumerable data properties");
     }
     u.append("[", n, d);
     for (let A = 0; A < y; A += 1) {
       A > 0 && u.append(",", n, d);
-      const I = String(A), S = E[I];
-      S || m("array_hole", `${n}[${A}]`, "array holes are not JSON"), De(S.value, `${n}[${A}]`, o + 1, s, u, d);
+      const I = String(A), L = E[I];
+      L || S("array_hole", `${n}[${A}]`, "array holes are not JSON"), xe(L.value, `${n}[${A}]`, o + 1, s, u, d);
     }
     u.append("]", n, d);
   } else {
-    Object.getPrototypeOf(e) !== Object.prototype && m("prototype", n, "object must use Object.prototype");
+    Object.getPrototypeOf(e) !== Object.prototype && S("prototype", n, "object must use Object.prototype");
     const E = (
       /** @type {Record<string, PropertyDescriptor>} */
       Object.getOwnPropertyDescriptors(e)
     ), g = Reflect.ownKeys(E);
-    g.length > d.maxObjectKeys && m("object_limit", n, "object exceeds configured key limit");
+    g.length > d.maxObjectKeys && S("object_limit", n, "object exceeds configured key limit");
     const y = [];
     for (const A of g) {
-      typeof A != "string" && m("symbol", n, "symbol keys are not JSON"), Wt.has(A) && m("prototype_pollution", `${n}.${A}`, "prototype-pollution key is forbidden");
+      typeof A != "string" && S("symbol", n, "symbol keys are not JSON"), Wt.has(A) && S("prototype_pollution", `${n}.${A}`, "prototype-pollution key is forbidden");
       const I = E[A];
-      (!I || !Object.hasOwn(I, "value")) && m("accessor", `${n}.${A}`, "accessors are not JSON"), I.enumerable || m("non_enumerable", `${n}.${A}`, "non-enumerable fields cannot be silently omitted"), et(A, `${n}.${A}`, d), y.push(A);
+      (!I || !Object.hasOwn(I, "value")) && S("accessor", `${n}.${A}`, "accessors are not JSON"), I.enumerable || S("non_enumerable", `${n}.${A}`, "non-enumerable fields cannot be silently omitted"), et(A, `${n}.${A}`, d), y.push(A);
     }
     y.sort(), u.append("{", n, d);
     for (let A = 0; A < y.length; A += 1) {
       const I = y[A];
-      typeof I != "string" && m("descriptor", n, "object key must be a string"), A > 0 && u.append(",", n, d);
-      const S = E[I];
-      (!S || !Object.hasOwn(S, "value")) && m("accessor", `${n}.${I}`, "accessors are not JSON");
+      typeof I != "string" && S("descriptor", n, "object key must be a string"), A > 0 && u.append(",", n, d);
+      const L = E[I];
+      (!L || !Object.hasOwn(L, "value")) && S("accessor", `${n}.${I}`, "accessors are not JSON");
       const _ = tt(I), F = d.maxCanonicalUtf8Bytes - u.bytes;
-      _ + 1 > F && m("utf8_limit", `${n}.${I}`, "canonical JSON exceeds the total AppData bound"), u.append(`${JSON.stringify(I)}:`, `${n}.${I}`, d), De(S.value, `${n}.${I}`, o + 1, s, u, d);
+      _ + 1 > F && S("utf8_limit", `${n}.${I}`, "canonical JSON exceeds the total AppData bound"), u.append(`${JSON.stringify(I)}:`, `${n}.${I}`, d), xe(L.value, `${n}.${I}`, o + 1, s, u, d);
     }
     u.append("}", n, d);
   }
@@ -153,9 +153,9 @@ function De(e, n, o, s, u, d) {
 }
 function de(e) {
   const n = new en();
-  return De(e, "$", 0, /* @__PURE__ */ new WeakSet(), n, It), n.finish();
+  return xe(e, "$", 0, /* @__PURE__ */ new WeakSet(), n, It), n.finish();
 }
-const Oe = (e, n) => n.some((o) => e instanceof o);
+const De = (e, n) => n.some((o) => e instanceof o);
 let nt, rt;
 function tn() {
   return nt || (nt = [
@@ -173,7 +173,7 @@ function nn() {
     IDBCursor.prototype.continuePrimaryKey
   ]);
 }
-const xe = /* @__PURE__ */ new WeakMap(), Se = /* @__PURE__ */ new WeakMap(), le = /* @__PURE__ */ new WeakMap();
+const Oe = /* @__PURE__ */ new WeakMap(), Le = /* @__PURE__ */ new WeakMap(), le = /* @__PURE__ */ new WeakMap();
 function rn(e) {
   const n = new Promise((o, s) => {
     const u = () => {
@@ -188,7 +188,7 @@ function rn(e) {
   return le.set(n, e), n;
 }
 function on(e) {
-  if (xe.has(e))
+  if (Oe.has(e))
     return;
   const n = new Promise((o, s) => {
     const u = () => {
@@ -200,13 +200,13 @@ function on(e) {
     };
     e.addEventListener("complete", d), e.addEventListener("error", E), e.addEventListener("abort", E);
   });
-  xe.set(e, n);
+  Oe.set(e, n);
 }
 let Ue = {
   get(e, n, o) {
     if (e instanceof IDBTransaction) {
       if (n === "done")
-        return xe.get(e);
+        return Oe.get(e);
       if (n === "store")
         return o.objectStoreNames[1] ? void 0 : o.objectStore(o.objectStoreNames[0]);
     }
@@ -230,15 +230,15 @@ function sn(e) {
   };
 }
 function an(e) {
-  return typeof e == "function" ? sn(e) : (e instanceof IDBTransaction && on(e), Oe(e, tn()) ? new Proxy(e, Ue) : e);
+  return typeof e == "function" ? sn(e) : (e instanceof IDBTransaction && on(e), De(e, tn()) ? new Proxy(e, Ue) : e);
 }
 function v(e) {
   if (e instanceof IDBRequest)
     return rn(e);
-  if (Se.has(e))
-    return Se.get(e);
+  if (Le.has(e))
+    return Le.get(e);
   const n = an(e);
-  return n !== e && (Se.set(e, n), le.set(n, e)), n;
+  return n !== e && (Le.set(e, n), le.set(n, e)), n;
 }
 const Re = (e) => le.get(e);
 function cn(e, n, { blocked: o, upgrade: s, blocking: u, terminated: d } = {}) {
@@ -255,12 +255,12 @@ function cn(e, n, { blocked: o, upgrade: s, blocking: u, terminated: d } = {}) {
   }).catch(() => {
   }), g;
 }
-const un = ["get", "getKey", "getAll", "getAllKeys", "count"], fn = ["put", "add", "delete", "clear"], Le = /* @__PURE__ */ new Map();
+const un = ["get", "getKey", "getAll", "getAllKeys", "count"], fn = ["put", "add", "delete", "clear"], me = /* @__PURE__ */ new Map();
 function ot(e, n) {
   if (!(e instanceof IDBDatabase && !(n in e) && typeof n == "string"))
     return;
-  if (Le.get(n))
-    return Le.get(n);
+  if (me.get(n))
+    return me.get(n);
   const o = n.replace(/FromIndex$/, ""), s = n !== o, u = fn.includes(o);
   if (
     // Bail if the target doesn't exist on the target. Eg, getAll isn't in Edge.
@@ -275,7 +275,7 @@ function ot(e, n) {
       u && y.done
     ]))[0];
   };
-  return Le.set(n, d), d;
+  return me.set(n, d), d;
 }
 gt((e) => ({
   ...e,
@@ -302,7 +302,7 @@ async function* An(...e) {
     yield o, n = await (ke.get(o) || n.continue()), ke.delete(o);
 }
 function it(e, n) {
-  return n === Symbol.asyncIterator && Oe(e, [IDBIndex, IDBObjectStore, IDBCursor]) || n === "iterate" && Oe(e, [IDBIndex, IDBObjectStore]);
+  return n === Symbol.asyncIterator && De(e, [IDBIndex, IDBObjectStore, IDBCursor]) || n === "iterate" && De(e, [IDBIndex, IDBObjectStore]);
 }
 gt((e) => ({
   ...e,
@@ -315,40 +315,40 @@ gt((e) => ({
 }));
 const hn = 100 * 1024 * 1024, yn = 200, En = 128 * 1024;
 Object.freeze({ maxContentBytes: hn, maxChunks: yn, maxManifestBytes: En, maxChunkBytes: It.maxContentChunkBytes, maxContentCanonicalBytes: Ht.maxCanonicalUtf8Bytes });
-const p = (e, n, o = !1) => ({ name: e, keyPath: n, unique: o });
-function mt(e) {
+const T = (e, n, o = !1) => ({ name: e, keyPath: n, unique: o });
+function St(e) {
   if (e && typeof e == "object" && !Object.isFrozen(e)) {
     Object.freeze(e);
-    for (const n of Reflect.ownKeys(e)) mt(e[n]);
+    for (const n of Reflect.ownKeys(e)) St(e[n]);
   }
   return e;
 }
-mt({
+St({
   meta: { keyPath: "key", indexes: [] },
-  bank_revisions: { keyPath: ["bankUid", "revision"], indexes: [p("bankUid", "bankUid")] },
-  content_chunks: { keyPath: ["contentDigest", "chunkIndex"], indexes: [p("contentDigest", "contentDigest")] },
-  question_aliases: { keyPath: Xt, indexes: [p("sourceKey", "sourceKey"), p("mappingStatus", "mappingStatus"), p("newQuestionKey", "newQuestionKey")] },
-  attempts: { keyPath: "attemptId", indexes: [p("status", "status"), p("startedAt", "startedAt")] },
-  attempt_scope: { keyPath: ["attemptId", "ordinal"], indexes: [p("attemptId", "attemptId")] },
-  drafts: { keyPath: ["attemptId", "questionKey"], indexes: [p("attemptId", "attemptId")] },
-  answer_events: { keyPath: "eventId", indexes: [p("attemptId", "attemptId"), p("questionKey", "questionKey"), p("attemptAction", ["attemptId", "writerStreamId", "actionSeq"], !0)] },
-  user_state: { keyPath: ["questionKey", "field"], indexes: [p("starredKey", "starredKey"), p("serverRevision", "serverRevision")] },
-  mutations: { keyPath: "mutationId", indexes: [p("streamSequence", ["clientStreamId", "clientSeq"], !0)] },
-  outbox: { keyPath: "mutationId", indexes: [p("nextAttemptAt", "nextAttemptAt")] },
-  conflicts: { keyPath: "conflictId", indexes: [p("entityKey", "entityKey"), p("status", "status")] },
-  legacy_raw: { keyPath: ["sourceId", "sourceDigest", "chunkIndex"], indexes: [p("sourceId", "sourceId")] },
-  legacy_aggregates: { keyPath: ["sourceId", "namespace", "legacyQuestionId"], indexes: [p("mappingStatus", "mappingStatus")] },
-  migration_journal: { keyPath: "migrationId", indexes: [p("status", "status")] },
+  bank_revisions: { keyPath: ["bankUid", "revision"], indexes: [T("bankUid", "bankUid")] },
+  content_chunks: { keyPath: ["contentDigest", "chunkIndex"], indexes: [T("contentDigest", "contentDigest")] },
+  question_aliases: { keyPath: Xt, indexes: [T("sourceKey", "sourceKey"), T("mappingStatus", "mappingStatus"), T("newQuestionKey", "newQuestionKey")] },
+  attempts: { keyPath: "attemptId", indexes: [T("status", "status"), T("startedAt", "startedAt")] },
+  attempt_scope: { keyPath: ["attemptId", "ordinal"], indexes: [T("attemptId", "attemptId")] },
+  drafts: { keyPath: ["attemptId", "questionKey"], indexes: [T("attemptId", "attemptId")] },
+  answer_events: { keyPath: "eventId", indexes: [T("attemptId", "attemptId"), T("questionKey", "questionKey"), T("attemptAction", ["attemptId", "writerStreamId", "actionSeq"], !0)] },
+  user_state: { keyPath: ["questionKey", "field"], indexes: [T("starredKey", "starredKey"), T("serverRevision", "serverRevision")] },
+  mutations: { keyPath: "mutationId", indexes: [T("streamSequence", ["clientStreamId", "clientSeq"], !0)] },
+  outbox: { keyPath: "mutationId", indexes: [T("nextAttemptAt", "nextAttemptAt")] },
+  conflicts: { keyPath: "conflictId", indexes: [T("entityKey", "entityKey"), T("status", "status")] },
+  legacy_raw: { keyPath: ["sourceId", "sourceDigest", "chunkIndex"], indexes: [T("sourceId", "sourceId")] },
+  legacy_aggregates: { keyPath: ["sourceId", "namespace", "legacyQuestionId"], indexes: [T("mappingStatus", "mappingStatus")] },
+  migration_journal: { keyPath: "migrationId", indexes: [T("status", "status")] },
   import_receipts: { keyPath: ["sourceId", "sourceRecordId"], indexes: [] },
-  checkpoints: { keyPath: "checkpointId", indexes: [p("createdAt", "createdAt")] },
-  entity_tombstones: { keyPath: "entityKey", indexes: [p("entityKind", "entityKind"), p("accountGeneration", "accountGeneration")] },
-  writer_leases: { keyPath: "attemptId", indexes: [p("expiresAt", "expiresAt")] }
+  checkpoints: { keyPath: "checkpointId", indexes: [T("createdAt", "createdAt")] },
+  entity_tombstones: { keyPath: "entityKey", indexes: [T("entityKind", "entityKind"), T("accountGeneration", "accountGeneration")] },
+  writer_leases: { keyPath: "attemptId", indexes: [T("expiresAt", "expiresAt")] }
 });
 function wn(e, n, o) {
   const s = new Error(n);
   return s.name = "StorageError", s.code = e, s;
 }
-const Pe = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/, St = Object.prototype.hasOwnProperty;
+const Pe = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/, Lt = Object.prototype.hasOwnProperty;
 function $(e, n, o) {
   return wn(e, n);
 }
@@ -357,7 +357,7 @@ function In(e, n) {
     throw $("CORRUPT", `${n} must be a plain data record`);
   for (const o of Object.getOwnPropertyNames(e)) {
     const s = Object.getOwnPropertyDescriptor(e, o);
-    if (!s || !St.call(s, "value")) throw $("CORRUPT", `${n}.${o} must be a data property`);
+    if (!s || !Lt.call(s, "value")) throw $("CORRUPT", `${n}.${o} must be a data property`);
   }
   return (
     /** @type {Record<string, unknown>} */
@@ -366,10 +366,10 @@ function In(e, n) {
 }
 function at(e, n, o, s) {
   const u = /* @__PURE__ */ new Set([...n, ...o]);
-  if (Object.keys(e).some((d) => !u.has(d)) || n.some((d) => !St.call(e, d)))
+  if (Object.keys(e).some((d) => !u.has(d)) || n.some((d) => !Lt.call(e, d)))
     throw $("CORRUPT", `${s} has an unsupported shape`);
 }
-function Tn(e) {
+function pn(e) {
   const n = In(e, "owner");
   if (n.ownerKind === "guest") {
     if (at(n, ["ownerKind", "guestId"], [], "owner"), !Pe.test(
@@ -391,12 +391,12 @@ function Tn(e) {
   }
   throw $("INVALID", "ownerKind must be guest or account");
 }
-function pn(e) {
+function Tn(e) {
   const n = typeof e == "string" && e.startsWith("qb-v2-business-") ? "qb-v2-business-" : "qb-b1a-test-business-";
   if (typeof e != "string" || !e.startsWith(n) || !Pe.test(e.slice(n.length))) throw $("CORRUPT", "business dbName is not a generated profile name");
   return e;
 }
-const q = "completedDeletes", Lt = 100, k = (e) => Object.assign(new Error(e), { code: e }), fe = (e, n) => e && typeof e == "object" && !Array.isArray(e) && Object.keys(e).sort().join() === n.slice().sort().join();
+const q = "completedDeletes", mt = 100, k = (e) => Object.assign(new Error(e), { code: e }), fe = (e, n) => e && typeof e == "object" && !Array.isArray(e) && Object.keys(e).sort().join() === n.slice().sort().join();
 function Ae(e) {
   if (de(e), e === null) return null;
   if (!fe(e, ["accountId", "accountGeneration"]) || !/^[0-9a-f]{64}$/.test(e.accountId) || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(e.accountGeneration)) throw k("INVALID_CLEANUP_RECEIPT");
@@ -405,7 +405,7 @@ function Ae(e) {
 const Ce = (e) => JSON.stringify(e && [e.accountId, e.accountGeneration]);
 function Be(e) {
   if (e === void 0) return { key: q, version: 1, entries: [] };
-  if (de(e), !fe(e, ["key", "version", "entries"]) || e.key !== q || e.version !== 1 || !Array.isArray(e.entries) || e.entries.length > Lt) throw k("INVALID_CLEANUP_RECEIPT");
+  if (de(e), !fe(e, ["key", "version", "entries"]) || e.key !== q || e.version !== 1 || !Array.isArray(e.entries) || e.entries.length > mt) throw k("INVALID_CLEANUP_RECEIPT");
   const n = /* @__PURE__ */ new Set(), o = e.entries.map((s) => {
     if (!fe(s, ["owner", "status"]) || s.status !== "server-complete") throw k("INVALID_CLEANUP_RECEIPT");
     const u = Ae(s.owner), d = Ce(u);
@@ -416,17 +416,17 @@ function Be(e) {
 }
 function Nt(e, n, o = !1) {
   const s = Be(e), u = Ae(n), d = Ce(u), E = s.entries.filter((g) => Ce(g.owner) !== d);
-  if (o || E.push({ owner: u, status: "server-complete" }), E.length > Lt) throw k("LOCAL_CLEANUP_QUEUE_FULL");
+  if (o || E.push({ owner: u, status: "server-complete" }), E.length > mt) throw k("LOCAL_CLEANUP_QUEUE_FULL");
   return { ...s, entries: E };
 }
 function gn(e) {
   if (e?.state !== "cleanup_pending") return;
   if (de(e), !fe(e, ["key", "owner", "controlId", "state", "cleanupDbs"])) throw k("INVALID_CLEANUP_RECEIPT");
-  const n = Tn(e.owner);
+  const n = pn(e.owner);
   if (n.ownerKind !== "account") throw k("INVALID_CLEANUP_RECEIPT");
   const o = Ae({ accountId: n.accountId, accountGeneration: n.accountGeneration });
   if (e.key !== JSON.stringify(["account", o.accountId, o.accountGeneration]) || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(e.controlId) || !Array.isArray(e.cleanupDbs) || e.cleanupDbs.length > 1e3 || new Set(e.cleanupDbs).size !== e.cleanupDbs.length) throw k("INVALID_CLEANUP_RECEIPT");
-  for (const s of e.cleanupDbs) pn(s);
+  for (const s of e.cleanupDbs) Tn(s);
   return o;
 }
 async function je() {
@@ -516,14 +516,14 @@ async function bt(e, n) {
     s.close();
   }
 }
-const ut = (e) => bt(e, !1), ft = (e) => bt(e, !0), mn = /^(?:v2\.[A-Za-z0-9_-]{43}|v3\.[0-9a-f]{64}\.[A-Za-z0-9_-]{43})$/, Sn = /* @__PURE__ */ new Set(["history", "banks", "verify"]);
-class Ln extends Error {
+const ut = (e) => bt(e, !1), ft = (e) => bt(e, !0), Sn = /^(?:v2\.[A-Za-z0-9_-]{43}|v3\.[0-9a-f]{64}\.[A-Za-z0-9_-]{43})$/, Ln = /* @__PURE__ */ new Set(["history", "banks", "verify"]);
+class mn extends Error {
   constructor(n, o = null) {
     super(n), this.name = "LegacyMigrationError", this.code = n, this.details = o;
   }
 }
 function ae(e, n) {
-  throw new Ln(e, n);
+  throw new mn(e, n);
 }
 function Nn(e) {
   return e !== null && typeof e == "object" && !Array.isArray(e);
@@ -535,20 +535,20 @@ function bn(e, n) {
   if (e === 202 && n.error === "MIGRATION_PENDING") {
     (Object.hasOwn(n, "token") || n.ok !== !1 || !Nn(n.migration)) && ae("INVALID_RESPONSE");
     const s = n.migration;
-    return (s.status !== "running" || !Sn.has(s.phase) || !dt(s.processed) || !dt(s.total) || s.processed > s.total || !Number.isSafeInteger(n.retryAfterMs) || n.retryAfterMs !== 750) && ae("INVALID_RESPONSE"), { state: "pending", migration: structuredClone(s), retryAfterMs: n.retryAfterMs };
+    return (s.status !== "running" || !Ln.has(s.phase) || !dt(s.processed) || !dt(s.total) || s.processed > s.total || !Number.isSafeInteger(n.retryAfterMs) || n.retryAfterMs !== 750) && ae("INVALID_RESPONSE"), { state: "pending", migration: structuredClone(s), retryAfterMs: n.retryAfterMs };
   }
-  if (e === 200 && n.ok === !0 && typeof n.token == "string" && mn.test(n.token))
+  if (e === 200 && n.ok === !0 && typeof n.token == "string" && Sn.test(n.token))
     return { state: "ready", token: n.token };
   (/* @__PURE__ */ new Set(["MIGRATION_UNCERTAIN", "MIGRATION_QUARANTINED", "ACCOUNT_DELETED", "UNAVAILABLE", "RATE_LIMITED", "AUTH_FAILED"])).has(n.error) && ae(n.error, { retryable: n.error === "UNAVAILABLE" || n.error === "RATE_LIMITED" }), ae("AUTH_FAILED");
 }
-const Ne = "qb_account_v2_session_v1", ce = "qb_account_v2_delete_ticket_v1", J = "qb_account_v2_local_cleanup_v1", ue = 2, Dn = /^(?:v2\.[A-Za-z0-9_-]{43}|v3\.[0-9a-f]{64}\.[A-Za-z0-9_-]{43})$/, Dt = /^[0-9a-f]{64}$/, On = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/, Ot = On, lt = /^dt1\.[0-9a-f]{64}\.[0-9a-f]{64}$/, At = 8, be = 32, ht = 3500, xn = 3e4, Un = 3600;
-class xt extends Error {
+const Ne = "qb_account_v2_session_v1", ce = "qb_account_v2_delete_ticket_v1", J = "qb_account_v2_local_cleanup_v1", ue = 2, xn = /^(?:v2\.[A-Za-z0-9_-]{43}|v3\.[0-9a-f]{64}\.[A-Za-z0-9_-]{43})$/, xt = /^[0-9a-f]{64}$/, Dn = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/, Dt = Dn, lt = /^dt1\.[0-9a-f]{64}\.[0-9a-f]{64}$/, At = 8, be = 32, ht = 3500, On = 3e4, Un = 3600;
+class Ot extends Error {
   constructor(n) {
     super(n), this.name = "AccountV2Error", this.code = n;
   }
 }
 function i(e) {
-  return new xt(e);
+  return new Ot(e);
 }
 function U(e, n) {
   if (!e || typeof e != "object" || Array.isArray(e)) return !1;
@@ -556,10 +556,10 @@ function U(e, n) {
   return o.length === n.length && n.every((s) => o.includes(s));
 }
 function Rn(e) {
-  return U(e, ["ok", "accountId", "accountGeneration", "expiresAt"]) && e.ok === !0 && Dt.test(e.accountId) && Ot.test(e.accountGeneration) && Number.isSafeInteger(e.expiresAt) && e.expiresAt > Date.now();
+  return U(e, ["ok", "accountId", "accountGeneration", "expiresAt"]) && e.ok === !0 && xt.test(e.accountId) && Dt.test(e.accountGeneration) && Number.isSafeInteger(e.expiresAt) && e.expiresAt > Date.now();
 }
 function yt(e) {
-  return typeof e == "string" && Dn.test(e);
+  return typeof e == "string" && xn.test(e);
 }
 function Et() {
   if (!globalThis.crypto || typeof globalThis.crypto.randomUUID != "function")
@@ -579,8 +579,8 @@ function wt(e) {
 }
 function Pn(e = {}) {
   const n = e.enabled === !0, o = kn(e.apiBase || "/api", e.allowMirrorApi), s = e.fetchImpl || globalThis.fetch.bind(globalThis), u = e.migrationDelay || ((t) => new Promise((r) => setTimeout(r, t))), d = /* @__PURE__ */ new Set(), E = /* @__PURE__ */ new Set(), g = /* @__PURE__ */ new Set();
-  let y = 0, A = null, I = null, S = null, _ = n ? "guest" : "off", F = "none", z = null, O = !1, H = null, he = null;
-  function Ve() {
+  let y = 0, A = null, I = null, L = null, _ = n ? "guest" : "off", F = "none", z = null, D = !1, H = null, he = null;
+  function Me() {
     let t;
     try {
       t = globalThis.sessionStorage.getItem(J);
@@ -594,15 +594,15 @@ function Pn(e = {}) {
     } catch {
       throw i("INVALID_CLEANUP_RECEIPT");
     }
-    const a = (c) => U(c, ["owner", "status"]) && c.status === "cleanup-required" && (c.owner === null || Ge(c.owner));
+    const a = (c) => U(c, ["owner", "status"]) && c.status === "cleanup-required" && (c.owner === null || Ve(c.owner));
     if (r.version === 1) {
       if (!U(r, ["version", "owner", "status"]) || !a({ owner: r.owner, status: r.status })) throw i("INVALID_CLEANUP_RECEIPT");
     } else if (r.version !== 2 || !U(r, ["version", "entries"]) || !Array.isArray(r.entries) || !r.entries.length || r.entries.length > 100 || !r.entries.every(a)) throw i("INVALID_CLEANUP_RECEIPT");
-    return O = !0, r;
+    return D = !0, r;
   }
   async function Ut() {
-    O = !0;
-    const t = Ve(), r = y;
+    D = !0;
+    const t = Me(), r = y;
     if (await _n(), l(r), t) {
       const f = t.version === 1 ? [{ owner: t.owner, status: t.status }] : t.entries;
       for (const w of f)
@@ -611,7 +611,7 @@ function Pn(e = {}) {
       if (globalThis.sessionStorage.removeItem(J), globalThis.sessionStorage.getItem(J) !== null) throw i("STORAGE_UNAVAILABLE");
     }
     const a = await ct();
-    if (l(r), O = a.length > 0, !E.size) return;
+    if (l(r), D = a.length > 0, !E.size) return;
     for (const f of a)
       if (f.owner)
         try {
@@ -622,7 +622,7 @@ function Pn(e = {}) {
           if (l(r), w?.code === "STALE_REQUEST") throw w;
         }
     const c = await ct();
-    l(r), O = c.length > 0;
+    l(r), D = c.length > 0;
   }
   function b() {
     return {
@@ -630,10 +630,10 @@ function Pn(e = {}) {
       phase: _,
       epoch: y,
       owner: I ? { ...I } : null,
-      pendingDeletion: !!S,
+      pendingDeletion: !!L,
       deletionRecovery: F,
       deletionRecoveryError: z,
-      cleanupRequired: O
+      cleanupRequired: D
     };
   }
   function N() {
@@ -667,10 +667,10 @@ function Pn(e = {}) {
     }
   }
   function kt(t) {
-    return (t?.version === 1 ? U(t, ["version", "ticket", "expiresAt", "deleteSent"]) : t?.version === ue && U(t, ["version", "ticket", "expiresAt", "deleteSent", "owner"]) && Ge(t.owner)) && typeof t.ticket == "string" && lt.test(t.ticket) && Number.isSafeInteger(t.expiresAt) && t.expiresAt > 0 && typeof t.deleteSent == "boolean";
+    return (t?.version === 1 ? U(t, ["version", "ticket", "expiresAt", "deleteSent"]) : t?.version === ue && U(t, ["version", "ticket", "expiresAt", "deleteSent", "owner"]) && Ve(t.owner)) && typeof t.ticket == "string" && lt.test(t.ticket) && Number.isSafeInteger(t.expiresAt) && t.expiresAt > 0 && typeof t.deleteSent == "boolean";
   }
-  function Ge(t) {
-    return U(t, ["accountId", "accountGeneration", "expiresAt"]) && Dt.test(t.accountId) && Ot.test(t.accountGeneration) && Number.isSafeInteger(t.expiresAt) && t.expiresAt > 0;
+  function Ve(t) {
+    return U(t, ["accountId", "accountGeneration", "expiresAt"]) && xt.test(t.accountId) && Dt.test(t.accountGeneration) && Number.isSafeInteger(t.expiresAt) && t.expiresAt > 0;
   }
   function te(t) {
     return {
@@ -704,17 +704,17 @@ function Pn(e = {}) {
     }
     return !kt(a) || JSON.stringify(te(a)) !== t ? { state: "invalid", error: "INVALID_DELETION_JOURNAL" } : a.expiresAt <= r ? { state: "expired", error: "DELETION_TICKET_EXPIRED", journal: te(a) } : { state: "valid", journal: te(a) };
   }
-  function G() {
+  function V() {
     const t = Ee();
     return t.state === "storage-error" ? t : we(t.raw);
   }
-  function Me(t, r) {
-    if (r !== null && (l(r), t !== null && !L(t, r)))
+  function Ge(t, r) {
+    if (r !== null && (l(r), t !== null && !m(t, r)))
       throw i("STALE_REQUEST");
   }
   function Pt(t) {
     l(t);
-    const r = G();
+    const r = V();
     if (l(t), r.state !== "none")
       throw r.state === "valid" ? i("DELETE_PENDING") : i(r.error || "STALE_REQUEST");
   }
@@ -725,30 +725,30 @@ function Pn(e = {}) {
     } catch {
       throw i("STORAGE_UNAVAILABLE");
     }
-    Me(r, a);
-    const f = G();
-    if (Me(r, a), f.state !== "valid" || !W(f.journal, c)) throw i("STORAGE_UNAVAILABLE");
+    Ge(r, a);
+    const f = V();
+    if (Ge(r, a), f.state !== "valid" || !W(f.journal, c)) throw i("STORAGE_UNAVAILABLE");
     return c;
   }
   function ne(t, r, a = t) {
-    if (l(r), !L(t, r)) throw i("STALE_REQUEST");
-    const c = G();
-    if (l(r), !L(t, r)) throw i("STALE_REQUEST");
+    if (l(r), !m(t, r)) throw i("STALE_REQUEST");
+    const c = V();
+    if (l(r), !m(t, r)) throw i("STALE_REQUEST");
     if (c.state === "storage-error") throw i("STORAGE_UNAVAILABLE");
     if (c.state === "expired") throw i("DELETION_TICKET_EXPIRED");
     if (c.state !== "valid" || !W(c.journal, a)) throw i("STALE_REQUEST");
     return c.journal;
   }
   function Ct(t, r) {
-    if (l(r), !L(t, r)) throw i("STALE_REQUEST");
-    const a = G();
-    if (l(r), !L(t, r)) throw i("STALE_REQUEST");
+    if (l(r), !m(t, r)) throw i("STALE_REQUEST");
+    const a = V();
+    if (l(r), !m(t, r)) throw i("STALE_REQUEST");
     if (a.state === "storage-error") throw i("STORAGE_UNAVAILABLE");
     if (a.state === "expired") throw i("DELETION_TICKET_EXPIRED");
     if (a.state !== "valid" || !W(a.journal, { ...t, deleteSent: a.journal.deleteSent }))
       throw i("STALE_REQUEST");
     if (a.journal.deleteSent !== t.deleteSent) {
-      if (l(r), !L(t, r)) throw i("STALE_REQUEST");
+      if (l(r), !m(t, r)) throw i("STALE_REQUEST");
       t.deleteSent = a.journal.deleteSent;
     }
     return a.journal;
@@ -760,10 +760,10 @@ function Pn(e = {}) {
     } catch {
       throw i("STORAGE_UNAVAILABLE");
     }
-    const c = G();
-    if (l(r), !L(t, r)) throw i("STALE_REQUEST");
+    const c = V();
+    if (l(r), !m(t, r)) throw i("STALE_REQUEST");
     if (c.state === "none") {
-      if (l(r), !L(t, r)) throw i("STALE_REQUEST");
+      if (l(r), !m(t, r)) throw i("STALE_REQUEST");
       return;
     }
     throw c.state === "valid" && W(c.journal, a) ? i("STORAGE_UNAVAILABLE") : c.state === "storage-error" ? i("DELETION_JOURNAL_CLEAR_UNCERTAIN") : i("STALE_REQUEST");
@@ -772,7 +772,7 @@ function Pn(e = {}) {
     F = t, z = r;
   }
   function Ie(t) {
-    return ++y, re(), A = null, I = null, X(), S = null, _ = "error", P("error", t), N(), i(t);
+    return ++y, re(), A = null, I = null, X(), L = null, _ = "error", P("error", t), N(), i(t);
   }
   function ve(t, r) {
     l(r);
@@ -784,20 +784,20 @@ function Pn(e = {}) {
       epoch: r,
       owner: t.version === 2 ? { ...t.owner } : null
     };
-    if (S = a, O = !a.owner || E.size === 0, _ = "deleting", P("pending"), N(), !L(a, r)) throw i("STALE_REQUEST");
+    if (L = a, D = !a.owner || E.size === 0, _ = "deleting", P("pending"), N(), !m(a, r)) throw i("STALE_REQUEST");
     return a;
   }
   function $e(t) {
     const r = ++y;
     re(), A = null, I = null, X(), l(r);
-    const a = G();
+    const a = V();
     if (a.state !== "valid" || !W(a.journal, t))
       throw l(r), Ie(a.error || "STALE_REQUEST");
     return ve(a.journal, r);
   }
   function Y() {
-    if (S) throw i("DELETE_PENDING");
-    const t = G();
+    if (L) throw i("DELETE_PENDING");
+    const t = V();
     if (t.state !== "none")
       throw t.state === "valid" ? ($e(t.journal), i("DELETE_PENDING")) : Ie(t.error);
   }
@@ -865,11 +865,11 @@ function Pn(e = {}) {
       expiresAt: c.expiresAt
     };
   }
-  async function Vt() {
+  async function Mt() {
     if (!n) return b();
-    if (await Ut(), S) return oe();
+    if (await Ut(), L) return oe();
     if (H && he === y) return H;
-    const t = G();
+    const t = V();
     if (t.state !== "none") {
       if (t.state !== "valid") throw Ie(t.error);
       return $e(t.journal), oe();
@@ -900,7 +900,7 @@ function Pn(e = {}) {
     const a = await Ke(t, r);
     return l(r), ye(t), A = t, I = a, _ = "ready", N(), b();
   }
-  async function Gt(t, r = () => {
+  async function Vt(t, r = () => {
   }) {
     if (!n) throw i("DISABLED");
     Y();
@@ -911,31 +911,31 @@ function Pn(e = {}) {
       let f = null;
       for (let w = 0; w < be; w += 1) {
         const h = await K("/v2/auth", { method: "POST", body: { action: "login", code: a } }, c);
-        let x;
+        let O;
         try {
-          x = await h.json();
+          O = await h.json();
         } catch {
           throw l(c), i("UNAVAILABLE");
         }
         l(c);
-        let T;
+        let p;
         try {
-          T = bn(h.status, x);
+          p = bn(h.status, O);
         } catch (C) {
           if (C?.code !== "RATE_LIMITED") throw C;
-          const D = h.headers.get("Retry-After"), B = D && /^\d{1,4}$/.test(D) ? Math.min(Un, Math.max(1, Number(D))) : 5;
+          const x = h.headers.get("Retry-After"), B = x && /^\d{1,4}$/.test(x) ? Math.min(Un, Math.max(1, Number(x))) : 5;
           if (w === be - 1) throw i("MIGRATION_PENDING", { migration: f, retryAfterMs: B * 1e3 });
           await u(Math.max(ht, B * 1e3)), l(c);
           continue;
         }
-        if (T.state === "ready") return await Je(T.token, c);
-        f = T.migration;
+        if (p.state === "ready") return await Je(p.token, c);
+        f = p.migration;
         try {
           r(structuredClone(f));
         } catch {
         }
-        if (w === be - 1) throw i("MIGRATION_PENDING", { migration: f, retryAfterMs: T.retryAfterMs });
-        await u(Math.min(xn, Math.max(ht, T.retryAfterMs))), l(c);
+        if (w === be - 1) throw i("MIGRATION_PENDING", { migration: f, retryAfterMs: p.retryAfterMs });
+        await u(Math.min(On, Math.max(ht, p.retryAfterMs))), l(c);
       }
       throw i("MIGRATION_PENDING", { migration: f });
     } catch (f) {
@@ -950,7 +950,7 @@ function Pn(e = {}) {
       throw f;
     }
   }
-  async function Mt(t, r) {
+  async function Gt(t, r) {
     if (!n) throw i("DISABLED");
     Y();
     const a = String(t || "").trim();
@@ -963,11 +963,11 @@ function Pn(e = {}) {
       }, c), h = await ee(w, [200], c);
       if (l(c), !U(h, ["ok", "intent", "expiresAt"]) || h.ok !== !0 || typeof h.intent != "string" || !/^ri1\.[0-9a-f]{64}$/.test(h.intent) || !Number.isSafeInteger(h.expiresAt) || h.expiresAt <= Date.now()) throw i("UNAVAILABLE");
       l(c);
-      const x = await r();
-      if (l(c), !x)
+      const O = await r();
+      if (l(c), !O)
         return _ = "guest", N(), { ...b(), cancelled: !0 };
-      const T = await jt({ action: "register", code: a, opId: f, intent: h.intent }, c);
-      return await Je(T, c);
+      const p = await jt({ action: "register", code: a, opId: f, intent: h.intent }, c);
+      return await Je(p, c);
     } catch (f) {
       if (f?.code !== "STALE_REQUEST") {
         try {
@@ -997,13 +997,13 @@ function Pn(e = {}) {
       }, f), h = await ee(w, [200], f);
       if (l(f), !U(h, ["ok", "ticket", "expiresAt"]) || h.ok !== !0 || typeof h.ticket != "string" || !lt.test(h.ticket) || !Number.isSafeInteger(h.expiresAt) || h.expiresAt <= Date.now()) throw i("UNAVAILABLE");
       l(f), Pt(f);
-      const x = Qe({
+      const O = Qe({
         owner: c,
         ticket: h.ticket,
         expiresAt: h.expiresAt,
         deleteSent: !1
       }, null, f);
-      return l(f), ve(x, f), oe();
+      return l(f), ve(O, f), oe();
     } catch (w) {
       if (w?.code === "STALE_REQUEST") throw w;
       try {
@@ -1015,18 +1015,18 @@ function Pn(e = {}) {
     }
   }
   let j = null;
-  function L(t, r) {
-    return y === r && S === t && t.epoch === r;
+  function m(t, r) {
+    return y === r && L === t && t.epoch === r;
   }
-  function M(t) {
-    if (l(t.epoch), _ !== "error" || F !== "error" || z !== t.code || S !== t.deletion)
+  function G(t) {
+    if (l(t.epoch), _ !== "error" || F !== "error" || z !== t.code || L !== t.deletion)
       throw i("STALE_REQUEST");
     if (j !== null) throw i("DELETE_PENDING");
   }
   function qe(t) {
-    M(t);
+    G(t);
     const r = Ee();
-    if (M(t), r.state === "storage-error") throw i("STORAGE_UNAVAILABLE");
+    if (G(t), r.state === "storage-error") throw i("STORAGE_UNAVAILABLE");
     return r.raw;
   }
   function Fe(t, r) {
@@ -1037,20 +1037,20 @@ function Pn(e = {}) {
     return a;
   }
   function ze(t, r) {
-    return M(t), _ = "error", P("error", r), N(), i(r);
+    return G(t), _ = "error", P("error", r), N(), i(r);
   }
   function He(t) {
-    M(t);
+    G(t);
     const r = ++y;
     if (re(), A = null, I = null, X(), y !== r) throw i("STALE_REQUEST");
-    return S = null, _ = "guest", P(), N(), b();
+    return L = null, _ = "guest", P(), N(), b();
   }
   function Q(t, r, a) {
-    return L(t, r) && (_ = "error", P("error", a?.code || "UNAVAILABLE"), N()), a;
+    return m(t, r) && (_ = "error", P("error", a?.code || "UNAVAILABLE"), N()), a;
   }
   async function $t(t, r) {
     let a = 0;
-    for (; S === t && t.epoch === r && a < At && t.expiresAt > Date.now(); ) {
+    for (; L === t && t.epoch === r && a < At && t.expiresAt > Date.now(); ) {
       l(r);
       let c;
       try {
@@ -1066,7 +1066,7 @@ function Pn(e = {}) {
           method: "POST",
           body: { action: f, ticket: t.ticket }
         }, r);
-        if (w = await ee(h, [200, 202], r), l(r), !L(t, r)) throw i("STALE_REQUEST");
+        if (w = await ee(h, [200, 202], r), l(r), !m(t, r)) throw i("STALE_REQUEST");
         if (!U(w, ["ok", "status"]) || w.ok !== !0 || !["pending", "complete"].includes(w.status)) throw i("UNAVAILABLE");
         ne(t, r, c);
       } catch (h) {
@@ -1078,67 +1078,67 @@ function Pn(e = {}) {
         throw h;
       }
       if (w.status === "complete") {
-        if (!L(t, r)) throw i("STALE_REQUEST");
+        if (!m(t, r)) throw i("STALE_REQUEST");
         const h = t.owner ? { accountId: t.owner.accountId, accountGeneration: t.owner.accountGeneration } : null;
-        O = !0;
+        D = !0;
         try {
           await ut(h), l(r);
-        } catch (T) {
-          throw T?.code === "STALE_REQUEST" || !L(t, r) ? i("STALE_REQUEST") : Q(t, r, T);
+        } catch (p) {
+          throw p?.code === "STALE_REQUEST" || !m(t, r) ? i("STALE_REQUEST") : Q(t, r, p);
         }
-        if (!L(t, r)) throw i("STALE_REQUEST");
-        O = !t.owner || E.size === 0;
-        const x = { owner: t.owner ? { ...t.owner } : null, receipt: { ok: !0, status: "complete" }, cleanupRequired: O };
+        if (!m(t, r)) throw i("STALE_REQUEST");
+        D = !t.owner || E.size === 0;
+        const O = { owner: t.owner ? { ...t.owner } : null, receipt: { ok: !0, status: "complete" }, cleanupRequired: D };
         try {
-          for (const T of E)
-            if (await T(structuredClone(x)), !L(t, r)) throw i("STALE_REQUEST");
-        } catch (T) {
-          if (O = !0, T?.code === "STALE_REQUEST" || !L(t, r)) throw i("STALE_REQUEST");
+          for (const p of E)
+            if (await p(structuredClone(O)), !m(t, r)) throw i("STALE_REQUEST");
+        } catch (p) {
+          if (D = !0, p?.code === "STALE_REQUEST" || !m(t, r)) throw i("STALE_REQUEST");
         }
-        if (!O) {
-          O = !0;
+        if (!D) {
+          D = !0;
           try {
-            await ft(h), l(r), O = !1;
-          } catch (T) {
-            throw T?.code === "STALE_REQUEST" || !L(t, r) ? i("STALE_REQUEST") : Q(t, r, T);
+            await ft(h), l(r), D = !1;
+          } catch (p) {
+            throw p?.code === "STALE_REQUEST" || !m(t, r) ? i("STALE_REQUEST") : Q(t, r, p);
           }
         }
-        if (O)
+        if (D)
           try {
-            const T = Ve(), C = { owner: t.owner ? { ...t.owner } : null, status: "cleanup-required" }, D = T ? T.version === 1 ? [{ owner: T.owner, status: T.status }] : T.entries : [];
-            if (D.some((se) => se.owner?.accountId === C.owner?.accountId && se.owner?.accountGeneration === C.owner?.accountGeneration) || D.push(C), D.length > 100) throw i("LOCAL_CLEANUP_QUEUE_FULL");
-            const B = JSON.stringify(D.length === 1 && !T ? { version: 1, ...C } : { version: 2, entries: D });
+            const p = Me(), C = { owner: t.owner ? { ...t.owner } : null, status: "cleanup-required" }, x = p ? p.version === 1 ? [{ owner: p.owner, status: p.status }] : p.entries : [];
+            if (x.some((se) => se.owner?.accountId === C.owner?.accountId && se.owner?.accountGeneration === C.owner?.accountGeneration) || x.push(C), x.length > 100) throw i("LOCAL_CLEANUP_QUEUE_FULL");
+            const B = JSON.stringify(x.length === 1 && !p ? { version: 1, ...C } : { version: 2, entries: x });
             if (globalThis.sessionStorage.setItem(J, B), globalThis.sessionStorage.getItem(J) !== B) throw i("STORAGE_UNAVAILABLE");
-          } catch (T) {
-            throw Q(t, r, T?.code ? T : i("STORAGE_UNAVAILABLE"));
+          } catch (p) {
+            throw Q(t, r, p?.code ? p : i("STORAGE_UNAVAILABLE"));
           }
         try {
           Bt(t, r, c);
-        } catch (T) {
-          throw T?.code === "STALE_REQUEST" ? T : Q(t, r, T);
+        } catch (p) {
+          throw p?.code === "STALE_REQUEST" ? p : Q(t, r, p);
         }
-        return S = null, P(), I || (_ = "deleted"), N(), b();
+        return L = null, P(), I || (_ = "deleted"), N(), b();
       }
-      if (!L(t, r)) throw i("STALE_REQUEST");
+      if (!m(t, r)) throw i("STALE_REQUEST");
       if (!t.deleteSent) {
         try {
           ne(t, r, c), Qe({ ...t, deleteSent: !0 }, t, r), ne(t, r, { ...c, deleteSent: !0 });
         } catch (h) {
           throw h?.code === "STALE_REQUEST" ? h : Q(t, r, h);
         }
-        if (l(r), !L(t, r)) throw i("STALE_REQUEST");
+        if (l(r), !m(t, r)) throw i("STALE_REQUEST");
         t.deleteSent = !0;
       }
       _ = "deleting", P("pending"), N(), await wt(250);
     }
-    throw L(t, r) ? (_ = "error", P("error", t.expiresAt <= Date.now() ? "DELETION_TICKET_EXPIRED" : "UNAVAILABLE"), N(), i(z)) : i("STALE_REQUEST");
+    throw m(t, r) ? (_ = "error", P("error", t.expiresAt <= Date.now() ? "DELETION_TICKET_EXPIRED" : "UNAVAILABLE"), N(), i(z)) : i("STALE_REQUEST");
   }
   function oe() {
-    if (!S) return Promise.resolve(b());
-    if (S.epoch !== y) return Promise.reject(i("STALE_REQUEST"));
-    if (j && j.deletion === S && j.epoch === y)
+    if (!L) return Promise.resolve(b());
+    if (L.epoch !== y) return Promise.reject(i("STALE_REQUEST"));
+    if (j && j.deletion === L && j.epoch === y)
       return j.promise;
-    const t = S, r = y;
+    const t = L, r = y;
     let a;
     return a = Promise.resolve().then(() => $t(t, r)).finally(() => {
       j && j.promise === a && (j = null);
@@ -1149,14 +1149,14 @@ function Pn(e = {}) {
     if (typeof t != "function") throw i("INVALID_INPUT");
     const r = {
       epoch: y,
-      deletion: S,
+      deletion: L,
       code: z
     };
     if (!["INVALID_DELETION_JOURNAL", "DELETION_TICKET_EXPIRED", "DELETION_JOURNAL_CLEAR_UNCERTAIN"].includes(r.code))
       throw i("STALE_REQUEST");
     const a = qe(r);
     if (Fe(r, a), !await t()) return { ...b(), cancelled: !0 };
-    M(r);
+    G(r);
     const f = qe(r), w = Fe(r, f);
     if (f !== a) throw i("STALE_REQUEST");
     if (r.code === "DELETION_JOURNAL_CLEAR_UNCERTAIN") {
@@ -1168,9 +1168,9 @@ function Pn(e = {}) {
     } catch {
       throw i("STORAGE_UNAVAILABLE");
     }
-    M(r);
+    G(r);
     const h = Ee();
-    if (M(r), h.state === "storage-error")
+    if (G(r), h.state === "storage-error")
       throw ze(r, "DELETION_JOURNAL_CLEAR_UNCERTAIN");
     if (we(h.raw).state === "none") return He(r);
     throw ze(r, "STALE_REQUEST");
@@ -1189,16 +1189,16 @@ function Pn(e = {}) {
     const r = new URL(String(t.path), "http://bounded.invalid");
     if (r.origin !== "http://bounded.invalid" || !t.path.startsWith("/v2/") || r.hash) throw i("INVALID_INPUT");
     const c = {
-      "/v2/sync/push": { methods: ["POST"], keys: [], max: 256 * 1024 },
-      "/v2/sync/pull": { methods: ["GET"], keys: ["after", "until", "limit"] },
-      "/v2/content/chunks": { methods: ["GET", "PUT"], keys: ["contentDigest", "chunkIndex"], max: 512 * 1024 },
-      "/v2/content/manifests": { methods: ["POST", "GET"], keys: ["contentDigest"], max: 128 * 1024 },
-      "/v2/export/start": { methods: ["POST"], keys: [], max: 2048 },
-      "/v2/export/reset": { methods: ["POST"], keys: [], max: 2048 },
-      "/v2/export/page": { methods: ["GET"], keys: ["exportId", "section", "after", "limit"] },
-      "/v2/export/chunk": { methods: ["GET"], keys: ["exportId", "contentDigest", "chunkIndex"] },
-      "/v2/legacy/history": { methods: ["GET"], keys: ["limit", "cursor", "id"], max: 409600 },
-      "/v2/legacy/banks": { methods: ["GET"], keys: ["limit", "cursor", "id", "chunkIndex", "part"], max: 256 * 1024 }
+      "/v2/sync/push": { methods: ["POST"], keys: [], requestMax: 256 * 1024, responseMax: 256 * 1024 },
+      "/v2/sync/pull": { methods: ["GET"], keys: ["after", "until", "limit"], responseMax: 512 * 1024 },
+      "/v2/content/chunks": { methods: ["GET", "PUT"], keys: ["contentDigest", "chunkIndex"], requestMax: 512 * 1024, responseMax: 512 * 1024 },
+      "/v2/content/manifests": { methods: ["POST", "GET"], keys: ["contentDigest"], requestMax: 128 * 1024, responseMax: 129 * 1024 },
+      "/v2/export/start": { methods: ["POST"], keys: [], requestMax: 2048, responseMax: 8 * 1024 },
+      "/v2/export/reset": { methods: ["POST"], keys: [], requestMax: 2048, responseMax: 2048 },
+      "/v2/export/page": { methods: ["GET"], keys: ["exportId", "section", "after", "limit"], responseMax: 512 * 1024 },
+      "/v2/export/chunk": { methods: ["GET"], keys: ["exportId", "contentDigest", "chunkIndex"], responseMax: 512 * 1024 },
+      "/v2/legacy/history": { methods: ["GET"], keys: ["limit", "cursor", "id"], responseMax: 409600 },
+      "/v2/legacy/banks": { methods: ["GET"], keys: ["limit", "cursor", "id", "chunkIndex", "part"], responseMax: 256 * 1024 }
     }[r.pathname], f = [...r.searchParams.keys()];
     if (!c || !c.methods.includes(t.method) || f.some((R) => !c.keys.includes(R)) || new Set(f).size !== f.length || t.method === "GET" && Object.hasOwn(t, "body")) throw i("INVALID_INPUT");
     let w;
@@ -1215,56 +1215,56 @@ function Pn(e = {}) {
         }
         h.set("Content-Type", "application/json");
       }
-      if (!c.max || w.byteLength > c.max) throw i("BODY_TOO_LARGE");
+      if (!c.requestMax || w.byteLength > c.requestMax) throw i("BODY_TOO_LARGE");
     }
-    const x = y, T = { ...I }, C = A, D = () => {
-      if (l(x), _ !== "ready" || A !== C || !I || I.accountId !== T.accountId || I.accountGeneration !== T.accountGeneration) throw i("STALE_REQUEST");
+    const O = y, p = { ...I }, C = A, x = () => {
+      if (l(O), _ !== "ready" || A !== C || !I || I.accountId !== p.accountId || I.accountGeneration !== p.accountGeneration) throw i("STALE_REQUEST");
     };
-    D(), h.set("Authorization", `Bearer ${C}`);
+    x(), h.set("Authorization", `Bearer ${C}`);
     const B = new AbortController();
     g.add(B);
     const se = setTimeout(() => B.abort(), 3e4);
     try {
       const R = await s(`${o}${r.pathname}${r.search}`, { method: t.method, headers: h, body: w, credentials: "omit", cache: "no-store", redirect: "error", signal: B.signal });
-      D();
+      x();
       const ie = R.body?.getReader();
       if (!ie) throw i("UNAVAILABLE");
-      let Te = 0;
-      const Xe = [], zt = Math.min(512 * 1024, c.max || 512 * 1024);
+      let pe = 0;
+      const Xe = [], zt = Math.min(512 * 1024, c.responseMax || 512 * 1024);
       try {
         for (; ; ) {
-          const V = await ie.read();
-          if (D(), V.done) break;
-          if (Te += V.value.length, Te > zt)
+          const M = await ie.read();
+          if (x(), M.done) break;
+          if (pe += M.value.length, pe > zt)
             throw await ie.cancel(), i("RESPONSE_TOO_LARGE");
-          Xe.push(V.value);
+          Xe.push(M.value);
         }
       } finally {
         ie.releaseLock();
       }
-      const pe = new Uint8Array(Te);
+      const Te = new Uint8Array(pe);
       let We = 0;
-      for (const V of Xe)
-        pe.set(V, We), We += V.length;
-      D();
+      for (const M of Xe)
+        Te.set(M, We), We += M.length;
+      x();
       let ge;
       const _e = R.ok && ["/v2/legacy/history", "/v2/legacy/banks"].includes(r.pathname) && r.searchParams.has("id");
-      if (R.ok && (["/v2/content/chunks", "/v2/export/chunk"].includes(r.pathname) || _e) && t.method === "GET") ge = pe;
+      if (R.ok && (["/v2/content/chunks", "/v2/export/chunk"].includes(r.pathname) || _e) && t.method === "GET") ge = Te;
       else
         try {
-          ge = JSON.parse(new TextDecoder("utf-8", { fatal: !0 }).decode(pe));
+          ge = JSON.parse(new TextDecoder("utf-8", { fatal: !0 }).decode(Te));
         } catch {
           throw i("UNAVAILABLE");
         }
-      D();
-      const me = R.headers.get("Retry-After"), Ye = {};
-      if (_e) for (const V of ["content-type", "content-length", "x-legacy-source-key", "x-legacy-source-sha256", "x-legacy-byte-length", "x-legacy-chunk-sha256", "x-legacy-chunk-index", "x-legacy-chunk-count"]) {
-        const Ze = R.headers.get(V);
-        Ze !== null && (Ye[V] = Ze);
+      x();
+      const Se = R.headers.get("Retry-After"), Ye = {};
+      if (_e) for (const M of ["content-type", "content-length", "x-legacy-source-key", "x-legacy-source-sha256", "x-legacy-byte-length", "x-legacy-chunk-sha256", "x-legacy-chunk-index", "x-legacy-chunk-count"]) {
+        const Ze = R.headers.get(M);
+        Ze !== null && (Ye[M] = Ze);
       }
-      return { status: R.status, body: ge, ..._e ? { headers: Ye } : {}, retryAfter: me && /^[1-9][0-9]{0,3}$/.test(me) ? Number(me) : null, epoch: x, owner: T };
+      return { status: R.status, body: ge, ..._e ? { headers: Ye } : {}, retryAfter: Se && /^[1-9][0-9]{0,3}$/.test(Se) ? Number(Se) : null, epoch: O, owner: p };
     } catch (R) {
-      throw x !== y ? i("STALE_REQUEST") : R instanceof xt ? R : i("UNAVAILABLE");
+      throw O !== y ? i("STALE_REQUEST") : R instanceof Ot ? R : i("UNAVAILABLE");
     } finally {
       clearTimeout(se), g.delete(B);
     }
@@ -1273,9 +1273,9 @@ function Pn(e = {}) {
     enabled: n,
     snapshot: b,
     subscribe: Jt,
-    resume: Vt,
-    login: Gt,
-    register: Mt,
+    resume: Mt,
+    login: Vt,
+    register: Gt,
     logout: Qt,
     deleteAccount: vt,
     acknowledgeRecovery: Kt,
@@ -1287,6 +1287,6 @@ function Pn(e = {}) {
 export {
   Ne as ACCOUNT_V2_SESSION_KEY,
   Ne as ACCOUNT_V2_TOKEN_KEY,
-  xt as AccountV2Error,
+  Ot as AccountV2Error,
   Pn as createAccountV2Controller
 };
