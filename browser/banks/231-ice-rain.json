@@ -1,0 +1,326 @@
+[
+  {
+    "id": "quiz_231_ice-rain-1",
+    "question": "Thermal wing anti-icing system for business jet and large transport category aircraft will typically use",
+    "choices": [
+      "air from engine exhaust heat exchangers.",
+      "bleed air from turbine engine compressor",
+      "bleed air from turbine engine combustion section."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q1"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-2",
+    "question": "What happens to the hot air used by a thermal anti-ice system operated by engine bleed air after it heats the leading edge of a wing?",
+    "choices": [
+      "The air is dumped (exhausted) overboard.",
+      "The air is cycled back through the wing",
+      "The air is returned to the vacuum pump"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q2"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-3",
+    "question": "Ice detector probes sense ice when ice build up changes the probe's...",
+    "choices": [
+      "pressure.",
+      "temperature.",
+      "frequency."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q3"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-4",
+    "question": "What type of valve controls the flow of bleed air from the pneumatic system to the wing anti-ice ducts?",
+    "choices": [
+      "Bleed air valve",
+      "Cross-feed valve",
+      "Wing anti-ice valve"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q4"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-5",
+    "question": "What type of circuits in the onboard computer continuously monitors the wing anti-ice system (WAI)?",
+    "choices": [
+      "Flight warning circuits",
+      "Built in test equipment (BITE)",
+      "Bleed air circuits"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q5"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-6",
+    "question": "During aircraft flight, what type of icing condition is still possible when there is no visible moisture?",
+    "choices": [
+      "Empennage icing",
+      "Glazed clear ice",
+      "Carburetor ice"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q6"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-7",
+    "question": "The deicer boots are failing to seat tightly on the leading edges of a Cessna Model 421. What might be the likely problem?",
+    "choices": [
+      "Ejector valve",
+      "Vacuum relief valve",
+      "Distributor Valve"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q7"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-8",
+    "question": "Icing which has a frosty appearance is called...",
+    "choices": [
+      "granular ice.",
+      "clear ice.",
+      "rime ice."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q8"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-9",
+    "question": "What are three methods of anti icing aircraft windshields?\n1. Blanket type heating system.\n2. An electric heating element in the windshield.\n3. Heated pneumatic system.\n4. Hot water system.\n5. Windshield wipers and anti-icing fluid.\n6. Ribbon type heating system.",
+    "choices": [
+      "1, 2, and 6",
+      "2, 3, and 4",
+      "2, 3, and 5"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q9"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-10",
+    "question": "Which of the following indication occur during a normal operational check of a pneumatic deicer system?",
+    "choices": [
+      "Relatively steady readings on the pressure gauge and fluctuating readings on the vacuum gauge.",
+      "Pressure and vacuum gauges will fluctuate as the deicer boots inflate and deflate.",
+      "Fluctuating readings on the pressure gauge and relatively steady reading on the vacuum gauge."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q10"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-11",
+    "question": "The inflation sequence of a pneumatic deicer boot is controlled by",
+    "choices": [
+      "the suction relief valve.",
+      "the timer.",
+      "the engine driven vacuum pump."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q11"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-12",
+    "question": "Aircraft deicer boot inflation operating pressure is typically in what pressure range?",
+    "choices": [
+      "42 to 50 PSI",
+      "15 to 20 PSI",
+      "8 to 10 PSI"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q12"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-13",
+    "question": "Which is the source of pressure for inflation of deicer boots on reciprocating engine aircraft?",
+    "choices": [
+      "Gear-type pump",
+      "Vane-type pump",
+      "Piston-type pump"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q13"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-14",
+    "question": "Which of the following regulates the vacuum of the air pump to hold the deicing boots deflated when the pneumatic deicing system is off?",
+    "choices": [
+      "Distributor valve",
+      "Pressure regulator",
+      "Suction relief valve"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q14"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-15",
+    "question": "What maintains normal windshield temperature control in an electrically heated windshield system?",
+    "choices": [
+      "Thermistors",
+      "Thermal overheat switches",
+      "ACIPS computer"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q15"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-16",
+    "question": "Clear ice forms when...",
+    "choices": [
+      "large droplets remain wet and do not completely freeze.",
+      "small droplets rapidly freeze as they hit the airframe.",
+      "large water droplets slowly freeze as they run along the aircraft."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q16"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-17",
+    "question": "Rime and clear ice can form at the same time.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q17"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-18",
+    "question": "If a pneumatic deicer boot is damaged in a small area, what is the correct course of action?",
+    "choices": [
+      "Install a surface patch with approved adhesive.",
+      "Remove damaged area and install a scarf patch.",
+      "Remove and replace boot."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q18"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-19",
+    "question": "Arcing in an electrically heated windshield panel usually indicates a breakdown in the...",
+    "choices": [
+      "conductive coating.",
+      "auto-transformers.",
+      "thermistors."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q19"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-20",
+    "question": "What mixture may be used as a deicing fluid to remove frost from an aircraft surface?",
+    "choices": [
+      "Naphtha and isopropyl alcohol",
+      "Ethylene glycol and isopropyl alcohol",
+      "Methyl ethyl ketene and ethylene glycol"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q20"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-21",
+    "question": "What controls the inflation & deflation sequence in a pneumatic deicer boot system?",
+    "choices": [
+      "Vacuum pump.",
+      "Shuttle valve.",
+      "Distributor valve."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q21"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-22",
+    "question": "What is the principle characteristic of a windshield pneumatic rain removal system?",
+    "choices": [
+      "Pneumatic system pressure powers the mechanical windshield wiper system.",
+      "An air blast forms a barrier that prevents raindrops from striking the windshield surface.",
+      "An air blast spreads a liquid rain repellent evenly over the windshield that prevents raindrops from clinging to the glass surface."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q22"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-23",
+    "question": "Some aircraft are protected against airframe icing by heating the leading edges of the airfoils and intake ducts. When is this type of anti ice system usually operated?",
+    "choices": [
+      "Turned on after icing conditions begin to remove ice as it accumulates.",
+      "Continuously while the aircraft is in flight.",
+      "Whenever icing condition are first encountered or expected to occur."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q23"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-24",
+    "question": "Modern transport category aircraft have windshields that are impact resistant. This characteristic is enhanced by heating, so that they can withstand...",
+    "choices": [
+      "the impact of a 12 pound bird at cruise speed.",
+      "the impact of a four pound bird at cruise speed.",
+      "the impact of a six pound bird at cruise speed."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q24"
+    ]
+  },
+  {
+    "id": "quiz_231_ice-rain-25",
+    "question": "What is the purpose of the oil separator in the pneumatic deicing system?",
+    "choices": [
+      "To prevent an accumulation of oil in the vacuum system.",
+      "To protect the deicer boots from oil deterioration.",
+      "To remove oil from air exhausted from the deicer boots."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT231 – Quiz – Ice & Rain – Q25"
+    ]
+  }
+]

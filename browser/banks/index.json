@@ -1,0 +1,85 @@
+[
+  {
+    "id": "239-airframe-elec",
+    "title": "Aircraft Electrical",
+    "mode": "public",
+    "description": "",
+    "tags": [],
+    "question_count": 34,
+    "has_images": true,
+    "json": "banks/239-airframe-elec.json"
+  },
+  {
+    "id": "205-finishes",
+    "title": "Finishes",
+    "mode": "public",
+    "description": "",
+    "tags": [],
+    "question_count": 112,
+    "has_images": false,
+    "archived": true,
+    "json": "banks/205-finishes.json"
+  },
+  {
+    "id": "215-helicopter",
+    "title": "Helicopter",
+    "mode": "public",
+    "description": "",
+    "tags": [],
+    "question_count": 29,
+    "has_images": false,
+    "archived": true,
+    "json": "banks/215-helicopter.json"
+  },
+  {
+    "id": "general",
+    "title": "General Question Banks",
+    "mode": "public",
+    "description": "",
+    "tags": [],
+    "question_count": 1139,
+    "has_images": true,
+    "json": "banks/general.json",
+    "archived": true
+  },
+  {
+    "id": "201-composite",
+    "title": "Composite",
+    "mode": "public",
+    "description": "",
+    "tags": [],
+    "question_count": 35,
+    "has_images": false,
+    "json": "banks/201-composite.json"
+  },
+  {
+    "id": "211-sheet-metal",
+    "title": "Sheet Metal",
+    "mode": "public",
+    "description": "",
+    "tags": [],
+    "question_count": 246,
+    "has_images": true,
+    "json": "banks/211-sheet-metal.json"
+  },
+  {
+    "id": "231-ice-rain",
+    "title": "Ice and Rain Protection",
+    "mode": "public",
+    "description": "",
+    "tags": [],
+    "question_count": 25,
+    "has_images": false,
+    "json": "banks/231-ice-rain.json"
+  },
+  {
+    "id": "231-fire-pos-warning",
+    "title": "Fire Prot/Pos & Warning",
+    "mode": "public",
+    "description": "",
+    "tags": [],
+    "question_count": 64,
+    "has_images": false,
+    "json": "banks/231-fire-pos-warning.json"
+  }
+]

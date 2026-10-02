@@ -5,7 +5,7 @@
   <title>AMT 题库练习</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="color-scheme" content="light dark" />
-  <script>(function(){try{var k="qb_theme",s=localStorage.getItem(k),m=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,t=(s==="dark"||s==="light")?s:(m?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <script>globalThis.QB_ACCOUNT_V2_UI = "true" === "true"; (function(){try{var k="qb_theme",s=localStorage.getItem(k),m=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,t=(s==="dark"||s==="light")?s:(m?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
   <style>
     :root{
       color-scheme: light;
@@ -136,6 +136,13 @@
     .q-badge{display:inline-flex; align-items:center; font-weight:700; font-size:12.5px; background:var(--badge-bg); color:var(--badge-ink); border:1px solid var(--badge-border); padding:3px 10px; border-radius:var(--pill)}
     .question-text{font-size:16.5px; font-weight:650; line-height:1.5; margin:6px 0 10px; flex:1; color:var(--ink)}
     .meta{font-size:12.5px; color:var(--muted); margin-top:8px}
+    .qb-source{min-width:0; max-width:100%; margin-top:8px; color:var(--muted)}
+    .qb-source-wrap{min-width:0; flex:1}
+    .qb-source>summary{cursor:pointer; overflow-wrap:anywhere; word-break:break-word}
+    .qb-source>summary::marker{color:var(--muted)}
+    .qb-source-list{margin:6px 0 0 18px; padding:0; overflow-wrap:anywhere; word-break:break-word}
+    .qb-source-list li{padding:2px 0; overflow-wrap:anywhere; word-break:break-word}
+    .qb-source-id{margin-top:7px; overflow-wrap:anywhere; word-break:break-word}
     img{max-width:100%; height:auto; border-radius:var(--radius-xs); border:1px solid var(--border)}
     .img-wrap{margin:10px 0}
 
@@ -407,7 +414,7 @@
     html[data-motion="off"] .barista.brewed .steam,html[data-motion="reduced"] .barista.brewed .steam{opacity:.35}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
   </style>
-</head>
+<script>globalThis.QB_DATA_V2_CONFIG={"enabled":true,"manifest":"banks/v2/manifest.json","banks":[{"slug":"239-airframe-elec","bankUid":"be8fe87d-7ec8-4bdd-a33a-a5d6b16d35e4","revision":"a19d1135fe58e9733a0f745d7900f2a5ab9d013a91ea981e00c4c917ae6d5912","staticRef":"banks/v2/239-airframe-elec.a19d1135fe58e9733a0f745d7900f2a5ab9d013a91ea981e00c4c917ae6d5912.json","questionCount":34,"title":"Aircraft Electrical"},{"slug":"205-finishes","bankUid":"2fb8d2be-46a4-435c-9cfd-d6c9f416300b","revision":"b69beb00cd3a2dbada9626efdb42cebbdb7bd75a75b1b3dea9aaf56fc26efa91","staticRef":"banks/v2/205-finishes.b69beb00cd3a2dbada9626efdb42cebbdb7bd75a75b1b3dea9aaf56fc26efa91.json","questionCount":112,"title":"Finishes"},{"slug":"215-helicopter","bankUid":"73c3ae5c-d627-4ece-b096-ee04309e9ea3","revision":"e52ad725d8b56a2b36a1f90c4692e4d33ff8e317abe30566c88916788fd87af5","staticRef":"banks/v2/215-helicopter.e52ad725d8b56a2b36a1f90c4692e4d33ff8e317abe30566c88916788fd87af5.json","questionCount":29,"title":"Helicopter"},{"slug":"general","bankUid":"35a68cb2-b871-4d37-9447-190c396eaf99","revision":"6ce382b1d2fbcdcc548ec265e4dbdf0de661c262b4473d710718dcc18fa763ba","staticRef":"banks/v2/general.6ce382b1d2fbcdcc548ec265e4dbdf0de661c262b4473d710718dcc18fa763ba.json","questionCount":1139,"title":"General Question Banks"},{"slug":"201-composite","bankUid":"08d6b781-19d6-49d1-af05-f7c05031940f","revision":"158659be6a1a8c5adcab8cb6d864255ea1e62410e8fb2b462f55ccbb3a0cbc34","staticRef":"banks/v2/201-composite.158659be6a1a8c5adcab8cb6d864255ea1e62410e8fb2b462f55ccbb3a0cbc34.json","questionCount":35,"title":"Composite"},{"slug":"211-sheet-metal","bankUid":"7c8ca573-7a7c-4cbe-8769-054719e65394","revision":"87fc9eb3e435675e12c53b081f5639344f157c9abda70bcb1843747fd2eed781","staticRef":"banks/v2/211-sheet-metal.87fc9eb3e435675e12c53b081f5639344f157c9abda70bcb1843747fd2eed781.json","questionCount":246,"title":"Sheet Metal"},{"slug":"231-ice-rain","bankUid":"79d93947-1307-45ae-8f19-e25d3bd11051","revision":"e411b6c8bb13cfbc6f9839398df24ddb9de1f10b1797905f93e6f345a60f2969","staticRef":"banks/v2/231-ice-rain.e411b6c8bb13cfbc6f9839398df24ddb9de1f10b1797905f93e6f345a60f2969.json","questionCount":25,"title":"Ice and Rain Protection"},{"slug":"231-fire-pos-warning","bankUid":"ce7a3545-f827-4573-8ded-7e105afc35e3","revision":"cb441e8709d69cc8dc0ec32fb5ceebddf9cd33a258964aac8d9f0ff2208e23f9","staticRef":"banks/v2/231-fire-pos-warning.cb441e8709d69cc8dc0ec32fb5ceebddf9cd33a258964aac8d9f0ff2208e23f9.json","questionCount":64,"title":"Fire Prot/Pos & Warning"}],"accountApiBase":"https://question-bank-78u.pages.dev/api"};</script></head>
 <body>
   <section id="unlock-panel" class="unlock-panel" hidden>
     <a class="btn" id="back-catalog-unlock" href="./" hidden data-i18n="back_catalog" style="margin-bottom:10px;display:inline-block">← Catalog</a>
@@ -615,15 +622,24 @@
   <div class="tut-overlay" id="qb-login" hidden data-testid="qb-login" onclick="if(event.target===this)closeLoginModal()">
     <div class="tut-card qb-fb-card">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
-        <h2 data-i18n="login_title" style="margin:0;font-size:1.1rem">Sign in to save your history</h2>
+        <h2 id="qb-login-title" data-i18n="login_title" style="margin:0;font-size:1.1rem">Sign in to save your history</h2>
         <button class="btn qb-x" onclick="closeLoginModal()" aria-label="Close">✕</button>
       </div>
-      <p class="meta" data-i18n="login_hint" style="margin:6px 0 8px">Pick a code and remember it.</p>
+      <p id="qb-login-hint" class="meta" data-i18n="login_hint" style="margin:6px 0 8px">Pick a code and remember it.</p>
       <input type="text" id="qb-login-code" maxlength="64" autocomplete="off" autocapitalize="off" spellcheck="false" data-i18n-placeholder="login_ph" onkeydown="if(event.key==='Enter'){event.preventDefault();doLogin();}">
       <div class="tut-actions">
         <button class="btn" onclick="closeLoginModal()" data-i18n="login_cancel">Cancel</button>
         <span class="spacer"></span>
+        <button class="btn" id="qb-register-go" onclick="doRegister()" type="button" hidden>Register new</button>
         <button class="btn submit-btn" id="qb-login-go" onclick="doLogin()" data-i18n="login_go">Enter</button>
+      </div>
+      <div id="qb-public-share-entry" hidden style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border)">
+        <label for="qb-public-share-code" class="meta">Open a shared practice bank</label>
+        <input type="text" id="qb-public-share-code" maxlength="128" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="share code" onkeydown="if(event.key==='Enter'){event.preventDefault();openPublicShare();}">
+        <div class="tut-actions" style="margin-top:8px">
+          <span class="spacer"></span>
+          <button class="btn" id="qb-public-share-go" onclick="openPublicShare()" type="button">Open shared practice</button>
+        </div>
       </div>
       <div class="qb-fb-status" id="qb-login-status"></div>
     </div>
@@ -637,14 +653,35 @@
       </div>
       <p class="meta" data-i18n="history_sub" style="margin:6px 0 8px">Your latest 10 rounds.</p>
       <div id="qb-history-list" class="qb-hist-list"></div>
+      <section id="qb-legacy-archive" aria-live="polite" style="margin:12px 0;padding:12px;border:1px solid var(--border);border-radius:10px">
+        <h3 style="margin:0 0 8px">Legacy archive</h3>
+        <p class="meta" style="margin:0 0 8px">Original snapshots are read-only. Starting an archived bank creates a separate new practice attempt.</p>
+        <div id="qb-legacy-archive-status" class="meta">Loading original history and private banks…</div>
+        <div id="qb-legacy-history-list"></div>
+        <div id="qb-legacy-banks-list"></div>
+        <hr><h4>Browser learning-data file bridge</h4>
+        <p class="meta">Scans only recognized learning keys. Export first, then import the file explicitly to the signed-in account you choose. Source browser data is never removed; records without a unique question mapping stay marked unknown.</p>
+        <button id="qb-local-legacy-export" class="btn" type="button">Preview &amp; download this browser’s data</button>
+        <label class="meta" style="display:block;margin-top:8px">Import a previously exported file <input id="qb-local-legacy-file" type="file" accept="application/json,.json"></label>
+        <div id="qb-local-legacy-preview" class="meta" aria-live="polite"></div>
+        <label id="qb-local-legacy-confirm-wrap" class="meta" hidden><input id="qb-local-legacy-confirm" type="checkbox"> I confirm this source file belongs with the account shown above.</label>
+        <button id="qb-local-legacy-import" class="btn" type="button" disabled>Import verified raw archive</button>
+        <div id="qb-local-legacy-status" class="meta" aria-live="polite"></div>
+      </section>
+      <section id="qb-account-recovery-panel" hidden aria-live="assertive" style="margin:10px 0;padding:12px;border:1px solid var(--warn-border,var(--border));border-radius:10px;background:var(--card)">
+        <p id="qb-account-recovery-message" class="meta" style="margin:0 0 10px"></p>
+        <button class="btn" id="qb-account-recovery-ack" type="button" onclick="acknowledgeAccountRecovery()" hidden></button>
+      </section>
       <div class="tut-actions">
         <button class="btn" onclick="logout()" data-i18n="hist_logout">Sign out</button>
         <button class="btn qb-danger" onclick="deleteMyAccount()" data-testid="del-account-btn" data-i18n="del_account_btn">Delete my data</button>
+        <button class="btn" id="qb-account-delete-retry" onclick="retryAccountDeletion()" type="button" hidden>Retry deletion</button>
         <span class="spacer"></span>
         <button class="btn" onclick="closeHistory()" data-i18n="login_cancel">Cancel</button>
       </div>
     </div>
   </div>
+  <div id="account-v2-learning-notice" hidden style="margin:0 0 14px;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--muted);font-size:13px">Candidate account mode: practice progress is memory-only in this release; it is not saved or synced.</div>
 
   <div class="tut-overlay" id="qb-tutorial" hidden data-testid="qb-tutorial">
     <div class="tut-card">
@@ -805,6 +842,595 @@
   </div>
 
   <script>
+    const ACCOUNT_V2_CANDIDATE = globalThis.QB_ACCOUNT_V2_UI === true;
+    const DATA_V2_ENABLED = !!(globalThis.QB_DATA_V2_CONFIG && globalThis.QB_DATA_V2_CONFIG.enabled);
+    let QUESTION_HTML_SANITIZER=null,QUESTION_RASTER_DISPLAY=null,QUESTION_RASTER_FACTORY=null,QUESTION_RASTER_HIDDEN_CONTEXT=null;
+    let DATA_V2_RECOVERY_CANCEL=null;
+    function questionHtmlDegraded(){let notice=document.getElementById('qb-html-degraded');if(!notice){notice=document.createElement('p');notice.id='qb-html-degraded';notice.role='status';notice.style.cssText='padding:8px 16px;color:var(--muted)';document.body.append(notice);}notice.textContent=typeof uiLang!=='undefined'&&uiLang==='zh'?'安全排版组件不可用：题目以纯文本显示，图片和内联输入已停用。':typeof uiLang!=='undefined'&&uiLang==='es'?'Formato seguro no disponible: texto sin imágenes ni campos incrustados.':'Safe formatting unavailable: displaying plain text without images or inline inputs.';}
+    const QUESTION_HTML_READY=import('./browser/html-sanitizer.js').then(module=>{QUESTION_HTML_SANITIZER=module.createQuestionHtmlSanitizer(window);QUESTION_RASTER_FACTORY=module.createPublicRasterDisplay;QUESTION_RASTER_DISPLAY=QUESTION_RASTER_FACTORY(window);}).catch(()=>{questionHtmlDegraded();});
+    window.addEventListener('pagehide',()=>{QUESTION_RASTER_HIDDEN_CONTEXT={generation:DATA_V2_SESSION_GENERATION,session:DATA_V2_SESSION,sequence:DATA_V2_BOOT_SEQUENCE};QUESTION_RASTER_DISPLAY?.close();});
+    window.addEventListener('pageshow',event=>{if(!event.persisted||!QUESTION_RASTER_FACTORY)return;QUESTION_RASTER_DISPLAY=QUESTION_RASTER_FACTORY(window);const captured=QUESTION_RASTER_HIDDEN_CONTEXT;if(!captured||captured.generation!==DATA_V2_SESSION_GENERATION||captured.sequence!==DATA_V2_BOOT_SEQUENCE||captured.session!==DATA_V2_SESSION)return;for(const q of currentQuestions){const state=uiState[q.id];if(state&&document.getElementById('qimage-'+q.id))hydrateQuestionText(q,state);}});
+    let DATA_V2_MODULE = null, DATA_V2_SESSION = null, DATA_V2_SESSION_READY = null, DATA_V2_SESSION_BOUND = false, DATA_V2_ACCOUNT_INITIALIZED = false, DATA_V2_BODIES = [], DATA_V2_BOOT_SEQUENCE = 0, DATA_V2_SESSION_GENERATION = 0, DATA_V2_READ_ONLY = false, DATA_V2_LOCAL_IMPORT = null, DATA_V2_LOCAL_BRIDGE_BOUND = false;
+    const dataV2Current=(generation,session)=>generation===DATA_V2_SESSION_GENERATION&&(!session||session===DATA_V2_SESSION);
+    function createQuestionHydrationScheduler(priority){
+      let closed=false,active=null,nextOrdinal=0;const pending=new Map();
+      function pump(){
+        if(closed||active||!pending.size)return;
+        const row=[...pending.values()].sort((a,b)=>priority(a.key)-priority(b.key)||a.ordinal-b.ordinal)[0];pending.delete(row.key);active=row;
+        Promise.resolve().then(()=>{if(closed)throw Object.assign(new Error('STALE_REQUEST'),{code:'STALE_REQUEST'});return row.work();}).then(row.resolve,row.reject).finally(()=>{active=null;pump();});
+      }
+      return Object.freeze({
+        run(key,work){if(closed)return Promise.reject(Object.assign(new Error('STALE_REQUEST'),{code:'STALE_REQUEST'}));if(active?.key===key)return active.promise;if(pending.has(key))return pending.get(key).promise;let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b;});pending.set(key,{key,work,promise,resolve,reject,ordinal:nextOrdinal++});queueMicrotask(pump);return promise;},
+        close(){if(closed)return;closed=true;for(const row of pending.values())row.reject(Object.assign(new Error('STALE_REQUEST'),{code:'STALE_REQUEST'}));pending.clear();},
+        snapshot(){return {active:active?1:0,pending:pending.size,closed};}
+      });
+    }
+    function createQuestionViewportFallback(surface,update){
+      let closed=false,frame=null;
+      function cancelFrame(){if(frame!==null){surface.cancelAnimationFrame(frame);frame=null;}}
+      function schedule(){if(closed||frame!==null)return;frame=surface.requestAnimationFrame(()=>{frame=null;if(!closed)update();});}
+      surface.addEventListener('scroll',schedule,{passive:true});surface.addEventListener('resize',schedule);surface.addEventListener('pagehide',cancelFrame);surface.addEventListener('pageshow',schedule);
+      return Object.freeze({schedule,close(){if(closed)return;closed=true;cancelFrame();surface.removeEventListener('scroll',schedule);surface.removeEventListener('resize',schedule);surface.removeEventListener('pagehide',cancelFrame);surface.removeEventListener('pageshow',schedule);}});
+    }
+    function questionHydrationPriority(questionKey){const q=currentQuestions.find(value=>value.questionKey===questionKey),card=q&&document.getElementById('card-'+q.id);if(!card)return Number.MAX_SAFE_INTEGER;const rect=card.getBoundingClientRect();return rect.bottom>=0&&rect.top<=innerHeight?0:Math.min(Math.abs(rect.top),Math.abs(rect.bottom-innerHeight))+1;}
+    let DATA_V2_PUBLIC_READONLY=null;
+    function dataV2NeedsFullQuestion(q){return Boolean(DATA_V2_PUBLIC_READONLY&&q&&DATA_V2_PUBLIC_READONLY.inputs.has(q.questionKey)&&!DATA_V2_PUBLIC_READONLY.full.has(q.questionKey));}
+    function dataV2HasVerifiedImages(q){const state=DATA_V2_PUBLIC_READONLY;if(!state||dataV2NeedsFullQuestion(q))return false;const input=state.inputs.get(q.questionKey),original=state.originals.get(q.questionKey);if(!input||!original||q.questionRevision!==input.questionRevision)return false;const images=[];for(const ref of state.equivalents.get(q.questionKey)||[{questionKey:q.questionKey}]){const source=state.originals.get(ref.questionKey);if(!source)return false;for(const image of collectImageList(source))if(!images.includes(image))images.push(image);}const shown=collectImageList(q);return shown.length===images.length&&shown.every(image=>images.includes(image));}
+    async function dataV2HydrateFullQuestion(q){
+      const state=DATA_V2_PUBLIC_READONLY,session=DATA_V2_SESSION,generation=DATA_V2_SESSION_GENERATION,sequence=DATA_V2_BOOT_SEQUENCE;
+      if(!state||!dataV2NeedsFullQuestion(q))return q;if(state.flights.has(q.questionKey))return state.flights.get(q.questionKey);
+      const current=()=>DATA_V2_PUBLIC_READONLY===state&&sequence===DATA_V2_BOOT_SEQUENCE&&dataV2Current(generation,session);
+      const flight=state.scheduler.run(q.questionKey,async()=>{if(!current())throw Object.assign(new Error('STALE_REQUEST'),{code:'STALE_REQUEST'});const input=state.inputs.get(q.questionKey),loaded=await session.readStoredQuestion(input);if(!current())throw Object.assign(new Error('STALE_REQUEST'),{code:'STALE_REQUEST'});
+        const original=loaded.question,uiId=q.id,banks=q.banks,source=q.source;state.originals.set(original.questionKey,original);
+        const images=collectImageList(original);for(const ref of state.equivalents.get(original.questionKey)||[]){if(ref.questionKey===original.questionKey)continue;const sibling=(await session.readStoredQuestion(state.inputs.get(ref.questionKey))).question;if(!current())throw Object.assign(new Error('STALE_REQUEST'),{code:'STALE_REQUEST'});state.originals.set(sibling.questionKey,sibling);for(const image of collectImageList(sibling))if(!images.includes(image))images.push(image);}
+        for(const key of Object.keys(q))delete q[key];Object.assign(q,original,{id:uiId,banks,source});setImageField(q,images);state.full.add(q.questionKey);return q;
+      }).finally(()=>{if(state.flights.get(q.questionKey)===flight)state.flights.delete(q.questionKey);});state.flights.set(q.questionKey,flight);return flight;
+    }
+    async function startDataV2StoredPublic(entry,session){
+      const generation=DATA_V2_SESSION_GENERATION,sequence=++DATA_V2_BOOT_SEQUENCE;dataV2Status({state:'initializing'});
+      const catalog=await session.readStoredDisplayCatalog({bankUid:entry.bankUid,revision:entry.revision});if(!dataV2Current(generation,session)||sequence!==DATA_V2_BOOT_SEQUENCE)return;
+      const raw=[],inputs=new Map(),prehydrated=new Set();
+      for(const view of catalog.views){
+        const input={bankUid:entry.bankUid,revision:entry.revision,reference:catalog.reference,questionKey:view.questionKey,questionRevision:view.questionRevision};inputs.set(view.questionKey,input);
+        const required=new Set(['type','question','choices','answer','answers','blanks','answer_sets','id','banks','source','sources','section']);let q;
+        if(view.displayView.deferredFields.some(field=>required.has(field))){q=(await session.readStoredQuestion(input)).question;if(!dataV2Current(generation,session)||sequence!==DATA_V2_BOOT_SEQUENCE)return;prehydrated.add(view.questionKey);}
+        else q={...structuredClone(view.displayView.fields),bankUid:entry.bankUid,questionKey:view.questionKey,questionRevision:view.questionRevision};
+        raw.push(q);
+      }
+      if(!raw.length)throw new Error('EMPTY_REGISTERED_BANK');
+      const deduped=dedupeQuestionBank(raw.map(q=>({...q,id:q.questionKey}))),equivalents=new Map();for(const q of raw){const id=deduped.alias[q.questionKey];if(!equivalents.has(id))equivalents.set(id,[]);equivalents.get(id).push({questionKey:q.questionKey,questionRevision:q.questionRevision});}
+      const scope=deduped.bank.map(q=>({questionKey:q.questionKey,questionRevision:q.questionRevision,equivalentSourceRefs:[...equivalents.get(q.id)].sort((a,b)=>a.questionKey<b.questionKey?-1:a.questionKey>b.questionKey?1:0)}));
+      const restored=await session.startStoredBank(inputs.get(raw[0].questionKey),{scope});if(!dataV2Current(generation,session)||sequence!==DATA_V2_BOOT_SEQUENCE)return;
+      DATA_V2_PUBLIC_READONLY?.viewportFallback?.close();DATA_V2_PUBLIC_READONLY?.scheduler.close();
+      const state={entry,inputs,scheduler:createQuestionHydrationScheduler(questionHydrationPriority),full:new Set(),flights:new Map(),originals:new Map(),equivalents:new Map(scope.map(row=>[row.questionKey,row.equivalentSourceRefs]))};DATA_V2_PUBLIC_READONLY=state;DATA_V2_BODIES=[{staticRef:entry.staticRef,content:{bankUid:entry.bankUid,metadata:catalog.record.metadata,questions:raw}}];
+      DATA_V2_SCOPE=new Map(restored.bundle.scope.map(row=>[row.questionKey,row.ordinal]));DATA_V2_POSITION=restored.bundle.attempt.position;DATA_V2_ELAPSED=restored.bundle.attempt.effectiveElapsedMs;DATA_V2_ACTIVE_AT=document.hidden?null:performance.now();DATA_V2_READ_ONLY=restored.bundle.attempt.status==='completed';
+      // Existing drafts use their immutable options and original recorded grade;
+      // hydrate those actual sources before uiFromDraft, never regrade a view.
+      for(const draft of restored.bundle.drafts){const q=raw.find(row=>row.questionKey===draft.questionKey);if(q)await dataV2HydrateFullQuestion(q);if(!dataV2Current(generation,session)||sequence!==DATA_V2_BOOT_SEQUENCE)return;}
+      setPageHeading(catalog.record.metadata.title);document.title=catalog.record.metadata.title;startLegacyQuiz(raw);dataV2Apply(restored.bundle,restored.stars);return{session,sequence,restored};
+    }
+    let DATA_V2_SCOPE = new Map(), DATA_V2_POSITION = 0, DATA_V2_ELAPSED = 0, DATA_V2_ACTIVE_AT = null, DATA_V2_POSITION_TIMER = null, DATA_V2_POSITION_PENDING = null, DATA_V2_LOCAL_WRITE_REVISION = 0;
+    function dataV2InvalidateSync(){
+      DATA_V2_LOCAL_WRITE_REVISION++;
+      const label=document.getElementById('qb-v2-sync-status');if(label){label.dataset.state='pending';label.textContent=uiLang==='zh'?'本机有新的学习资料；请再次云同步。':uiLang==='es'?'Hay cambios locales nuevos; sincroniza otra vez.':'New local learning changes; sync again.';}
+    }
+    function dataV2ClearPosition(){clearTimeout(DATA_V2_POSITION_TIMER);DATA_V2_POSITION_TIMER=null;DATA_V2_POSITION_PENDING=null;}
+    function dataV2FlushPosition(session,generation){
+      const pending=DATA_V2_POSITION_PENDING;dataV2ClearPosition();
+      if(!pending||pending.session!==session||pending.generation!==generation||!dataV2Current(generation,session)||DATA_V2_READ_ONLY)return Promise.resolve();
+      return session.savePosition({position:DATA_V2_POSITION,effectiveElapsedMs:dataV2Elapsed()});
+    }
+    function dataV2Elapsed(){return DATA_V2_ELAPSED+(DATA_V2_ACTIVE_AT===null?0:Math.max(0,Math.floor(performance.now()-DATA_V2_ACTIVE_AT)));}
+    function dataV2SavePosition(questionKey){
+      if(!DATA_V2_SESSION||DATA_V2_READ_ONLY||!DATA_V2_SCOPE.has(questionKey))return;
+      DATA_V2_POSITION=DATA_V2_SCOPE.get(questionKey);dataV2ClearPosition();dataV2InvalidateSync();
+      const session=DATA_V2_SESSION,generation=DATA_V2_SESSION_GENERATION;
+      DATA_V2_POSITION_PENDING={session,generation};
+      DATA_V2_POSITION_TIMER=setTimeout(function(){dataV2FlushPosition(session,generation).catch(error=>{if(dataV2Current(generation,session))dataV2Status({state:'error',error:error.code||error.message});});},750);
+    }
+    document.addEventListener('focusin',function(event){if(!DATA_V2_ENABLED)return;const card=event.target.closest('.question-card[data-qid]');if(!card)return;const question=currentQuestions.find(q=>q.id===card.dataset.qid);if(question)dataV2SavePosition(question.questionKey);});
+    document.addEventListener('click',function(event){if(!DATA_V2_ENABLED)return;const card=event.target.closest('.question-card[data-qid]');if(!card)return;const question=currentQuestions.find(q=>q.id===card.dataset.qid);if(question)dataV2SavePosition(question.questionKey);});
+    document.addEventListener('visibilitychange',function(){if(!DATA_V2_ENABLED)return;if(document.hidden){DATA_V2_ELAPSED=dataV2Elapsed();DATA_V2_ACTIVE_AT=null;}else if(DATA_V2_SESSION&&!DATA_V2_READ_ONLY)DATA_V2_ACTIVE_AT=performance.now();});
+    function dataV2Text(key){
+      if(key==='idle')return uiLang==='zh'?'本地存储已就绪 · 请选择或导入题库':uiLang==='es'?'Almacenamiento listo · elige o importa un banco':'Local storage ready · choose or import a bank';
+      if(key==='protectBank')return uiLang==='zh'?'加密并注册新 JSON':uiLang==='es'?'Cifrar y registrar JSON nuevo':'Encrypt & register new JSON';
+      if(key==='protectedFile')return uiLang==='zh'?'导出加密题库文件':uiLang==='es'?'Exportar banco cifrado':'Export encrypted bank file';
+      if(key==='finish')return uiLang==='zh'?'结束本轮':uiLang==='es'?'Finalizar intento':'Finish this attempt';
+      if(key==='conflicts')return uiLang==='zh'?'收藏冲突':uiLang==='es'?'Conflictos de favoritos':'Star conflicts';
+      if(key==='cloudRecovery')return uiLang==='zh'?'恢复云端截点':uiLang==='es'?'Recuperar corte de nube':'Recover cloud checkpoint';
+      const copy = {
+        en:{initializing:"Opening local learning storage…",saving:"Saving on this device…",saved:"Saved on this device · sync is separate",error:"Not saved: ",closed:"Learning writer closed",history:"Learning history",backup:"Export backup",restore:"Import backup",importBank:"Register & save a new JSON bank",missing:"Registered bank content is not available offline yet.",unsupported:"This bank has no registered v2 content. Protected/shared legacy practice is not enabled in this candidate.",empty:"Import a new bank explicitly. Existing localStorage banks are not migrated.",quarantine:"Account backup isolated. Online tombstone reconciliation is required before activation."},
+        zh:{initializing:"正在打开本地学习存储…",saving:"正在保存到本设备…",saved:"已保存到本设备 · 云同步另行处理",error:"未保存：",closed:"学习写者已关闭",history:"学习历史",backup:"导出备份",restore:"导入备份",importBank:"注册并保存新 JSON 题库",missing:"本设备尚无可离线使用的注册题库正文。",unsupported:"此题库没有 v2 注册正文。本候选尚未支持受保护或旧分享题库。",empty:"请明确导入新题库；不会迁移已有 localStorage 题库。",quarantine:"账号备份已隔离；联网核对最新墓碑前不会激活。"},
+        es:{initializing:"Abriendo almacenamiento local…",saving:"Guardando en este dispositivo…",saved:"Guardado en este dispositivo · sincronización aparte",error:"No guardado: ",closed:"Escritor cerrado",history:"Historial de aprendizaje",backup:"Exportar copia",restore:"Importar copia",importBank:"Registrar y guardar un banco JSON nuevo",missing:"El contenido registrado aún no está disponible sin conexión.",unsupported:"Este banco no tiene contenido v2 registrado. Bancos protegidos/compartidos antiguos no están habilitados.",empty:"Importa un banco nuevo explícitamente. No se migran bancos de localStorage.",quarantine:"Copia de cuenta aislada; requiere comprobar las eliminaciones en línea."}
+      }; return (copy[typeof uiLang === 'string' ? uiLang : 'en'] || copy.en)[key] || key;
+    }
+    function dataV2Status(value){ if(value.state==='closed')QUESTION_RASTER_DISPLAY?.clear();if(value.state==='saving')dataV2InvalidateSync();const node=document.getElementById('qb-v2-save-status'); if(node) {node.textContent=dataV2Text(value.state)+(value.error ? value.error : '');node.dataset.state=value.state;} }
+    function dataV2CleanupStatus(value){
+      const node=document.getElementById('qb-v2-cleanup-status'),retry=document.getElementById('qb-v2-cleanup-retry');if(!node||!retry)return;
+      const checking=value.status==='checking',required=value.cleanupRequired===true,untracked=value.status==='cleanup-untracked',reopen=value.status==='cleanup-reopen-required';node.hidden=!required;node.dataset.state=value.status;retry.hidden=!required||untracked;retry.disabled=checking;
+      node.textContent=checking?(uiLang==='zh'?'正在核对临时恢复资料清理…':uiLang==='es'?'Comprobando la limpieza temporal…':'Checking temporary recovery cleanup…'):untracked?(uiLang==='zh'?'旧恢复没有可验证清理凭据；未删除任何资料。本机学习保存状态不变。':uiLang==='es'?'La recuperación antigua no tiene comprobante verificable de limpieza; no se borró ningún dato. El guardado local no cambia.':'Older recovery has no verifiable cleanup commitment; no data was deleted. Local learning save state is unchanged.'):(uiLang==='zh'?'临时恢复资料清理尚未完成；已保存学习资料不受影响。':uiLang==='es'?'La limpieza temporal está pendiente; el aprendizaje guardado se conserva.':'Temporary recovery cleanup remains pending; saved learning data is retained.')+(value.error?' · '+value.error:'');
+      const observed=required&&Array.isArray(value.allocationResults)&&value.allocationResults.some(row=>row.profileId===row.sourceProfileId&&row.logicalContentEmpty===true&&row.physicalContainerRetained===true&&row.error==='CLOUD_SOURCE_PHYSICAL_DELETE_UNAVAILABLE');
+      if(observed)node.textContent+=(uiLang==='zh'?' 最近检查中，一个临时来源内容为空；空存储容器仍保留，维护待完成。':uiLang==='es'?' En una comprobación reciente, un origen temporal estaba vacío; su contenedor sigue retenido y el mantenimiento está pendiente.':' In a recent check, one temporary source was empty; its storage container remains retained and maintenance is pending.');
+      retry.textContent=reopen?(uiLang==='zh'?'保存进度并重新打开以继续清理':uiLang==='es'?'Guardar y reabrir para continuar la limpieza':'Save progress and reopen to continue cleanup'):(uiLang==='zh'?'重试临时清理':uiLang==='es'?'Reintentar limpieza temporal':'Retry temporary cleanup');
+    }
+    async function dataV2RetryCleanup(){const generation=DATA_V2_SESSION_GENERATION;let session;try{session=await ensureDataV2Session();if(!dataV2Current(generation,session))return;if(session.cleanupSnapshot()?.status==='cleanup-reopen-required'){await dataV2FlushPosition(session,generation);await session.flush();if(!dataV2Current(generation,session))return;session.close();if(dataV2Current(generation,session))location.reload();return;}await session.retryCleanup();}catch(error){if(dataV2Current(generation,session))dataV2CleanupStatus({status:'cleanup-incomplete',cleanupRequired:true,error:error.code||'CLOUD_CLEANUP_FAILED'});}}
+    function installDataV2Tools(){
+      if(document.getElementById('qb-v2-tools')) return;
+      const tools=document.createElement('div'); tools.id='qb-v2-tools';tools.style.cssText='display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0;font-size:13px';
+      const status=document.createElement('span');status.id='qb-v2-save-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');status.style.cssText='color:var(--muted);flex:1 1 220px';tools.append(status);
+      const cleanup=document.createElement('span');cleanup.id='qb-v2-cleanup-status';cleanup.hidden=true;cleanup.role='status';cleanup.setAttribute('aria-live','polite');tools.append(cleanup);const retry=document.createElement('button');retry.id='qb-v2-cleanup-retry';retry.type='button';retry.className='btn';retry.hidden=true;retry.onclick=dataV2RetryCleanup;tools.append(retry);
+      [['history',dataV2History],['finish',dataV2Finish],['conflicts',dataV2StarConflicts],['cloudRecovery',dataV2CloudRecover],['backup',dataV2Export],['restore',()=>document.getElementById('qb-v2-backup-file').click()],['importBank',()=>document.getElementById('qb-v2-bank-file').click()],['protectBank',()=>document.getElementById('qb-v2-protect-file').click()],['protectedFile',dataV2ExportProtected]].forEach(([key,handler])=>{const button=document.createElement('button');button.type='button';button.className='btn';button.id='qb-v2-'+key;button.textContent=dataV2Text(key);button.addEventListener('click',handler);tools.append(button);});
+      [['qb-v2-backup-file','.zip',dataV2ImportBackup],['qb-v2-bank-file','.json',dataV2ImportBank],['qb-v2-protect-file','.json',event=>dataV2ImportBank(event,true)]].forEach(([id,accept,handler])=>{const input=document.createElement('input');input.type='file';input.id=id;input.accept=accept;input.hidden=true;input.addEventListener('change',handler);tools.append(input);});
+      const anchor=document.getElementById('account-v2-learning-notice');if(anchor)anchor.after(tools);else document.getElementById('quiz').before(tools);
+      dataV2Status({state:'initializing'});
+      updateAuthUI();
+    }
+    async function ensureDataV2Session(){
+      if(DATA_V2_SESSION) return DATA_V2_SESSION;
+      if(DATA_V2_SESSION_READY) return DATA_V2_SESSION_READY;
+      installDataV2Tools();
+      const generation=DATA_V2_SESSION_GENERATION;
+      const flight=(async()=>{
+        DATA_V2_MODULE=await import('./browser/data-v2.js');
+        const controller=await ACCOUNT_V2_READY, state=controller && controller.snapshot();
+        if(state && (state.pendingDeletion || state.deletionRecovery==='error')) throw new Error('ACCOUNT_RECOVERY_BLOCKED');
+        const capturedEpoch=state ? state.epoch : null;
+        const current=()=>generation===DATA_V2_SESSION_GENERATION&&(!controller||controller.snapshot().epoch===capturedEpoch);
+        if(!current())throw Object.assign(new Error('STALE_REQUEST'),{code:'STALE_REQUEST'});
+        DATA_V2_SESSION_BOUND=true;
+        const owner=state && state.owner ? {ownerKind:'account',accountId:state.owner.accountId,accountGeneration:state.owner.accountGeneration} : null;
+        const session=await DATA_V2_MODULE.createLearningSession({owner,isCurrent:current,onStatus:status=>{if(current())dataV2Status(status);},onCleanup:status=>{if(current())dataV2CleanupStatus(status);}});
+        if(!current()){session.close();throw Object.assign(new Error('STALE_REQUEST'),{code:'STALE_REQUEST'});}
+        DATA_V2_SESSION=session;return session;
+      })().catch(error=>{if(DATA_V2_SESSION_READY===flight){DATA_V2_SESSION_READY=null;DATA_V2_SESSION_BOUND=false;if(generation===DATA_V2_SESSION_GENERATION&&error.code!=='STALE_REQUEST')dataV2Status({state:'error',error:error.code||error.message});}throw error;});
+      DATA_V2_SESSION_READY=flight;return flight;
+    }
+    async function dataV2LoadBank(entry,session){
+      const generation=DATA_V2_SESSION_GENERATION;session=session||await ensureDataV2Session();
+      if(!dataV2Current(generation,session))throw Object.assign(new Error('STALE_REQUEST'),{code:'STALE_REQUEST'});
+      const stored=await session.repository.readRecords('bank_revisions',[entry.bankUid,entry.revision]);
+      if(stored) return (await session.repository.readBankContent(entry.bankUid,entry.revision)).content;
+      const response=await fetch(entry.staticRef);if(!response.ok)throw new Error(dataV2Text('missing'));
+      const body=await response.json(),verified=await DATA_V2_MODULE.validateBankContent(body);
+      if(verified.contentDigest!==entry.revision || verified.content.bankUid!==entry.bankUid)throw new Error('REGISTERED_BANK_BINDING_MISMATCH');
+      return verified.content;
+    }
+    async function dataV2Public(id){
+      const generation=DATA_V2_SESSION_GENERATION;showQuizApp();const session=await ensureDataV2Session();if(!dataV2Current(generation,session))return;
+      if(id==='all-banks'){
+        const entries=globalThis.QB_DATA_V2_CONFIG.banks||[],banks=[];
+        for(const entry of entries)banks.push({content:await dataV2LoadBank(entry,session),staticRef:entry.staticRef});
+        if(!dataV2Current(generation,session))return;
+        const title=uiLang==='zh'?'全部公开题库':uiLang==='es'?'Todos los bancos públicos':'All public banks';DATA_V2_BODIES=banks;MERGED_BANK_IDS=entries.map(entry=>entry.slug);setPageHeading(title);document.title=title;
+        await startDataV2Quiz(banks.flatMap(bank=>structuredClone(bank.content.questions)));return;
+      }
+      const entry=(globalThis.QB_DATA_V2_CONFIG.banks||[]).find(row=>row.slug===id);
+      if(!entry)throw new Error(dataV2Text('unsupported'));
+      const stored=await session.repository.readRecords('bank_revisions',[entry.bankUid,entry.revision]);if(!dataV2Current(generation,session))return;
+      if(stored){await startDataV2StoredPublic(entry,session);return;}
+      DATA_V2_PUBLIC_READONLY?.viewportFallback?.close();DATA_V2_PUBLIC_READONLY?.scheduler.close();DATA_V2_PUBLIC_READONLY=null;
+      const content=await dataV2LoadBank(entry,session);if(!dataV2Current(generation,session))return;DATA_V2_BODIES=[{content,staticRef:entry.staticRef}];
+      setPageHeading(content.metadata.title);document.title=content.metadata.title;
+      await startDataV2Quiz(structuredClone(content.questions));
+    }
+    async function dataV2Local(){
+      const generation=DATA_V2_SESSION_GENERATION;showQuizApp();const session=await ensureDataV2Session();if(!dataV2Current(generation,session))return;
+      const records=(await session.repository.readRecords('bank_revisions')).filter(row=>['private','protected'].includes(row.metadata.visibility));if(!dataV2Current(generation,session))return;
+      const requested=new URLSearchParams(location.search).get('bank');
+      const chosen=records.find(row=>row.bankUid===requested);
+      if(chosen){
+        let entry;
+        if(chosen.contentManifest.kind==='protected_cipher'){
+          const loaded=await session.repository.readProtectedBankEnvelopeV2(chosen.bankUid,chosen.revision);if(!dataV2Current(generation,session))return;const password=await dataV2Password();if(password===null||!dataV2Current(generation,session)){if(dataV2Current(generation,session))dataV2Status({state:'idle'});return;}
+          entry=await DATA_V2_MODULE.unlockProtectedBankFileV2({format:'qb-protected-bank-file-v2',version:2,record:loaded.record,envelope:loaded.envelope},password);
+        }else{const loaded=await session.repository.readBankContent(chosen.bankUid,chosen.revision);entry={content:loaded.content};}
+        if(generation!==DATA_V2_SESSION_GENERATION)return;DATA_V2_BODIES=[entry];setPageHeading(entry.content.metadata.title);await startDataV2Quiz(structuredClone(entry.content.questions));return;
+      }
+      const quiz=document.getElementById('quiz');quiz.replaceChildren();const hint=document.createElement('p');hint.textContent=dataV2Text('empty');quiz.append(hint);
+      const seen=new Set();for(const record of records){if(seen.has(record.bankUid))continue;seen.add(record.bankUid);const button=document.createElement('button');button.className='btn';button.textContent=record.metadata.title;button.addEventListener('click',()=>{location.href='local.html?bank='+encodeURIComponent(record.bankUid);});quiz.append(button);}
+      dataV2Status({state:'idle'});
+    }
+    function dataV2Apply(bundle,stars){
+      const byKey=new Map(QUESTION_BANK.map(q=>[q.questionKey,q])); uiState={};answeredOnce=new Set();starred=new Set();wrongSet=new Set();conqueredSet=new Set();attemptCountMap={};
+      for(const key of stars||[]){const q=byKey.get(key);if(q)starred.add(q.id);}
+      for(const draft of bundle.drafts){const q=byKey.get(draft.questionKey);if(!q)continue;const latest=bundle.events.filter(e=>e.questionKey===q.questionKey&&e.kind==='answer_submitted').at(-1);const state=DATA_V2_MODULE.uiFromDraft(q,draft,latest);state.feedbackHTML=state.submitted&&latest?(latest.gradeAtTime.correct?`<div class="correct">${FB_CHECK_SVG}${T('correct_fb')}</div>`:`<div class="wrong">${FB_CROSS_SVG}${T('wrong_fb')}</div>`):'';uiState[q.id]=state;}
+      for(const state of Object.values(uiState))if(state.inheritedFrom)state.feedbackHTML='<div class="meta">'+(uiLang==='zh'?'继承自原练习；没有新增提交或得分。选择“重新作答”后可编辑，提示状态会保留。':uiLang==='es'?'Heredado del intento original; no añade respuestas ni puntos. Responde de nuevo para editar; se conserva la ayuda.':'Inherited from the original attempt; no new submission or score. Answer anew to edit; assistance is retained.')+'</div>';
+      for(const event of bundle.events){if(event.kind!=='answer_submitted')continue;const q=byKey.get(event.questionKey);if(!q)continue;attemptCountMap[q.id]=(attemptCountMap[q.id]||0)+1;if(!event.assisted)answeredOnce.add(q.id);if(!event.gradeAtTime.correct)wrongSet.add(q.id);else if(wrongSet.has(q.id))conqueredSet.add(q.id);}
+      totalAttempts=bundle.progress.firstAnswered;totalCorrect=bundle.progress.firstCorrect;rerenderCurrentView();updateStats();
+      if(DATA_V2_READ_ONLY)document.querySelectorAll('#quiz .choice-btn,#quiz .submit-btn,#quiz input,#quiz .redo-btn').forEach(node=>node.disabled=true);
+      const finish=document.getElementById('qb-v2-finish');if(finish)finish.disabled=DATA_V2_READ_ONLY;
+    }
+    async function startDataV2Quiz(rawQuestions){
+      DATA_V2_PUBLIC_READONLY?.viewportFallback?.close();DATA_V2_PUBLIC_READONLY?.scheduler.close();DATA_V2_PUBLIC_READONLY=null;
+      const generation=DATA_V2_SESSION_GENERATION,sequence=++DATA_V2_BOOT_SEQUENCE;DATA_V2_READ_ONLY=false;dataV2Status({state:'initializing'});
+      try{
+        const session=await ensureDataV2Session();
+        if(sequence!==DATA_V2_BOOT_SEQUENCE||!dataV2Current(generation,session))return;
+        if(!DATA_V2_BODIES.length || rawQuestions.some(q=>!q.questionKey||!q.optionIds))throw new Error(dataV2Text('unsupported'));
+        const dedupedResult=dedupeQuestionBank(rawQuestions.map(q=>({...q,id:q.questionKey}))),deduped=dedupedResult.bank;
+        const equivalents=new Map();for(const q of rawQuestions){const id=dedupedResult.alias[q.questionKey];if(!equivalents.has(id))equivalents.set(id,[]);const refs=equivalents.get(id);if(!refs.some(ref=>ref.questionKey===q.questionKey))refs.push({questionKey:q.questionKey,questionRevision:q.questionRevision});}
+        const refs=deduped.map(q=>({questionKey:q.questionKey,questionRevision:q.questionRevision,equivalentSourceRefs:[...equivalents.get(q.id)].sort((a,b)=>a.questionKey<b.questionKey?-1:a.questionKey>b.questionKey?1:0)}));
+        const restored=await session.startBanks(DATA_V2_BODIES,{scope:refs});
+        if(sequence!==DATA_V2_BOOT_SEQUENCE||!dataV2Current(generation,session))return;
+        DATA_V2_SCOPE=new Map(restored.bundle.scope.map(row=>[row.questionKey,row.ordinal]));DATA_V2_POSITION=restored.bundle.attempt.position;DATA_V2_ELAPSED=restored.bundle.attempt.effectiveElapsedMs;DATA_V2_ACTIVE_AT=document.hidden?null:performance.now();
+        DATA_V2_READ_ONLY=restored.bundle.attempt.status==='completed';startLegacyQuiz(rawQuestions);dataV2Apply(restored.bundle,restored.stars);
+        return {session,sequence,restored};
+      }catch(error){if(sequence!==DATA_V2_BOOT_SEQUENCE||error.code==='STALE_REQUEST')return;dataV2Status({state:'error',error:error.code||error.message});document.getElementById('quiz').textContent=error.code||error.message;}
+    }
+    function dataV2Draft(q,st){if(!DATA_V2_ENABLED||!DATA_V2_SESSION||DATA_V2_READ_ONLY||dataV2NeedsFullQuestion(q))return;const session=DATA_V2_SESSION,generation=DATA_V2_SESSION_GENERATION;session.saveDraft({questionKey:q.questionKey,questionRevision:q.questionRevision,input:DATA_V2_MODULE.answerFromUI(q,st)}).catch(error=>{if(dataV2Current(generation,session))dataV2Status({state:'error',error:error.code||error.message});});}
+    async function dataV2Sync(){
+      const generation=DATA_V2_SESSION_GENERATION,sequence=DATA_V2_BOOT_SEQUENCE;
+      let session,account,capturedEpoch;
+      const current=()=>generation===DATA_V2_SESSION_GENERATION&&sequence===DATA_V2_BOOT_SEQUENCE&&(!session||session===DATA_V2_SESSION)&&(!account||account.snapshot().epoch===capturedEpoch);
+      const label=document.getElementById('qb-v2-sync-status'),button=document.getElementById('qb-v2-sync');if(button)button.disabled=true;
+      try{session=await ensureDataV2Session();account=await ACCOUNT_V2_READY;capturedEpoch=account?.snapshot().epoch;if(!current())return;if(!account||!account.snapshot().owner||session.owner.ownerKind!=='account')throw new Error('ACCOUNT_REQUIRED');await dataV2FlushPosition(session,generation);await session.flush();if(!current())return;const writeRevision=DATA_V2_LOCAL_WRITE_REVISION;if(label)label.textContent=uiLang==='zh'?'正在同步…':uiLang==='es'?'Sincronizando…':'Syncing…';const result=await DATA_V2_MODULE.createSyncV2Coordinator({account,repository:session.repository}).runOnce();if(current()&&label){if(writeRevision!==DATA_V2_LOCAL_WRITE_REVISION){const pending=(await session.repository.readRecords('outbox')).length;if(!current())return;label.dataset.state='pending';label.textContent=(uiLang==='zh'?'同步期间有新的本机资料；请再次同步。':uiLang==='es'?'Hay cambios nuevos durante la sincronización; sincroniza otra vez.':'New local changes during sync; sync again.')+' · '+pending;return;}const awaiting=result.reason==='AWAITING_RESUME'||result.awaitingResume===true;label.dataset.state=awaiting?'awaiting-resume':result.synced?'synced':result.paused?'paused':'pending';label.textContent=awaiting?(uiLang==='zh'?'本机保存状态不变；等待完整续做资料，尚未同步完成。':uiLang==='es'?'El guardado local no cambia; esperando datos completos para continuar. Sincronización incompleta.':'Local save state unchanged; waiting for complete resume data. Not yet synced.'):result.synced?(uiLang==='zh'?'已同步至本次云端截点':uiLang==='es'?'Sincronizado hasta el corte confirmado':'Synced through the confirmed cloud cut'):(uiLang==='zh'?'仍有待同步资料':uiLang==='es'?'Quedan datos pendientes':'Sync pending')+' · '+(result.reason||'')+' · '+result.pending+(result.retryAfter?' · '+result.retryAfter+'s':'');}}
+      catch(error){if(current()&&error.code!=='STALE_REQUEST'&&label){label.dataset.state='error';label.textContent=(uiLang==='zh'?'同步未完成：':uiLang==='es'?'Sincronización incompleta: ':'Sync incomplete: ')+(error.code||error.message);}}
+      finally{if(current()&&button)button.disabled=false;}
+    }
+    async function dataV2Export(){const generation=DATA_V2_SESSION_GENERATION;let session;try{session=await ensureDataV2Session();if(!dataV2Current(generation,session))return;const saved=await session.exportBackup();if(!dataV2Current(generation,session))return;const url=URL.createObjectURL(saved.blob),link=document.createElement('a');link.href=url;link.download='question-bank-'+saved.manifest.exportId+'.zip';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch(error){if(dataV2Current(generation,session))dataV2Status({state:'error',error:error.code||error.message});}}
+    async function dataV2StarConflicts(){
+      const generation=DATA_V2_SESSION_GENERATION;let session;
+      try{session=await ensureDataV2Session();const groups=await session.starConflictGroups();if(!dataV2Current(generation,session))return;const groupViews=groups.filter(view=>view.pendingCount>1),groupKeys=new Set(groupViews.map(view=>view.questionKey));const views=(await session.starConflicts()).filter(view=>!groupKeys.has(view.questionKey));if(!dataV2Current(generation,session))return;
+        document.getElementById('qb-v2-star-conflicts')?.remove();const dialog=document.createElement('dialog');dialog.id='qb-v2-star-conflicts';dialog.style.cssText='max-width:560px;width:calc(100% - 32px);max-height:80vh;overflow:auto;background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:14px;padding:24px';
+        const heading=document.createElement('h2');heading.textContent=dataV2Text('conflicts');const notice=document.createElement('p');notice.textContent=uiLang==='zh'?'先云同步以取得最新云值，再明确选择。选择只生成新的本机意图，仍需再次云同步；原意图和冲突来源保留。其他类型冲突不能在此丢弃。':uiLang==='es'?'Sincroniza para obtener el valor actual y elige explícitamente. Se crea una intención local nueva; vuelve a sincronizar. Se conserva el origen del conflicto. Otros conflictos no se descartan aquí.':'Sync first to obtain the current cloud value, then explicitly choose. This creates a new local intent; sync again afterward. Original intent and conflict provenance are retained. Other conflict kinds cannot be discarded here.';dialog.append(heading,notice);
+        if(!views.length&&!groupViews.length){const empty=document.createElement('p');empty.textContent=uiLang==='zh'?'没有待解决的收藏冲突。':uiLang==='es'?'No hay conflictos de favoritos abiertos.':'No open star conflicts.';dialog.append(empty);}
+        for(const view of groupViews){
+          const row=document.createElement('section');row.style.cssText='border-top:1px solid var(--border);padding:12px 0';row.dataset.starGroup=view.entityKey;
+          const inBank=QUESTION_BANK.some(q=>q.questionKey===view.questionKey),label=document.createElement('p');
+          label.textContent=view.questionKey+' · '+view.pendingCount+' '+(uiLang==='zh'?'条待发意图 · 最新本机：':uiLang==='es'?'intenciones pendientes · Última local: ':'queued intents · Latest local: ')+(view.localValue?'★':'☆')+(view.available?' · '+(uiLang==='zh'?'已验证云端：':uiLang==='es'?'Nube verificada: ':'Verified cloud: ')+(view.cloudValue?'★':'☆'):' · '+view.error);row.append(label);
+          if(!inBank){const note=document.createElement('p');note.textContent=uiLang==='zh'?'请先打开包含此题的题库，再解决此组收藏意图。':uiLang==='es'?'Abre primero el banco que contiene esta pregunta para resolver el grupo.':'Open the bank containing this question before resolving this group.';row.append(note);}
+          for(const choice of ['local','cloud']){const button=document.createElement('button');button.type='button';button.className='btn';button.style.minHeight='44px';button.dataset.resolveStarGroup=view.entityKey+':'+choice;button.textContent=choice==='local'?(uiLang==='zh'?'采用最新本机选择':uiLang==='es'?'Usar última elección local':'Use latest local choice'):(uiLang==='zh'?'采用云端选择':uiLang==='es'?'Usar elección de nube':'Use cloud choice');button.disabled=!view.available||!inBank;
+            button.onclick=async()=>{if(!dataV2Current(generation,session))return;const message=uiLang==='zh'?'将 '+view.pendingCount+' 条排队的收藏意图替换为你选择的最终值？原记录保留；撤回意图不等于云端已确认。':uiLang==='es'?'¿Reemplazar '+view.pendingCount+' intenciones de favoritos en cola por tu elección final? Los registros originales se conservan; las intenciones retiradas no se consideran confirmadas.':'Replace '+view.pendingCount+' queued star intents with your selected final choice? Original records remain; withdrawn intents are not ACKed.';if(!confirm(message)||!dataV2Current(generation,session))return;row.querySelectorAll('button').forEach(node=>node.disabled=true);
+              try{await session.resolveStarConflictGroup({entityKey:view.entityKey,groupDigest:view.groupDigest,choice});if(!dataV2Current(generation,session))return;const records=await session.repository.readRecords('user_state');if(!dataV2Current(generation,session))return;starred=new Set(records.filter(record=>record.field==='starred'&&record.value).map(record=>QUESTION_BANK.find(q=>q.questionKey===record.questionKey)?.id).filter(Boolean));rerenderCurrentView();if(DATA_V2_READ_ONLY)document.querySelectorAll('#quiz .choice-btn,#quiz .submit-btn,#quiz input,#quiz .redo-btn').forEach(node=>node.disabled=true);label.textContent=uiLang==='zh'?'最终选择已保存到本设备，尚未云同步；请再次同步。':uiLang==='es'?'Elección final guardada localmente, aún no sincronizada; sincroniza otra vez.':'Final choice saved on this device, not yet synced; sync again.';const syncLabel=document.getElementById('qb-v2-sync-status');if(syncLabel){syncLabel.dataset.state='pending';syncLabel.textContent=label.textContent;}}
+              catch(error){if(dataV2Current(generation,session))label.textContent=(uiLang==='zh'?'未解决；请重新同步并再次明确选择：':uiLang==='es'?'Sin resolver; sincroniza y elige de nuevo: ':'Not resolved; sync and explicitly choose again: ')+(error.code||error.message);}
+            };row.append(button);
+          }dialog.append(row);
+        }
+        for(const view of views){const inBank=QUESTION_BANK.some(q=>q.questionKey===view.questionKey),row=document.createElement('section');row.style.cssText='border-top:1px solid var(--border);padding:12px 0';const label=document.createElement('p');label.textContent=view.questionKey+' · '+(uiLang==='zh'?'本机：':uiLang==='es'?'Local: ':'Local: ')+(view.localValue?'★':'☆')+(view.available?' · '+(uiLang==='zh'?'云端：':uiLang==='es'?'Nube: ':'Cloud: ')+(view.cloudValue?'★':'☆'):' · '+view.error);if(!inBank)label.textContent+=' · '+(uiLang==='zh'?'请先打开包含此题的题库。':uiLang==='es'?'Abre primero el banco correspondiente.':'Open the bank containing this question first.');row.append(label);
+          for(const choice of ['local','cloud']){const button=document.createElement('button');button.type='button';button.className='btn';button.dataset.resolveStar=view.conflictId+':'+choice;button.style.minHeight='44px';button.textContent=choice==='local'?(uiLang==='zh'?'保留本机选择':uiLang==='es'?'Usar elección local':'Keep local choice'):(uiLang==='zh'?'采用云端选择':uiLang==='es'?'Usar elección de nube':'Use cloud choice');button.disabled=!view.available||!inBank;button.onclick=async()=>{if(!dataV2Current(generation,session))return;row.querySelectorAll('button').forEach(node=>node.disabled=true);try{await session.resolveStarConflict({conflictId:view.conflictId,choice,expectedCloudDigest:view.expectedCloudDigest,expectedCloudRevision:view.expectedCloudRevision});if(!dataV2Current(generation,session))return;const rows=await session.repository.readRecords('user_state');if(!dataV2Current(generation,session))return;starred=new Set(rows.filter(record=>record.field==='starred'&&record.value).map(record=>QUESTION_BANK.find(q=>q.questionKey===record.questionKey)?.id).filter(Boolean));rerenderCurrentView();if(DATA_V2_READ_ONLY)document.querySelectorAll('#quiz .choice-btn,#quiz .submit-btn,#quiz input,#quiz .redo-btn').forEach(node=>node.disabled=true);label.textContent=uiLang==='zh'?'新选择已保存到本设备；请再次云同步。':uiLang==='es'?'Nueva elección guardada localmente; sincroniza otra vez.':'New choice saved on this device; sync again.';}catch(error){if(dataV2Current(generation,session))label.textContent=(uiLang==='zh'?'未解决；请重新同步并打开此面板：':uiLang==='es'?'Sin resolver; sincroniza y vuelve a abrir: ':'Not resolved; sync and reopen this panel: ')+(error.code||error.message);}};row.append(button);}dialog.append(row);}
+        const close=document.createElement('button');close.type='button';close.className='btn';close.textContent=uiLang==='zh'?'关闭':uiLang==='es'?'Cerrar':'Close';close.onclick=()=>dialog.close();dialog.append(close);dialog.addEventListener('close',()=>dialog.remove(),{once:true});document.body.append(dialog);dialog.showModal();close.focus();
+      }catch(error){if(dataV2Current(generation,session))dataV2Status({state:'error',error:error.code||error.message});}
+    }
+    function dataV2CloudBoundary(error){
+      const code=error.code||error.message;
+      if(!['CLOUD_STREAMING_SEMANTICS_UNAVAILABLE','FINAL_STREAMING_SEMANTICS_UNAVAILABLE','FINAL_BANK_QUESTION_STREAMING_UNIMPLEMENTED','FINAL_BANK_SEMANTIC_FIELDS_STREAMING_UNIMPLEMENTED'].includes(code))return code;
+      return code+' · '+(uiLang==='zh'?'当前不支持超过 3 MiB 的私有/加密正文、练习范围或续做正文；大型公共题库仍有逐字段语义限制。尚未完成全面大容量恢复。':uiLang==='es'?'Aún no se admiten cuerpos privados/cifrados, ámbitos o datos de continuación de más de 3 MiB. Los bancos públicos grandes tienen límites semánticos por campo. La recuperación de gran capacidad no está completa.':'Private/cipher, scope or resume bodies over 3 MiB are not supported yet. Large public banks retain per-field semantic limits. Full large-capacity recovery is not complete.');
+    }
+    function dataV2CloudCleanupNotice(value){return value?.cleanupRequired?' · '+(uiLang==='zh'?'恢复已提交，但临时资料清理尚待处理。':uiLang==='es'?'La recuperación se confirmó, pero queda pendiente limpiar datos temporales.':'Recovery committed; temporary data cleanup is still required.')+' '+(value.cleanupError||''):'';}
+    async function dataV2CloudRecover(){
+      if(DATA_V2_RECOVERY_CANCEL)return;const generation=DATA_V2_SESSION_GENERATION;let session,account,epoch,abort;
+      const current=()=>dataV2Current(generation,session)&&account?.snapshot().epoch===epoch;
+      const button=document.getElementById('qb-v2-cloudRecovery');let panel=document.getElementById('qb-v2-cloud-recovery-status');if(!panel){panel=document.createElement('span');panel.id='qb-v2-cloud-recovery-status';panel.role='status';panel.setAttribute('aria-live','polite');button?.parentElement.append(panel);}
+      const cancel=document.createElement('button');cancel.id='qb-v2-cloud-recovery-cancel';cancel.type='button';cancel.className='btn';cancel.textContent=T('cancel');
+      const showCommitted=message=>{if(!current())return;DATA_V2_SESSION_GENERATION++;DATA_V2_BOOT_SEQUENCE++;dataV2ClearPosition();DATA_V2_SESSION=null;DATA_V2_SESSION_READY=null;DATA_V2_SESSION_BOUND=false;DATA_V2_ACTIVE_AT=null;DATA_V2_READ_ONLY=true;document.querySelectorAll('#quiz button,#quiz input').forEach(node=>node.disabled=true);const committedGeneration=DATA_V2_SESSION_GENERATION,reopen=document.createElement('button');reopen.type='button';reopen.className='btn';reopen.id='qb-v2-cloud-recovery-reopen';reopen.textContent=uiLang==='zh'?'重新打开已保存题库':uiLang==='es'?'Reabrir banco guardado':'Reopen saved bank';reopen.onclick=()=>{if(committedGeneration===DATA_V2_SESSION_GENERATION&&account.snapshot().epoch===epoch)location.reload();};panel.replaceChildren(document.createTextNode(message),reopen);};
+      try{session=await ensureDataV2Session();account=await ACCOUNT_V2_READY;epoch=account?.snapshot().epoch;if(!current())return;if(session.owner.ownerKind!=='account'||!account.snapshot().owner)throw Object.assign(new Error('ACCOUNT_REQUIRED'),{code:'ACCOUNT_REQUIRED'});
+        if(!confirm(uiLang==='zh'?'恢复云端已接受资料的固定截点？本机未同步意图和原判分会保留；这不代表全部资料已同步。较大依赖仍可能被安全拒绝。':uiLang==='es'?'¿Recuperar el corte aceptado de la nube? Se conservan intenciones locales y notas originales. No significa sincronización completa; dependencias grandes pueden rechazarse.':'Recover a fixed accepted cloud checkpoint? Local pending intents and original grades are retained. This is not a claim that everything is synced; large dependencies may be refused.'))return;
+        abort=new AbortController();DATA_V2_RECOVERY_CANCEL=abort;button.disabled=true;cancel.onclick=()=>abort.abort();panel.replaceChildren(document.createTextNode(uiLang==='zh'?'正在恢复云端截点…':uiLang==='es'?'Recuperando corte…':'Recovering cloud checkpoint…'),cancel);
+        const result=await session.recoverCloud({account,signal:abort.signal,onProgress:value=>{if(!current())return;const text=value.phase==='rate-limited'?(uiLang==='zh'?'等待服务限速：':uiLang==='es'?'Esperando límite: ':'Waiting for rate limit: ')+value.retryAfter+'s':value.phase==='cleanup-required'?'Cleanup required':value.phase+' · '+(value.section||'')+' · '+(value.page??'');panel.replaceChildren(document.createTextNode(text),cancel);}});
+        showCommitted((uiLang==='zh'?'已激活云端截点；本机待同步：':uiLang==='es'?'Corte activado; pendientes locales: ':'Cloud cut activated; local pending: ')+result.pending+' · '+(uiLang==='zh'?'冲突：':uiLang==='es'?'conflictos: ':'conflicts: ')+result.conflicts+' · '+(uiLang==='zh'?'尚未宣称同步完成。':uiLang==='es'?'No indica sincronización completa.':'Not a Synced claim.')+dataV2CloudCleanupNotice(result));
+      }catch(error){if(current()){if(error.recoveryCommitted)showCommitted((uiLang==='zh'?'截点已激活，请重新打开以核查；':uiLang==='es'?'El corte se activó; vuelve a abrir para comprobar. ':'Checkpoint activated; reopen to inspect. ')+dataV2CloudBoundary(error)+dataV2CloudCleanupNotice(error));else panel.replaceChildren(document.createTextNode((uiLang==='zh'?'恢复未完成；原资料未替换。':uiLang==='es'?'Recuperación incompleta; sin reemplazar datos originales. ':'Recovery incomplete; original data not replaced. ')+dataV2CloudBoundary(error)+(error.cleanupRequired?' · Local cleanup required':'')));}}
+      finally{if(DATA_V2_RECOVERY_CANCEL===abort)DATA_V2_RECOVERY_CANCEL=null;if(button&&generation===DATA_V2_SESSION_GENERATION)button.disabled=false;}
+    }
+    async function dataV2Finish(){if(DATA_V2_READ_ONLY)return;const generation=DATA_V2_SESSION_GENERATION;let session;try{session=await ensureDataV2Session();if(!dataV2Current(generation,session)||!session.snapshot().attemptId)return;dataV2ClearPosition();await session.savePosition({position:DATA_V2_POSITION,effectiveElapsedMs:dataV2Elapsed()});if(!dataV2Current(generation,session))return;const result=await session.finalize({});if(!dataV2Current(generation,session))return;DATA_V2_READ_ONLY=true;DATA_V2_ACTIVE_AT=null;dataV2Apply(result.bundle,[...starred].map(id=>getQ(id)?.questionKey).filter(Boolean));}catch(error){if(dataV2Current(generation,session))dataV2Status({state:'error',error:error.code||error.message});}}
+    async function dataV2ImportBackup(event){const file=event.target.files[0];event.target.value='';if(!file)return;const generation=DATA_V2_SESSION_GENERATION;let session;try{session=await ensureDataV2Session();if(!dataV2Current(generation,session))return;const result=await session.importBackup(file);if(!dataV2Current(generation,session))return;if(result.status==='quarantined')alert(result.error==='GUEST_RESTORE_MERGE_CONFLICT'?(uiLang==='zh'?'备份中有与本机不同的同一份资料，已隔离保留；当前资料未覆盖。':uiLang==='es'?'El archivo contiene datos incompatibles. Se conservó aislado; tus datos actuales no se sobrescribieron.':'The archive contains conflicting records. It was preserved separately; current data was not overwritten.'):dataV2Text('quarantine'));else location.reload();}catch(error){if(dataV2Current(generation,session))dataV2Status({state:'error',error:error.code||error.message});}}
+    function dataV2Password(){return new Promise(resolve=>{
+      const generation=DATA_V2_SESSION_GENERATION;
+      const dialog=document.createElement('dialog');dialog.id='qb-v2-password-dialog';dialog.style.cssText='max-width:440px;width:calc(100% - 32px);background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:14px;padding:24px';
+      const form=document.createElement('form');form.method='dialog';const label=document.createElement('label');label.textContent=uiLang==='zh'?'加密题库密码':uiLang==='es'?'Contraseña del banco cifrado':'Encrypted bank password';
+      const input=document.createElement('input');input.id='qb-v2-password';input.type='password';input.autocomplete='off';input.required=true;input.style.cssText='display:block;width:100%;box-sizing:border-box;min-height:44px;margin:12px 0';label.htmlFor=input.id;
+      const notice=document.createElement('p');notice.textContent=uiLang==='zh'?'仅题库正文加密。你的填空答案、学习记录和历史仍保存在本设备，未加密；账号同步可能上传这些学习资料。密码无法找回。':uiLang==='es'?'Solo se cifra el contenido del banco. Tus respuestas y tu historial siguen sin cifrar en este dispositivo; la sincronización puede subirlos. La contraseña no se puede recuperar.':'Only the bank content is encrypted. Your answers and learning history remain unencrypted on this device; account sync may upload those learning records. The password cannot be recovered.';
+      const cancel=document.createElement('button');cancel.type='button';cancel.className='btn';cancel.textContent=T('cancel');cancel.onclick=()=>dialog.close('cancel');const go=document.createElement('button');go.type='submit';go.className='btn';go.textContent=uiLang==='zh'?'继续':uiLang==='es'?'Continuar':'Continue';
+      go.value='continue';form.append(label,input,notice,cancel,go);dialog.append(form);document.body.append(dialog);dialog.addEventListener('close',()=>{const password=generation===DATA_V2_SESSION_GENERATION&&dialog.returnValue==='continue'?input.value:null;input.value='';dialog.remove();resolve(password);},{once:true});dialog.showModal();input.focus();
+    });}
+    function dataV2CancelPasswords(){document.querySelectorAll('#qb-v2-password-dialog').forEach(dialog=>{dialog.querySelectorAll('input').forEach(input=>input.value='');if(dialog.open)dialog.close('cancel');});}
+    async function dataV2ImportBank(event,encryptNew=false){
+      const file=event.target.files[0];event.target.value='';if(!file)return;const generation=DATA_V2_SESSION_GENERATION;
+      try{await ensureDataV2Session();if(file.size>16*1024*1024)throw new Error('BANK_IMPORT_BUDGET');const value=JSON.parse(await file.text());if(generation!==DATA_V2_SESSION_GENERATION)return;
+        let entry;
+        if(value.format==='qb-protected-bank-file-v2'){
+          const password=await dataV2Password();if(password===null||generation!==DATA_V2_SESSION_GENERATION)return;
+          entry=await DATA_V2_MODULE.unlockProtectedBankFileV2(value,password);
+        }else{
+          const imported=await DATA_V2_MODULE.registerImportedBank(value,{title:file.name.replace(/\.json$/i,''),sourceOrigin:location.origin});entry={content:imported.content};
+          if(encryptNew){const password=await dataV2Password();if(password===null||generation!==DATA_V2_SESSION_GENERATION)return;const encrypted=await DATA_V2_MODULE.createProtectedBankFileV2({content:imported.content,password});entry.protectedFile=encrypted.file;}
+        }
+        if(generation!==DATA_V2_SESSION_GENERATION)return;DATA_V2_BODIES=[entry];setPageHeading(entry.content.metadata.title);showQuizApp();const started=await startDataV2Quiz(entry.content.questions);
+        if(!started||started.sequence!==DATA_V2_BOOT_SEQUENCE||!dataV2Current(generation,started.session))return;
+        const revision=entry.protectedFile?.record.revision||(await DATA_V2_MODULE.validateBankContent(entry.content)).contentDigest;
+        if(started.sequence!==DATA_V2_BOOT_SEQUENCE||!dataV2Current(generation,started.session))return;
+        const stored=await started.session.repository.readRecords('bank_revisions',[entry.content.bankUid,revision]);
+        const kind=entry.protectedFile?'protected_cipher':'private_chunks';
+        if(!stored||stored.contentManifest?.kind!==kind||stored.contentManifest.reference.contentDigest!==revision||stored.metadata.visibility!==(entry.protectedFile?'protected':'private'))throw new Error('IMPORTED_BANK_BINDING_MISMATCH');
+        if(started.sequence!==DATA_V2_BOOT_SEQUENCE||!dataV2Current(generation,started.session))return;
+        const url=new URL('local.html',location.href);url.searchParams.set('bank',stored.bankUid);history.replaceState(history.state,'',url);
+      }catch(error){if(generation===DATA_V2_SESSION_GENERATION)dataV2Status({state:'error',error:error.code||error.message});}
+    }
+    async function dataV2ExportProtected(){
+      const generation=DATA_V2_SESSION_GENERATION;try{const file=DATA_V2_BODIES.length===1?DATA_V2_BODIES[0].protectedFile:null;if(!file)throw new Error('NO_ENCRYPTED_BANK_OPEN');const encoded=await DATA_V2_MODULE.encodeProtectedBankFileV2(file);if(generation!==DATA_V2_SESSION_GENERATION)return;const url=URL.createObjectURL(new Blob([encoded.bytes],{type:'application/json'})),link=document.createElement('a');link.href=url;link.download='encrypted-bank-'+file.record.bankUid+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch(error){if(generation===DATA_V2_SESSION_GENERATION)dataV2Status({state:'error',error:error.code||error.message});}
+    }
+    let DATA_V2_HISTORY_SEQUENCE=0;
+    let DATA_V2_LEGACY_CLIENT_PROMISE=null;
+    async function dataV2LegacyClient(){
+      if(DATA_V2_LEGACY_CLIENT_PROMISE)return DATA_V2_LEGACY_CLIENT_PROMISE;
+      DATA_V2_LEGACY_CLIENT_PROMISE=import('./browser/legacy-migration-client.js').then(({createLegacyMigrationClient})=>{
+        const config=globalThis.QB_DATA_V2_CONFIG||{},mirror=location.origin==='https://shicheng0810.github.io'&&config.accountApiBase==='https://question-bank-78u.pages.dev/api';
+        return createLegacyMigrationClient({apiBase:config.accountApiBase||'/api',allowMirrorApi:mirror,transport:command=>ACCOUNT_V2.authenticatedTransport(command)});
+      }).catch(error=>{DATA_V2_LEGACY_CLIENT_PROMISE=null;throw error;});
+      return DATA_V2_LEGACY_CLIENT_PROMISE;
+    }
+    function dataV2LegacyArchiveStatus(message,isError=false){const node=document.getElementById('qb-legacy-archive-status');if(node){node.textContent=message;node.dataset.state=isError?'error':'ready';}}
+    function dataV2ClearLocalImport(){DATA_V2_LOCAL_IMPORT=null;const input=document.getElementById('qb-local-legacy-file'),confirmBox=document.getElementById('qb-local-legacy-confirm'),confirmWrap=document.getElementById('qb-local-legacy-confirm-wrap'),button=document.getElementById('qb-local-legacy-import'),preview=document.getElementById('qb-local-legacy-preview');if(input)input.value='';if(confirmBox)confirmBox.checked=false;if(confirmWrap)confirmWrap.hidden=true;if(button)button.disabled=true;if(preview)preview.textContent='';}
+    async function dataV2LocalBridgeModule(){return import('./browser/local-storage-migration.js');}
+    async function dataV2LocalBridgeSetup(){
+      if(DATA_V2_LOCAL_BRIDGE_BOUND)return;DATA_V2_LOCAL_BRIDGE_BOUND=true;
+      const exportButton=document.getElementById('qb-local-legacy-export'),fileInput=document.getElementById('qb-local-legacy-file'),preview=document.getElementById('qb-local-legacy-preview'),confirmWrap=document.getElementById('qb-local-legacy-confirm-wrap'),confirmBox=document.getElementById('qb-local-legacy-confirm'),importButton=document.getElementById('qb-local-legacy-import'),status=document.getElementById('qb-local-legacy-status');
+      const clear=dataV2ClearLocalImport;
+      confirmBox.addEventListener('change',()=>{importButton.disabled=!confirmBox.checked||!DATA_V2_LOCAL_IMPORT;});
+      exportButton.addEventListener('click',async()=>{const generation=DATA_V2_SESSION_GENERATION;exportButton.disabled=true;status.textContent='Scanning recognized learning keys only…';try{const migration=await dataV2LocalBridgeModule(),result=await migration.createBrowserLearningExport(localStorage,{sourceOrigin:location.origin});if(generation!==DATA_V2_SESSION_GENERATION)return;const digests=result.summary.records.map(row=>`${row.key} · ${row.byteLength} B · ${row.sha256.slice(0,12)}`).join(' | ');preview.textContent=`Source ${result.summary.sourceOrigin} · ${result.summary.keyCount} keys · ${result.summary.byteLength} file bytes · SHA-256 ${result.summary.sha256} · ${digests||'no recognized keys'}. This file is not account-bound.`;const link=document.createElement('a'),url=URL.createObjectURL(new Blob([result.file],{type:'application/json'}));link.href=url;link.download=`question-bank-browser-data-${result.summary.sha256.slice(0,12)}.json`;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status.textContent='Download ready. Your source browser data was not changed.';}catch(error){status.textContent=`Export unavailable (${error.code||error.message}); no browser data was changed.`;}finally{exportButton.disabled=false;}});
+      fileInput.addEventListener('change',async()=>{const file=fileInput.files?.[0];clear();status.textContent='';if(!file)return;const generation=DATA_V2_SESSION_GENERATION;try{if(file.size>2*1024*1024)throw Object.assign(new Error('EXPORT_TOO_LARGE'),{code:'EXPORT_TOO_LARGE'});const parsed=JSON.parse(await file.text()),migration=await dataV2LocalBridgeModule(),validated=await migration.validateBrowserLearningExport(parsed);if(!validated.records.length)throw Object.assign(new Error('NO_LEARNING_DATA'),{code:'NO_LEARNING_DATA'});if(generation!==DATA_V2_SESSION_GENERATION)return;const session=await ensureDataV2Session();if(!dataV2Current(generation,session)||session.owner?.ownerKind!=='account')throw Object.assign(new Error('ACCOUNT_PROFILE_REQUIRED'),{code:'ACCOUNT_PROFILE_REQUIRED'});const owner=session.owner,sourceRows=validated.records.map(row=>`${row.key} · ${row.byteLength} B · ${row.sha256.slice(0,12)}`).join(' | ');DATA_V2_LOCAL_IMPORT={value:validated,generation,accountId:owner.accountId,accountGeneration:owner.accountGeneration};confirmWrap.hidden=false;preview.textContent=`Verified source ${validated.sourceOrigin} · ${validated.records.length} keys · ${validated.byteLength} bytes · SHA-256 ${validated.sha256} · ${sourceRows}. Target account ${owner.accountId} · generation ${owner.accountGeneration}. These browser records are not account-bound; review and confirm the target.`;status.textContent='Digest verified. Nothing is saved until you confirm and press Import.';}catch(error){status.textContent=`File rejected (${error.code||error.message}). Source and target data remain unchanged.`;}}
+      );
+      importButton.addEventListener('click',async()=>{const pending=DATA_V2_LOCAL_IMPORT;if(!pending||!confirmBox.checked)return;const generation=DATA_V2_SESSION_GENERATION;importButton.disabled=true;status.textContent='Saving original browser records to this account…';try{const session=await ensureDataV2Session();if(!dataV2Current(generation,session)||generation!==pending.generation||session.owner?.ownerKind!=='account'||session.owner.accountId!==pending.accountId||session.owner.accountGeneration!==pending.accountGeneration)throw Object.assign(new Error('TARGET_PROFILE_CHANGED'),{code:'TARGET_PROFILE_CHANGED'});const result=await session.importLegacyBrowserExport(pending.value);if(!dataV2Current(generation,session))return;status.textContent=`${result.duplicate?'Already imported':'Imported'} ${result.rawCount} original keys · ${result.unknownCount} unmapped · ${result.quarantinedCount} malformed. Source file and browser storage remain unchanged. No new answer events were created.`;clear();}catch(error){if(generation===DATA_V2_SESSION_GENERATION)status.textContent=`Import did not complete (${error.code||error.message}). The source file and browser storage are unchanged; you can retry.`;}finally{if(DATA_V2_LOCAL_IMPORT)importButton.disabled=!confirmBox.checked;}});
+    }
+    async function dataV2LegacyArchive(current){
+      const historyList=document.getElementById('qb-legacy-history-list'),banksList=document.getElementById('qb-legacy-banks-list');if(!historyList||!banksList)return;
+      await dataV2LocalBridgeSetup();
+      historyList.replaceChildren();banksList.replaceChildren();
+      try{
+        const client=await dataV2LegacyClient();if(!current())return;
+        const loadAll=async method=>{const all=[];let cursor=null;for(let page=0;page<20;page++){const result=await method({limit:5,cursor});all.push(...result.items);if(result.nextCursor===null)return all;cursor=result.nextCursor;if(!cursor||all.length>=100)throw new Error('ARCHIVE_PAGE_LIMIT');}throw new Error('ARCHIVE_PAGE_LIMIT');};
+        const [history,banks]=await Promise.all([loadAll(client.listHistory),loadAll(client.listBanks)]);if(!current())return;
+        const makeSection=(heading)=>{const el=document.createElement('h4');el.textContent=heading;return el;};
+        historyList.append(makeSection('Original rounds'));
+        if(!history.length){const empty=document.createElement('p');empty.className='meta';empty.textContent='No archived rounds.';historyList.append(empty);}
+        for(const item of history){const row=document.createElement('div');row.style.cssText='display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 0;border-top:1px solid var(--border)';const label=document.createElement('span');label.className='meta';label.textContent=`${item.title||item.bank_id} · ${new Date(item.ts).toLocaleString()} · ${item.count} saved answers · legacy ${item.sha256.slice(0,12)}`;const button=document.createElement('button');button.type='button';button.className='btn';button.textContent='Reopen original (read-only)';button.addEventListener('click',()=>{if(current())dataV2LegacyRestoreHistory(item,current);});row.append(label,button);historyList.append(row);}
+        banksList.append(makeSection('Original private banks'));
+        if(!banks.length){const empty=document.createElement('p');empty.className='meta';empty.textContent='No archived private banks.';banksList.append(empty);}
+        for(const item of banks){const row=document.createElement('div');row.style.cssText='display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 0;border-top:1px solid var(--border)';const label=document.createElement('span');label.className='meta';label.textContent=`${item.title} · ${item.questionCount} questions · legacy ${item.sha256.slice(0,12)}`;const button=document.createElement('button');button.type='button';button.className='btn';button.textContent='Practice a new copy';button.addEventListener('click',()=>{if(current())dataV2LegacyPracticeBank(item,current);});row.append(label,button);banksList.append(row);}
+        dataV2LegacyArchiveStatus('Archive metadata loaded. Original bytes are digest-checked when opened.');
+      }catch(error){if(current())dataV2LegacyArchiveStatus(`Legacy archive unavailable (${error.code||error.message}). Close and reopen History to retry; original data was not changed.`,true);}
+    }
+    async function dataV2LegacyLoadBank(item,client){return client.readBank(item.id,{chunkCount:item.chunkCount,sha256:item.sha256,byteLength:item.byteLength,sourceKey:item.sourceKey,metaByteLength:item.metaByteLength,metaSha256:item.metaSha256});}
+    async function dataV2LegacyPracticeBank(item,current){
+      const generation=DATA_V2_SESSION_GENERATION;try{
+        dataV2LegacyArchiveStatus(`Verifying ${item.title}…`);const client=await dataV2LegacyClient(),loaded=await dataV2LegacyLoadBank(item,client);if(!current()||generation!==DATA_V2_SESSION_GENERATION)return;
+        const imported=await DATA_V2_MODULE.registerImportedBank(loaded.questions,{title:item.title,sourceOrigin:location.origin,namespace:`legacy-${item.id}-${item.sha256.slice(0,16)}`,legacyArchive:{sourceKey:item.sourceKey,sha256:item.sha256,metaSha256:item.metaSha256}});if(!current()||generation!==DATA_V2_SESSION_GENERATION)return;
+        DATA_V2_BODIES=[{content:imported.content,legacySource:{sourceKey:item.sourceKey,sha256:item.sha256,metaSha256:item.metaSha256,questionCount:item.questionCount}}];setPageHeading(`${item.title} · new copy from ${item.sourceKey} (${item.sha256.slice(0,12)})`);showQuizApp();await startDataV2Quiz(structuredClone(imported.content.questions));if(!current()||generation!==DATA_V2_SESSION_GENERATION)return;const localUrl=new URL('local.html',location.href);localUrl.searchParams.set('bank',imported.content.bankUid);history.replaceState(history.state,'',localUrl);dataV2LegacyArchiveStatus(`New practice copy saved locally; source ${item.sourceKey} · ${item.sha256.slice(0,12)} remains linked in each question. Cloud sync is separate.`);closeHistory();
+      }catch(error){if(current())dataV2LegacyArchiveStatus(`Could not open this bank (${error.code||error.message}). The original archive remains unchanged; retry from History.`,true);}
+    }
+    async function dataV2LegacyRestoreHistory(item,current){
+      const generation=DATA_V2_SESSION_GENERATION;let verifiedSnapshot=null;try{
+        dataV2LegacyArchiveStatus(`Verifying original round ${item.id}…`);const client=await dataV2LegacyClient(),loaded=await client.readHistory(item.id);verifiedSnapshot=loaded;if(!current()||generation!==DATA_V2_SESSION_GENERATION)return;
+        const snap=loaded.record,bankId=String(snap.bank_id||'');let archived,bankItem=null;
+        if(bankId.startsWith('u-')){const pages=await dataV2LegacyClient();let cursor=null;for(let page=0;page<20&&!bankItem;page++){const result=await pages.listBanks({limit:5,cursor});bankItem=result.items.find(bank=>bank.id===bankId.slice(2))||null;if(bankItem||result.nextCursor===null)break;cursor=result.nextCursor;}if(!bankItem)throw new Error('ARCHIVED_BANK_NOT_FOUND');archived=await dataV2LegacyLoadBank(bankItem,client);}
+        else{const manifest=globalThis.QB_DATA_V2_CONFIG?.banks||[],session=await ensureDataV2Session();let entries;if(bankId==='all-banks'||Array.isArray(snap.merged_banks)){const slugs=Array.isArray(snap.merged_banks)?snap.merged_banks.map(row=>typeof row==='string'?row:row?.slug).filter(value=>typeof value==='string'):manifest.map(row=>row.slug);entries=slugs.map(slug=>manifest.find(row=>row.slug===slug)).filter(Boolean);if(!entries.length||entries.length!==slugs.length)throw new Error('LEGACY_MERGED_BANK_REFERENCE_MISSING');}else{const entry=manifest.find(row=>row.slug===bankId);if(!entry)throw new Error('LEGACY_PUBLIC_BANK_NOT_FOUND');entries=[entry];}const contents=[];for(const entry of entries){contents.push(await dataV2LoadBank(entry,session));if(!current()||generation!==DATA_V2_SESSION_GENERATION)return;}archived={questions:contents.flatMap(content=>content.questions)};}
+        if(!current()||generation!==DATA_V2_SESSION_GENERATION)return;
+        const ids=new Set(archived.questions.map(question=>String(question.id)));const scope=Array.isArray(snap.scope)?snap.scope.map(String):[];if(!scope.length||scope.some(id=>!ids.has(id)))throw new Error('LEGACY_SNAPSHOT_SCOPE_MISMATCH');
+        DATA_V2_SESSION_GENERATION++;DATA_V2_BOOT_SEQUENCE++;DATA_V2_BODIES=[];DATA_V2_SESSION?.close();DATA_V2_SESSION=null;DATA_V2_SESSION_READY=null;DATA_V2_SESSION_BOUND=false;DATA_V2_SCOPE=new Map();DATA_V2_READ_ONLY=true;
+        startLegacyQuiz(archived.questions);const renderedIds=new Set(QUESTION_BANK.map(question=>String(question.id))),mapLegacyId=id=>String(ID_ALIAS?.[String(id)]||id),mappedScope=scope.map(mapLegacyId),state=snap.state||{},mappedState={};let mapFailed=mappedScope.some(id=>!renderedIds.has(id))||new Set(mappedScope).size!==mappedScope.length;for(const [legacyId,value] of Object.entries(state)){const id=mapLegacyId(legacyId);if(!renderedIds.has(id)||Object.hasOwn(mappedState,id)){mapFailed=true;break;}mappedState[id]=value;}if(mapFailed){dataV2LegacyRawSnapshot(loaded,`Original question IDs do not map one-to-one to the current renderer. The original score ${snap.score?.correct??'?'} / ${snap.score?.answered??'?'} is preserved as legacy data; no score was recalculated.`);return;}
+        applyRestore({...snap,scope:mappedScope,state:mappedState});DATA_V2_READ_ONLY=true;document.querySelectorAll('#quiz button,#quiz input').forEach(node=>node.disabled=true);const banner=document.createElement('div');banner.className='meta';banner.style.cssText='margin:10px;padding:10px;border:1px solid var(--border);border-radius:8px';banner.textContent=`Original archived score: ${snap.score?.correct??'?'}/${snap.score?.answered??'?'} (${snap.score?.total??'?'} questions). Displayed answers are rechecked against current question content; this does not alter the stored legacy score.`;document.getElementById('quiz').prepend(banner);setPageHeading(`${item.title} · original read-only`);closeHistory();dataV2Status({state:'idle'});
+      }catch(error){if(current()){if(verifiedSnapshot)dataV2LegacyRawSnapshot(verifiedSnapshot,`Original round could not be mapped (${error.code||error.message}). The verified original snapshot is available without rewriting or regrading it.`);else dataV2LegacyArchiveStatus(`Original round unavailable (${error.code||error.message}); close and reopen History to retry.`,true);}}
+    }
+    function dataV2LegacyRawSnapshot(loaded,message){const host=document.getElementById('qb-legacy-archive-status');if(!host)return;host.replaceChildren(document.createTextNode(`${message} `));const button=document.createElement('button');button.type='button';button.className='btn';button.textContent='Download verified original snapshot';button.onclick=()=>{const link=document.createElement('a'),url=URL.createObjectURL(new Blob([loaded.rawJson],{type:'application/json'}));link.href=url;link.download=`legacy-history-${loaded.record.id}.json`;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};host.append(button);host.dataset.state='error';}
+    async function dataV2History(){
+      if(ACCOUNT_V2_CANDIDATE&&(candidateRecoveryBlocksControls(ACCOUNT_V2_STATE)||ACCOUNT_V2_LOAD_ERROR)){renderCandidateAccountRecovery(ACCOUNT_V2_STATE);return;}
+      const modal=document.getElementById('qb-history');if(!modal)return;
+      const list=document.getElementById('qb-history-list')||modal.querySelector('.qb-history-list'),sequence=++DATA_V2_HISTORY_SEQUENCE,generation=DATA_V2_SESSION_GENERATION,account=ACCOUNT_V2,accountState=account?.snapshot(),epoch=accountState?.epoch,owner=JSON.stringify(accountState?.owner??null);
+      modal.hidden=false;if(list){list.replaceChildren();const loading=document.createElement('div');loading.className='meta';loading.textContent=T('hist_loading');list.append(loading);}
+      let session;
+      const current=()=>sequence===DATA_V2_HISTORY_SEQUENCE&&!modal.hidden&&generation===DATA_V2_SESSION_GENERATION&&(!session||session===DATA_V2_SESSION)&&account===ACCOUNT_V2&&(!account||(account.snapshot().epoch===epoch&&JSON.stringify(account.snapshot().owner??null)===owner))&&!(ACCOUNT_V2_CANDIDATE&&(candidateRecoveryBlocksControls(ACCOUNT_V2_STATE)||ACCOUNT_V2_LOAD_ERROR));
+      try{session=await ensureDataV2Session();if(!current())return;dataV2LegacyArchive(current);const history=await session.history();if(!current()||!list)return;list.replaceChildren();
+        for(const bundle of history){const row=document.createElement('div');row.style.cssText='padding:12px 0;border-bottom:1px solid var(--border)';const label=document.createElement('span');label.textContent=new Date(bundle.attempt.startedAt).toLocaleString()+' · '+bundle.progress.firstCorrect+'/'+bundle.progress.firstAnswered;const button=document.createElement('button');button.className='btn';button.textContent=T('hist_load');button.addEventListener('click',()=>{if(current())dataV2LoadHistory(bundle.attempt.attemptId);});const fork=document.createElement('button');fork.className='btn';fork.dataset.forkAttempt=bundle.attempt.attemptId;fork.textContent=uiLang==='zh'?'分叉继续':uiLang==='es'?'Continuar en copia':'Fork & continue';fork.onclick=()=>{if(current())dataV2LoadHistory(bundle.attempt.attemptId,true);};row.append(label,button,fork);list.append(row);}
+      }catch(error){if(current()&&list){list.replaceChildren();const status=document.createElement('div');status.className='meta';status.textContent=uiLang==='zh'?'历史暂不可用；账户操作仍可使用。':uiLang==='es'?'Historial no disponible; las acciones de cuenta siguen disponibles.':'History unavailable; account actions remain available.';list.append(status);}}
+    }
+    async function dataV2LoadHistory(id,fork=false){const generation=DATA_V2_SESSION_GENERATION;try{
+      const session=await ensureDataV2Session();let bundle=await session.loadHistory(id);const records=await session.repository.readRecords('bank_revisions'),questions=[],entries=[];
+      for(const scope of bundle.scope){let found=null;for(const record of records.filter(row=>row.bankUid===scope.questionKey.split('/')[0])){
+        let entry=entries.find(row=>row.content.bankUid===record.bankUid&&row.content.questions.some(q=>q.questionKey===scope.questionKey&&q.questionRevision===scope.questionRevision));
+        if(!entry){
+          if(record.contentManifest.kind==='protected_cipher'){
+            entry=DATA_V2_BODIES.find(row=>row.protectedFile?.record.revision===record.revision&&row.content.bankUid===record.bankUid);
+            if(!entry){const loaded=await session.repository.readProtectedBankEnvelopeV2(record.bankUid,record.revision);if(!dataV2Current(generation,session))return;const password=await dataV2Password();if(password===null||!dataV2Current(generation,session))return;entry=await DATA_V2_MODULE.unlockProtectedBankFileV2({format:'qb-protected-bank-file-v2',version:2,record:loaded.record,envelope:loaded.envelope},password);}
+          }else{const loaded=await session.repository.readBankContent(record.bankUid,record.revision);entry={content:loaded.content};}
+          entries.push(entry);
+        }
+        found=entry.content.questions.find(q=>q.questionKey===scope.questionKey&&q.questionRevision===scope.questionRevision);if(found)break;
+      }if(!found)throw new Error('HISTORY_CONTENT_MISSING');questions.push(found);}
+      if(generation!==DATA_V2_SESSION_GENERATION)return;let stars=[];
+      if(fork){const result=await session.forkHistory({parentAttemptId:id});bundle=result.bundle;stars=result.stars;if(generation!==DATA_V2_SESSION_GENERATION)return;DATA_V2_BODIES=entries;DATA_V2_SCOPE=new Map(bundle.scope.map(row=>[row.questionKey,row.ordinal]));DATA_V2_POSITION=bundle.attempt.position;DATA_V2_ELAPSED=bundle.attempt.effectiveElapsedMs;DATA_V2_ACTIVE_AT=document.hidden?null:performance.now();}
+      startLegacyQuiz(questions);DATA_V2_READ_ONLY=!fork;dataV2Apply(bundle,stars);if(!fork)document.querySelectorAll('#quiz .choice-btn,#quiz .submit-btn,#quiz input,#quiz .redo-btn').forEach(node=>node.disabled=true);closeHistory();
+    }catch(error){if(generation===DATA_V2_SESSION_GENERATION)dataV2Status({state:'error',error:error.code||error.message});}}
+    let ACCOUNT_V2 = null;
+    let ACCOUNT_V2_STATE = null;
+    let ACCOUNT_V2_LOAD_ERROR = false;
+    let ACCOUNT_V2_RESUME_EPOCH = null;
+    // A UI operation owns only the controller epoch transition it initiates.  It
+    // is deliberately separate from controller authority: logout, resume, or a
+    // different account operation invalidates the UI operation immediately.
+    let ACCOUNT_V2_UI_OPERATION = null;
+    let ACCOUNT_V2_UI_OPERATION_SEQUENCE = 0;
+    let ACCOUNT_V2_PRIVATE_TIMER_EPOCH = 0;
+    const ACCOUNT_V2_PRIVATE_TIMERS = new Set();
+    const ACCOUNT_V2_PRIVATE_FRAMES = new Set();
+    function beginAccountV2UiOperation(controller){
+      const operation = { id: ++ACCOUNT_V2_UI_OPERATION_SEQUENCE, epoch: controller ? controller.snapshot().epoch : null, acceptsNextEpoch: false };
+      ACCOUNT_V2_UI_OPERATION = operation;
+      return operation;
+    }
+    function accountV2UiOperationOwns(operation){ return !!(operation && ACCOUNT_V2_UI_OPERATION === operation); }
+    function bindAccountV2UiOperation(operation, controller){
+      if (!accountV2UiOperationOwns(operation)) return false;
+      operation.epoch = controller.snapshot().epoch;
+      return true;
+    }
+    function accountV2UiOperationAcceptsTransition(operation){
+      if (ACCOUNT_V2_UI_OPERATION !== operation) return false;
+      operation.acceptsNextEpoch = true;
+      return true;
+    }
+    function accountV2ObserveUiOperation(next){
+      const operation = ACCOUNT_V2_UI_OPERATION;
+      // An operation may be waiting for the lazy controller import. Its first
+      // subscription snapshot establishes controller availability, not a
+      // competing transition.
+      if (!operation || operation.epoch === null || next.epoch === operation.epoch) return;
+      if (operation.acceptsNextEpoch && next.epoch === operation.epoch + 1){
+        operation.epoch = next.epoch;
+        operation.acceptsNextEpoch = false;
+        return;
+      }
+      ACCOUNT_V2_UI_OPERATION = null;
+    }
+    function accountV2UiOperationIsCurrent(operation){
+      return !!(operation && operation.epoch !== null && ACCOUNT_V2_UI_OPERATION === operation && ACCOUNT_V2 && ACCOUNT_V2.snapshot().epoch === operation.epoch);
+    }
+    function finishAccountV2UiOperation(operation){ if (ACCOUNT_V2_UI_OPERATION === operation) ACCOUNT_V2_UI_OPERATION = null; }
+    function invalidateAccountV2UiOperation(){ ACCOUNT_V2_UI_OPERATION = null; }
+    function scheduleCandidatePrivateTimer(callback, delay){
+      if (!ACCOUNT_V2_CANDIDATE) return setTimeout(callback, delay);
+      const timerEpoch = ACCOUNT_V2_PRIVATE_TIMER_EPOCH;
+      let timer = setTimeout(function(){
+        ACCOUNT_V2_PRIVATE_TIMERS.delete(timer);
+        if (timerEpoch === ACCOUNT_V2_PRIVATE_TIMER_EPOCH) callback();
+      }, delay);
+      ACCOUNT_V2_PRIVATE_TIMERS.add(timer);
+      return timer;
+    }
+    function requestCandidatePrivateFrame(callback){
+      if (!ACCOUNT_V2_CANDIDATE) return requestAnimationFrame(callback);
+      const timerEpoch = ACCOUNT_V2_PRIVATE_TIMER_EPOCH;
+      let frame = requestAnimationFrame(function(now){
+        ACCOUNT_V2_PRIVATE_FRAMES.delete(frame);
+        if (timerEpoch === ACCOUNT_V2_PRIVATE_TIMER_EPOCH) callback(now);
+      });
+      ACCOUNT_V2_PRIVATE_FRAMES.add(frame);
+      return frame;
+    }
+    function cancelCandidatePrivateCallbacks(){
+      ACCOUNT_V2_PRIVATE_TIMER_EPOCH++;
+      ACCOUNT_V2_PRIVATE_TIMERS.forEach(function(timer){ clearTimeout(timer); });
+      ACCOUNT_V2_PRIVATE_TIMERS.clear();
+      ACCOUNT_V2_PRIVATE_FRAMES.forEach(function(frame){ cancelAnimationFrame(frame); });
+      ACCOUNT_V2_PRIVATE_FRAMES.clear();
+    }
+    function candidateRecoveryCode(state){ return state && state.deletionRecovery === "error" ? state.deletionRecoveryError : null; }
+    function candidateRecoveryAckAllowed(code){ return code === "INVALID_DELETION_JOURNAL" || code === "DELETION_TICKET_EXPIRED" || code === "DELETION_JOURNAL_CLEAR_UNCERTAIN"; }
+    function candidateRecoveryBlocksControls(state){ return !!(ACCOUNT_V2_CANDIDATE && state && (state.pendingDeletion || state.deletionRecovery === "error")); }
+    function candidateRecoveryText(code){
+      if (code === "INVALID_DELETION_JOURNAL") return T("account_recovery_invalid");
+      if (code === "DELETION_TICKET_EXPIRED") return T("account_recovery_expired");
+      if (code === "DELETION_JOURNAL_CLEAR_UNCERTAIN") return T("account_recovery_uncertain");
+      if (code === "STORAGE_UNAVAILABLE") return T("account_recovery_storage");
+      return T("account_recovery_unavailable");
+    }
+    function renderCandidateAccountRecovery(state){
+      if (!ACCOUNT_V2_CANDIDATE) return;
+      const panel = document.getElementById("qb-account-recovery-panel");
+      const message = document.getElementById("qb-account-recovery-message");
+      const ack = document.getElementById("qb-account-recovery-ack");
+      const retry = document.getElementById("qb-account-delete-retry");
+      const code = candidateRecoveryCode(state);
+      const blocked = candidateRecoveryBlocksControls(state) || ACCOUNT_V2_LOAD_ERROR;
+      const cleanup = !!(state && state.cleanupRequired);
+      const visible = !!(blocked || cleanup || (state && state.pendingDeletion));
+      if (panel) panel.hidden = !visible;
+      if (message) message.textContent = cleanup ? (uiLang==='zh'?'账号已删除，本机旧资料清理尚未完成。请重试；不会删除其他账号或访客资料。':uiLang==='es'?'La cuenta fue eliminada; la limpieza local sigue pendiente. Reintenta. No se borrarán otras cuentas ni datos de invitado.':'Account deleted; local cleanup is still pending. Retry. Other accounts and guest data are preserved.') : ACCOUNT_V2_LOAD_ERROR ? T("account_recovery_unavailable") : (code ? candidateRecoveryText(code) : (state && state.pendingDeletion ? T("account_recovery_pending") : ""));
+      if (ack) { ack.textContent = T("account_recovery_ack"); ack.hidden = !candidateRecoveryAckAllowed(code) || ACCOUNT_V2_LOAD_ERROR; }
+      if (retry) retry.hidden = !cleanup && (!(state && state.pendingDeletion && state.phase === "error") || candidateRecoveryAckAllowed(code) || code === "STORAGE_UNAVAILABLE");
+      if (visible){ const modal = document.getElementById("qb-history"); if (modal) modal.hidden = false; }
+    }
+    let ACCOUNT_V2_RECOVERY_FLIGHT = null;
+    function resumeCandidateAccountRecovery(source){
+      if (!ACCOUNT_V2 || ACCOUNT_V2_UI_OPERATION) return Promise.resolve(null);
+      if (ACCOUNT_V2_RECOVERY_FLIGHT) return ACCOUNT_V2_RECOVERY_FLIGHT;
+      const before = ACCOUNT_V2.snapshot();
+      if (before.deletionRecovery === "error") { renderCandidateAccountRecovery(before); return Promise.resolve(before); }
+      if (ACCOUNT_V2_RESUME_EPOCH === before.epoch){ renderCandidateAccountRecovery(before); return Promise.resolve(before); }
+      ACCOUNT_V2_RESUME_EPOCH = before.epoch;
+      const controller=ACCOUNT_V2;
+      const flight=controller.resume().then(next => { if (ACCOUNT_V2===controller && controller.snapshot().epoch===next.epoch) { ACCOUNT_V2_STATE = next; ACCOUNT_V2_RESUME_EPOCH=next.epoch; renderCandidateAccountRecovery(next); } return next; }).catch(error => {
+        if(ACCOUNT_V2===controller)ACCOUNT_V2_RESUME_EPOCH=null;
+        if (!ACCOUNT_V2 || (error && error.code === "STALE_REQUEST")) return;
+        const next = ACCOUNT_V2.snapshot(); ACCOUNT_V2_STATE = next; renderCandidateAccountRecovery(next); return next;
+      }).finally(()=>{if(ACCOUNT_V2_RECOVERY_FLIGHT===flight)ACCOUNT_V2_RECOVERY_FLIGHT=null;});
+      ACCOUNT_V2_RECOVERY_FLIGHT=flight;return flight;
+    }
+    let ACCOUNT_V2_READY = ACCOUNT_V2_CANDIDATE
+      ? import("./browser/account-v2.js").then(function(mod){
+          ACCOUNT_V2 = mod.createAccountV2Controller({ enabled: true, apiBase: globalThis.QB_DATA_V2_CONFIG.accountApiBase, allowMirrorApi: location.origin === 'https://shicheng0810.github.io' && globalThis.QB_DATA_V2_CONFIG.accountApiBase === 'https://question-bank-78u.pages.dev/api' });
+          if(DATA_V2_ENABLED && ACCOUNT_V2.subscribeDeletionComplete)ACCOUNT_V2.subscribeDeletionComplete(async function(event){
+            if(!event.owner)throw Object.assign(new Error('LOCAL_CLEANUP_OWNER_UNKNOWN'),{code:'LOCAL_CLEANUP_OWNER_UNKNOWN'});
+            const oldOwner={ownerKind:'account',accountId:event.owner.accountId,accountGeneration:event.owner.accountGeneration};
+            if(DATA_V2_SESSION && JSON.stringify(DATA_V2_SESSION.owner)===JSON.stringify(oldOwner)){DATA_V2_SESSION_GENERATION++;DATA_V2_BOOT_SEQUENCE++;dataV2CancelPasswords();dataV2ClearLocalImport();DATA_V2_SESSION.close();DATA_V2_SESSION=null;DATA_V2_SESSION_READY=null;DATA_V2_SESSION_BOUND=false;}
+            const storage=await import('./browser/data-v2.js');
+            return storage.deleteCompletedOwnerData(oldOwner,{receipt:event.receipt});
+          });
+          ACCOUNT_V2.subscribe(function(next){
+            const previous = ACCOUNT_V2_STATE;
+            accountV2ObserveUiOperation(next);
+            if (previous && (previous.epoch !== next.epoch || JSON.stringify(previous.owner) !== JSON.stringify(next.owner)) && (!DATA_V2_ENABLED || DATA_V2_ACCOUNT_INITIALIZED || DATA_V2_SESSION || (DATA_V2_SESSION_READY&&DATA_V2_SESSION_BOUND))) resetCandidatePrivateMemory(previous.owner?.accountId===next.owner?.accountId&&previous.owner?.accountGeneration===next.owner?.accountGeneration);
+            ACCOUNT_V2_STATE = next;
+            updateAuthUI();
+            renderCandidateAccountRecovery(next);
+          });
+          ["focus", "pageshow"].forEach(function(eventName){
+            globalThis.addEventListener(eventName, function(){
+              if (!ACCOUNT_V2 || ACCOUNT_V2_UI_OPERATION) { if (ACCOUNT_V2) updateAuthUI(); return; }
+              ACCOUNT_V2_READY.then(function(controller){if(controller===ACCOUNT_V2&&!ACCOUNT_V2_UI_OPERATION)resumeCandidateAccountRecovery(eventName);});
+            });
+          });
+          return ACCOUNT_V2.resume().then(function(next){ACCOUNT_V2_STATE=next;ACCOUNT_V2_RESUME_EPOCH=next.epoch;DATA_V2_ACCOUNT_INITIALIZED=true;return ACCOUNT_V2;}).catch(function(error){if(error&&error.code==='STALE_REQUEST'){DATA_V2_ACCOUNT_INITIALIZED=true;return ACCOUNT_V2;}throw error;});
+        }).catch(function(){ ACCOUNT_V2_LOAD_ERROR = true; updateAuthUI(); renderCandidateAccountRecovery(null); return null; })
+      : Promise.resolve(null);
+    function accountV2ErrorText(error){
+      if (error && error.code === "RATE_LIMITED") return "Too many attempts. Please wait and retry.";
+      if (error && error.code === "STALE_REQUEST") return "This action was superseded by another account change.";
+      if (error && error.code === "AUTH_FAILED") return "The code or session was not accepted.";
+      if (error && error.code === "MIGRATION_PENDING") { const p=error.details?.migration; return p ? (uiLang==='zh'?`旧资料仍在安全迁移（${p.phase} ${p.processed}/${p.total}）。请保留本页，点击“继续迁移”重试同一码。`:uiLang==='es'?`La migración sigue activa (${p.phase} ${p.processed}/${p.total}). Mantén esta página y vuelve a intentarlo con el mismo código.`:`Your old data is still being migrated (${p.phase} ${p.processed}/${p.total}). Keep this page and retry with the same code.`) : (uiLang==='zh'?'旧资料仍在迁移。请使用相同账号码重试，系统不会新建空账号。':uiLang==='es'?'La migración sigue activa. Reintenta con el mismo código; no se creará una cuenta vacía.':'Your data is still migrating. Retry with the same code; no empty account was created.'); }
+      if (error && error.code === "MIGRATION_UNCERTAIN") return uiLang==='zh'?'无法确认旧账号资料完整性；账号未创建，请稍后重试或联系支持。':uiLang==='es'?'No se pudo verificar el estado de los datos antiguos. No se creó una cuenta; inténtalo más tarde.':'We could not verify the old account data. No account was created; please retry later.';
+      if (error && error.code === "MIGRATION_QUARANTINED") return uiLang==='zh'?'旧账号资料需要人工核查，当前没有导入或覆盖。':uiLang==='es'?'Los datos antiguos requieren revisión; no se importaron ni sobrescribieron.':'Old account data needs review; nothing was imported or overwritten.';
+      if (error && error.code === "ACCOUNT_DELETED") return uiLang==='zh'?'此旧账号已删除，旧资料不会恢复。':uiLang==='es'?'La cuenta anterior se eliminó y sus datos no se restaurarán.':'This old account was deleted; its data will not be restored.';
+      return "Account service unavailable. Nothing was saved or synced; please retry.";
+    }
+    function resetCandidatePrivateMemory(sameOwner){
+      const readonlySlug=DATA_V2_PUBLIC_READONLY?.entry.slug;DATA_V2_PUBLIC_READONLY?.viewportFallback?.close();DATA_V2_PUBLIC_READONLY?.scheduler.close();DATA_V2_PUBLIC_READONLY=null;
+      if (!ACCOUNT_V2_CANDIDATE) return;
+      QUESTION_RASTER_DISPLAY?.clear();
+      dataV2ClearPosition();DATA_V2_ACTIVE_AT=null;DATA_V2_SCOPE=new Map();
+      DATA_V2_SESSION_GENERATION++;DATA_V2_BOOT_SEQUENCE++;
+      for(const id of ['qb-v2-cleanup-status','qb-v2-cleanup-retry']){const node=document.getElementById(id);if(node){node.hidden=true;if(id==='qb-v2-cleanup-status')node.textContent='';}}
+      DATA_V2_RECOVERY_CANCEL?.abort();DATA_V2_RECOVERY_CANCEL=null;document.getElementById('qb-v2-cloud-recovery-status')?.replaceChildren();
+      dataV2CancelPasswords();
+      const conflictDialog=document.getElementById('qb-v2-star-conflicts');if(conflictDialog){if(conflictDialog.open)conflictDialog.close();conflictDialog.remove();}
+      if(DATA_V2_SESSION)DATA_V2_SESSION.close();DATA_V2_SESSION=null;DATA_V2_SESSION_READY=null;DATA_V2_SESSION_BOUND=false;
+      const syncButton=document.getElementById('qb-v2-sync');if(syncButton)syncButton.disabled=false;
+      const recoveryButton=document.getElementById('qb-v2-cloudRecovery');if(recoveryButton)recoveryButton.disabled=false;
+      const raw = (typeof RAW_QUESTION_BANK !== "undefined" && Array.isArray(RAW_QUESTION_BANK)) ? RAW_QUESTION_BANK.slice() : null;
+      cancelCandidatePrivateCallbacks();
+      if (typeof uiState !== "undefined" && uiState && typeof uiState === "object") {
+        Object.keys(uiState).forEach(function(id){
+          var old = uiState[id];
+          if (old && old._autoTimer) { clearTimeout(old._autoTimer); old._autoTimer = null; }
+        });
+      }
+      starred = new Set(); wrongSet = new Set(); conqueredSet = new Set(); attemptCountMap = {};
+      answeredOnce = new Set(); uiState = {}; totalAttempts = 0; totalCorrect = 0; sessionLog = []; SESSION_ID = null; RESTORING = false;
+      currentQuestions = []; baseQuestions = []; activeRandom150Questions = null; activeRandom150SourcePool = null; viewMode = "all"; specialFilterSource = "base";
+      if (typeof clearTimeout === "function" && typeof _snapTimer !== "undefined") clearTimeout(_snapTimer);
+      if (typeof _snapTimer !== "undefined") _snapTimer = null;
+      if (typeof REPORT_CTX !== "undefined") REPORT_CTX = { qId: "", idx: 0 };
+      ["#qb-recap", "#qb-sheet-panel"].forEach(function(selector){ const panel = document.querySelector(selector); if (panel) panel.hidden = true; });
+      const recapBody = document.getElementById("qb-recap-body"); if (recapBody) recapBody.innerHTML = "";
+      const sheetGrid = document.getElementById("qb-sheet-grid"); if (sheetGrid) sheetGrid.innerHTML = "";
+      closeHistory();
+      // Do not read, delete, or restore the legacy qb_restore entry in candidate mode.
+      if(DATA_V2_ENABLED&&!sameOwner&&(location.pathname.endsWith('/local.html')||DATA_V2_BODIES.some(bank=>!bank.staticRef))){
+        if(location.pathname.endsWith('/local.html')){const url=new URL(location.href);url.searchParams.delete('bank');history.replaceState(history.state,'',url);}
+        DATA_V2_BODIES=[];RAW_QUESTION_BANK=[];QUESTION_BANK=[];
+        startLegacyQuiz([]);setPageHeading(uiLang==='zh'?'请选择题库':uiLang==='es'?'Elige un banco':'Choose a bank');
+        const quiz=document.getElementById('quiz');if(quiz)quiz.textContent=uiLang==='zh'?'身份已改变。请选择该身份的题库或明确注册新 JSON；不会自动认领之前的私有资料。':uiLang==='es'?'La identidad cambió. Elige su banco o registra un JSON nuevo; los datos privados anteriores no se transfieren.':'Identity changed. Choose this owner’s bank or explicitly register a new JSON; prior private data is not transferred.';
+      }else if(DATA_V2_ENABLED&&(!raw?.length||!DATA_V2_BODIES.length)){dataV2Status({state:'idle'});const sync=document.getElementById('qb-v2-sync');if(sync)sync.disabled=false;
+      }else if (raw && typeof startQuiz === "function" && typeof QUESTION_BANK !== "undefined") {if(readonlySlug){const rebootGeneration=DATA_V2_SESSION_GENERATION;dataV2Public(readonlySlug).catch(error=>{if(rebootGeneration===DATA_V2_SESSION_GENERATION&&error.code!=='STALE_REQUEST')dataV2Status({state:'error',error:error.code||error.message});});}else startQuiz(raw);}
+    }
     // 每个题库一个存储命名空间：发布到同一域名（如 Cloudflare Pages）的多个题库页
     // 互不串档。构建/导出时注入题库 id；旧导出未注入时回退到共享的 "amt"。
     const RAW_STORAGE_NS = "remote";
@@ -825,7 +1451,7 @@
 
     /* ------------------ 反馈配置（构建时注入；未注入则降级为 mailto/剪贴板，按钮永不失效） ------------------ */
     // 裸 marker（与题库 payload 同模式）：构建时被替换成 JS 对象字面量；所有消费路径都会替换。
-    const RAW_FEEDBACK_CONFIG = {"endpoint":"https://question-bank-78u.pages.dev/api/feedback","email":"","turnstile_site_key":"","app_version":"db45fb802375f694857e4108ed1dcd8aeb6a7f63"};
+    const RAW_FEEDBACK_CONFIG = {"endpoint":"https://question-bank-78u.pages.dev/api/feedback","email":"","turnstile_site_key":"","app_version":"site","build_environment":"production","effective_api_base":"https://question-bank-78u.pages.dev/api","client_protocol_version":2,"data_schema_version":2,"minimum_supported_data_schema_version":1,"unknown_data_version_policy":"read-only-or-refuse"};
     let FEEDBACK_CONFIG = { endpoint: "", email: "", turnstile_site_key: "", app_version: "dev" };
     try {
       if (RAW_FEEDBACK_CONFIG && typeof RAW_FEEDBACK_CONFIG === "object") {
@@ -892,7 +1518,10 @@
         clear_all_stars: "Unstar all",
         confirm_remove_all_wrong: "Remove all {n} questions from your wrong list?",
         confirm_clear_all_stars: "Unstar all {n} questions?",
-        question_badge: "Question {n}",
+        question_badge: "Display number {n}",
+        source_summary: "Question source · {n} entries",
+        source_empty: "No source recorded",
+        source_internal_id: "Internal ID",
         star: "Star", unstar: "Unstar",
         submit: "Submit Answer", submitted: "Submitted", redo: "Redo",
         remove_wrong: "Remove from wrong",
@@ -989,7 +1618,10 @@
         clear_all_stars: "全部取消收藏",
         confirm_remove_all_wrong: "确定把这 {n} 道题全部移出错题？",
         confirm_clear_all_stars: "确定取消收藏这 {n} 道题？",
-        question_badge: "第 {n} 题",
+        question_badge: "显示序号 {n}",
+        source_summary: "题目来源 · {n} 条",
+        source_empty: "暂无来源",
+        source_internal_id: "内部 ID",
         star: "收藏", unstar: "取消收藏",
         submit: "提交答案", submitted: "已提交", redo: "重做",
         remove_wrong: "移出错题",
@@ -1086,7 +1718,10 @@
         clear_all_stars: "Quitar todas las favoritas",
         confirm_remove_all_wrong: "¿Quitar las {n} preguntas de tu lista de errores?",
         confirm_clear_all_stars: "¿Quitar las {n} preguntas de favoritas?",
-        question_badge: "Pregunta {n}",
+        question_badge: "Número mostrado {n}",
+        source_summary: "Fuente de la pregunta · {n} entradas",
+        source_empty: "No hay fuente registrada",
+        source_internal_id: "ID interno",
         star: "Marcar", unstar: "Desmarcar",
         submit: "Enviar respuesta", submitted: "Enviado", redo: "Rehacer",
         remove_wrong: "Quitar de errores",
@@ -1143,6 +1778,12 @@
       },
     };
     let uiLang = (function(){ try{ const v = localStorage.getItem(UI_LANG_KEY); return I18N[v] ? v : "en"; }catch(_e){ return "en"; } })();
+    const ACCOUNT_RECOVERY_I18N = {
+      en: { account_recovery_tab_session: "If deletion was interrupted, reloading this tab may resume recovery. Closing the browser, another tab, or another device is not guaranteed.", account_recovery_invalid: "This tab's deletion-recovery record cannot be read. Account actions are blocked. Acknowledgement only forgets this tab's unusable marker.", account_recovery_expired: "This tab's deletion-recovery period ended before completion could be confirmed. No account or learning data was restored. Acknowledgement only removes this tab's expired marker.", account_recovery_uncertain: "This tab cannot verify whether deletion finished. No account request will be sent from this screen, and acknowledgement does not confirm deletion.", account_recovery_storage: "Deletion-recovery storage is unavailable. Account actions remain blocked; reload after browser storage is available.", account_recovery_unavailable: "The account service is unavailable. Account actions remain blocked; public practice is still available.", account_recovery_ack: "Acknowledge recovery state", account_recovery_ack_confirm: "This only clears this tab's recovery marker when it is safe to do so. It does not confirm deletion, restore your account, or recover learning data.", account_recovery_pending: "Deletion is pending. Reloading this tab may resume this deletion recovery; another tab, browser close, or another device is not guaranteed." },
+      zh: { account_recovery_tab_session: "如果删除被中断，重新加载本标签页可能继续恢复。关闭浏览器、换标签页或换设备不保证能恢复。", account_recovery_invalid: "此标签页的删除恢复记录无法读取。账号操作已阻止。确认只会忘记此标签页无法使用的标记。", account_recovery_expired: "此标签页的删除恢复期限已结束，无法确认是否完成。没有账号或学习数据被恢复。确认只会移除此标签页已过期的标记。", account_recovery_uncertain: "此标签页无法确认删除是否完成。本页面不会发送账号请求，确认也不代表删除已完成。", account_recovery_storage: "删除恢复存储不可用。账号操作仍被阻止；请在浏览器存储恢复后重新加载。", account_recovery_unavailable: "账号服务不可用。账号操作仍被阻止，但仍可进行公开练习。", account_recovery_ack: "确认恢复状态", account_recovery_ack_confirm: "这只会在安全时清除此标签页的恢复标记。它不确认删除、不恢复账号，也不恢复学习数据。", account_recovery_pending: "删除仍在处理中。重新加载此标签页可能继续恢复；换标签页、关闭浏览器或换设备不保证能继续。" },
+      es: { account_recovery_tab_session: "Si la eliminación se interrumpió, recargar esta pestaña puede reanudar la recuperación. No se garantiza al cerrar el navegador, usar otra pestaña u otro dispositivo.", account_recovery_invalid: "No se puede leer el registro de recuperación de eliminación de esta pestaña. Las acciones de cuenta están bloqueadas. Reconocerlo solo olvida el marcador inutilizable de esta pestaña.", account_recovery_expired: "El periodo de recuperación de esta pestaña terminó antes de confirmar el resultado. No se restauraron la cuenta ni los datos de aprendizaje. Reconocerlo solo quita el marcador caducado de esta pestaña.", account_recovery_uncertain: "Esta pestaña no puede verificar si la eliminación terminó. Esta pantalla no enviará ninguna solicitud de cuenta, y reconocerlo no confirma la eliminación.", account_recovery_storage: "El almacenamiento de recuperación no está disponible. Las acciones de cuenta siguen bloqueadas; recarga cuando el almacenamiento del navegador esté disponible.", account_recovery_unavailable: "El servicio de cuenta no está disponible. Las acciones de cuenta siguen bloqueadas, pero la práctica pública continúa disponible.", account_recovery_ack: "Reconocer estado de recuperación", account_recovery_ack_confirm: "Esto solo borra el marcador de recuperación de esta pestaña cuando es seguro hacerlo. No confirma la eliminación, no restaura tu cuenta ni recupera datos de aprendizaje.", account_recovery_pending: "La eliminación está pendiente. Recargar esta pestaña puede reanudarla; otra pestaña, cerrar el navegador u otro dispositivo no ofrecen garantía." }
+    };
+    Object.keys(ACCOUNT_RECOVERY_I18N).forEach(k => Object.assign(I18N[k], ACCOUNT_RECOVERY_I18N[k]));
     function T(key, vars){
       let s = (I18N[uiLang] && I18N[uiLang][key]) || I18N.en[key] || key;
       if (vars) for (const k in vars) s = s.split("{"+k+"}").join(String(vars[k]));
@@ -1158,6 +1799,7 @@
       const guideList = document.getElementById("guide-list");
       if (guideList){
         let gh = T("guide_html");
+        if(DATA_V2_ENABLED)gh=gh.replace(/<li[^>]*><strong>👤[\s\S]*?<\/li>/,'<li><strong>👤 '+(uiLang==='zh'?'本机保存与云同步':uiLang==='es'?'Guardado local y sincronización':'Local saving & cloud sync')+'</strong> '+(uiLang==='zh'?'“已保存到本设备”只确认本机记录。登录后按“云同步”确认本次云端截点；未同步资料不会出现在其他设备。加密题库仅加密正文，学习答案和历史未加密。':uiLang==='es'?'“Guardado en este dispositivo” confirma solo los datos locales. Tras iniciar sesión, pulsa Sincronizar para confirmar el corte en la nube; lo pendiente no aparece en otros dispositivos. Un banco cifrado protege el contenido, no las respuestas ni el historial.':'“Saved on this device” confirms local records only. Sign in and press Cloud sync to confirm a cloud cut; unsynced records do not appear on other devices. Encrypted banks protect bank content, not your answers or learning history.')+'</li>');
         // 打赏未配置（离线导出/未注入）时，去掉指南里那条「☕」高亮——否则指向并不存在的按钮
         if (!(UI_FEATURES.donation && UI_FEATURES.donation.url)) gh = gh.replace(/<li data-coffee[\s\S]*?<\/li>/, "");
         // 反馈关闭（离线导出）时，去掉指南里那条「💬 反馈 / ⚐ 报错」高亮——否则会指向并不存在的按钮
@@ -1183,6 +1825,7 @@
       try{ applyMotion(); }catch(_e){} // P6 换语言后刷新动效按钮 title/aria-label
       try{ updateGoalUI(); }catch(_e){} // P17 换语言后刷新目标按钮 title/计数
       try{ refreshWelcomeLang(); }catch(_e){} // P10 换语言后刷新欢迎横幅文案
+      if (ACCOUNT_V2_CANDIDATE) updateAuthUI();
       if (Array.isArray(currentQuestions) && currentQuestions.length){ rerenderCurrentView(); }
       updateAutoBtn();
     }
@@ -1200,10 +1843,13 @@
       // 2) 反馈/报错：关则隐藏顶栏「💬 Feedback」（题卡内 ⚐ 报错按钮在渲染时已按开关跳过）
       if (!UI_FEATURES.feedback){
         const sb = document.getElementById("suggest-btn"); if (sb) sb.hidden = true;
-        const ab = document.getElementById("account-btn"); if (ab) ab.hidden = true; // 登录/历史依赖后端，离线/本地导出隐藏
+        const ab = document.getElementById("account-btn"); if (ab) ab.hidden = !ACCOUNT_V2_CANDIDATE; // Standalone offline exports have no account controller.
       } else {
         updateAuthUI();
       }
+      // Candidate mode has no legacy feedback transport; retain only its
+      // controller-owned account UI and public practice content.
+      if (ACCOUNT_V2_CANDIDATE){ const sb = document.getElementById("suggest-btn"); if (sb) sb.hidden = true; const ab=document.getElementById('account-btn');if(ab)ab.hidden=false;updateAuthUI(); }
       // 3) 新手教程：关则隐藏「?」按钮（首屏自动弹出在 maybeStartTutorial 里另行拦截）
       if (!UI_FEATURES.tutorial){
         const tb = document.getElementById("tutorial-help-btn"); if (tb) tb.hidden = true;
@@ -1302,21 +1948,22 @@
     let autoSubmit = loadBool(AUTO_KEY, false);
 
     /* ------------------ 工具函数 ------------------ */
-    function loadSet(key){if(IS_SPECIAL)return new Set();try{return new Set(JSON.parse(localStorage.getItem(key)||"[]"))}catch{return new Set()}}
-    function saveSet(key,set){if(IS_SPECIAL)return;localStorage.setItem(key,JSON.stringify([...set]))}
+    function loadSet(key){if(ACCOUNT_V2_CANDIDATE || IS_SPECIAL)return new Set();try{return new Set(JSON.parse(localStorage.getItem(key)||"[]"))}catch{return new Set()}}
+    function saveSet(key,set){if(ACCOUNT_V2_CANDIDATE || IS_SPECIAL)return;localStorage.setItem(key,JSON.stringify([...set]))}
     function loadCountMap(key){
-      if(IS_SPECIAL)return {};
+      if(ACCOUNT_V2_CANDIDATE || IS_SPECIAL)return {};
       try{
         const raw = JSON.parse(localStorage.getItem(key) || '{}');
         return (raw && typeof raw === 'object' && !Array.isArray(raw)) ? raw : {};
       }catch{return {}}
     }
     function saveCountMap(key,obj){
-      if(IS_SPECIAL)return;
+      if(ACCOUNT_V2_CANDIDATE || IS_SPECIAL)return;
       try{ localStorage.setItem(key, JSON.stringify(obj || {})); }catch{}
     }
 
     function loadBool(key, defaultVal){
+      if(ACCOUNT_V2_CANDIDATE) return !!defaultVal;
       try{
         const v = localStorage.getItem(key);
         if(v===null || v===undefined) return !!defaultVal;
@@ -1324,6 +1971,7 @@
       }catch{return !!defaultVal}
     }
     function saveBool(key, val){
+      if(ACCOUNT_V2_CANDIDATE) return;
       try{ localStorage.setItem(key, val ? "1" : "0"); }catch{}
     }
 
@@ -1425,9 +2073,9 @@
     // P15 练习活动记录（全局跨库；IS_SPECIAL 不落盘）
     const ACTIVITY_KEY = "qb_activity_days_v1";
     function todayKey(){ const d=new Date(); const p=n=>String(n).padStart(2,"0"); return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate()); }
-    function loadActivity(){ try{ const v=JSON.parse(localStorage.getItem(ACTIVITY_KEY)||"{}"); return (v&&typeof v==="object")?v:{}; }catch(e){ return {}; } }
+    function loadActivity(){ if(ACCOUNT_V2_CANDIDATE)return {}; try{ const v=JSON.parse(localStorage.getItem(ACTIVITY_KEY)||"{}"); return (v&&typeof v==="object")?v:{}; }catch(e){ return {}; } }
     function bumpActivityDay(){
-      if (IS_SPECIAL) return;
+      if (ACCOUNT_V2_CANDIDATE || IS_SPECIAL) return;
       try{
         const map = loadActivity(); const k = todayKey();
         map[k] = (map[k]|0) + 1;
@@ -1457,30 +2105,30 @@
         .replace(/"/g,"&quot;")
         .replace(/'/g,"&#39;");
     }
-    // 极简 HTML 消毒：保留排版标签，剥掉脚本/事件处理器/javascript: 等。
-    // 题库内容（选项、question_html）可能来自不可信导入/分享，渲染前过一遍防存储型 XSS。
-    function sanitizeHTML(html){
-      try{
-        const tpl = document.createElement("template");
-        tpl.innerHTML = String(html == null ? "" : html);
-        tpl.content.querySelectorAll("*").forEach(el => {
-          const tag = el.tagName ? el.tagName.toLowerCase() : "";
-          if (["script","style","iframe","object","embed","link","meta","base","form"].includes(tag)){ el.remove(); return; }
-          Array.from(el.attributes).forEach(a => {
-            const n = a.name.toLowerCase();
-            if (n.startsWith("on")) el.removeAttribute(a.name);
-            else if (["href","src","xlink:href","formaction"].includes(n) && /^\s*javascript:/i.test(a.value || "")) el.removeAttribute(a.name);
-          });
-        });
-        return tpl.innerHTML;
-      }catch(_e){ return escHTML(html); }
+    function questionDisplayFragment(html,mode='choice',blanksCount=0){
+      const source=String(html??'');try{if(QUESTION_HTML_SANITIZER){const result=QUESTION_HTML_SANITIZER.sanitize({html:source,mode,blanksCount});if(result.degraded)questionHtmlDegraded();return result.fragment;}}catch{}
+      questionHtmlDegraded();const fragment=document.createDocumentFragment();fragment.append(document.createTextNode(source));return fragment;
     }
+    function safeFeedbackNode(html){const source=String(html||''),kind=source.startsWith('<div class="correct">')?'correct':source.startsWith('<div class="wrong">')?'wrong':null;const wrapper=document.createElement('div');if(kind){wrapper.className=kind;wrapper.append(document.createTextNode(kind==='correct'?'✓ ':'✕ '));}wrapper.append(questionDisplayFragment(source,'choice',0));return wrapper;}
 
     function renderSource(q){
-      const s = (q && (q.source ?? q.sources)) ?? "";
-      const arr = Array.isArray(s) ? s : (s ? [s] : []);
-      // use text join; keep compact
-      return escHTML(arr.filter(Boolean).join(" | "));
+      const primary = q && q.source;
+      const primaryArr = Array.isArray(primary) ? primary : (primary == null ? [] : [primary]);
+      const primaryLabels = primaryArr.map(value => String(value ?? "")).filter(label => label.trim().length > 0);
+      const fallback = q && q.sources;
+      const fallbackArr = Array.isArray(fallback) ? fallback : (fallback == null ? [] : [fallback]);
+      const labels = primaryLabels.length
+        ? primaryLabels
+        : fallbackArr.map(value => String(value ?? "")).filter(label => label.trim().length > 0);
+      const preview = labels.length ? ` · ${escHTML(labels[0].slice(0, 80))}${labels[0].length > 80 ? "…" : ""}` : "";
+      const list = labels.length
+        ? `<ol class="qb-source-list">${labels.map(label => `<li>${escHTML(label)}</li>`).join("")}</ol>`
+        : `<div class="meta qb-source-empty">${escHTML(T("source_empty"))}</div>`;
+      const id = q && q.id != null ? String(q.id) : "";
+      const internalId = id
+        ? `<div class="qb-source-id"><span>${escHTML(T("source_internal_id"))}:</span> <code>${escHTML(id)}</code></div>`
+        : "";
+      return `<details class="qb-source"><summary>${escHTML(T("source_summary", { n: labels.length }))}${preview}</summary>${list}${internalId}</details>`;
     }
 
     /* TEST-EXPORT START */
@@ -1844,7 +2492,7 @@
       if(cats.length && cats.every(c=>c.id[0]===SECTION_KEY_PREFIX)) return cats;
       // Group filters by subject/course first (e.g. all 205 banks, then 215), then order
       // within each course. Course = the 3-digit code in the bank id (ass_7_205_Finishes -> 205).
-      const courseOf=id=>{const m=String(id).match(/\d{3}/);return m?m[0]:"￿";};
+      const courseOf=id=>{const m=String(id).match(/\d{3}/);return m?m[0]:"\uffff";};
       cats.sort((a,b)=>{
         const ca=courseOf(a.id), cb=courseOf(b.id);
         if(ca!==cb) return ca.localeCompare(cb, undefined, {numeric:true});
@@ -1855,20 +2503,13 @@
     function initFilters(){
       const cats=deriveCategoriesFromQuestions();
       const container=document.getElementById("filter-container");
-      container.innerHTML=cats.map(c=>`<label class="filter-label"><input type="checkbox" class="bank-filter" value="${c.id}" checked>${c.label}</label>`).join("");
+      container.replaceChildren();for(const category of cats){const label=document.createElement('label');label.className='filter-label';const input=document.createElement('input');input.type='checkbox';input.className='bank-filter';input.value=category.id;input.checked=true;label.append(input,document.createTextNode(category.label));container.append(label);}
       // 没有任何分类（AI 导入/手写库，题目无 bank 前缀）时隐藏整个筛选面板——否则是个空壳。
       const panel=document.querySelector('details.filter-panel');
       if(panel) panel.hidden = cats.length===0;
     }
     function toggleFilters(check){document.querySelectorAll(".bank-filter").forEach(cb=>cb.checked=check)}
     function getSelectedPrefixes(){return Array.from(document.querySelectorAll(".bank-filter:checked")).map(cb=>cb.value)}
-
-    /* ------------------ 图片渲染（支持多图/单图） ------------------ */
-    function renderImgs(img){
-      if(!img) return '';
-      const arr = Array.isArray(img) ? img : [img];
-      return arr.map(src => `<div class="img-wrap"><img src="${escapeAttr(src)}" alt="figure" loading="lazy" decoding="async"></div>`).join('');
-    }
 
     /* ------------------ 渲染与交互 ------------------ */
     function ensureState(q){
@@ -1895,9 +2536,16 @@
     let hydrateObserver = null;
     function hydrateOne(q){
       if (!q || hydratedSet.has(q.id)) return;
+      if(dataV2NeedsFullQuestion(q)){
+        const state=DATA_V2_PUBLIC_READONLY,generation=DATA_V2_SESSION_GENERATION,session=DATA_V2_SESSION,card=document.getElementById('card-'+q.id);
+        if(card){card.dataset.nativeQuestion='loading';card.querySelectorAll('button,input,textarea,select').forEach(node=>node.disabled=true);const text=document.getElementById('qtext-'+q.id);if(text)text.textContent=uiLang==='zh'?'正在读取本机原题…':uiLang==='es'?'Leyendo la pregunta original…':'Reading original local question…';}
+        dataV2HydrateFullQuestion(q).then(()=>{if(DATA_V2_PUBLIC_READONLY!==state||!dataV2Current(generation,session))return;const live=document.getElementById('card-'+q.id);if(live){live.dataset.nativeQuestion='verified';live.querySelectorAll('button,input,textarea,select').forEach(node=>node.disabled=DATA_V2_READ_ONLY);}hydrateOne(q);}).catch(error=>{if(DATA_V2_PUBLIC_READONLY!==state||!dataV2Current(generation,session))return;const text=document.getElementById('qtext-'+q.id);if(text)text.textContent=error.code||error.message;const live=document.getElementById('card-'+q.id);if(live)live.dataset.nativeQuestion='error';});return;
+      }
+      if(DATA_V2_PUBLIC_READONLY?.full.has(q.questionKey)){const card=document.getElementById('card-'+q.id);if(card)card.dataset.nativeQuestion='verified';}
       const st = ensureState(q);
       hydrateQuestionText(q, st);
       renderAnswerArea(q, st);
+      const feedback=document.getElementById('feedback-'+q.id);if(feedback)feedback.replaceChildren(safeFeedbackNode(st.feedbackHTML));
       if (st.submitted && isFill(q) && st.showKeys) renderKeysPanel(q.id);
       hydratedSet.add(q.id);
     }
@@ -1921,6 +2569,7 @@
     }
 
     function render(questions){
+      QUESTION_RASTER_DISPLAY?.clear();
       currentQuestions=questions;
       kbIndex = -1; // P8 列表重建后旧键盘焦点索引失效，重置（下次 j/k 从视口重新定位）
       const wrap=document.getElementById("quiz");
@@ -1974,25 +2623,25 @@
           </div>
 
           <div class="question-text" id="qtext-${q.id}"></div>
-          ${renderImgs(q.image)}
+      <div id="qimage-${q.id}"></div>
 
           <div id="answer-${q.id}"></div>
 
           <div class="action-bar">
-            <button class="btn submit-btn" id="submit-${q.id}" onclick="submitAnswer('${q.id}')" ${st.submitted?'disabled':''}>${st.submitted?T('submitted'):T('submit')}</button>
-            <button class="btn redo-btn" id="redo-${q.id}" onclick="redoQuestion('${q.id}')" style="display:${st.submitted?'block':'none'}">${T('redo')}</button>
+            <button class="btn submit-btn" id="submit-${q.id}" onclick="submitAnswer('${q.id}')" ${(st.submitted||st.inheritedFrom)?'disabled':''}>${st.submitted?T('submitted'):T('submit')}</button>
+            <button class="btn redo-btn" id="redo-${q.id}" onclick="redoQuestion('${q.id}')" style="display:${(st.submitted||st.inheritedFrom)?'block':'none'}">${st.inheritedFrom?(uiLang==='zh'?'重新作答（保留来源）':uiLang==='es'?'Responder de nuevo':'Answer anew (keep origin)'):T('redo')}</button>
             ${showKeyBtn}
           </div>
 
-          <div class="feedback ${(st.submitted || st.feedbackHTML)?'visible':''}" id="feedback-${q.id}" role="status">${st.feedbackHTML||""}</div>
+          <div class="feedback ${(st.submitted || st.feedbackHTML)?'visible':''}" id="feedback-${q.id}" role="status"></div>
 
           <div class="keys-panel" id="keys-${q.id}" style="display:${(st.submitted && st.showKeys && isFill(q)) ? "block" : "none"}"></div>
 
           <div class="qb-explain" id="explain-${q.id}" style="display:none"></div>
 
           <div class="meta" style="display:flex;justify-content:space-between;align-items:center;gap:10px">
-            <span>${renderSource(q)}</span>
-            ${(UI_FEATURES.feedback && !IS_PRIVATE_BANK && !IS_SPECIAL) ? `<button class="qb-report-btn" type="button" onclick="openReportModal('${q.id}',${i+1})" title="${T('fb_report_title')}">${T('fb_report_btn')}</button>` : ""}
+            <div class="qb-source-wrap">${renderSource(q)}</div>
+            ${(UI_FEATURES.feedback && !ACCOUNT_V2_CANDIDATE && !IS_PRIVATE_BANK && !IS_SPECIAL) ? `<button class="qb-report-btn" type="button" onclick="openReportModal('${q.id}',${i+1})" title="${T('fb_report_title')}">${T('fb_report_btn')}</button>` : ""}
           </div>
           ${viewMode==='wrong'?`<div class="mt-2"><button class="btn" onclick="removeFromWrong('${q.id}')">${T('remove_wrong')}</button></div>`:""}
         </div>`;
@@ -2002,9 +2651,10 @@
       // Chunked hydration: fill the first screenful now; lazy-hydrate the rest as they near the viewport.
       hydratedSet = new Set();
       if (hydrateObserver){ try{ hydrateObserver.disconnect(); }catch(_e){} hydrateObserver = null; }
+      DATA_V2_PUBLIC_READONLY?.viewportFallback?.close();
       const firstChunk = Math.min(questions.length, 15);
-      for (let i=0;i<firstChunk;i++){ hydrateOne(questions[i]); }
-      const rest = questions.slice(firstChunk);
+      for (let i=0;i<firstChunk;i++){const q=questions[i],card=document.getElementById('card-'+q.id),rect=card?.getBoundingClientRect();if(dataV2NeedsFullQuestion(q)){hydrateQuestionText(q,ensureState(q));if(card){card.dataset.nativeQuestion='deferred';card.querySelectorAll('button,input,textarea,select').forEach(node=>node.disabled=true);}}if(!dataV2NeedsFullQuestion(q)||(rect&&rect.bottom>=0&&rect.top<=innerHeight))hydrateOne(q);}
+      const rest = DATA_V2_PUBLIC_READONLY?questions:questions.slice(firstChunk);
       if (rest.length){
         if (typeof IntersectionObserver !== "undefined"){
           hydrateObserver = new IntersectionObserver((entries)=>{
@@ -2015,8 +2665,12 @@
                 if (id) ensureHydrated(id);
               }
             }
-          }, { rootMargin: "800px 0px" });
+          }, { rootMargin: DATA_V2_PUBLIC_READONLY?"0px":"800px 0px" });
           for (const q of rest){ const c = document.getElementById("card-" + q.id); if (c) hydrateObserver.observe(c); }
+        } else if(DATA_V2_PUBLIC_READONLY){
+          const captured=DATA_V2_PUBLIC_READONLY,generation=DATA_V2_SESSION_GENERATION,session=DATA_V2_SESSION,sequence=DATA_V2_BOOT_SEQUENCE;
+          const visible=()=>{if(DATA_V2_PUBLIC_READONLY!==captured||sequence!==DATA_V2_BOOT_SEQUENCE||!dataV2Current(generation,session))return;for(const q of questions){const card=document.getElementById('card-'+q.id),rect=card?.getBoundingClientRect();if(rect&&rect.bottom>=0&&rect.top<=innerHeight)ensureHydrated(q.id);}};
+          captured.viewportFallback=createQuestionViewportFallback(window,visible);captured.viewportFallback.schedule();
         } else {
           for (const q of rest){ hydrateOne(q); }
         }
@@ -2027,11 +2681,12 @@
     }
 
     function hydrateQuestionText(q, st){
+      if(dataV2NeedsFullQuestion(q))return;
       const el = document.getElementById(`qtext-${q.id}`);
       if (!el) return;
 
       if (isFill(q) && typeof q.question_html === "string" && q.question_html.trim()){
-        el.innerHTML = sanitizeHTML(q.question_html);
+        el.replaceChildren(questionDisplayFragment(q.question_html,'question-inline',Array.isArray(q.blanks)?q.blanks.length:0));
       } else {
         el.textContent = q.question || "";
       }
@@ -2039,6 +2694,7 @@
       if (isFill(q)){
         hydrateInlineBlanks(q, st, el);
       }
+      const imageBox=document.getElementById('qimage-'+q.id);if(imageBox){QUESTION_RASTER_DISPLAY?.revoke(q.id);imageBox.replaceChildren();const images=q.image?(Array.isArray(q.image)?q.image:[q.image]):[];const registered=DATA_V2_ENABLED&&(dataV2HasVerifiedImages(q)||DATA_V2_BODIES.some(bank=>bank.staticRef&&bank.content.metadata.visibility==='public'&&bank.content.questions.some(original=>original.questionKey===q.questionKey&&original.questionRevision===q.questionRevision&&JSON.stringify(original.image)===JSON.stringify(q.image))));for(const source of images){const wrap=document.createElement('div');wrap.className='img-wrap';if(typeof source==='string'&&source.startsWith('data:')){try{if(!registered||!QUESTION_RASTER_DISPLAY)throw Error('UNTRUSTED_RASTER');wrap.append(QUESTION_RASTER_DISPLAY.show(q.id,source,q.questionRevision,q.questionKey));}catch(error){const notice=document.createElement('span');notice.className='meta';notice.textContent='Image unavailable: '+(error.code||'UNTRUSTED_RASTER');wrap.append(notice);}}else wrap.append(questionDisplayFragment('<img src="'+escapeAttr(source)+'" alt="figure">','choice',0));imageBox.append(wrap);}}
     }
 
     function hydrateInlineBlanks(q, st, scopeEl){
@@ -2067,11 +2723,11 @@
         if (bi >= n) return; // ignore extra inputs
 
         inp.value = st.fillInputs[bi] ?? "";
-        inp.disabled = !!st.submitted;
+        inp.disabled = !!(st.submitted||st.inheritedFrom);
         inp.placeholder = "Type…";
 
         inp.addEventListener("input", () => {
-          if (st.submitted) return;
+          if (st.submitted||st.inheritedFrom) return;
           st.fillInputs[bi] = inp.value;
           maybeAutoSubmit(q.id);
         });
@@ -2093,7 +2749,7 @@
         if (!Array.isArray(st.fillInputs) || st.fillInputs.length !== n){
           st.fillInputs = Array(n).fill("");
         }
-        const disabled = st.submitted ? "disabled" : "";
+        const disabled = (st.submitted||st.inheritedFrom) ? "disabled" : "";
         let inner = `<div class="fill-area" id="fill-${q.id}">`;
         for (let i=0;i<n;i++){
           const v = (st.fillInputs[i] ?? "");
@@ -2119,11 +2775,9 @@
       // choice question
       const ul = document.createElement('ul');
       ul.className = 'choices';
-      const disabled = st.submitted ? 'disabled' : '';
+      const disabled = (st.submitted||st.inheritedFrom) ? 'disabled' : '';
       for(let i=0;i<(q.choices||[]).length;i++){
-        ul.insertAdjacentHTML('beforeend',
-          `<li class="choice-item"><button class="choice-btn ${disabled}" onclick="selectChoice('${q.id}',${i})">${String.fromCharCode(65+i)}. ${sanitizeHTML(q.choices[i])}</button></li>`
-        );
+        const item=document.createElement('li');item.className='choice-item';const button=document.createElement('button');button.type='button';button.className='choice-btn';button.disabled=!!(st.submitted||st.inheritedFrom);button.onclick=()=>selectChoice(q.id,i);button.append(document.createTextNode(String.fromCharCode(65+i)+'. '),questionDisplayFragment(q.choices[i],'choice',0));item.append(button);ul.append(item);
       }
       box.innerHTML = "";
       box.appendChild(ul);
@@ -2147,16 +2801,20 @@
     }
 
     function onFillInput(qId, blankIndex, value){
+      if(DATA_V2_ENABLED&&DATA_V2_READ_ONLY)return;
       const q = getQ(qId);
       const st = ensureState(q);
       if (st.submitted) return;
       if (!Array.isArray(st.fillInputs)) st.fillInputs = [];
       st.fillInputs[blankIndex] = value;
+      dataV2Draft(q,st);
       maybeAutoSubmit(qId);
     }
 
     function selectChoice(qId, index){
+      if(DATA_V2_ENABLED&&DATA_V2_READ_ONLY)return;
       const q = getQ(qId);
+      if(dataV2NeedsFullQuestion(q)){ensureHydrated(qId);return;}
       const st = ensureState(q);
       if (st.submitted) return;
       if (isFill(q) || isEssay(q)) return;
@@ -2172,6 +2830,7 @@
         btns.forEach(b => b.classList.remove('selected'));
         btns[index].classList.add('selected');
       }
+      dataV2Draft(q,st);
       maybeAutoSubmit(qId);
     }
 
@@ -2183,7 +2842,7 @@
       if(!el) return;
       const ex = q.explanation;
       if(st.submitted && st.showKeys && ex && String(ex).trim()){
-        el.innerHTML = '💡 ' + escHTML(String(ex));
+        el.textContent = '💡 ' + String(ex);
         el.style.display = 'block';
       } else {
         el.innerHTML = '';
@@ -2200,7 +2859,7 @@
 
       const fb=document.getElementById(`feedback-${qId}`);
       if(fb){
-        fb.innerHTML = st.feedbackHTML || '';
+        fb.replaceChildren(safeFeedbackNode(st.feedbackHTML));
         fb.classList.toggle('visible', !!st.feedbackHTML || !!st.submitted);
       }
       syncExplain(qId);
@@ -2208,11 +2867,11 @@
       const sub=document.getElementById(`submit-${qId}`);
       if(sub){
         sub.textContent = st.submitted ? T('submitted') : T('submit');
-        sub.disabled = !!st.submitted;
+        sub.disabled = !!(st.submitted||st.inheritedFrom);
       }
 
       const redo=document.getElementById(`redo-${qId}`);
-      if(redo) redo.style.display = st.submitted ? 'block' : 'none';
+      if(redo) redo.style.display = (st.submitted||st.inheritedFrom) ? 'block' : 'none';
 
       const kp = document.getElementById(`keys-${qId}`);
       if (kp) {
@@ -2259,11 +2918,11 @@
             card.classList.remove("qb-ok-pulse","qb-bad-pulse");
             void card.offsetWidth; // 重置动画
             card.classList.add(cls);
-            setTimeout(()=>card.classList.remove(cls), 500);
+            scheduleCandidatePrivateTimer(()=>card.classList.remove(cls), 500);
             if (!ok){
               card.querySelectorAll(".choice-btn.selected, .qb-blank, .fill-input").forEach(el=>{
                 el.classList.add("qb-shake");
-                setTimeout(()=>el.classList.remove("qb-shake"), 350);
+                scheduleCandidatePrivateTimer(()=>el.classList.remove("qb-shake"), 350);
               });
             }
           }
@@ -2291,17 +2950,19 @@
         hint.classList.remove("show"); void hint.offsetWidth; hint.classList.add("show");
         if (motionFull()){
           const sb = card.querySelector(".submit-btn");
-          if (sb){ sb.classList.add("qb-shake"); setTimeout(()=>sb.classList.remove("qb-shake"),350); }
+          if (sb){ sb.classList.add("qb-shake"); scheduleCandidatePrivateTimer(()=>sb.classList.remove("qb-shake"),350); }
         }
         clearTimeout(hint._t);
-        hint._t = setTimeout(()=>{ hint.classList.remove("show"); }, 2200);
+        hint._t = scheduleCandidatePrivateTimer(()=>{ hint.classList.remove("show"); }, 2200);
       }catch(e){ alert(msg); }
     }
 
-    function submitAnswer(qId){
+    async function submitAnswer(qId){
+      if(DATA_V2_ENABLED&&DATA_V2_READ_ONLY)return;
       const q = getQ(qId);
+      if(dataV2NeedsFullQuestion(q)){ensureHydrated(qId);return;}
       const st = ensureState(q);
-      if(st.submitted) return;
+      if(st.submitted||st.pending) return;
       ensureHydrated(qId);
 
       // 校验是否填写/选择
@@ -2333,6 +2994,13 @@
       } else {
         ok = (st.selectedIndex === q.answer);
       }
+      if(DATA_V2_ENABLED){
+        const generation=DATA_V2_SESSION_GENERATION;let session;
+        st.pending=true;
+        try{session=await ensureDataV2Session();if(!dataV2Current(generation,session))return;await session.submit({questionKey:q.questionKey,questionRevision:q.questionRevision,input:DATA_V2_MODULE.answerFromUI(q,st),gradeAtTime:{status:'graded',correct:ok,score:ok?1:0,maxScore:1},graderVersion:'qb-browser-grader-v1',gradingBasisDigest:q.questionRevision});if(!dataV2Current(generation,session))return;}
+        catch(error){if(dataV2Current(generation,session)){dataV2Status({state:'error',error:error.code||error.message});showCardHint(qId,dataV2Text('error')+(error.code||error.message));}return;}
+        finally{st.pending=false;}
+      }
 
       const firstScoredAttempt = !answeredOnce.has(qId);
       if(firstScoredAttempt){
@@ -2358,11 +3026,13 @@
       scheduleSnapshotSave(); // 登录用户：防抖自动存本轮快照
     }
 
-    function toggleKeys(qId){
+    async function toggleKeys(qId){
       const q = getQ(qId);
+      if(dataV2NeedsFullQuestion(q)){ensureHydrated(qId);return;}
       const st = ensureState(q);
       if (isEssay(q)) return;
       if (!st.submitted) return;
+      if(DATA_V2_ENABLED&&!st.showKeys&&!DATA_V2_READ_ONLY){const generation=DATA_V2_SESSION_GENERATION;let session;try{session=await ensureDataV2Session();if(!dataV2Current(generation,session))return;await session.hint({questionKey:q.questionKey,questionRevision:q.questionRevision,input:DATA_V2_MODULE.answerFromUI(q,st),hintKind:'reveal'});if(!dataV2Current(generation,session))return;}catch(error){if(dataV2Current(generation,session))dataV2Status({state:'error',error:error.code||error.message});return;}}
 
       st.showKeys = !st.showKeys;
 
@@ -2417,11 +3087,16 @@
       panel.innerHTML = html;
     }
 
-    function redoQuestion(qId, opts={}){
+    async function redoQuestion(qId, opts={}){
+      if(dataV2NeedsFullQuestion(getQ(qId))){ensureHydrated(qId);return;}
+      if(DATA_V2_ENABLED&&uiState[qId]?.inheritedFrom){if(DATA_V2_READ_ONLY)return;const generation=DATA_V2_SESSION_GENERATION,q=getQ(qId);let session;try{session=await ensureDataV2Session();if(!dataV2Current(generation,session))return;const result=await session.restartInheritedDraft({questionKey:q.questionKey,questionRevision:q.questionRevision});if(dataV2Current(generation,session))dataV2Apply(result.bundle,[...starred].map(id=>getQ(id)?.questionKey).filter(Boolean));}catch(error){if(dataV2Current(generation,session))dataV2Status({state:'error',error:error.code||error.message});}return;}
+      if(DATA_V2_ENABLED){if(DATA_V2_READ_ONLY)return;const generation=DATA_V2_SESSION_GENERATION,q=getQ(qId);let session;try{session=await ensureDataV2Session();if(!dataV2Current(generation,session))return;await session.redo({questionKey:q.questionKey,questionRevision:q.questionRevision});if(!dataV2Current(generation,session))return;}catch(error){if(dataV2Current(generation,session))dataV2Status({state:'error',error:error.code||error.message});return;}}
       resetQuestionStateForRedo(qId, opts);
     }
 
-    function toggleStar(id){
+    async function toggleStar(id){
+      if(dataV2NeedsFullQuestion(getQ(id))){ensureHydrated(id);return;}
+      if(DATA_V2_ENABLED){if(DATA_V2_READ_ONLY)return;const generation=DATA_V2_SESSION_GENERATION,q=getQ(id),value=!starred.has(id);let session;try{session=await ensureDataV2Session();if(!dataV2Current(generation,session))return;await session.setStar({questionKey:q.questionKey,value});if(!dataV2Current(generation,session))return;}catch(error){if(dataV2Current(generation,session))dataV2Status({state:'error',error:error.code||error.message});return;}}
       starred.has(id)?starred.delete(id):starred.add(id);
       saveSet(STAR_KEY,starred);
       // 「只看收藏」视图里取消收藏 → 这张卡要从列表里消失，才需要重渲染。
@@ -2430,7 +3105,7 @@
         if(motionFull()){
           const fading=document.getElementById("card-"+id);
           if(fading){ fading.style.transition="opacity .15s"; fading.style.opacity="0"; }
-          setTimeout(rerenderCurrentView, 160);
+          scheduleCandidatePrivateTimer(rerenderCurrentView, 160);
           return;
         }
         rerenderCurrentView(); return;
@@ -2449,7 +3124,7 @@
         if(on && motionFull()){ // P3 星标 pop：变为已收藏时弹一下
           btn.classList.remove("qb-star-pop"); void btn.offsetWidth;
           btn.classList.add("qb-star-pop");
-          setTimeout(function(){ btn.classList.remove("qb-star-pop"); }, 250);
+          scheduleCandidatePrivateTimer(function(){ btn.classList.remove("qb-star-pop"); }, 250);
         }
       }
       updateButtons();
@@ -2583,7 +3258,7 @@
               const f = document.createElement("span");
               f.className = "qb-float"; f.textContent = T("conquer_plus");
               chip.parentNode.insertBefore(f, chip.nextSibling);
-              setTimeout(()=>f.remove(), 400);
+              scheduleCandidatePrivateTimer(()=>f.remove(), 400);
             }
           }
           maybeCelebrateWrongsCleared(); // P12
@@ -2752,7 +3427,7 @@
         if(st.fillInputs.some(v=>!String(v ?? "").trim())) return;
 
         if(st._autoTimer) clearTimeout(st._autoTimer);
-        st._autoTimer = setTimeout(() => {
+        st._autoTimer = scheduleCandidatePrivateTimer(() => {
           if(autoSubmit && !st.submitted) submitAnswer(qId);
         }, 350);
         return;
@@ -2821,7 +3496,7 @@
     let WELCOME_SHOWN = false;
     function maybeShowWelcomeBack(){
       try{
-        if (IS_SPECIAL || WELCOME_SHOWN) return;
+        if (ACCOUNT_V2_CANDIDATE || IS_SPECIAL || WELCOME_SHOWN) return;
         if (sessionStorage.getItem("qb_restore")) return;
         if (document.getElementById("qb-welcome")) return;
         const practiced = Object.keys(attemptCountMap || {}).length;
@@ -2849,7 +3524,8 @@
     function dismissWelcome(){ const b = document.getElementById("qb-welcome"); if (b) b.remove(); }
 
     /* ------------------ 启动 ------------------ */
-    function startQuiz(rawQuestions){
+    function startQuiz(rawQuestions){if(DATA_V2_ENABLED)return startDataV2Quiz(rawQuestions);return startLegacyQuiz(rawQuestions);}
+    function startLegacyQuiz(rawQuestions){
       RAW_QUESTION_BANK = Array.isArray(rawQuestions) ? rawQuestions : [];
       const deduped = dedupeQuestionBank(RAW_QUESTION_BANK);
       QUESTION_BANK = Array.isArray(deduped && deduped.bank) ? deduped.bank : [];
@@ -2939,6 +3615,7 @@
     }
     // 唯一出口：POST 端点 → mailto → 剪贴板，永远 resolve（按钮不会死）。返回 {ok,mode,email}
     async function submitFeedback(raw){
+      if (ACCOUNT_V2_CANDIDATE) return {ok:false,mode:"unsupported",error:"candidate_feedback_disabled"};
       const p=buildFeedbackPayload(raw), cfg=FEEDBACK_CONFIG||{};
       if(cfg.endpoint){
         try{
@@ -2954,6 +3631,7 @@
       return {ok:true,mode:"manual",email:cfg.email};
     }
     function afterFeedback(statusId, r, closeFn){
+      if(!r || !r.ok){ fbStatus(statusId, "Feedback is unavailable in candidate mode.", "err"); return; }
       if(r.mode==="posted") fbStatus(statusId, T("fb_thanks"), "ok");
       else if(r.mode==="mailto") fbStatus(statusId, T("fb_mailto_hint"), "ok");
       else fbStatus(statusId, T("fb_copied_hint").split("{email}").join(r.email||""), "ok");
@@ -2963,17 +3641,22 @@
     /* ================= 登录 + 做题历史（每用户最近 10 条快照，存 CF KV，跨设备） ================= */
     // 复用反馈端点同一组 CF Function：把 /feedback 换成 /auth、/history。离线/本地导出关闭反馈时本段 UI 不显示。
     var QB_API_BASE = (function(){
+      var configuredBase = (FEEDBACK_CONFIG && FEEDBACK_CONFIG.effective_api_base) ? String(FEEDBACK_CONFIG.effective_api_base) : "";
+      if(configuredBase) return configuredBase;
       var ep = (FEEDBACK_CONFIG && FEEDBACK_CONFIG.endpoint) ? String(FEEDBACK_CONFIG.endpoint) : "";
       if(/\/feedback$/.test(ep)) return ep.replace(/\/feedback$/, "");
       if(/\/api\/?$/.test(ep)) return ep.replace(/\/$/, "");
-      return "https://question-bank-78u.pages.dev/api";
+      // A production endpoint is injected only by an explicit production build.
+      // This fallback must remain same-origin so local/preview artifacts cannot
+      // silently reach production when an older config is missing.
+      return "/api";
     })();
     var AUTH_KEY = "qb_auth_v1"; // localStorage：{ token, name }
-    function getAuth(){ try{ return JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); }catch(_e){ return null; } }
-    function setAuth(a){ try{ localStorage.setItem(AUTH_KEY, JSON.stringify(a)); }catch(_e){} updateAuthUI(); }
-    function clearAuth(){ try{ localStorage.removeItem(AUTH_KEY); }catch(_e){} updateAuthUI(); }
-    function isLoggedIn(){ var a=getAuth(); return !!(a && a.token); }
-    function authHeaders(){ var a=getAuth(); return (a && a.token) ? { "Authorization": "Bearer " + a.token } : {}; }
+    function getAuth(){ if(ACCOUNT_V2_CANDIDATE)return null; try{ return JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); }catch(_e){ return null; } }
+    function setAuth(a){ if(ACCOUNT_V2_CANDIDATE)return; try{ localStorage.setItem(AUTH_KEY, JSON.stringify(a)); }catch(_e){} updateAuthUI(); }
+    function clearAuth(){ if(ACCOUNT_V2_CANDIDATE)return; try{ localStorage.removeItem(AUTH_KEY); }catch(_e){} updateAuthUI(); }
+    function isLoggedIn(){ if(ACCOUNT_V2_CANDIDATE)return !!(ACCOUNT_V2_STATE && ACCOUNT_V2_STATE.phase === "ready" && ACCOUNT_V2_STATE.owner); var a=getAuth(); return !!(a && a.token); }
+    function authHeaders(){ if(ACCOUNT_V2_CANDIDATE)return {}; var a=getAuth(); return (a && a.token) ? { "Authorization": "Bearer " + a.token } : {}; }
     /* ---- 特殊题库访客模式（分享码进，不登录账号，纯内存做题） ---- */
     function getSpecial(){ try{ var s = sessionStorage.getItem("qb_special"); return s ? JSON.parse(s) : null; }catch(_e){ return null; } }
     function clearSpecial(){ try{ sessionStorage.removeItem("qb_special"); }catch(_e){} }
@@ -2984,34 +3667,149 @@
       fbStatus("qb-login-status", T("special_ok"), "ok");
       setTimeout(function(){ location.href = "player.html?special=1"; }, 500);
     }
+    async function openPublicShare(){
+      if (!ACCOUNT_V2_CANDIDATE) return;
+      if (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; }
+      var input = document.getElementById("qb-public-share-code");
+      var code = ((input && input.value) || "").trim();
+      var button = document.getElementById("qb-public-share-go");
+      if (code.length < 3){ fbStatus("qb-login-status", "Share code needs at least 3 characters.", "err"); return; }
+      if (button) button.disabled = true;
+      var shareOperation = beginAccountV2UiOperation(null);
+      try{
+        var controller = await ACCOUNT_V2_READY;
+        if (!controller) throw new Error("controller_unavailable");
+        if (!bindAccountV2UiOperation(shareOperation, controller)) return;
+        // This is the sole candidate share-code path. It never sends a share
+        // code to account authentication and does not inspect account input.
+        var response = await fetch(QB_API_BASE + "/special", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ code:code }) });
+        if (!accountV2UiOperationIsCurrent(shareOperation)) return;
+        var body = {}; try{ body = await response.json(); }catch(_e){}
+        if (!accountV2UiOperationIsCurrent(shareOperation)) return;
+        if (!response.ok || !body || !body.ok || !body.bank) throw new Error("share_not_found");
+        setTimeout(function(){
+          if (!accountV2UiOperationIsCurrent(shareOperation)) return;
+          try{
+            sessionStorage.setItem("qb_special", JSON.stringify({ code:code, id:body.bank.id, title:body.bank.title }));
+            if (!getSpecial()) throw new Error("share_storage_failed");
+          }catch(_e){
+            fbStatus("qb-login-status", "Could not open shared practice in this browser.", "err");
+            if (button) button.disabled = false;
+            finishAccountV2UiOperation(shareOperation);
+            return;
+          }
+          fbStatus("qb-login-status", T("special_ok"), "ok");
+          finishAccountV2UiOperation(shareOperation);
+          location.href = "player.html?special=1";
+        }, 500);
+      }catch(e){
+        if (accountV2UiOperationOwns(shareOperation) && (shareOperation.epoch === null || accountV2UiOperationIsCurrent(shareOperation))) fbStatus("qb-login-status", e && e.message === "share_not_found" ? T("special_not_found") : accountV2ErrorText(e), "err");
+        if (accountV2UiOperationOwns(shareOperation) && (shareOperation.epoch === null || accountV2UiOperationIsCurrent(shareOperation))){ if (button) button.disabled = false; finishAccountV2UiOperation(shareOperation); }
+      }
+    }
+    function showCandidatePendingDeletion(){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); }
+    async function acknowledgeAccountRecovery(){
+      if (!ACCOUNT_V2_CANDIDATE || !ACCOUNT_V2) return;
+      const code = candidateRecoveryCode(ACCOUNT_V2_STATE);
+      if (!candidateRecoveryAckAllowed(code)) return renderCandidateAccountRecovery(ACCOUNT_V2_STATE);
+      const operation = beginAccountV2UiOperation(ACCOUNT_V2);
+      try{
+        const result = await ACCOUNT_V2.acknowledgeRecovery(function(){
+          if (!accountV2UiOperationIsCurrent(operation)) return false;
+          const approved = window.confirm(T("account_recovery_ack_confirm"));
+          if (approved) accountV2UiOperationAcceptsTransition(operation);
+          return approved;
+        });
+        if (!accountV2UiOperationOwns(operation)) return;
+        if (result && result.cancelled) renderCandidateAccountRecovery(ACCOUNT_V2_STATE);
+        else { closeHistory(); updateAuthUI(); }
+      }catch(_e){
+        if (accountV2UiOperationOwns(operation) && (operation.epoch === null || accountV2UiOperationIsCurrent(operation))) renderCandidateAccountRecovery(ACCOUNT_V2.snapshot());
+      }finally{ if (accountV2UiOperationOwns(operation)) finishAccountV2UiOperation(operation); }
+    }
     function updateAuthUI(){
       var lbl = document.getElementById("account-label"); if(!lbl) return;
       var btn = document.getElementById("account-btn");
       var sp = getSpecial();
+      var notice = document.getElementById("account-v2-learning-notice");
+      var retry = document.getElementById("qb-account-delete-retry");
+      if (ACCOUNT_V2_CANDIDATE){
+        var candidateTitle = document.getElementById("qb-login-title");
+        var candidateHint = document.getElementById("qb-login-hint");
+        if (candidateTitle) candidateTitle.textContent = "Account access";
+        if (candidateHint) candidateHint.textContent = T("account_recovery_tab_session") + " " + (DATA_V2_ENABLED?dataV2Text('saved'):"Sign in or create an empty account. Practice progress stays in this page only and is not saved or synced.");
+        if (notice) notice.hidden = DATA_V2_ENABLED;
+        const conflictsButton=document.getElementById('qb-v2-conflicts');if(conflictsButton)conflictsButton.hidden=!(ACCOUNT_V2_STATE&&ACCOUNT_V2_STATE.phase==='ready'&&ACCOUNT_V2_STATE.owner);
+        const recoveryButton=document.getElementById('qb-v2-cloudRecovery');if(recoveryButton)recoveryButton.hidden=!(ACCOUNT_V2_STATE&&ACCOUNT_V2_STATE.phase==='ready'&&ACCOUNT_V2_STATE.owner);
+        if(DATA_V2_ENABLED){const tools=document.getElementById('qb-v2-save-status')?.parentElement;if(tools&&!document.getElementById('qb-v2-sync')){const sync=document.createElement('button');sync.id='qb-v2-sync';sync.className='btn';sync.type='button';sync.onclick=dataV2Sync;tools.append(sync);const status=document.createElement('span');status.id='qb-v2-sync-status';status.role='status';status.setAttribute('aria-live','polite');tools.append(status);}const sync=document.getElementById('qb-v2-sync');if(sync){sync.textContent=uiLang==='zh'?'云同步':uiLang==='es'?'Sincronizar':'Cloud sync';sync.hidden=!(ACCOUNT_V2_STATE&&ACCOUNT_V2_STATE.phase==='ready'&&ACCOUNT_V2_STATE.owner);}}
+        if (sp){ lbl.textContent = "🔑 Shared practice"; if(btn) btn.title = T("special_exit"); return; }
+        var ready = ACCOUNT_V2_STATE && ACCOUNT_V2_STATE.phase === "ready";
+        var pending = !!(ACCOUNT_V2_STATE && ACCOUNT_V2_STATE.pendingDeletion);
+        var blocked = candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR;
+        var recoveryCode = candidateRecoveryCode(ACCOUNT_V2_STATE);
+        if (lbl) lbl.textContent = ready ? "Account" : "Sign in";
+        if (btn) btn.title = ready ? "Account" : T("login_btn");
+        var loginButton = document.getElementById("qb-login-go");
+        var registerButton = document.getElementById("qb-register-go");
+        var shareButton = document.getElementById("qb-public-share-go");
+        var busy = !!(ACCOUNT_V2_STATE && ["authenticating", "checking", "deleting"].includes(ACCOUNT_V2_STATE.phase));
+        if (loginButton) loginButton.disabled = busy || blocked;
+        if (registerButton) { registerButton.hidden = false; registerButton.disabled = busy || blocked; }
+        if (shareButton) shareButton.disabled = busy || blocked;
+        if (btn) btn.disabled = busy || blocked;
+        if (retry) retry.hidden = !(pending && ACCOUNT_V2_STATE && ACCOUNT_V2_STATE.phase === "error") || candidateRecoveryAckAllowed(recoveryCode) || recoveryCode === "STORAGE_UNAVAILABLE";
+        renderCandidateAccountRecovery(ACCOUNT_V2_STATE);
+        return;
+      }
       if(sp){ lbl.textContent = "🔑 " + (sp.code || ""); if(btn) btn.title = T("special_exit"); return; }
       var a = getAuth();
       if(a && a.name){ lbl.textContent = a.name + " · " + T("account_history"); if(btn) btn.title = T("history_title"); }
       else { lbl.textContent = T("login_btn"); if(btn) btn.title = T("login_btn"); }
     }
     function onAccountBtn(){
+      if(ACCOUNT_V2_CANDIDATE && (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR)){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; }
       if(getSpecial()){ confirmExitSpecial(); return; }
       if(isLoggedIn()) openHistory(); else openLoginModal();
     }
 
     function openLoginModal(){
       var m = document.getElementById("qb-login"); if(!m) return;
+      if (ACCOUNT_V2_CANDIDATE) updateAuthUI();
       var inp = document.getElementById("qb-login-code"); if(inp) inp.value = "";
+      var shareEntry = document.getElementById("qb-public-share-entry"); if (shareEntry) shareEntry.hidden = !ACCOUNT_V2_CANDIDATE;
+      var shareInput = document.getElementById("qb-public-share-code"); if (shareInput) shareInput.value = "";
       fbStatus("qb-login-status", "", "");
       m.hidden = false;
       if(inp) setTimeout(function(){ try{ inp.focus(); }catch(_e){} }, 60);
     }
-    function closeLoginModal(){ var m=document.getElementById("qb-login"); if(m) m.hidden = true; }
+    function closeLoginModal(){ if(ACCOUNT_V2_CANDIDATE&&ACCOUNT_V2?.snapshot().phase==='authenticating'){ACCOUNT_V2.logout();const op=ACCOUNT_V2_UI_OPERATION;if(op)finishAccountV2UiOperation(op);}var m=document.getElementById("qb-login"); if(m) m.hidden = true; }
     async function doLogin(){
       var inp = document.getElementById("qb-login-code");
       var code = ((inp && inp.value) || "").trim();
-      if(code.length < 3){ fbStatus("qb-login-status", T("login_too_short"), "err"); return; }
+      if(code.length < (ACCOUNT_V2_CANDIDATE ? 4 : 3)){ fbStatus("qb-login-status", T("login_too_short"), "err"); return; }
       var btn = document.getElementById("qb-login-go"); if(btn) btn.disabled = true;
       fbStatus("qb-login-status", T("login_ing"), "");
+      if (ACCOUNT_V2_CANDIDATE){
+        if (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); if(btn) btn.disabled = false; return; }
+        var loginOperation = beginAccountV2UiOperation(null);
+        try{
+          var controller = await ACCOUNT_V2_READY;
+          if (!controller) throw new Error("controller_unavailable");
+          if (!bindAccountV2UiOperation(loginOperation, controller)) return;
+          if (!accountV2UiOperationAcceptsTransition(loginOperation)) return;
+          await controller.login(code, function(progress){
+            if (!accountV2UiOperationIsCurrent(loginOperation)) return;
+            const text=uiLang==='zh'?`正在迁移旧账号资料 · ${progress.phase} ${progress.processed}/${progress.total}`:uiLang==='es'?`Migrando datos anteriores · ${progress.phase} ${progress.processed}/${progress.total}`:`Migrating old account data · ${progress.phase} ${progress.processed}/${progress.total}`;
+            fbStatus("qb-login-status", text, "");
+            const button=document.getElementById("qb-login-go");if(button)button.textContent=uiLang==='zh'?'继续迁移':uiLang==='es'?'Continuar migración':'Continue migration';
+          });
+          if (!accountV2UiOperationIsCurrent(loginOperation)) return;
+          fbStatus("qb-login-status", DATA_V2_ENABLED?(uiLang==='zh'?'已登录。学习记录保存到此身份的本机空间；云同步状态单独显示。':uiLang==='es'?'Sesión iniciada. El progreso se guarda localmente para esta identidad; la sincronización se indica por separado.':'Signed in. Learning records save to this identity’s local space; cloud sync status is shown separately.'):"Signed in. Practice progress remains memory-only.", "ok");
+          closeLoginModal();
+        }catch(e){ if (accountV2UiOperationOwns(loginOperation) && (loginOperation.epoch === null || accountV2UiOperationIsCurrent(loginOperation))) fbStatus("qb-login-status", accountV2ErrorText(e), "err"); }
+        finally { if (accountV2UiOperationOwns(loginOperation) && (loginOperation.epoch === null || accountV2UiOperationIsCurrent(loginOperation))){ if(btn) { btn.disabled = false;btn.textContent=T("login_go"); } finishAccountV2UiOperation(loginOperation); } }
+        return;
+      }
       // 先查「特殊题库分享码」——命中即进访客模式（不走账号登录）
       try{
         var spr = await fetch(QB_API_BASE + "/special", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ code: code }) });
@@ -3041,8 +3839,57 @@
       }
       if(btn) btn.disabled = false;
     }
-    function logout(){ clearAuth(); closeHistory(); }
+    async function doRegister(){
+      if (!ACCOUNT_V2_CANDIDATE) return;
+      if (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; }
+      var inp = document.getElementById("qb-login-code");
+      var code = ((inp && inp.value) || "").trim();
+      var btn = document.getElementById("qb-register-go");
+      if(code.length < 4){ fbStatus("qb-login-status", T("login_too_short"), "err"); return; }
+      if(btn) btn.disabled = true;
+      fbStatus("qb-login-status", "Preparing a new account…", "");
+      var registerOperation = beginAccountV2UiOperation(null);
+      try{
+        var controller = await ACCOUNT_V2_READY;
+        if (!controller) throw new Error("controller_unavailable");
+        if (!bindAccountV2UiOperation(registerOperation, controller)) return;
+        // register(), unlike deleteAccount(), invalidates before it asks for
+        // confirmation. Accept exactly that controller-owned transition now.
+        if (!accountV2UiOperationAcceptsTransition(registerOperation)) return;
+        var registration = await controller.register(code, function(){
+          if (!accountV2UiOperationIsCurrent(registerOperation)) return Promise.resolve(false);
+          var confirmed = window.confirm("Create a new empty account for this code? Existing data is never restored.");
+          return Promise.resolve(confirmed);
+        });
+        if (!accountV2UiOperationIsCurrent(registerOperation)) return;
+        if (registration && registration.cancelled){ fbStatus("qb-login-status", "Registration cancelled.", ""); }
+        else { fbStatus("qb-login-status", DATA_V2_ENABLED?(uiLang==='zh'?'已创建空账号。选择或导入题库后可保存本机学习记录；云同步单独确认。':uiLang==='es'?'Cuenta vacía creada. Elige o importa un banco para guardar el progreso localmente; la sincronización se confirma por separado.':'New empty account created. Choose or import a bank to save local learning records; cloud sync is confirmed separately.'):"New empty account created. Practice progress remains memory-only.", "ok"); closeLoginModal(); }
+      }catch(e){ if (accountV2UiOperationOwns(registerOperation) && (registerOperation.epoch === null || accountV2UiOperationIsCurrent(registerOperation))) fbStatus("qb-login-status", accountV2ErrorText(e), "err"); }
+      finally { if (accountV2UiOperationOwns(registerOperation) && (registerOperation.epoch === null || accountV2UiOperationIsCurrent(registerOperation))){ if(btn) btn.disabled = false; finishAccountV2UiOperation(registerOperation); } }
+    }
+    function logout(){ if(ACCOUNT_V2_CANDIDATE){ if (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; } invalidateAccountV2UiOperation();dataV2ClearLocalImport(); if(ACCOUNT_V2) ACCOUNT_V2.logout(); closeHistory(); return; } dataV2ClearLocalImport();clearAuth(); closeHistory(); }
     async function deleteMyAccount(){
+      if (ACCOUNT_V2_CANDIDATE){
+        if (!ACCOUNT_V2) { fbStatus("qb-login-status", "Account service unavailable. Please retry.", "err"); return; }
+        if (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; }
+        var deleteOperation = beginAccountV2UiOperation(ACCOUNT_V2);
+        try{
+          closeHistory();
+          var deletion = await ACCOUNT_V2.deleteAccount(function(){
+            if (!accountV2UiOperationIsCurrent(deleteOperation)) return Promise.resolve(false);
+            var confirmed = window.confirm("Permanently delete this account and all server data? A later registration starts empty.");
+            if (confirmed) accountV2UiOperationAcceptsTransition(deleteOperation);
+            return Promise.resolve(confirmed);
+          });
+          if (!accountV2UiOperationIsCurrent(deleteOperation)) return;
+          if (!(deletion && deletion.cancelled)){ closeHistory(); alert(deletion?.cleanupRequired?(uiLang==='zh'?'服务器账号已删除；本机旧资料清理仍待处理，请重试。新账号不会恢复旧资料。':uiLang==='es'?'La cuenta del servidor se eliminó; la limpieza local sigue pendiente. Reintenta. Una cuenta nueva no restaura datos antiguos.':'Server account deleted; local cleanup is still pending. Retry. A new account never restores old data.'):(uiLang==='zh'?'账号及对应本机资料已删除。再次注册将创建空账号。':uiLang==='es'?'Cuenta y datos locales correspondientes eliminados. Volver a registrarse crea una cuenta vacía.':'Account and corresponding local data deleted. A later registration starts empty.')); }
+        }catch(e){
+          if (e && e.code !== "STALE_REQUEST" && accountV2UiOperationIsCurrent(deleteOperation)) { fbStatus("qb-login-status", accountV2ErrorText(e), "err"); updateAuthUI(); }
+          if (accountV2UiOperationIsCurrent(deleteOperation)) updateAuthUI();
+        }
+        finally { if (accountV2UiOperationIsCurrent(deleteOperation)) finishAccountV2UiOperation(deleteOperation); }
+        return;
+      }
       if(!isLoggedIn()) return;
       if(!confirm(T("del_account_confirm"))) return;
       try{
@@ -3051,6 +3898,16 @@
         else if(res.status === 401){ clearAuth(); closeHistory(); }
         else { alert(T("del_account_fail")); }
       }catch(_e){ alert(T("del_account_fail")); }
+    }
+    async function retryAccountDeletion(){
+      if (!ACCOUNT_V2_CANDIDATE || !ACCOUNT_V2) return;
+      if(ACCOUNT_V2_STATE && ACCOUNT_V2_STATE.cleanupRequired && !ACCOUNT_V2_STATE.pendingDeletion){try{await ACCOUNT_V2.resume();}finally{renderCandidateAccountRecovery(ACCOUNT_V2.snapshot());}return;}
+      const recoveryCode = candidateRecoveryCode(ACCOUNT_V2_STATE);
+      if (!ACCOUNT_V2_STATE || !ACCOUNT_V2_STATE.pendingDeletion || candidateRecoveryAckAllowed(recoveryCode) || recoveryCode === "STORAGE_UNAVAILABLE"){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; }
+      var retryOperation = beginAccountV2UiOperation(ACCOUNT_V2);
+      try{ var deletion = await ACCOUNT_V2.continueDeletion(); if (accountV2UiOperationIsCurrent(retryOperation) && !(deletion && deletion.pendingDeletion)){ closeHistory(); alert(deletion?.cleanupRequired?(uiLang==='zh'?'服务器账号已删除；本机旧资料清理仍待处理，请重试。':uiLang==='es'?'La cuenta del servidor se eliminó; la limpieza local sigue pendiente. Reintenta.':'Server account deleted; local cleanup is still pending. Retry.'):(uiLang==='zh'?'账号及对应本机资料已删除。再次注册将创建空账号。':uiLang==='es'?'Cuenta y datos locales correspondientes eliminados. Volver a registrarse crea una cuenta vacía.':'Account and corresponding local data deleted. A later registration starts empty.')); } }
+      catch(e){ if (e && e.code !== "STALE_REQUEST" && accountV2UiOperationIsCurrent(retryOperation)) { fbStatus("qb-login-status", accountV2ErrorText(e), "err"); updateAuthUI(); } }
+      finally { if (accountV2UiOperationIsCurrent(retryOperation)){ updateAuthUI(); finishAccountV2UiOperation(retryOperation); } }
     }
 
     /* ---- 本轮快照 + 防抖自动保存 ---- */
@@ -3104,12 +3961,12 @@
       };
     }
     function scheduleSnapshotSave(){
-      if(RESTORING || IS_SPECIAL || !isLoggedIn()) return; // 特殊题库：永不联网存历史
+      if(ACCOUNT_V2_CANDIDATE || RESTORING || IS_SPECIAL || !isLoggedIn()) return; // candidate 学习状态仅内存
       clearTimeout(_snapTimer);
       _snapTimer = setTimeout(saveSnapshotNow, 1500);
     }
     async function saveSnapshotNow(){
-      if(!isLoggedIn()) return;
+      if(ACCOUNT_V2_CANDIDATE || !isLoggedIn()) return;
       var snap = buildSnapshot();
       if(!snap.count) return; // 没有已提交的题就不存
       try{
@@ -3124,21 +3981,32 @@
 
     /* ---- 历史面板 ---- */
     function openHistory(){
+      if(DATA_V2_ENABLED){dataV2History();return;}
+      if(ACCOUNT_V2_CANDIDATE && (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR)){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; }
       if(!isLoggedIn()){ openLoginModal(); return; }
       var m = document.getElementById("qb-history"); if(!m) return;
       m.hidden = false;
+      if (ACCOUNT_V2_CANDIDATE){
+        var candidateBox = document.getElementById("qb-history-list");
+        if (candidateBox) candidateBox.innerHTML = '<div class="meta" style="padding:8px">History and private banks are unavailable in candidate mode; practice progress is memory-only.</div>';
+        updateAuthUI();
+        return;
+      }
       renderHistoryList();
     }
-    function closeHistory(){ var m=document.getElementById("qb-history"); if(m) m.hidden = true; }
+    function closeHistory(){ DATA_V2_HISTORY_SEQUENCE++;var m=document.getElementById("qb-history");if(m)m.hidden=true;const list=document.getElementById('qb-history-list');if(list)list.replaceChildren(); }
     function fmtHistTime(ts){ try{ return new Date(ts).toLocaleString(); }catch(_e){ return ""; } }
     async function renderHistoryList(){
       var box = document.getElementById("qb-history-list"); if(!box) return;
+      if (ACCOUNT_V2_CANDIDATE){ box.innerHTML = '<div class="meta" style="padding:8px">History is not persisted or synced in candidate mode.</div>'; return; }
       box.innerHTML = '<div class="meta" style="padding:8px">' + escHTML(T("hist_loading")) + '</div>';
       try{
         var res = await fetch(QB_API_BASE + "/history", { headers: authHeaders() });
         if(res.status === 401){ clearAuth(); closeHistory(); openLoginModal(); return; }
-        var d = {}; try{ d = await res.json(); }catch(_e){}
-        var items = (d && d.items) || [];
+        if(res.status !== 200) throw new Error("history_http_" + res.status);
+        var d = await res.json();
+        if(!d || d.ok !== true || !Array.isArray(d.items)) throw new Error("history_invalid_payload");
+        var items = d.items;
         if(!items.length){ box.innerHTML = '<div class="meta" style="padding:8px">' + escHTML(T("hist_empty")) + '</div>'; return; }
         box.innerHTML = items.map(function(it){
           var sc = it.score ? (it.score.correct + "/" + it.score.answered + " ✓ · " + it.score.answered + "/" + it.score.total) : escHTML(T("hist_unanswered"));
@@ -3155,11 +4023,13 @@
       }
     }
     async function deleteSnapshot(id){
+      if (ACCOUNT_V2_CANDIDATE) return;
       if(!confirm(T("hist_del_confirm"))) return;
       try{ await fetch(QB_API_BASE + "/history?id=" + encodeURIComponent(id), { method: "DELETE", headers: authHeaders() }); }catch(_e){}
       renderHistoryList();
     }
     async function restoreSnapshot(id){
+      if (ACCOUNT_V2_CANDIDATE){ alert("History restore is unavailable in candidate mode."); return; }
       var snap = null;
       try{
         var res = await fetch(QB_API_BASE + "/history?id=" + encodeURIComponent(id), { headers: authHeaders() });
@@ -3182,9 +4052,10 @@
 
     /* ---- 还原 ---- */
     function getPendingRestore(){
+      if (ACCOUNT_V2_CANDIDATE) return null;
       try{ var s = sessionStorage.getItem("qb_restore"); return s ? JSON.parse(s) : null; }catch(_e){ return null; }
     }
-    function clearPendingRestore(){ try{ sessionStorage.removeItem("qb_restore"); }catch(_e){} }
+    function clearPendingRestore(){ if (ACCOUNT_V2_CANDIDATE) return; try{ sessionStorage.removeItem("qb_restore"); }catch(_e){} }
     function applyRestore(snap){
       var byId = {};
       for(var i=0;i<QUESTION_BANK.length;i++) byId[QUESTION_BANK[i].id] = QUESTION_BANK[i];
@@ -3499,7 +4370,7 @@
               ctx.fillStyle = p.col; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
             }
           }
-          if (alive && frame < 260) requestAnimationFrame(tick);
+          if (alive && frame < 260) requestCandidatePrivateFrame(tick);
           else { ctx.clearRect(0, 0, W, H); canvas.hidden = true; }
         })();
       }catch(_e){}
@@ -3513,7 +4384,7 @@
       const statEl = document.getElementById("coffee-stat");
       if (statEl){
         let n = 0;
-        try{ n = Object.keys(JSON.parse(localStorage.getItem(ATTEMPT_COUNT_KEY) || "{}")).length; }catch(_e){}
+        if (!ACCOUNT_V2_CANDIDATE) try{ n = Object.keys(JSON.parse(localStorage.getItem(ATTEMPT_COUNT_KEY) || "{}")).length; }catch(_e){}
         if (n > 0){ statEl.textContent = T("coffee_stat", { n: n }); statEl.hidden = false; }
         else statEl.hidden = true;
       }
@@ -3818,6 +4689,10 @@
 
     async function bootstrapPrivateBank(id, fail){
       if(!/^[A-Za-z0-9_-]{1,64}$/.test(id)){ fail("Invalid ?mybank= id"); return; }
+      if (ACCOUNT_V2_CANDIDATE){
+        fail("Private account banks are unavailable in candidate mode; practice progress is memory-only.");
+        return;
+      }
       IS_PRIVATE_BANK = true;
       setStorageNamespace("u-" + id);
       const sb = document.getElementById("suggest-btn"); if (sb) sb.hidden = true; // 私有题库内容只属于本人，关掉反馈/报错
@@ -3855,6 +4730,7 @@
           '<div style="padding:24px;text-align:center;color:var(--muted)">' + msg +
           '<br><a href="./" style="color:var(--brand)">← Back to catalog / 返回目录</a></div>';
       };
+      if(DATA_V2_ENABLED){const generation=DATA_V2_SESSION_GENERATION;try{await dataV2Public(id);}catch(error){if(generation===DATA_V2_SESSION_GENERATION&&error.code!=='STALE_REQUEST'){showQuizApp();document.getElementById('quiz').textContent=error.code||error.message;dataV2Status({state:'error',error:error.code||error.message});}}return;}
       // 特殊题库访客模式：player.html?special=1 —— 从 sessionStorage 取分享码、按需拉取、纯内存做题（不登录、不存历史）
       if (new URLSearchParams(location.search).get("special")){ await bootstrapSpecialBank(fail); return; }
       // 私有题库（登录后云端打开）：player.html?mybank=<id> —— 必须登录，按需从账号云端拉取，不在设备留存
@@ -3901,7 +4777,13 @@
       }
     }
 
-    function bootstrapLegacyBank(){
+    async function bootstrapLegacyBank(){
+      await QUESTION_HTML_READY;
+      if (ACCOUNT_V2_CANDIDATE){
+        const controller = await ACCOUNT_V2_READY;
+        if (!controller){ renderCandidateAccountRecovery(null); }
+        else { await resumeCandidateAccountRecovery("bootstrap"); }
+      }
       const payload = LEGACY_BANK_PAYLOAD;
       // 站点模式（player.html / local.html）显示「返回目录」；提取器导出的独立单文件没有目录，保持隐藏
       if (payload && (payload.mode === "remote" || payload.mode === "local-bank")){
@@ -3937,6 +4819,12 @@
       // local.html：题库不内嵌，从浏览器 localStorage 读（目录页「导入 JSON 本地练习」存入），
       // 地址形如 local.html?bank=<id>。每个本地题库有独立存储命名空间 local-<id>。
       if(payload && payload.mode === "local-bank"){
+        if(DATA_V2_ENABLED){const generation=DATA_V2_SESSION_GENERATION;try{await dataV2Local();}catch(error){if(generation===DATA_V2_SESSION_GENERATION&&error.code!=='STALE_REQUEST')dataV2Status({state:'error',error:error.code||error.message});}return;}
+        if (ACCOUNT_V2_CANDIDATE){
+          showQuizApp();
+          document.getElementById("quiz").innerHTML = '<div style="padding:24px;text-align:center;color:var(--muted)">Local banks are hidden in candidate mode. Public banks remain available; practice progress is memory-only.</div>';
+          return;
+        }
         const localId = String(new URLSearchParams(location.search).get("bank") || "").trim();
         let bank = null;
         try{
@@ -4011,7 +4899,7 @@
         if (!card) return;
         try{ card.scrollIntoView({behavior: scrollBehavior(), block: "center"}); }catch(_e){ try{ card.scrollIntoView(); }catch(_e2){} }
         card.classList.remove("qb-flash"); void card.offsetWidth; card.classList.add("qb-flash");
-        setTimeout(()=>card.classList.remove("qb-flash"), 500);
+        scheduleCandidatePrivateTimer(()=>card.classList.remove("qb-flash"), 500);
       }catch(e){}
     }
     // P7/P17/P9 点击面板外收起（目标不在面板里、也不是对应开关按钮时）
@@ -4038,6 +4926,7 @@
       if (prev) prev.classList.remove("kb-focus");
       kbIndex = i;
       const q = list[i];
+      if(DATA_V2_ENABLED)dataV2SavePosition(q.questionKey);
       ensureHydrated(q.id);
       const card = document.getElementById("card-" + q.id);
       if (card){
@@ -4156,7 +5045,7 @@
     // P11 与上次存档对比（登录 + 云端反馈可用才显示；排除本轮自己的自动存档；静默失败）
     function maybeAppendCompare(container){
       try{
-        if (IS_SPECIAL || !UI_FEATURES.feedback || !isLoggedIn() || !sessionLog.length) return;
+        if (ACCOUNT_V2_CANDIDATE || IS_SPECIAL || !UI_FEATURES.feedback || !isLoggedIn() || !sessionLog.length) return;
         fetch(QB_API_BASE + "/history", { headers: authHeaders() }).then(r => r.ok ? r.json() : null).then(data => {
           const list = (data && data.items) || [];
           const prev = list.find(s => s && s.bank_id === STORAGE_NS && String(s.id) !== String(SESSION_ID) && s.score && s.score.answered);
@@ -4173,7 +5062,7 @@
     }
 
     // P17 自设今日目标（endowed progress：当天已答自动计入；全局 key，跨库共享；IS_SPECIAL 隐藏入口）
-    function loadGoal(){ try{ const g = JSON.parse(localStorage.getItem("qb_daily_goal_v1") || "{}"); return (g && g.n > 0) ? g : null; }catch(e){ return null; } }
+    function loadGoal(){ if(ACCOUNT_V2_CANDIDATE)return null; try{ const g = JSON.parse(localStorage.getItem("qb_daily_goal_v1") || "{}"); return (g && g.n > 0) ? g : null; }catch(e){ return null; } }
     function toggleGoalPop(){
       if (IS_SPECIAL) return;
       const p = document.getElementById("qb-goal-pop"); if (!p) return;
@@ -4183,6 +5072,7 @@
       p.hidden = false;
     }
     function saveGoal(){
+      if (ACCOUNT_V2_CANDIDATE){ const p = document.getElementById("qb-goal-pop"); if (p) p.hidden = true; return; }
       const inp = document.getElementById("qb-goal-n");
       const n = parseInt(inp && inp.value, 10);
       if (n > 0){
@@ -4193,6 +5083,7 @@
       updateGoalUI();
     }
     function clearGoal(){
+      if (ACCOUNT_V2_CANDIDATE){ const p = document.getElementById("qb-goal-pop"); if (p) p.hidden = true; return; }
       try{ localStorage.removeItem("qb_daily_goal_v1"); }catch(e){}
       const p = document.getElementById("qb-goal-pop"); if (p) p.hidden = true;
       updateGoalUI();

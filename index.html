@@ -5,7 +5,8 @@
   <title>AMT Question Bank Practice</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="color-scheme" content="light dark" />
-  <script>(function(){try{var k="qb_theme",s=localStorage.getItem(k),m=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,t=(s==="dark"||s==="light")?s:(m?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <script>globalThis.QB_ACCOUNT_V2_UI = "true" === "true"; (function(){try{var k="qb_theme",s=localStorage.getItem(k),m=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,t=(s==="dark"||s==="light")?s:(m?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <script>globalThis.QB_DATA_V2_CONFIG={"enabled":true,"manifest":"banks/v2/manifest.json","banks":[{"slug":"239-airframe-elec","bankUid":"be8fe87d-7ec8-4bdd-a33a-a5d6b16d35e4","revision":"a19d1135fe58e9733a0f745d7900f2a5ab9d013a91ea981e00c4c917ae6d5912","staticRef":"banks/v2/239-airframe-elec.a19d1135fe58e9733a0f745d7900f2a5ab9d013a91ea981e00c4c917ae6d5912.json","questionCount":34,"title":"Aircraft Electrical"},{"slug":"205-finishes","bankUid":"2fb8d2be-46a4-435c-9cfd-d6c9f416300b","revision":"b69beb00cd3a2dbada9626efdb42cebbdb7bd75a75b1b3dea9aaf56fc26efa91","staticRef":"banks/v2/205-finishes.b69beb00cd3a2dbada9626efdb42cebbdb7bd75a75b1b3dea9aaf56fc26efa91.json","questionCount":112,"title":"Finishes"},{"slug":"215-helicopter","bankUid":"73c3ae5c-d627-4ece-b096-ee04309e9ea3","revision":"e52ad725d8b56a2b36a1f90c4692e4d33ff8e317abe30566c88916788fd87af5","staticRef":"banks/v2/215-helicopter.e52ad725d8b56a2b36a1f90c4692e4d33ff8e317abe30566c88916788fd87af5.json","questionCount":29,"title":"Helicopter"},{"slug":"general","bankUid":"35a68cb2-b871-4d37-9447-190c396eaf99","revision":"6ce382b1d2fbcdcc548ec265e4dbdf0de661c262b4473d710718dcc18fa763ba","staticRef":"banks/v2/general.6ce382b1d2fbcdcc548ec265e4dbdf0de661c262b4473d710718dcc18fa763ba.json","questionCount":1139,"title":"General Question Banks"},{"slug":"201-composite","bankUid":"08d6b781-19d6-49d1-af05-f7c05031940f","revision":"158659be6a1a8c5adcab8cb6d864255ea1e62410e8fb2b462f55ccbb3a0cbc34","staticRef":"banks/v2/201-composite.158659be6a1a8c5adcab8cb6d864255ea1e62410e8fb2b462f55ccbb3a0cbc34.json","questionCount":35,"title":"Composite"},{"slug":"211-sheet-metal","bankUid":"7c8ca573-7a7c-4cbe-8769-054719e65394","revision":"87fc9eb3e435675e12c53b081f5639344f157c9abda70bcb1843747fd2eed781","staticRef":"banks/v2/211-sheet-metal.87fc9eb3e435675e12c53b081f5639344f157c9abda70bcb1843747fd2eed781.json","questionCount":246,"title":"Sheet Metal"},{"slug":"231-ice-rain","bankUid":"79d93947-1307-45ae-8f19-e25d3bd11051","revision":"e411b6c8bb13cfbc6f9839398df24ddb9de1f10b1797905f93e6f345a60f2969","staticRef":"banks/v2/231-ice-rain.e411b6c8bb13cfbc6f9839398df24ddb9de1f10b1797905f93e6f345a60f2969.json","questionCount":25,"title":"Ice and Rain Protection"},{"slug":"231-fire-pos-warning","bankUid":"ce7a3545-f827-4573-8ded-7e105afc35e3","revision":"cb441e8709d69cc8dc0ec32fb5ceebddf9cd33a258964aac8d9f0ff2208e23f9","staticRef":"banks/v2/231-fire-pos-warning.cb441e8709d69cc8dc0ec32fb5ceebddf9cd33a258964aac8d9f0ff2208e23f9.json","questionCount":64,"title":"Fire Prot/Pos & Warning"}],"accountApiBase":"https://question-bank-78u.pages.dev/api"};</script>
   <style>
     :root{
       color-scheme: light;
@@ -440,14 +441,20 @@
 
   <div class="qb-ov" id="login-modal" hidden data-testid="login-modal" onclick="if(event.target===this)closeLoginModal()">
     <div class="qb-card">
-      <div class="row"><h2 data-i18n="login_title">Sign in to save your history</h2>
+      <div class="row"><h2 id="catalog-login-title" data-i18n="login_title">Sign in to save your history</h2>
         <button class="qb-x" onclick="closeLoginModal()" aria-label="Close">✕</button></div>
-      <p class="qb-hint" data-i18n="login_hint">Pick a code and remember it.</p>
+      <p id="catalog-login-hint" class="qb-hint" data-i18n="login_hint">Pick a code and remember it.</p>
       <input type="text" id="login-code" maxlength="64" autocomplete="off" autocapitalize="off" spellcheck="false" data-i18n-ph="login_ph" onkeydown="if(event.key==='Enter'){event.preventDefault();doLogin();}">
       <div class="qb-acts">
         <button class="qb-btn" onclick="closeLoginModal()" data-i18n="login_cancel">Cancel</button>
         <span class="spacer"></span>
+        <button class="qb-btn" id="register-go" onclick="doRegister()" type="button" hidden>Register new</button>
         <button class="qb-btn primary" id="login-go" onclick="doLogin()" data-i18n="login_go">Enter</button>
+      </div>
+      <div id="catalog-public-share-entry" hidden style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border)">
+        <label for="catalog-public-share-code" class="qb-hint">Open a shared practice bank</label>
+        <input type="text" id="catalog-public-share-code" maxlength="128" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="share code" onkeydown="if(event.key==='Enter'){event.preventDefault();openPublicShare();}">
+        <div class="qb-acts" style="margin-top:8px"><span class="spacer"></span><button class="qb-btn" id="catalog-public-share-go" onclick="openPublicShare()" type="button">Open shared practice</button></div>
       </div>
       <div class="qb-status" id="login-status"></div>
     </div>
@@ -459,14 +466,20 @@
         <button class="qb-x" onclick="closeHistory()" aria-label="Close">✕</button></div>
       <p class="qb-hint" data-i18n="history_sub">Your latest 10 rounds.</p>
       <div class="hist-list" id="history-list"></div>
+      <section id="account-recovery-panel" hidden aria-live="assertive" style="margin:10px 0;padding:12px;border:1px solid var(--warn-border,var(--border));border-radius:10px;background:var(--card)">
+        <p id="account-recovery-message" class="qb-hint" style="margin:0 0 10px"></p>
+        <button class="qb-btn" id="account-recovery-ack" type="button" onclick="acknowledgeAccountRecovery()" hidden></button>
+      </section>
       <div class="qb-acts">
         <button class="qb-btn" onclick="logout()" data-i18n="hist_logout">Sign out</button>
         <button class="qb-btn qb-danger" onclick="deleteMyAccount()" data-testid="del-account-btn" data-i18n="del_account_btn">Delete my data</button>
+        <button class="qb-btn" id="account-delete-retry" onclick="retryAccountDeletion()" type="button" hidden>Retry deletion</button>
         <span class="spacer"></span>
         <button class="qb-btn" onclick="closeHistory()" data-i18n="login_cancel">Close</button>
       </div>
     </div>
   </div>
+  <div id="account-v2-learning-notice" hidden style="margin:14px 0;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--muted);font-size:13px">Candidate account mode: practice progress is memory-only in this release; it is not saved or synced.</div>
 
   <button class="coffee-fab" id="coffee-btn" type="button" onclick="openCoffee()" data-testid="coffee-btn" aria-label="Buy me a coffee">
     <span class="cf-emoji" aria-hidden="true">☕</span><span class="cf-text" data-i18n="coffee_fab">Click me for fun!</span>
@@ -502,6 +515,95 @@
     </div>
   </div>
   <script>
+    const ACCOUNT_V2_CANDIDATE = globalThis.QB_ACCOUNT_V2_UI === true;
+    let ACCOUNT_V2 = null;
+    let ACCOUNT_V2_STATE = null;
+    let ACCOUNT_V2_LOAD_ERROR = false;
+    let ACCOUNT_V2_RESUME_EPOCH = null;
+    let ACCOUNT_V2_UI_OPERATION = null;
+    let ACCOUNT_V2_UI_OPERATION_SEQUENCE = 0;
+    function beginAccountV2UiOperation(controller){
+      const operation = { id: ++ACCOUNT_V2_UI_OPERATION_SEQUENCE, epoch: controller ? controller.snapshot().epoch : null, acceptsNextEpoch: false };
+      ACCOUNT_V2_UI_OPERATION = operation;
+      return operation;
+    }
+    function accountV2UiOperationOwns(operation){ return !!(operation && ACCOUNT_V2_UI_OPERATION === operation); }
+    function bindAccountV2UiOperation(operation, controller){ if (!accountV2UiOperationOwns(operation)) return false; operation.epoch = controller.snapshot().epoch; return true; }
+    function accountV2UiOperationAcceptsTransition(operation){ if (!accountV2UiOperationOwns(operation)) return false; operation.acceptsNextEpoch = true; return true; }
+    function accountV2ObserveUiOperation(next){
+      const operation = ACCOUNT_V2_UI_OPERATION;
+      if (!operation || operation.epoch === null || operation.epoch === next.epoch) return;
+      if (operation.acceptsNextEpoch && next.epoch === operation.epoch + 1){ operation.epoch = next.epoch; operation.acceptsNextEpoch = false; return; }
+      ACCOUNT_V2_UI_OPERATION = null;
+    }
+    function accountV2UiOperationIsCurrent(operation){ return !!(operation && operation.epoch !== null && ACCOUNT_V2_UI_OPERATION === operation && ACCOUNT_V2 && ACCOUNT_V2.snapshot().epoch === operation.epoch); }
+    function finishAccountV2UiOperation(operation){ if (ACCOUNT_V2_UI_OPERATION === operation) ACCOUNT_V2_UI_OPERATION = null; }
+    function invalidateAccountV2UiOperation(){ ACCOUNT_V2_UI_OPERATION = null; }
+    function candidateRecoveryCode(state){ return state && state.deletionRecovery === "error" ? state.deletionRecoveryError : null; }
+    function candidateRecoveryAckAllowed(code){ return code === "INVALID_DELETION_JOURNAL" || code === "DELETION_TICKET_EXPIRED" || code === "DELETION_JOURNAL_CLEAR_UNCERTAIN"; }
+    function candidateRecoveryBlocksControls(state){ return !!(ACCOUNT_V2_CANDIDATE && state && (state.pendingDeletion || state.deletionRecovery === "error")); }
+    function candidateRecoveryText(code){
+      if (code === "INVALID_DELETION_JOURNAL") return T("account_recovery_invalid");
+      if (code === "DELETION_TICKET_EXPIRED") return T("account_recovery_expired");
+      if (code === "DELETION_JOURNAL_CLEAR_UNCERTAIN") return T("account_recovery_uncertain");
+      if (code === "STORAGE_UNAVAILABLE") return T("account_recovery_storage");
+      return T("account_recovery_unavailable");
+    }
+    function renderCandidateAccountRecovery(state){
+      if (!ACCOUNT_V2_CANDIDATE) return;
+      var panel = document.getElementById("account-recovery-panel");
+      var message = document.getElementById("account-recovery-message");
+      var ack = document.getElementById("account-recovery-ack");
+      var retry = document.getElementById("account-delete-retry");
+      var code = candidateRecoveryCode(state);
+      var blocked = candidateRecoveryBlocksControls(state) || ACCOUNT_V2_LOAD_ERROR;
+      var cleanup=!!(state&&state.cleanupRequired);
+      var visible = !!(blocked || cleanup || (state && state.pendingDeletion));
+      if (panel) panel.hidden = !visible;
+      if (message) message.textContent = cleanup ? (lang==='zh'?'账号已删除，本机旧资料清理尚未完成。请重试；其他账号和访客资料不会删除。':lang==='es'?'Cuenta eliminada; la limpieza local sigue pendiente. Reintenta. Otras cuentas e invitados se conservan.':'Account deleted; local cleanup is pending. Retry. Other accounts and guest data are preserved.') : ACCOUNT_V2_LOAD_ERROR ? T("account_recovery_unavailable") : (code ? candidateRecoveryText(code) : (state && state.pendingDeletion ? T("account_recovery_pending") : ""));
+      if (ack) { ack.textContent = T("account_recovery_ack"); ack.hidden = !candidateRecoveryAckAllowed(code) || ACCOUNT_V2_LOAD_ERROR; }
+      if (retry) retry.hidden = !cleanup && (!(state && state.pendingDeletion && state.phase === "error") || candidateRecoveryAckAllowed(code) || code === "STORAGE_UNAVAILABLE");
+      if (visible){ var modal = document.getElementById("history-modal"); if (modal) modal.hidden = false; }
+    }
+    function resumeCandidateAccountRecovery(source){
+      if (!ACCOUNT_V2 || ACCOUNT_V2_UI_OPERATION) return Promise.resolve(null);
+      var before = ACCOUNT_V2.snapshot();
+      if (before.deletionRecovery === "error") { renderCandidateAccountRecovery(before); return Promise.resolve(before); }
+      if (source !== "bootstrap" && ACCOUNT_V2_RESUME_EPOCH === before.epoch){ renderCandidateAccountRecovery(before); return Promise.resolve(before); }
+      ACCOUNT_V2_RESUME_EPOCH = before.epoch;
+      return ACCOUNT_V2.resume().then(function(next){ if (ACCOUNT_V2) { ACCOUNT_V2_STATE = next; renderCandidateAccountRecovery(next); } return next; }).catch(function(error){
+        if (!ACCOUNT_V2 || (error && error.code === "STALE_REQUEST")) return;
+        var next = ACCOUNT_V2.snapshot(); ACCOUNT_V2_STATE = next; renderCandidateAccountRecovery(next); return next;
+      });
+    }
+    const ACCOUNT_V2_READY = ACCOUNT_V2_CANDIDATE
+      ? import("./browser/account-v2.js").then(function(mod){
+          ACCOUNT_V2 = mod.createAccountV2Controller({ enabled: true, apiBase: globalThis.QB_DATA_V2_CONFIG.accountApiBase, allowMirrorApi: location.origin === 'https://shicheng0810.github.io' && globalThis.QB_DATA_V2_CONFIG.accountApiBase === 'https://question-bank-78u.pages.dev/api' });
+          if(globalThis.QB_DATA_V2_CONFIG.enabled && ACCOUNT_V2.subscribeDeletionComplete)ACCOUNT_V2.subscribeDeletionComplete(async function(event){
+            if(!event.owner)throw Object.assign(new Error('LOCAL_CLEANUP_OWNER_UNKNOWN'),{code:'LOCAL_CLEANUP_OWNER_UNKNOWN'});
+            const storage=await import('./browser/data-v2.js');
+            return storage.deleteCompletedOwnerData({ownerKind:'account',accountId:event.owner.accountId,accountGeneration:event.owner.accountGeneration},{receipt:event.receipt});
+          });
+          ACCOUNT_V2.subscribe(function(next){
+            accountV2ObserveUiOperation(next);
+            ACCOUNT_V2_STATE = next;
+            updateAuthUI();
+            renderCandidateAccountRecovery(next);
+          });
+          resumeCandidateAccountRecovery("bootstrap");
+          ["focus", "pageshow"].forEach(function(eventName){ globalThis.addEventListener(eventName, function(){
+            if (!ACCOUNT_V2 || ACCOUNT_V2_UI_OPERATION) { if (ACCOUNT_V2) updateAuthUI(); return; }
+            resumeCandidateAccountRecovery(eventName);
+          }); });
+          return ACCOUNT_V2;
+        }).catch(function(){ ACCOUNT_V2_LOAD_ERROR = true; updateAuthUI(); renderCandidateAccountRecovery(null); return null; })
+      : Promise.resolve(null);
+    function accountV2ErrorText(error){
+      if (error && error.code === "RATE_LIMITED") return "Too many attempts. Please wait and retry.";
+      if (error && error.code === "STALE_REQUEST") return "This action was superseded by another account change.";
+      if (error && error.code === "AUTH_FAILED") return "The code or session was not accepted.";
+      return "Account service unavailable. Nothing was saved or synced; please retry.";
+    }
     var I18N = {
       en: { title:"AMT Question Bank Practice", sub:"Pick a bank to start — every question on one page, submit one by one; wrong answers and stars are saved on this device.",
             merged_title:"All Banks · Merged Practice", merged_desc:"Every public bank merged into one page (duplicates removed). Use \u201CFilter Question Banks\u201D inside to pick any combination.",
@@ -515,7 +617,7 @@
             paste_title:"\u1F4CB No file? Paste the AI\u2019s reply instead (works on free ChatGPT / Gemini)", paste_desc:"Copy the whole reply and paste it here \u2014 chatter around it, code fences, even a reply cut off halfway are handled. Long test? Ask for 15 questions at a time, tick \u201Cadd to the same bank\u201D and paste each batch.", paste_go:"Import pasted text", paste_append:"Add to the same bank (for pasting a long test in batches)", paste_name_ph:"Bank name", paste_ph:"Paste the AI reply here\u2026", paste_default_name:"My bank", err_paste_empty:"Nothing pasted yet.", import_appended:"Added {a} new \u2014 this bank now has {n} questions.", import_dup:" ({d} already in the bank, skipped)", import_salvaged:" \u26A0 The reply looked cut off, so complete questions were recovered one by one \u2014 ask the AI to continue, then paste the rest with \u201Cadd to the same bank\u201D ticked.", err_parse:"Not valid JSON \u2014 check the file.", err_shape:"No valid questions found \u2014 see the JSON format guide.", err_quota:"Browser storage is full \u2014 delete a local bank or shrink images.",
             confirm_delete:"Delete this local bank? Its practice records stay until re-imported with the same file name.",
             login_btn:"Sign in", account_history:"History", login_title:"Sign in to save your history", login_hint:"Pick a code and remember it - use the same code on any device to find your history. Anyone who knows the code can see that history, so do not reuse a real password.", login_ph:"your code (4+ characters)", login_go:"Enter", login_cancel:"Cancel", login_ing:"Signing in...", login_ok:"\u2705 Signed in", login_fail:"Couldn't sign in, try again.", login_too_short:"Code needs at least 4 characters.", login_rate:"Too many tries - wait a minute.", login_neterr:"Network error, try again later.", login_reminder:"\uD83D\uDCA1 Sign in to save every practice round and reload your history on any device.",
-            history_title:"Your practice history", history_sub:"Your latest 10 rounds (oldest dropped). Tap Load to reopen a round with your answers.", hist_loading:"Loading...", hist_empty:"No saved rounds yet - answer a few questions and they will show up here.", hist_load:"Load", hist_neterr:"Couldn't load history.", hist_del_confirm:"Delete this record?", hist_load_fail:"Couldn't load that round.", hist_logout:"Sign out", hist_unanswered:"not started",
+            history_title:"Your practice history", history_sub:"Your latest 10 rounds (oldest dropped). Tap Load to reopen a round with your answers.", hist_loading:"Loading...", hist_empty:"No saved rounds yet - answer a few questions and they will show up here.", hist_load:"Load", hist_neterr:"Couldn't load history.", hist_del_confirm:"Delete this record?", hist_load_fail:"Couldn't load that round.", hist_logout:"Sign out", hist_unanswered:"not started", account_recovery_tab_session:"If deletion was interrupted, reloading this tab may resume recovery. Closing the browser, another tab, or another device is not guaranteed.", account_recovery_invalid:"This tab's deletion-recovery record cannot be read. Account actions are blocked. Acknowledgement only forgets this tab's unusable marker.", account_recovery_expired:"This tab's deletion-recovery period ended before completion could be confirmed. No account or learning data was restored. Acknowledgement only removes this tab's expired marker.", account_recovery_uncertain:"This tab cannot verify whether deletion finished. No account request will be sent from this screen, and acknowledgement does not confirm deletion.", account_recovery_storage:"Deletion-recovery storage is unavailable. Account actions remain blocked; reload after browser storage is available.", account_recovery_unavailable:"The account service is unavailable. Account actions remain blocked; public practice is still available.", account_recovery_ack:"Acknowledge recovery state", account_recovery_ack_confirm:"This only clears this tab's recovery marker when it is safe to do so. It does not confirm deletion, restore your account, or recover learning data.", account_recovery_pending:"Deletion is pending. Reloading this tab may resume this deletion recovery; another tab, browser close, or another device is not guaranteed.",
             cloud_title:"My account banks", cloud_badge_section:"\u2601\uFE0F Private \u00B7 any device", cloud_badge:"\u2601\uFE0F Private", cloud_desc:"Banks you uploaded to your account. Only you, signed in with your code, can see and open them.", cloud_empty:"No account banks yet. Tick \u201CSave to my account\u201D below when you import a file.", cloud_delete:"Remove", cloud_del_confirm:"Remove this bank from your account? It is deleted from the cloud.", import_to_account:"\u2601\uFE0F Save to my account instead - private, opens on any device after you sign in", cloud_need_login:"Sign in first to upload to your account.", cloud_uploading:"Uploading to your account...", cloud_uploaded:"Uploaded \u201C{t}\u201D: {n} questions to your account.", cloud_moved:"Moved \u201C{t}\u201D ({n} questions) to your account; the local copy and its progress were removed.", cloud_limit:"Account bank limit reached ({n}). Remove one first.", cloud_too_large:"This bank is too large to upload - try removing large images.", cloud_fail:"Upload failed, please try again.", cloud_neterr:"Network error, try again later.", del_account_btn:"Delete my data", del_account_confirm:"Permanently delete your account and ALL your data (history + private banks)? This cannot be undone. You can sign in again later with the same code to start fresh.", del_account_done:"\u2705 Your account and all your data were deleted.", del_account_fail:"Couldn't delete - please try again.", special_ok:"\u2705 Opening the shared bank...", special_badge:"\uD83D\uDD11 Shared", special_exit:"Exit", special_exit_confirm:"Exit this shared bank? Your practice here is not saved.",
             coffee_title:"Buy me a coffee ☕", coffee_fab:"Buy me a coffee", coffee_brewing:"Brewing your coffee… ☕", coffee_brew_done:"Fresh brew, just for you! ☕", coffee_blurb:"This question bank is free and ad-free, built by one person. If it helped your studying, a coffee keeps it caffeinated and growing. 🙏", coffee_stat:"You've practiced {n} banks here. ☕", coffee_tier_s:"Espresso", coffee_tier_m:"Latte", coffee_tier_l:"Whole bag", coffee_go:"Buy me a coffee →", coffee_custom_ph:"other", coffee_thanks:"You're the best — thank you! ☕✨" },
       zh: { title:"AMT \u9898\u5E93\u7EC3\u4E60", sub:"\u9009\u62E9\u4E00\u4E2A\u9898\u5E93\u5F00\u59CB \u2014 \u6240\u6709\u9898\u76EE\u4E00\u9875\u5E73\u94FA\uFF0C\u9010\u9898\u63D0\u4EA4\uFF0C\u9519\u9898/\u6536\u85CF\u81EA\u52A8\u4FDD\u5B58\u5728\u672C\u673A\u3002",
@@ -530,7 +632,7 @@
             paste_title:"\u1F4CB \u6CA1\u6709\u6587\u4EF6\uFF1F\u76F4\u63A5\u7C98\u8D34 AI \u7684\u56DE\u590D\uFF08\u514D\u8D39\u7248 ChatGPT / Gemini \u53EF\u7528\uFF09", paste_desc:"\u628A\u6574\u6BB5\u56DE\u590D\u590D\u5236\u8FC7\u6765\u7C98\u5728\u8FD9\u91CC\u2014\u2014\u524D\u540E\u7684\u5BA2\u5957\u8BDD\u3001\u4EE3\u7801\u56F4\u6805\u3001\u751A\u81F3\u88AB\u622A\u65AD\u5728\u534A\u53E5\u7684\u56DE\u590D\u90FD\u80FD\u5904\u7406\u3002\u9898\u591A\u5C31\u8BA9 AI \u6BCF\u6B21\u53EA\u7ED9 15 \u9898\uFF0C\u52FE\u4E0A\u300C\u5E76\u5165\u540C\u540D\u9898\u5E93\u300D\u9010\u6279\u7C98\u3002", paste_go:"\u5BFC\u5165\u7C98\u8D34\u5185\u5BB9", paste_append:"\u5E76\u5165\u540C\u540D\u9898\u5E93\uFF08\u5206\u6279\u7C98\u957F\u5377\u65F6\u52FE\u4E0A\uFF09", paste_name_ph:"\u9898\u5E93\u540D\u79F0", paste_ph:"\u628A AI \u7684\u56DE\u590D\u7C98\u5728\u8FD9\u91CC\u2026", paste_default_name:"\u6211\u7684\u9898\u5E93", err_paste_empty:"\u8FD8\u6CA1\u7C98\u8D34\u5185\u5BB9\u3002", import_appended:"\u65B0\u589E {a} \u9898\u2014\u2014\u8BE5\u9898\u5E93\u73B0\u6709 {n} \u9898\u3002", import_dup:"\uFF08{d} \u9898\u5DF2\u5B58\u5728\uFF0C\u5DF2\u8DF3\u8FC7\uFF09", import_salvaged:" \u26A0 \u56DE\u590D\u770B\u8D77\u6765\u88AB\u622A\u65AD\u4E86\uFF0C\u5DF2\u9010\u6761\u62A2\u6551\u51FA\u5B8C\u6574\u7684\u9898\u2014\u2014\u8BF7\u8BA9 AI \u63A5\u7740\u5199\uFF0C\u5269\u4E0B\u7684\u52FE\u4E0A\u300C\u5E76\u5165\u540C\u540D\u9898\u5E93\u300D\u518D\u7C98\u4E00\u6B21\u3002", err_parse:"\u4E0D\u662F\u5408\u6CD5\u7684 JSON \u6587\u4EF6\u3002", err_shape:"\u6CA1\u6709\u627E\u5230\u53EF\u7528\u9898\u76EE \u2014 \u8BF7\u770B JSON \u683C\u5F0F\u8BF4\u660E\u3002", err_quota:"\u6D4F\u89C8\u5668\u5B58\u50A8\u5DF2\u6EE1 \u2014 \u5220\u4E2A\u672C\u5730\u9898\u5E93\u6216\u51CF\u5C0F\u56FE\u7247\u3002",
             confirm_delete:"\u5220\u9664\u8FD9\u4E2A\u672C\u5730\u9898\u5E93\uFF1F\uFF08\u505A\u9898\u8BB0\u5F55\u4FDD\u7559\uFF0C\u540C\u540D\u91CD\u65B0\u5BFC\u5165\u53EF\u63A5\u7EED\uFF09",
             login_btn:"登录", account_history:"历史", login_title:"登录以保存历史", login_hint:"自定义一个码并记住它——换设备也用同一个码就能找回历史。知道码的人就能看到那份历史，别用你别处的真实密码。", login_ph:"你的码（4 位以上）", login_go:"进入", login_cancel:"取消", login_ing:"登录中...", login_ok:"\u2705 已登录", login_fail:"登录失败，请重试。", login_too_short:"码至少要 4 位。", login_rate:"尝试太频繁，请稍等一分钟。", login_neterr:"网络错误，请稍后再试。", login_reminder:"\uD83D\uDCA1 登录后可保存每次做题、并在任意设备重新加载你的历史。",
-            history_title:"你的做题历史", history_sub:"最近 10 轮（超出删最旧）。点「载入」回到那一轮、带上你的作答。", hist_loading:"加载中...", hist_empty:"还没有记录——做几道题就会出现在这里。", hist_load:"载入", hist_neterr:"加载历史失败。", hist_del_confirm:"删除这条记录？", hist_load_fail:"载入这一轮失败。", hist_logout:"退出登录", hist_unanswered:"未开始",
+            history_title:"你的做题历史", history_sub:"最近 10 轮（超出删最旧）。点「载入」回到那一轮、带上你的作答。", hist_loading:"加载中...", hist_empty:"还没有记录——做几道题就会出现在这里。", hist_load:"载入", hist_neterr:"加载历史失败。", hist_del_confirm:"删除这条记录？", hist_load_fail:"载入这一轮失败。", hist_logout:"退出登录", hist_unanswered:"未开始", account_recovery_tab_session:"如果删除被中断，重新加载本标签页可能继续恢复。关闭浏览器、换标签页或换设备不保证能恢复。", account_recovery_invalid:"此标签页的删除恢复记录无法读取。账号操作已阻止。确认只会忘记此标签页无法使用的标记。", account_recovery_expired:"此标签页的删除恢复期限已结束，无法确认是否完成。没有账号或学习数据被恢复。确认只会移除此标签页已过期的标记。", account_recovery_uncertain:"此标签页无法确认删除是否完成。本页面不会发送账号请求，确认也不代表删除已完成。", account_recovery_storage:"删除恢复存储不可用。账号操作仍被阻止；请在浏览器存储恢复后重新加载。", account_recovery_unavailable:"账号服务不可用。账号操作仍被阻止，但仍可进行公开练习。", account_recovery_ack:"确认恢复状态", account_recovery_ack_confirm:"这只会在安全时清除此标签页的恢复标记。它不确认删除、不恢复账号，也不恢复学习数据。", account_recovery_pending:"删除仍在处理中。重新加载此标签页可能继续恢复；换标签页、关闭浏览器或换设备不保证能继续。",
             cloud_title:"我的账号题库", cloud_badge_section:"\u2601\uFE0F 私有 \u00B7 任意设备", cloud_badge:"\u2601\uFE0F 私有", cloud_desc:"你上传到账号的题库。只有用你的码登录的你，才能看到和打开。", cloud_empty:"账号里还没有题库。导入文件时勾选下面的「传到账号」即可。", cloud_delete:"移除", cloud_del_confirm:"从账号移除这个题库？（会从云端删除。）", import_to_account:"\u2601\uFE0F 改为传到我的账号 —— 私有，登录后任意设备都能打开", cloud_need_login:"请先登录再上传到账号。", cloud_uploading:"正在上传到账号...", cloud_uploaded:"已上传「{t}」：{n} 题到你的账号。", cloud_moved:"已把「{t}」（{n} 题）移到你的账号；本地副本和进度已一并移走。", cloud_limit:"账号题库数量已达上限（{n}）。请先移除一个。", cloud_too_large:"题库太大无法上传 —— 试试去掉大图片。", cloud_fail:"上传失败，请重试。", cloud_neterr:"网络错误，请稍后再试。", del_account_btn:"删除我的数据", del_account_confirm:"永久删除你的账号和全部数据（历史 + 私有题库）？此操作无法撤销。之后仍可用同一个码重新登录、从空账号开始。", del_account_done:"\u2705 你的账号和全部数据已删除。", del_account_fail:"删除失败，请重试。", special_ok:"\u2705 正在打开分享题库...", special_badge:"\uD83D\uDD11 分享", special_exit:"退出", special_exit_confirm:"退出这个分享题库？这里的做题不会保存。",
             coffee_title:"请我喝杯咖啡 ☕", coffee_fab:"请我喝杯咖啡", coffee_brewing:"正在为你现做… ☕", coffee_brew_done:"刚出炉，专属你的一杯！☕", coffee_blurb:"这个题库免费、无广告，一个人做的。如果它帮到了你的复习，一杯咖啡能让它继续有咖啡因、继续长大。🙏", coffee_stat:"你已经在这里练过 {n} 个题库。☕", coffee_tier_s:"浓缩", coffee_tier_m:"拿铁", coffee_tier_l:"一整袋豆", coffee_go:"请我喝咖啡 →", coffee_custom_ph:"自定义", coffee_thanks:"你最好了 —— 谢谢你！☕✨" },
       es: { title:"Pr\u00E1ctica del banco de preguntas AMT", sub:"Elige un banco para empezar: todas las preguntas en una p\u00E1gina, env\u00EDa una por una; errores y favoritas se guardan en este dispositivo.",
@@ -545,12 +647,27 @@
             paste_title:"\u1F4CB \u00BFSin archivo? Pega la respuesta de la IA (sirve con ChatGPT / Gemini gratis)", paste_desc:"Copia toda la respuesta y p\u00E9gala aqu\u00ED: se admite texto alrededor, bloques de c\u00F3digo e incluso una respuesta cortada a medias. \u00BFExamen largo? Pide 15 preguntas cada vez, marca \u201Ca\u00F1adir al mismo banco\u201D y pega cada lote.", paste_go:"Importar lo pegado", paste_append:"A\u00F1adir al mismo banco (para pegar por lotes)", paste_name_ph:"Nombre del banco", paste_ph:"Pega aqu\u00ED la respuesta de la IA\u2026", paste_default_name:"Mi banco", err_paste_empty:"A\u00FAn no has pegado nada.", import_appended:"{a} nuevas \u2014 este banco tiene ahora {n} preguntas.", import_dup:" ({d} ya estaban, omitidas)", import_salvaged:" \u26A0 La respuesta parec\u00EDa cortada; se recuperaron las preguntas completas una a una \u2014 pide a la IA que contin\u00FAe y pega el resto con \u201Ca\u00F1adir al mismo banco\u201D marcado.", err_parse:"JSON no v\u00E1lido.", err_shape:"No se encontraron preguntas v\u00E1lidas \u2014 ver la gu\u00EDa del formato.", err_quota:"Almacenamiento del navegador lleno.",
             confirm_delete:"\u00BFEliminar este banco local?",
             login_btn:"Entrar", account_history:"Historial", login_title:"Entra para guardar tu historial", login_hint:"Elige un código y recuérdalo - usa el mismo en cualquier dispositivo para encontrar tu historial. Quien conozca el código verá ese historial, así que no uses una contraseña real.", login_ph:"tu código (4+ caracteres)", login_go:"Entrar", login_cancel:"Cancelar", login_ing:"Entrando...", login_ok:"\u2705 Sesión iniciada", login_fail:"No se pudo entrar, reinténtalo.", login_too_short:"El código necesita 4+ caracteres.", login_rate:"Demasiados intentos - espera un minuto.", login_neterr:"Error de red, inténtalo más tarde.", login_reminder:"\uD83D\uDCA1 Inicia sesión para guardar cada ronda y recargar tu historial en cualquier dispositivo.",
-            history_title:"Tu historial de práctica", history_sub:"Tus últimas 10 rondas (se elimina la más antigua). Pulsa Cargar para reabrir una ronda con tus respuestas.", hist_loading:"Cargando...", hist_empty:"Aún no hay rondas - responde algunas preguntas y aparecerán aquí.", hist_load:"Cargar", hist_neterr:"No se pudo cargar el historial.", hist_del_confirm:"¿Eliminar este registro?", hist_load_fail:"No se pudo cargar esa ronda.", hist_logout:"Cerrar sesión", hist_unanswered:"sin empezar",
+            history_title:"Tu historial de práctica", history_sub:"Tus últimas 10 rondas (se elimina la más antigua). Pulsa Cargar para reabrir una ronda con tus respuestas.", hist_loading:"Cargando...", hist_empty:"Aún no hay rondas - responde algunas preguntas y aparecerán aquí.", hist_load:"Cargar", hist_neterr:"No se pudo cargar el historial.", hist_del_confirm:"¿Eliminar este registro?", hist_load_fail:"No se pudo cargar esa ronda.", hist_logout:"Cerrar sesión", hist_unanswered:"sin empezar", account_recovery_tab_session:"Si la eliminación se interrumpió, recargar esta pestaña puede reanudar la recuperación. No se garantiza al cerrar el navegador, usar otra pestaña u otro dispositivo.", account_recovery_invalid:"No se puede leer el registro de recuperación de eliminación de esta pestaña. Las acciones de cuenta están bloqueadas. Reconocerlo solo olvida el marcador inutilizable de esta pestaña.", account_recovery_expired:"El periodo de recuperación de esta pestaña terminó antes de confirmar el resultado. No se restauraron la cuenta ni los datos de aprendizaje. Reconocerlo solo quita el marcador caducado de esta pestaña.", account_recovery_uncertain:"Esta pestaña no puede verificar si la eliminación terminó. Esta pantalla no enviará ninguna solicitud de cuenta, y reconocerlo no confirma la eliminación.", account_recovery_storage:"El almacenamiento de recuperación no está disponible. Las acciones de cuenta siguen bloqueadas; recarga cuando el almacenamiento del navegador esté disponible.", account_recovery_unavailable:"El servicio de cuenta no está disponible. Las acciones de cuenta siguen bloqueadas, pero la práctica pública continúa disponible.", account_recovery_ack:"Reconocer estado de recuperación", account_recovery_ack_confirm:"Esto solo borra el marcador de recuperación de esta pestaña cuando es seguro hacerlo. No confirma la eliminación, no restaura tu cuenta ni recupera datos de aprendizaje.", account_recovery_pending:"La eliminación está pendiente. Recargar esta pestaña puede reanudarla; otra pestaña, cerrar el navegador u otro dispositivo no ofrecen garantía.",
             cloud_title:"Mis bancos de la cuenta", cloud_badge_section:"\u2601\uFE0F Privado \u00B7 cualquier dispositivo", cloud_badge:"\u2601\uFE0F Privado", cloud_desc:"Bancos que subiste a tu cuenta. Solo tú, con tu código, puedes verlos y abrirlos.", cloud_empty:"Aún no hay bancos en la cuenta. Marca \u201CGuardar en mi cuenta\u201D al importar un archivo.", cloud_delete:"Quitar", cloud_del_confirm:"\u00BFQuitar este banco de tu cuenta? Se elimina de la nube.", import_to_account:"\u2601\uFE0F Guardar en mi cuenta - privado, se abre en cualquier dispositivo tras iniciar sesión", cloud_need_login:"Inicia sesión primero para subir a tu cuenta.", cloud_uploading:"Subiendo a tu cuenta...", cloud_uploaded:"Subido \u201C{t}\u201D: {n} preguntas a tu cuenta.", cloud_moved:"Movido \u201C{t}\u201D ({n} preguntas) a tu cuenta; la copia local y su progreso se quitaron.", cloud_limit:"Límite de bancos alcanzado ({n}). Quita uno primero.", cloud_too_large:"Este banco es demasiado grande - quita imágenes grandes.", cloud_fail:"Error al subir, inténtalo de nuevo.", cloud_neterr:"Error de red, inténtalo más tarde.", del_account_btn:"Eliminar mis datos", del_account_confirm:"¿Eliminar permanentemente tu cuenta y TODOS tus datos (historial + bancos privados)? No se puede deshacer. Puedes volver a entrar con el mismo código y empezar de cero.", del_account_done:"\u2705 Tu cuenta y todos tus datos se eliminaron.", del_account_fail:"No se pudo eliminar - inténtalo de nuevo.", special_ok:"\u2705 Abriendo el banco compartido...", special_badge:"\uD83D\uDD11 Compartido", special_exit:"Salir", special_exit_confirm:"¿Salir de este banco compartido? Tu práctica aquí no se guarda.",
             coffee_title:"Invítame a un café ☕", coffee_fab:"Invítame a un café", coffee_brewing:"Preparando tu café… ☕", coffee_brew_done:"¡Recién hecho, solo para ti! ☕", coffee_blurb:"Este banco de preguntas es gratis y sin anuncios, hecho por una sola persona. Si te ayudó a estudiar, un café lo mantiene con cafeína y creciendo. 🙏", coffee_stat:"Has practicado {n} bancos aquí. ☕", coffee_tier_s:"Espresso", coffee_tier_m:"Latte", coffee_tier_l:"Bolsa entera", coffee_go:"Invítame a un café →", coffee_custom_ph:"otro", coffee_thanks:"¡Eres lo mejor — gracias! ☕✨" }
     };
     var LANG_KEY = "qb_ui_lang"; // 与做题页共用同一偏好
     var lang = (function(){ try{ var v = localStorage.getItem(LANG_KEY); return I18N[v] ? v : "en"; }catch(e){ return "en"; } })();
+    I18N.en.cloud_copy_ok = "Uploaded “{t}” ({n} questions); the local copy and all progress remain on this browser.";
+    I18N.en.cloud_copy_partial = "Uploaded “{t}” ({n} questions); the local copy remains, but progress copy is incomplete ({c} conflict(s), {f} failure(s)). Retry to continue.";
+    I18N.zh.cloud_copy_ok = "已上传「{t}」（{n} 题）；本地副本和全部进度仍保留在本浏览器。";
+    I18N.zh.cloud_copy_partial = "已上传「{t}」（{n} 题）；本地副本保留，但进度复制未完成（{c} 个冲突、{f} 个失败），可重试继续。";
+    I18N.es.cloud_copy_ok = "Subido “{t}” ({n} preguntas); la copia local y todo el progreso siguen en este navegador.";
+    I18N.es.cloud_copy_partial = "Subido “{t}” ({n} preguntas); la copia local sigue aquí, pero la copia del progreso está incompleta ({c} conflicto(s), {f} fallo(s)). Reintenta para continuar.";
+    I18N.en.cloud_moved = I18N.en.cloud_copy_ok;
+    I18N.zh.cloud_moved = I18N.zh.cloud_copy_ok;
+    I18N.es.cloud_moved = I18N.es.cloud_copy_ok;
+    var ACCOUNT_RECOVERY_I18N = {
+      en: { account_recovery_tab_session:"If deletion was interrupted, reloading this tab may resume recovery. Closing the browser, another tab, or another device is not guaranteed.", account_recovery_invalid:"This tab's deletion-recovery record cannot be read. Account actions are blocked. Acknowledgement only forgets this tab's unusable marker.", account_recovery_expired:"This tab's deletion-recovery period ended before completion could be confirmed. No account or learning data was restored. Acknowledgement only removes this tab's expired marker.", account_recovery_uncertain:"This tab cannot verify whether deletion finished. No account request will be sent from this screen, and acknowledgement does not confirm deletion.", account_recovery_storage:"Deletion-recovery storage is unavailable. Account actions remain blocked; reload after browser storage is available.", account_recovery_unavailable:"The account service is unavailable. Account actions remain blocked; public practice is still available.", account_recovery_ack:"Acknowledge recovery state", account_recovery_ack_confirm:"This only clears this tab's recovery marker when it is safe to do so. It does not confirm deletion, restore your account, or recover learning data.", account_recovery_pending:"Deletion is pending. Reloading this tab may resume this deletion recovery; another tab, browser close, or another device is not guaranteed." },
+      zh: { account_recovery_tab_session:"如果删除被中断，重新加载本标签页可能继续恢复。关闭浏览器、换标签页或换设备不保证能恢复。", account_recovery_invalid:"此标签页的删除恢复记录无法读取。账号操作已阻止。确认只会忘记此标签页无法使用的标记。", account_recovery_expired:"此标签页的删除恢复期限已结束，无法确认是否完成。没有账号或学习数据被恢复。确认只会移除此标签页已过期的标记。", account_recovery_uncertain:"此标签页无法确认删除是否完成。本页面不会发送账号请求，确认也不代表删除已完成。", account_recovery_storage:"删除恢复存储不可用。账号操作仍被阻止；请在浏览器存储恢复后重新加载。", account_recovery_unavailable:"账号服务不可用。账号操作仍被阻止，但仍可进行公开练习。", account_recovery_ack:"确认恢复状态", account_recovery_ack_confirm:"这只会在安全时清除此标签页的恢复标记。它不确认删除、不恢复账号，也不恢复学习数据。", account_recovery_pending:"删除仍在处理中。重新加载此标签页可能继续恢复；换标签页、关闭浏览器或换设备不保证能继续。" },
+      es: { account_recovery_tab_session:"Si la eliminación se interrumpió, recargar esta pestaña puede reanudar la recuperación. No se garantiza al cerrar el navegador, usar otra pestaña u otro dispositivo.", account_recovery_invalid:"No se puede leer el registro de recuperación de eliminación de esta pestaña. Las acciones de cuenta están bloqueadas. Reconocerlo solo olvida el marcador inutilizable de esta pestaña.", account_recovery_expired:"El periodo de recuperación de esta pestaña terminó antes de confirmar el resultado. No se restauraron la cuenta ni los datos de aprendizaje. Reconocerlo solo quita el marcador caducado de esta pestaña.", account_recovery_uncertain:"Esta pestaña no puede verificar si la eliminación terminó. Esta pantalla no enviará ninguna solicitud de cuenta, y reconocerlo no confirma la eliminación.", account_recovery_storage:"El almacenamiento de recuperación no está disponible. Las acciones de cuenta siguen bloqueadas; recarga cuando el almacenamiento del navegador esté disponible.", account_recovery_unavailable:"El servicio de cuenta no está disponible. Las acciones de cuenta siguen bloqueadas, pero la práctica pública continúa disponible.", account_recovery_ack:"Reconocer estado de recuperación", account_recovery_ack_confirm:"Esto solo borra el marcador de recuperación de esta pestaña cuando es seguro hacerlo. No confirma la eliminación, no restaura tu cuenta ni recupera datos de aprendizaje.", account_recovery_pending:"La eliminación está pendiente. Recargar esta pestaña puede reanudarla; otra pestaña, cerrar el navegador u otro dispositivo no ofrecen garantía." }
+    };
+    Object.keys(ACCOUNT_RECOVERY_I18N).forEach(function(k){ Object.assign(I18N[k], ACCOUNT_RECOVERY_I18N[k]); });
     function T(k, vars){
       var s = (I18N[lang] && I18N[lang][k]) || I18N.en[k] || k;
       if (vars) Object.keys(vars).forEach(function(key){ s = s.split("{" + key + "}").join(String(vars[key])); });
@@ -560,8 +677,8 @@
 
     /* ---- 本地题库（仅存浏览器，qb_local_banks_v1）---- */
     var LOCAL_KEY = "qb_local_banks_v1";
-    function loadLocalBanks(){ try{ var o = JSON.parse(localStorage.getItem(LOCAL_KEY) || "{}"); return (o && typeof o === "object" && !Array.isArray(o)) ? o : {}; }catch(e){ return {}; } }
-    function saveLocalBanks(o){ localStorage.setItem(LOCAL_KEY, JSON.stringify(o)); }
+    function loadLocalBanks(){ if (ACCOUNT_V2_CANDIDATE) return {}; try{ var o = JSON.parse(localStorage.getItem(LOCAL_KEY) || "{}"); return (o && typeof o === "object" && !Array.isArray(o)) ? o : {}; }catch(e){ return {}; } }
+    function saveLocalBanks(o){ if (ACCOUNT_V2_CANDIDATE) return; localStorage.setItem(LOCAL_KEY, JSON.stringify(o)); }
     // 与发布脚本同规则的轻量校验（导入侧提示用；详见 format.html）
     function validateBank(list){
       var valid = [], rejected = 0;
@@ -601,6 +718,7 @@
     function renderLocalBanks(){
       var grid = document.getElementById("local-grid");
       if (!grid) return;
+      if (ACCOUNT_V2_CANDIDATE){ grid.hidden = true; grid.innerHTML = ""; return; }
       var banks = loadLocalBanks();
       var ids = Object.keys(banks);
       grid.innerHTML = ids.map(function(id){
@@ -619,6 +737,7 @@
       scanProgress();
     }
     function removeLocalBank(id){
+      if (ACCOUNT_V2_CANDIDATE) return;
       if (!confirm(T("confirm_delete"))) return;
       var banks = loadLocalBanks();
       delete banks[id];
@@ -627,6 +746,7 @@
     }
     // 把已有的本地题库上传到账号（私有云端）；未登录先弹登录。本地副本保留，用户可自行删除。
     function saveLocalToAccount(id){
+      if (ACCOUNT_V2_CANDIDATE){ importMessage("Local and cloud banks are unavailable in candidate mode.", true); return; }
       if (!isLoggedIn()){ openLoginModal(); importMessage(T("cloud_need_login"), true); return; }
       var b = loadLocalBanks()[id];
       if (!b || !Array.isArray(b.questions) || !b.questions.length){ importMessage(T("cloud_fail"), true); return; }
@@ -819,6 +939,7 @@
     // 文件导入与粘贴导入共用这一条通道（以前只有文件一条路，而免费额度的 AI 给不出文件）。
     // opts.append=true：把这一批并进同名题库（分批粘贴用），不覆盖。
     function importBankText(text, title, opts){
+      if (ACCOUNT_V2_CANDIDATE){ importMessage("Local import is unavailable in candidate mode.", true); return false; }
       opts = opts || {};
       var parsed = parseBankFromText(text);
       if (!parsed.list){ importMessage(T("err_parse"), true); return false; }
@@ -897,6 +1018,7 @@
     function setLang(v){ lang = I18N[v] ? v : "en"; try{ localStorage.setItem(LANG_KEY, lang); }catch(e){} applyLang(); }
     // 进度提示：读各题库命名空间下的做题次数表
     function scanProgress(){
+      if (ACCOUNT_V2_CANDIDATE) return;
       document.querySelectorAll("[data-progress-for]").forEach(function(el){
         try{
           var id = el.getAttribute("data-progress-for");
@@ -1005,14 +1127,38 @@
     /* ===== 登录 + 做题历史（目录页：与做题页同源，共用 token / 历史）===== */
     var QB_API_BASE = "https://question-bank-78u.pages.dev/api";
     var AUTH_KEY = "qb_auth_v1";
-    function getAuth(){ try{ return JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); }catch(e){ return null; } }
-    function setAuth(a){ try{ localStorage.setItem(AUTH_KEY, JSON.stringify(a)); }catch(e){} updateAuthUI(); }
-    function clearAuth(){ try{ localStorage.removeItem(AUTH_KEY); }catch(e){} updateAuthUI(); }
-    function isLoggedIn(){ var a = getAuth(); return !!(a && a.token); }
-    function authHeaders(){ var a = getAuth(); return (a && a.token) ? { "Authorization": "Bearer " + a.token } : {}; }
+    function getAuth(){ if (ACCOUNT_V2_CANDIDATE) return null; try{ return JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); }catch(e){ return null; } }
+    function setAuth(a){ if (ACCOUNT_V2_CANDIDATE) return; try{ localStorage.setItem(AUTH_KEY, JSON.stringify(a)); }catch(e){} updateAuthUI(); }
+    function clearAuth(){ if (ACCOUNT_V2_CANDIDATE) return; try{ localStorage.removeItem(AUTH_KEY); }catch(e){} updateAuthUI(); }
+    function isLoggedIn(){ if (ACCOUNT_V2_CANDIDATE) return !!(ACCOUNT_V2_STATE && ACCOUNT_V2_STATE.phase === "ready" && ACCOUNT_V2_STATE.owner); var a = getAuth(); return !!(a && a.token); }
+    function authHeaders(){ if (ACCOUNT_V2_CANDIDATE) return {}; var a = getAuth(); return (a && a.token) ? { "Authorization": "Bearer " + a.token } : {}; }
     function updateAuthUI(){
       var sp = getSpecial();
       var lbl = document.getElementById("account-label");
+      if (ACCOUNT_V2_CANDIDATE){
+        var title = document.getElementById("catalog-login-title");
+        var hint = document.getElementById("catalog-login-hint");
+        var sub = document.getElementById("catalog-sub");
+        var notice = document.getElementById("account-v2-learning-notice");
+        if (title) title.textContent = "Account access";
+        if (hint) hint.textContent = T("account_recovery_tab_session") + " " + "Sign in or create an empty account. Catalog practice remains memory-only and is not saved or synced.";
+        if (sub) sub.textContent = "Public question banks remain available. Candidate account mode does not save, sync, or load learning history.";
+        if (notice) notice.hidden = false;
+        var reg = document.getElementById("register-go"); if (reg) reg.hidden = false;
+        var local = document.getElementById("local-grid"); if (local) local.hidden = true;
+        var importer = document.querySelector('[data-testid="import-box"]'); if (importer) importer.hidden = true;
+        var cloud = document.getElementById("cloud-box"); if (cloud) cloud.hidden = true;
+        var reminder = document.getElementById("login-reminder"); if (reminder) reminder.hidden = true;
+        if (sp){ if (lbl) lbl.textContent = "Shared practice"; return; }
+        var ready = ACCOUNT_V2_STATE && ACCOUNT_V2_STATE.phase === "ready";
+        if (lbl) lbl.textContent = ready ? "Account" : "Sign in";
+        var candidateButton = document.getElementById("account-btn"); if (candidateButton) candidateButton.title = ready ? "Account" : T("login_btn");
+        var busy = !!(ACCOUNT_V2_STATE && ["authenticating", "checking", "deleting"].includes(ACCOUNT_V2_STATE.phase));
+        var blocked = candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR;
+        ["account-btn", "login-go", "register-go", "catalog-public-share-go"].forEach(function(id){ var control = document.getElementById(id); if (control) control.disabled = busy || blocked; });
+        renderCandidateAccountRecovery(ACCOUNT_V2_STATE);
+        return;
+      }
       if (sp){ if (lbl) lbl.textContent = "\uD83D\uDD11 " + (sp.code || ""); applySpecialMode(); return; }
       document.body.classList.remove("special-mode");
       var a = getAuth();
@@ -1048,22 +1194,90 @@
           '</div></div>';
       }
     }
+    async function openPublicShare(){
+      if (!ACCOUNT_V2_CANDIDATE) return;
+      if (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; }
+      var code = ((document.getElementById("catalog-public-share-code") || {}).value || "").trim();
+      var button = document.getElementById("catalog-public-share-go");
+      if (code.length < 3){ loginStatus("Share code needs at least 3 characters.", "err"); return; }
+      if (button) button.disabled = true;
+      var operation = beginAccountV2UiOperation(null);
+      try{
+        var controller = await ACCOUNT_V2_READY;
+        if (!controller) throw new Error("controller_unavailable");
+        if (!bindAccountV2UiOperation(operation, controller)) return;
+        var response = await fetch(QB_API_BASE + "/special", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({code:code}) });
+        if (!accountV2UiOperationIsCurrent(operation)) return;
+        var body = {}; try{ body = await response.json(); }catch(e){}
+        if (!accountV2UiOperationIsCurrent(operation)) return;
+        if (!response.ok || !body || !body.ok || !body.bank) throw new Error("share_not_found");
+        setTimeout(function(){
+          if (!accountV2UiOperationIsCurrent(operation)) return;
+          try{ sessionStorage.setItem("qb_special", JSON.stringify({code:code,id:body.bank.id,title:body.bank.title})); if (!getSpecial()) throw new Error("storage"); }
+          catch(e){ loginStatus("Could not open shared practice in this browser.", "err"); if (button) button.disabled = false; finishAccountV2UiOperation(operation); return; }
+          loginStatus(T("special_ok"), "ok"); finishAccountV2UiOperation(operation); location.href = "player.html?special=1";
+        }, 500);
+      }catch(e){
+        if (accountV2UiOperationOwns(operation) && (operation.epoch === null || accountV2UiOperationIsCurrent(operation))) loginStatus(e && e.message === "share_not_found" ? T("special_not_found") : accountV2ErrorText(e), "err");
+        if (accountV2UiOperationOwns(operation) && (operation.epoch === null || accountV2UiOperationIsCurrent(operation))){ if (button) button.disabled = false; finishAccountV2UiOperation(operation); }
+      }
+    }
+    function showCandidatePendingDeletion(){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); }
+    async function acknowledgeAccountRecovery(){
+      if (!ACCOUNT_V2_CANDIDATE || !ACCOUNT_V2) return;
+      var code = candidateRecoveryCode(ACCOUNT_V2_STATE);
+      if (!candidateRecoveryAckAllowed(code)) return renderCandidateAccountRecovery(ACCOUNT_V2_STATE);
+      var operation = beginAccountV2UiOperation(ACCOUNT_V2);
+      try{
+        var result = await ACCOUNT_V2.acknowledgeRecovery(function(){
+          if (!accountV2UiOperationIsCurrent(operation)) return false;
+          var approved = window.confirm(T("account_recovery_ack_confirm"));
+          if (approved) accountV2UiOperationAcceptsTransition(operation);
+          return approved;
+        });
+        if (!accountV2UiOperationOwns(operation)) return;
+        if (result && result.cancelled) renderCandidateAccountRecovery(ACCOUNT_V2_STATE);
+        else { closeHistory(); updateAuthUI(); }
+      }catch(e){
+        if (accountV2UiOperationOwns(operation) && (operation.epoch === null || accountV2UiOperationIsCurrent(operation))) renderCandidateAccountRecovery(ACCOUNT_V2.snapshot());
+      }finally{ if (accountV2UiOperationOwns(operation)) finishAccountV2UiOperation(operation); }
+    }
     function onAccountBtn(){
+      if (ACCOUNT_V2_CANDIDATE && (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR)){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; }
       if (getSpecial()){ if (confirm(T("special_exit_confirm"))) exitSpecial(); return; }
       if (isLoggedIn()) openHistory(); else openLoginModal();
     }
     function loginStatus(text, kind){ var el = document.getElementById("login-status"); if (!el) return; el.textContent = text || ""; el.className = "qb-status" + (kind ? " " + kind : ""); }
     function openLoginModal(){
       var m = document.getElementById("login-modal"); if (!m) return;
+      if (ACCOUNT_V2_CANDIDATE) updateAuthUI();
       var inp = document.getElementById("login-code"); if (inp) inp.value = "";
+      var shareEntry = document.getElementById("catalog-public-share-entry"); if (shareEntry) shareEntry.hidden = !ACCOUNT_V2_CANDIDATE;
+      var shareInput = document.getElementById("catalog-public-share-code"); if (shareInput) shareInput.value = "";
       loginStatus("", "");
       m.hidden = false;
       if (inp) setTimeout(function(){ try{ inp.focus(); }catch(e){} }, 60);
     }
     function closeLoginModal(){ var m = document.getElementById("login-modal"); if (m) m.hidden = true; }
-    function doLogin(){
+    async function doLogin(){
       var inp = document.getElementById("login-code");
       var code = ((inp && inp.value) || "").trim();
+      if (ACCOUNT_V2_CANDIDATE){
+        if (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; }
+        if (code.length < 4){ loginStatus(T("login_too_short"), "err"); return; }
+        var candidateButton = document.getElementById("login-go"); if (candidateButton) candidateButton.disabled = true;
+        var loginOperation = beginAccountV2UiOperation(null);
+        try{
+          var controller = await ACCOUNT_V2_READY;
+          if (!controller) throw new Error("controller_unavailable");
+          if (!bindAccountV2UiOperation(loginOperation, controller) || !accountV2UiOperationAcceptsTransition(loginOperation)) return;
+          await controller.login(code);
+          if (!accountV2UiOperationIsCurrent(loginOperation)) return;
+          loginStatus("Signed in. Catalog practice remains memory-only.", "ok"); closeLoginModal();
+        }catch(e){ if (accountV2UiOperationOwns(loginOperation) && (loginOperation.epoch === null || accountV2UiOperationIsCurrent(loginOperation))) loginStatus(accountV2ErrorText(e), "err"); }
+        finally { if (accountV2UiOperationOwns(loginOperation) && (loginOperation.epoch === null || accountV2UiOperationIsCurrent(loginOperation))){ if (candidateButton) candidateButton.disabled = false; finishAccountV2UiOperation(loginOperation); } }
+        return;
+      }
       if (code.length < 3){ loginStatus(T("login_too_short"), "err"); return; }
       var btn = document.getElementById("login-go"); if (btn) btn.disabled = true;
       loginStatus(T("login_ing"), "");
@@ -1090,8 +1304,38 @@
         .catch(function(){ loginStatus(T("login_neterr"), "err"); })
         .then(function(){ if (btn) btn.disabled = false; });
     }
-    function logout(){ clearAuth(); closeHistory(); }
-    function deleteMyAccount(){
+    async function doRegister(){
+      if (!ACCOUNT_V2_CANDIDATE) return;
+      if (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; }
+      var code = ((document.getElementById("login-code") || {}).value || "").trim();
+      if (code.length < 4){ loginStatus(T("login_too_short"), "err"); return; }
+      var button = document.getElementById("register-go"); if (button) button.disabled = true;
+      var operation = beginAccountV2UiOperation(null);
+      try{
+        var controller = await ACCOUNT_V2_READY;
+        if (!controller) throw new Error("controller_unavailable");
+        if (!bindAccountV2UiOperation(operation, controller) || !accountV2UiOperationAcceptsTransition(operation)) return;
+        var result = await controller.register(code, function(){ if (!accountV2UiOperationIsCurrent(operation)) return Promise.resolve(false); return Promise.resolve(window.confirm("Create a new empty account for this code? Existing data is never restored.")); });
+        if (!accountV2UiOperationIsCurrent(operation)) return;
+        if (result && result.cancelled) loginStatus("Registration cancelled.", ""); else { loginStatus("New empty account created. Catalog practice remains memory-only.", "ok"); closeLoginModal(); }
+      }catch(e){ if (accountV2UiOperationOwns(operation) && (operation.epoch === null || accountV2UiOperationIsCurrent(operation))) loginStatus(accountV2ErrorText(e), "err"); }
+      finally { if (accountV2UiOperationOwns(operation) && (operation.epoch === null || accountV2UiOperationIsCurrent(operation))){ if (button) button.disabled = false; finishAccountV2UiOperation(operation); } }
+    }
+    function logout(){ if (ACCOUNT_V2_CANDIDATE){ if (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; } invalidateAccountV2UiOperation(); if (ACCOUNT_V2) ACCOUNT_V2.logout(); closeHistory(); return; } clearAuth(); closeHistory(); }
+    async function deleteMyAccount(){
+      if (ACCOUNT_V2_CANDIDATE){
+        if (!ACCOUNT_V2) { loginStatus("Account service unavailable. Please retry.", "err"); return; }
+        if (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; }
+        var operation = beginAccountV2UiOperation(ACCOUNT_V2);
+        try{
+          closeHistory();
+          var result = await ACCOUNT_V2.deleteAccount(function(){ if (!accountV2UiOperationIsCurrent(operation)) return Promise.resolve(false); var confirmed = window.confirm("Permanently delete this account and all server data? A later registration starts empty."); if (confirmed) accountV2UiOperationAcceptsTransition(operation); return Promise.resolve(confirmed); });
+          if (!accountV2UiOperationIsCurrent(operation)) return;
+          if (!(result && result.cancelled)){ closeHistory(); alert("Deletion completed. A later registration starts with an empty account."); }
+        }catch(e){ if (e && e.code !== "STALE_REQUEST" && accountV2UiOperationIsCurrent(operation)) { loginStatus(accountV2ErrorText(e), "err"); updateAuthUI(); } }
+        finally { if (accountV2UiOperationIsCurrent(operation)) finishAccountV2UiOperation(operation); }
+        return;
+      }
       if (!isLoggedIn()) return;
       if (!confirm(T("del_account_confirm"))) return;
       fetch(QB_API_BASE + "/account", { method:"DELETE", headers: authHeaders() })
@@ -1102,8 +1346,19 @@
         })
         .catch(function(){ alert(T("del_account_fail")); });
     }
+    async function retryAccountDeletion(){
+      if (!ACCOUNT_V2_CANDIDATE || !ACCOUNT_V2) return;
+      if(ACCOUNT_V2_STATE&&ACCOUNT_V2_STATE.cleanupRequired&&!ACCOUNT_V2_STATE.pendingDeletion){try{await ACCOUNT_V2.resume();}finally{renderCandidateAccountRecovery(ACCOUNT_V2.snapshot());}return;}
+      var recoveryCode = candidateRecoveryCode(ACCOUNT_V2_STATE);
+      if (!ACCOUNT_V2_STATE || !ACCOUNT_V2_STATE.pendingDeletion || candidateRecoveryAckAllowed(recoveryCode) || recoveryCode === "STORAGE_UNAVAILABLE"){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; }
+      var operation = beginAccountV2UiOperation(ACCOUNT_V2);
+      try{ var result = await ACCOUNT_V2.continueDeletion(); if (accountV2UiOperationIsCurrent(operation) && !(result && result.pendingDeletion)){ closeHistory(); alert("Deletion completed. A later registration starts with an empty account."); } }
+      catch(e){ if (e && e.code !== "STALE_REQUEST" && accountV2UiOperationIsCurrent(operation)) { loginStatus(accountV2ErrorText(e), "err"); updateAuthUI(); } }
+      finally { if (accountV2UiOperationIsCurrent(operation)){ updateAuthUI(); finishAccountV2UiOperation(operation); } }
+    }
     function fmtHistTime(ts){ try{ return new Date(ts).toLocaleString(); }catch(e){ return ""; } }
     function openHistory(){
+      if (ACCOUNT_V2_CANDIDATE && (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR)){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; }
       if (!isLoggedIn()){ openLoginModal(); return; }
       var m = document.getElementById("history-modal"); if (!m) return;
       m.hidden = false; renderHistoryList();
@@ -1111,9 +1366,17 @@
     function closeHistory(){ var m = document.getElementById("history-modal"); if (m) m.hidden = true; }
     function renderHistoryList(){
       var box = document.getElementById("history-list"); if (!box) return;
+      if (ACCOUNT_V2_CANDIDATE){ box.innerHTML = '<div class="qb-hint" style="padding:6px">History is unavailable in candidate mode; practice is memory-only.</div>'; return; }
       box.innerHTML = '<div class="qb-hint" style="padding:6px">' + escHtml(T("hist_loading")) + '</div>';
       fetch(QB_API_BASE + "/history", { headers: authHeaders() })
-        .then(function(res){ if (res.status === 401){ clearAuth(); closeHistory(); openLoginModal(); return null; } return res.json(); })
+        .then(function(res){
+          if (res.status === 401){ clearAuth(); closeHistory(); openLoginModal(); return null; }
+          if (res.status !== 200) throw new Error("history_http_" + res.status);
+          return res.json().then(function(d){
+            if (!d || d.ok !== true || !Array.isArray(d.items)) throw new Error("history_invalid_payload");
+            return d;
+          });
+        })
         .then(function(d){
           if (!d) return;
           var items = (d && d.items) || [];
@@ -1130,11 +1393,13 @@
         .catch(function(){ box.innerHTML = '<div class="qb-hint" style="padding:6px;color:var(--danger-ink)">' + escHtml(T("hist_neterr")) + '</div>'; });
     }
     function deleteSnapshot(id){
+      if (ACCOUNT_V2_CANDIDATE) return;
       if (!confirm(T("hist_del_confirm"))) return;
       fetch(QB_API_BASE + "/history?id=" + encodeURIComponent(id), { method: "DELETE", headers: authHeaders() })
         .then(function(){ renderHistoryList(); }, function(){ renderHistoryList(); });
     }
     function restoreSnapshot(id){
+      if (ACCOUNT_V2_CANDIDATE){ loginStatus("History restore is unavailable in candidate mode.", "err"); return; }
       fetch(QB_API_BASE + "/history?id=" + encodeURIComponent(id), { headers: authHeaders() })
         .then(function(res){ if (res.status === 401){ clearAuth(); closeHistory(); openLoginModal(); return null; } return res.json(); })
         .then(function(d){
@@ -1153,23 +1418,26 @@
 
     /* ---- 私有题库：上传到账号（云端私有），登录后任意设备打开 ---- */
     function uploadBankToAccount(title, questions, rejected, opts){
+      if (ACCOUNT_V2_CANDIDATE){ importMessage("Cloud banks are unavailable in candidate mode.", true); return; }
       opts = opts || {};
       importMessage(T("cloud_uploading"), false);
       fetch(QB_API_BASE + "/banks", { method:"POST", headers:Object.assign({"Content-Type":"application/json"}, authHeaders()), body: JSON.stringify({ bank: { id: slugLocal(title), title: title, questions: questions } }) })
         .then(function(res){ return res.json().then(function(d){ return { status: res.status, d: d }; }, function(){ return { status: res.status, d: {} }; }); })
         .then(function(r){
           if (r.status === 401){ clearAuth(); openLoginModal(); importMessage(T("cloud_need_login"), true); return; }
-          if (r.d && r.d.ok){
+          if (r.status >= 200 && r.status < 300 && r.d && r.d.ok === true && isStoredBankId(r.d.saved)){
             var t2 = document.getElementById("import-to-account"); if (t2) t2.checked = false;
             if (opts.localId){
-              // 「移动」语义：本地进度（错题/收藏/已答次数）搬到云端命名空间，再删掉本地题库+本地进度
-              migrateLocalProgressToCloud(opts.localId, r.d.saved);
-              var lb = loadLocalBanks(); delete lb[opts.localId]; saveLocalBanks(lb);
-              clearLocalProgress(opts.localId);
-              renderLocalBanks();
+              var copy = migrateLocalProgressToCloud(opts.localId, r.d.saved);
+              var copyMessage = copy.failed || copy.conflicts
+                ? T("cloud_copy_partial", { t: title, n: questions.length, c: copy.conflicts, f: copy.failed })
+                : T("cloud_copy_ok", { t: title, n: questions.length });
+              renderCloudBanks();
+              importMessage(copyMessage, !!(copy.failed || copy.conflicts));
+              return;
             }
             renderCloudBanks();
-            importMessage(opts.localId ? T("cloud_moved", { t: title, n: questions.length }) : (T("cloud_uploaded", { t: title, n: questions.length }) + (rejected ? T("import_rej", { r: rejected }) : "")), false);
+            importMessage(T("cloud_uploaded", { t: title, n: questions.length }) + (rejected ? T("import_rej", { r: rejected }) : ""), false);
           } else if (r.d && r.d.error === "limit"){ importMessage(T("cloud_limit", { n: (r.d.limit || 15) }), true); }
           else if (r.d && (r.d.error === "too_large" || r.d.error === "too_many_questions")){ importMessage(T("cloud_too_large"), true); }
           else { importMessage(T("cloud_fail"), true); }
@@ -1178,21 +1446,41 @@
     }
     // 本地题库做题进度从 local-<id> 命名空间复制到云端 u-<cloudId>（题目内容相同→dedup 出的题 id 相同→进度键通用）
     function localNs(localId){ return "local-" + String(localId).replace(/[^A-Za-z0-9_-]/g, "-").slice(0, 48); }
-    var PROGRESS_SUFFIXES = ["_starred_questions", "_wrong_questions", "_attempt_count_map_v1"];
+    function isStoredBankId(value){
+      if (typeof value !== "string" || value.length < 1 || value.length > 48 || !/^[a-z0-9_][a-z0-9_-]*$/.test(value)) return false;
+      return !value.endsWith("-") || value.length === 48;
+    }
+    var PROGRESS_SUFFIXES = ["_starred_questions", "_wrong_questions", "_attempt_count_map_v1", "_conquered_questions_v1", "_last_active_v1"];
     function migrateLocalProgressToCloud(localId, cloudId){
-      if (!localId || !cloudId) return;
+      if (ACCOUNT_V2_CANDIDATE) return { copied: 0, skipped: 0, conflicts: 0, failed: 0 };
+      var result = { copied: 0, skipped: 0, conflicts: 0, failed: 0 };
+      if (!localId || !isStoredBankId(cloudId)) return { copied: 0, skipped: 0, conflicts: 0, failed: PROGRESS_SUFFIXES.length };
       var fromNs = localNs(localId), toNs = "u-" + cloudId;
       PROGRESS_SUFFIXES.forEach(function(suf){
-        try{ var v = localStorage.getItem(fromNs + suf); if (v != null) localStorage.setItem(toNs + suf, v); }catch(e){}
+        var sourceValue, targetValue;
+        try{ sourceValue = localStorage.getItem(fromNs + suf); }
+        catch(e){ result.failed++; return; }
+        try{ targetValue = localStorage.getItem(toNs + suf); }
+        catch(e){ result.failed++; return; }
+        if (sourceValue == null){ result.skipped++; return; }
+        if (targetValue != null){
+          if (targetValue === sourceValue) result.skipped++;
+          else result.conflicts++;
+          return;
+        }
+        try{ localStorage.setItem(toNs + suf, sourceValue); }
+        catch(e){ result.failed++; return; }
+        try{
+          if (localStorage.getItem(toNs + suf) !== sourceValue) result.failed++;
+          else result.copied++;
+        }catch(e){ result.failed++; }
       });
-    }
-    function clearLocalProgress(localId){
-      var ns = localNs(localId);
-      PROGRESS_SUFFIXES.forEach(function(suf){ try{ localStorage.removeItem(ns + suf); }catch(e){} });
+      return result;
     }
     function renderCloudBanks(){
       var box = document.getElementById("cloud-box");
       var grid = document.getElementById("cloud-grid");
+      if (ACCOUNT_V2_CANDIDATE){ if (box) box.hidden = true; if (grid) grid.innerHTML = ""; return; }
       if (!grid) return;
       if (!isLoggedIn()){ if (box) box.hidden = true; return; }
       fetch(QB_API_BASE + "/banks", { headers: authHeaders() })
@@ -1216,6 +1504,7 @@
         .catch(function(){ if (box) box.hidden = false; grid.innerHTML = '<div class="desc" style="padding:6px;color:var(--danger-ink)">' + escHtml(T("cloud_neterr")) + '</div>'; });
     }
     function deleteCloudBank(id){
+      if (ACCOUNT_V2_CANDIDATE) return;
       if (!confirm(T("cloud_del_confirm"))) return;
       fetch(QB_API_BASE + "/banks?id=" + encodeURIComponent(id), { method:"DELETE", headers: authHeaders() })
         .then(function(){ renderCloudBanks(); }, function(){ renderCloudBanks(); });
@@ -1263,7 +1552,7 @@
           if (alive && frame < 260) requestAnimationFrame(tick); else { ctx.clearRect(0, 0, W, H); canvas.hidden = true; } })();
       }catch(e){}
     }
-    function coffeeBankCount(){ var n = 0; try{ for (var i = 0; i < localStorage.length; i++){ var k = localStorage.key(i); if (k && k.indexOf("_attempt_count_map_v1") > 0){ try{ var m = JSON.parse(localStorage.getItem(k)); if (m && Object.keys(m).length) n++; }catch(e){} } } }catch(e){} return n; }
+    function coffeeBankCount(){ if (ACCOUNT_V2_CANDIDATE) return 0; var n = 0; try{ for (var i = 0; i < localStorage.length; i++){ var k = localStorage.key(i); if (k && k.indexOf("_attempt_count_map_v1") > 0){ try{ var m = JSON.parse(localStorage.getItem(k)); if (m && Object.keys(m).length) n++; }catch(e){} } } }catch(e){} return n; }
     function coffeeReset(){
       var b = document.getElementById("coffee-barista"); if (b) b.className = "barista";
       var roll = document.getElementById("coffee-roll"); if (roll){ roll.hidden = true; roll.textContent = ""; }

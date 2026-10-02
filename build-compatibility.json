@@ -1,0 +1,8 @@
+{
+  "environment": "production",
+  "clientProtocolVersion": 2,
+  "dataSchemaVersion": 2,
+  "minimumSupportedDataSchemaVersion": 1,
+  "unknownDataVersionPolicy": "read-only-or-refuse",
+  "effectiveApiBase": "https://question-bank-78u.pages.dev/api"
+}
