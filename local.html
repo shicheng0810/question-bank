@@ -2545,6 +2545,7 @@
       const st = ensureState(q);
       hydrateQuestionText(q, st);
       renderAnswerArea(q, st);
+      if(DATA_V2_ENABLED&&DATA_V2_READ_ONLY)document.getElementById('card-'+q.id)?.querySelectorAll('.choice-btn,.submit-btn,input,.redo-btn').forEach(node=>node.disabled=true);
       const feedback=document.getElementById('feedback-'+q.id);if(feedback)feedback.replaceChildren(safeFeedbackNode(st.feedbackHTML));
       if (st.submitted && isFill(q) && st.showKeys) renderKeysPanel(q.id);
       hydratedSet.add(q.id);
@@ -2628,8 +2629,8 @@
           <div id="answer-${q.id}"></div>
 
           <div class="action-bar">
-            <button class="btn submit-btn" id="submit-${q.id}" onclick="submitAnswer('${q.id}')" ${(st.submitted||st.inheritedFrom)?'disabled':''}>${st.submitted?T('submitted'):T('submit')}</button>
-            <button class="btn redo-btn" id="redo-${q.id}" onclick="redoQuestion('${q.id}')" style="display:${(st.submitted||st.inheritedFrom)?'block':'none'}">${st.inheritedFrom?(uiLang==='zh'?'重新作答（保留来源）':uiLang==='es'?'Responder de nuevo':'Answer anew (keep origin)'):T('redo')}</button>
+            <button class="btn submit-btn" id="submit-${q.id}" onclick="submitAnswer('${q.id}')" ${(st.submitted||st.inheritedFrom||(DATA_V2_ENABLED&&DATA_V2_READ_ONLY))?'disabled':''}>${st.submitted?T('submitted'):T('submit')}</button>
+            <button class="btn redo-btn" id="redo-${q.id}" onclick="redoQuestion('${q.id}')" ${(DATA_V2_ENABLED&&DATA_V2_READ_ONLY)?'disabled':''} style="display:${(st.submitted||st.inheritedFrom)?'block':'none'}">${st.inheritedFrom?(uiLang==='zh'?'重新作答（保留来源）':uiLang==='es'?'Responder de nuevo':'Answer anew (keep origin)'):T('redo')}</button>
             ${showKeyBtn}
           </div>
 
@@ -2723,11 +2724,11 @@
         if (bi >= n) return; // ignore extra inputs
 
         inp.value = st.fillInputs[bi] ?? "";
-        inp.disabled = !!(st.submitted||st.inheritedFrom);
+        inp.disabled = !!(st.submitted||st.inheritedFrom||(DATA_V2_ENABLED&&DATA_V2_READ_ONLY));
         inp.placeholder = "Type…";
 
         inp.addEventListener("input", () => {
-          if (st.submitted||st.inheritedFrom) return;
+          if (st.submitted||st.inheritedFrom||(DATA_V2_ENABLED&&DATA_V2_READ_ONLY)) return;
           st.fillInputs[bi] = inp.value;
           maybeAutoSubmit(q.id);
         });
@@ -2749,7 +2750,7 @@
         if (!Array.isArray(st.fillInputs) || st.fillInputs.length !== n){
           st.fillInputs = Array(n).fill("");
         }
-        const disabled = (st.submitted||st.inheritedFrom) ? "disabled" : "";
+        const disabled = (st.submitted||st.inheritedFrom||(DATA_V2_ENABLED&&DATA_V2_READ_ONLY)) ? "disabled" : "";
         let inner = `<div class="fill-area" id="fill-${q.id}">`;
         for (let i=0;i<n;i++){
           const v = (st.fillInputs[i] ?? "");
@@ -2777,7 +2778,7 @@
       ul.className = 'choices';
       const disabled = (st.submitted||st.inheritedFrom) ? 'disabled' : '';
       for(let i=0;i<(q.choices||[]).length;i++){
-        const item=document.createElement('li');item.className='choice-item';const button=document.createElement('button');button.type='button';button.className='choice-btn';button.disabled=!!(st.submitted||st.inheritedFrom);button.onclick=()=>selectChoice(q.id,i);button.append(document.createTextNode(String.fromCharCode(65+i)+'. '),questionDisplayFragment(q.choices[i],'choice',0));item.append(button);ul.append(item);
+        const item=document.createElement('li');item.className='choice-item';const button=document.createElement('button');button.type='button';button.className='choice-btn';button.disabled=!!(st.submitted||st.inheritedFrom||(DATA_V2_ENABLED&&DATA_V2_READ_ONLY));button.onclick=()=>selectChoice(q.id,i);button.append(document.createTextNode(String.fromCharCode(65+i)+'. '),questionDisplayFragment(q.choices[i],'choice',0));item.append(button);ul.append(item);
       }
       box.innerHTML = "";
       box.appendChild(ul);
@@ -2867,11 +2868,11 @@
       const sub=document.getElementById(`submit-${qId}`);
       if(sub){
         sub.textContent = st.submitted ? T('submitted') : T('submit');
-        sub.disabled = !!(st.submitted||st.inheritedFrom);
+        sub.disabled = !!(st.submitted||st.inheritedFrom||(DATA_V2_ENABLED&&DATA_V2_READ_ONLY));
       }
 
       const redo=document.getElementById(`redo-${qId}`);
-      if(redo) redo.style.display = (st.submitted||st.inheritedFrom) ? 'block' : 'none';
+      if(redo){redo.style.display = (st.submitted||st.inheritedFrom) ? 'block' : 'none';redo.disabled=!!(DATA_V2_ENABLED&&DATA_V2_READ_ONLY);}
 
       const kp = document.getElementById(`keys-${qId}`);
       if (kp) {
