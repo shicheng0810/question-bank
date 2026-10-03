@@ -187,6 +187,7 @@ export function createLegacyMigrationClient(options = {}) {
       || (cursor !== null && (typeof cursor !== 'string' || !cursor || cursor.length > MAX_CURSOR_LENGTH))) fail('INVALID_ARGUMENT');
     const suffix = queryString({ limit, cursor });
     const response = await request(`/v2/legacy/${kind}?${suffix}`, { token });
+    if(response.status===429){const value=response.headers.get('retry-after');fail('RATE_LIMITED',{retryAfter:typeof value==='string'&&/^[1-9]\d{0,4}$/.test(value)?Math.min(Number(value),86400):null});}
     if (response.status !== 200) fail(response.status === 401 ? 'SESSION_EXPIRED' : 'ARCHIVE_UNAVAILABLE', { retryable: response.status >= 500 });
     const value = await responseJson(response);
     if (value.ok !== true) fail('INVALID_RESPONSE');
