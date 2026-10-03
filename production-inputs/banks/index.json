@@ -1,0 +1,58 @@
+[
+  {
+    "id": "239-airframe-elec",
+    "title": "Aircraft Electrical",
+    "json": "banks/239-airframe-elec.json",
+    "deploy": true,
+    "mode": "public"
+  },
+  {
+    "id": "205-finishes",
+    "title": "Finishes",
+    "json": "banks/205-finishes.json",
+    "deploy": true,
+    "mode": "public"
+  },
+  {
+    "id": "215-helicopter",
+    "title": "Helicopter",
+    "json": "banks/215-helicopter.json",
+    "deploy": true,
+    "mode": "public"
+  },
+  {
+    "id": "general",
+    "title": "General Question Banks",
+    "json": "banks/general.json",
+    "deploy": true,
+    "mode": "public"
+  },
+  {
+    "id": "201-composite",
+    "title": "Composite",
+    "json": "banks/201-composite.json",
+    "deploy": true,
+    "mode": "public"
+  },
+  {
+    "id": "211-sheet-metal",
+    "title": "Sheet Metal",
+    "json": "banks/211-sheet-metal.json",
+    "deploy": true,
+    "mode": "public"
+  },
+  {
+    "id": "231-ice-rain",
+    "title": "Ice and Rain Protection",
+    "json": "banks/231-ice-rain.json",
+    "deploy": true,
+    "mode": "public"
+  },
+  {
+    "id": "231-fire-pos-warning",
+    "title": "Fire Prot/Pos & Warning",
+    "json": "banks/231-fire-pos-warning.json",
+    "deploy": true,
+    "mode": "public"
+  }
+]

@@ -1,0 +1,365 @@
+<div class="extractor-app" data-testid="extractor-app">
+  <header class="extractor-hero panel" data-testid="extractor-hero">
+    <div class="extractor-hero__copy">
+      <p class="section-kicker">Local Private Extractor</p>
+      <h1>本地题库提取器</h1>
+      <p>
+        这个页面只用于你电脑本地的题库生产流程：批量导入 <strong>.mhtml/.mht</strong>、截图 OCR、修正答案、去重融合、AI 转换，并导出 GitHub Pages 题库发布包。公开站点只负责做题，不包含这里的提取能力。
+      </p>
+      <label class="inline-check edit-mode-control" data-testid="edit-mode-toggle-label">
+        <input id="editModeToggle" type="checkbox" data-testid="edit-mode-toggle">
+        <span>编辑模式（启用后显示「删除题库 / 删除单题」按钮）</span>
+      </label>
+    </div>
+    <div class="extractor-hero__status" data-testid="extractor-status-panel">
+      <div class="status-card">
+        <span class="status-card__label">提取状态</span>
+        <strong id="status" data-testid="top-status"></strong>
+      </div>
+      <div class="status-card status-card--muted">
+        <span class="status-card__label">发布目标</span>
+        <strong>GitHub Pages / 本地兼容 HTML</strong>
+      </div>
+    </div>
+  </header>
+
+  <section class="workflow-grid">
+    <div class="panel" data-testid="mhtml-import-panel">
+      <div class="panel-title-row">
+        <div>
+          <p class="section-kicker">Import</p>
+          <h2>MHTML 与旧题库导入</h2>
+        </div>
+      </div>
+      <div class="row">
+        <input id="file" type="file" accept=".mhtml,.mht" multiple data-testid="mhtml-input">
+        <button class="btn primary" id="parseAllBtn" disabled data-testid="parse-all-btn">解析全部</button>
+        <button class="btn" id="parseActiveBtn" disabled data-testid="parse-active-btn">只解析当前</button>
+      </div>
+      <div class="row row--compact">
+        <input id="qbankFile" type="file" accept=".json,.html,.htm" multiple data-testid="qbank-input">
+        <button class="btn" id="extractQBankBtn" disabled data-testid="extract-qbank-btn">提取已生成题库</button>
+        <span id="qbankStatus" class="meta" data-testid="qbank-status"></span>
+      </div>
+      <div class="meta">
+        上面第二个上传口可直接导入过去生成过的题库 <code>.json</code> / <code>.html</code>，自动抽取其中全部题目并加入文件列表，可像普通 mhtml 一样预览 / 修改 / 导出。
+      </div>
+      <div class="meta">
+        提示：如果某题你当时做错了，Canvas 回顾页会显示“红 X = 你选的错项；灰色箭头 = 正确项”。本脚本会优先把“灰色箭头”判为正确答案，不会用 checked 状态误判。
+      </div>
+    </div>
+
+    <div class="panel" id="imageOcrPanel" data-testid="ocr-panel">
+      <div class="panel-title-row">
+        <div>
+          <p class="section-kicker">OCR</p>
+          <h2>截图识别</h2>
+        </div>
+      </div>
+      <div class="row">
+        <input id="imgFile" type="file" accept="image/*" multiple data-testid="ocr-file-input">
+        <button class="btn primary" id="ocrImagesBtn" disabled data-testid="ocr-images-btn">识别全部截图</button>
+        <button class="btn" id="ocrActiveBtn" disabled data-testid="ocr-active-btn">只识别当前截图</button>
+        <span id="imgStatus" class="meta" data-testid="ocr-status"></span>
+      </div>
+      <div class="dropzone" id="imgDropZone" data-testid="img-dropzone">
+        <div class="title">拖拽截图到这里，或直接粘贴截图（Ctrl / Cmd + V）</div>
+        <div class="meta">支持 PNG / JPG / WebP，多次追加不会覆盖已有文件。截图会进入左侧文件列表，并复用现有预览、修正、导出 JSON、导出做题单 HTML 流程。</div>
+      </div>
+      <details class="panel nested-panel" id="ocrSettings">
+        <summary class="meta"><strong>截图识别设置（默认本地 OCR，可选 AI 修复）</strong></summary>
+        <div class="meta">
+          默认在浏览器端本地执行 OCR；首次使用会按需加载 OCR 依赖。当前按“一张截图≈一题”处理；若自动识别不准，可在右侧预览里继续手动修正答案后导出。
+        </div>
+        <div class="row row--compact">
+          <input id="ocrLang" type="text" value="eng" class="small" data-testid="ocr-lang-input">
+          <span class="meta">OCR 语言（纯英文截图建议 eng；只有含中文时再用 eng+chi_sim）</span>
+        </div>
+        <div class="row row--compact">
+          <label class="meta inline-check">
+            <input id="ocrPreferColor" type="checkbox" checked data-testid="ocr-prefer-color"> 优先用高亮颜色判定正确答案
+          </label>
+          <label class="meta inline-check">
+            <input id="ocrDebug" type="checkbox" data-testid="ocr-debug"> 保存 OCR 调试信息
+          </label>
+        </div>
+        <div class="row row--compact">
+          <label class="meta inline-check">
+            <input id="ocrAiRepair" type="checkbox" data-testid="ocr-ai-repair"> 使用 DeepSeek V4 Flash 二次修复 OCR 文本
+          </label>
+          <span class="meta">只发送 OCR 文本和选项，不发送截图；不会改变正确答案索引。</span>
+        </div>
+        <div class="row row--compact">
+          <label class="meta inline-check">
+            <input id="ocrRapidOcr" type="checkbox" data-testid="ocr-rapidocr"> 使用 RapidOCR PP-OCRv5 本地识别
+          </label>
+          <span class="meta">需先运行 <code>npm run rapidocr:server</code>；失败时自动回退浏览器 Tesseract OCR。</span>
+        </div>
+        <div class="row row--compact">
+          <label class="meta inline-check">
+            <input id="ocrOpenAiVision" type="checkbox" data-testid="ocr-openai-vision"> 使用本地 OpenAI Vision 直接识别截图
+          </label>
+          <label class="meta inline-check">
+            <input id="ocrOpenAiFallbackOnly" type="checkbox" checked data-testid="ocr-openai-fallback-only"> 仅在本地 OCR 弱时调用（省钱）
+          </label>
+        </div>
+        <div class="row row--compact">
+          <input id="ocrOpenAiModel" type="text" value="gpt-5.4-mini" class="small" data-testid="ocr-openai-model">
+          <input id="ocrOpenAiFallbackModel" type="text" value="gpt-5.4-nano" class="small" data-testid="ocr-openai-fallback-model">
+          <select id="ocrOpenAiDetail" class="small" data-testid="ocr-openai-detail">
+            <option value="high" selected>high detail</option>
+            <option value="auto">auto detail</option>
+            <option value="low">low detail</option>
+          </select>
+          <span class="meta">需要本地 <code>OPENAI_API_KEY</code>；Key 不进入浏览器。</span>
+        </div>
+        <div class="row row--compact">
+          <input id="ocrAiApiKey" type="password" placeholder="DEEPSEEK_API_KEY" style="min-width:300px" data-testid="ocr-ai-api-key">
+        </div>
+        <div class="meta">本页不再记住密钥/密码；旧保存内容请先转存到密码管理器，再在浏览器站点设置中手动清理。</div>
+        <div class="row row--compact">
+          <input id="ocrAiBaseUrl" type="text" value="https://api.deepseek.com/chat/completions" style="min-width:460px" data-testid="ocr-ai-base-url">
+          <input id="ocrAiModel" type="text" value="deepseek-v4-flash" class="small" data-testid="ocr-ai-model">
+        </div>
+        <div class="ocr-note">提示：当前保留所有既有功能与边界；截图识别作为新增数据源接入，不影响原有 MHTML / 已生成题库导入逻辑。</div>
+      </details>
+    </div>
+  </section>
+
+  <div class="split">
+    <div class="panel sticky" data-testid="file-list-panel">
+      <div class="panel-title-row">
+        <div>
+          <p class="section-kicker">Datasets</p>
+          <h2>文件列表</h2>
+        </div>
+        <div class="meta">点击“预览”切换文件</div>
+      </div>
+      <table class="fileList" id="fileTable" data-testid="file-table">
+        <thead>
+          <tr>
+            <th style="width:36%">文件名</th>
+            <th style="width:24%">题库前缀(prefix)</th>
+            <th style="width:26%">Source 前缀</th>
+            <th style="width:14%">状态</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" id="selectAll" data-testid="select-all-btn">单选题补选首项</button>
+        <button class="btn" id="clearAll" data-testid="clear-all-btn">清除选择</button>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn primary" id="aiAnswerCurrentBtn" disabled data-testid="ai-answer-current-btn">AI 补下一道缺答案题</button>
+        <button class="btn" id="aiAnswerMissingBtn" disabled data-testid="ai-answer-missing-btn">AI 补全部缺答案题</button>
+      </div>
+      <div class="meta" id="aiAnswerStatus" data-testid="ai-answer-status" style="margin-top:6px"></div>
+      <div class="meta" style="margin-top:6px">
+        “补选首项”只会对<strong>没有任何正确项</strong>的单选题补一个，避免导出 answer=-1。
+      </div>
+    </div>
+
+    <div class="resizer" id="dragHandle" title="拖动调整宽度"></div>
+
+    <div class="rightCol">
+      <div class="panel" data-testid="workspace-panel">
+        <div class="panel-title-row panel-title-row--wide">
+          <div>
+            <p class="section-kicker">Workspace</p>
+            <h2>当前文件与导出</h2>
+            <div class="meta"><strong>当前文件：</strong><span id="activeName" data-testid="active-name">(未选择)</span></div>
+          </div>
+          <div class="row row--toolbar">
+            <button class="btn" id="exportActiveBtn" disabled data-testid="export-active-btn">导出当前文件 JSON</button>
+            <button class="btn" id="exportAllBtn" disabled data-testid="export-all-btn">导出全部题目 JSON（未去重）</button>
+            <button class="btn primary" id="exportUniqueBtn" disabled data-testid="export-unique-btn">导出去重融合 JSON（推荐）</button>
+          </div>
+        </div>
+
+        <section class="panel nested-panel review-editor-panel" id="reviewEditorPanel" hidden data-testid="review-editor-panel">
+          <div class="panel-title-row">
+            <div>
+              <p class="section-kicker">D2 Review</p>
+              <h3>审核编辑（候选）</h3>
+            </div>
+            <div class="review-summary" id="reviewSummary" data-testid="review-summary"></div>
+          </div>
+          <div class="meta" id="reviewSummaryNote" data-testid="review-summary-note">
+            结构分类仅表示当前记录是否准备好进入导出 schema，不代表答案专业正确性；所有记录仍保留。
+          </div>
+          <div class="row row--compact review-toolbar">
+            <label class="meta">筛选
+              <select id="reviewFilter" class="small" data-testid="review-filter">
+                <option value="all">全部</option>
+                <option value="valid">valid</option>
+                <option value="review">review</option>
+                <option value="rejected">rejected</option>
+              </select>
+            </label>
+            <span class="meta" id="reviewSelectionCount" data-testid="review-selection-count">已选 0 题</span>
+            <button class="btn" type="button" data-review-batch="confirmed" data-testid="review-batch-confirmed">批量确认</button>
+            <button class="btn" type="button" data-review-batch="needs_review" data-testid="review-batch-needs-review">批量标记待核</button>
+            <button class="btn" type="button" data-review-batch="cannot_determine" data-testid="review-batch-cannot-determine">批量标记无法判断</button>
+            <button class="btn" type="button" id="reviewUndoBtn" data-testid="review-undo-btn" disabled>撤销</button>
+            <span class="meta" id="reviewUndoHint" data-testid="review-undo-hint">会话撤销最多 20 步</span>
+          </div>
+          <div class="review-export-preview" data-testid="review-export-preview">
+            <button class="btn" type="button" id="reviewExportPreviewBtn" data-testid="review-export-preview-btn">生成导出预览</button>
+            <div class="meta" id="reviewExportPreviewText" data-testid="review-export-preview-text">不可导出记录必须先修复或在编辑模式中显式删除；预览不会改变源数据。</div>
+          </div>
+        </section>
+
+        <div class="export-stack" data-testid="export-stack">
+          <div class="panel nested-panel export-panel export-panel--json">
+            <div class="panel-title-row">
+              <div>
+                <p class="section-kicker">Output</p>
+                <h3>JSON 工作区</h3>
+              </div>
+              <button class="btn" id="downloadOutJsonBtn" disabled data-testid="download-out-json-btn">下载输出 JSON</button>
+            </div>
+            <div class="meta">
+              导出规则：
+              <code>id = prefix + "-" + 题号</code>，
+              <code>source = sourcePrefix + " – Q" + 题号</code>，
+              图片字段 <code>image</code> 一律为 <code>data:</code> URL（内嵌）。
+            </div>
+            <textarea id="out" placeholder="// 导出结果会出现在这里" data-testid="output-json"></textarea>
+          </div>
+
+          <details class="panel nested-panel export-panel export-panel--publish" id="publishSettings" open>
+            <summary class="meta"><strong>GitHub Pages 发布设置</strong></summary>
+            <div class="meta">
+              默认发布产物是 <code>banks/index.json</code> + 单个 bank 文件。可选择公开发布（明文 JSON）或密码保护发布（生成 <code>.qbpack</code>）。
+            </div>
+            <div class="row row--compact">
+              <input id="publishBankId" type="text" placeholder="bank-id（例如 aircraft-drawings）" class="small" data-testid="publish-bank-id">
+              <input id="publishTitle" type="text" placeholder="题库标题" style="min-width:280px" data-testid="publish-title">
+              <select id="publishMode" class="small" data-testid="publish-mode">
+                <option value="public">公开发布</option>
+                <option value="protected">密码保护发布</option>
+              </select>
+            </div>
+            <div class="row row--compact">
+              <input id="publishDescription" type="text" placeholder="题库描述" style="min-width:520px" data-testid="publish-description">
+            </div>
+            <div class="row row--compact">
+              <input id="publishTags" type="text" placeholder="标签（用逗号分隔）" style="min-width:260px" data-testid="publish-tags">
+              <input id="publishCover" type="text" placeholder="封面图 URL（可选）" style="min-width:300px" data-testid="publish-cover">
+              <input id="publishPasswordHint" type="text" placeholder="密码提示（仅保护发布）" style="min-width:220px" data-testid="publish-password-hint">
+            </div>
+            <div class="row row--compact">
+              <input id="publishPassword" type="password" placeholder="发布密码（仅保护发布）" style="min-width:320px" data-testid="publish-password">
+            </div>
+            <div class="meta">本页不再记住密钥/密码；旧保存内容请先转存到密码管理器，再在浏览器站点设置中手动清理。</div>
+            <div class="row row--toolbar row--publish-actions">
+              <button class="btn" id="genLegacyQBankBtn" disabled data-testid="generate-legacy-html-btn">导出做题单 HTML（全平铺）</button>
+              <select id="publishTargetSel" data-testid="publish-target-select" title="发布后部署到哪里">
+                <option value="all" disabled>Cloudflare + GitHub（发布未接通）</option>
+                <option value="cf" disabled>Cloudflare（发布未接通）</option>
+                <option value="gh" disabled>GitHub（发布未接通）</option>
+                <option value="preview" disabled>预览站（发布未接通）</option>
+                <option value="none" selected>只保存本地，不上线</option>
+              </select>
+              <button class="btn primary" id="publishSiteBtn" disabled data-testid="publish-site-btn" title="保存到本地题库，不会上线">保存到本地题库</button>
+            </div>
+            <div class="meta" id="publishSiteStatus" data-testid="publish-site-status">新版发布通道尚未接通；当前只保存本地，不会上线。</div>
+          </details>
+
+          <details class="panel nested-panel" id="siteBanksPanel" data-testid="site-banks-panel">
+            <summary class="meta"><strong>本地题库清单（未必等于线上 · 编辑 · 删除 · 公开⇄加密）</strong></summary>
+            <div class="meta" id="siteBanksHint" style="margin:6px 0 2px"></div>
+            <div id="siteBanksList" data-testid="site-banks-list"></div>
+            <div class="row row--toolbar" style="margin-top:10px">
+              <button class="btn" id="siteBanksRefreshBtn" data-testid="site-banks-refresh-btn">刷新列表</button>
+              <button class="btn" id="siteUnlistAllBtn" data-testid="site-unlist-all-btn">全部下架</button>
+              <select id="siteDeployTargetSel" data-testid="site-deploy-target">
+                <option value="all">部署：Cloudflare + GitHub</option>
+                <option value="cf">仅 Cloudflare</option>
+                <option value="gh">仅 GitHub</option>
+                <option value="preview">🔍 仅预览站（preview 分支）</option>
+              </select>
+              <button class="btn primary" id="siteDeployBtn" data-testid="site-deploy-btn">发布通道未接通</button>
+              <span class="meta">当前修改只影响本地清单，不会上线。</span>
+            </div>
+            <div class="meta" id="siteBanksOpStatus" data-testid="site-banks-op-status"></div>
+          </details>
+
+          <details class="panel nested-panel" id="usersPanel" data-testid="users-panel">
+            <summary class="meta"><strong>新版账号管理（已观察账号 · 旧库存可选）</strong></summary>
+            <div class="meta" id="usersHint" style="margin:6px 0 2px"></div>
+            <div class="row row--toolbar" style="margin:6px 0;gap:8px;flex-wrap:wrap">
+              <input id="usersDelCode" type="text" placeholder="按用户的码删除：输入那个用户的码" autocomplete="off" spellcheck="false" style="flex:1;min-width:170px">
+              <button class="btn" id="usersDelByCodeBtn" data-testid="users-del-by-code-btn">按码删除该用户</button>
+              <button class="btn" id="usersRefreshBtn" data-testid="users-refresh-btn">刷新用户列表</button>
+            </div>
+            <div class="row row--toolbar" style="margin:2px 0 6px;gap:8px;flex-wrap:wrap;align-items:center">
+              <label class="meta" style="display:flex;align-items:center;gap:5px"><input type="checkbox" id="usersSelectAll" data-testid="users-select-all">全选</label>
+              <button class="btn danger" id="usersDeleteSelectedBtn" data-testid="users-delete-selected-btn" disabled>🗑 删除选中（0）</button>
+            </div>
+            <div id="usersList" data-testid="users-list"></div>
+            <label class="meta"><input type="checkbox" id="usersIncludeLegacy" data-testid="users-include-legacy">包含仅旧源库存（非新版账号）</label>
+            <div class="meta" id="usersOpStatus" data-testid="users-op-status"></div>
+          </details>
+
+          <details class="panel nested-panel" id="specialBanksPanel" data-testid="special-banks-panel">
+            <summary class="meta"><strong>特殊题库（私享给特定人 · 每个一个分享码 · 不记历史）</strong></summary>
+            <div class="meta" id="specialBanksHint" style="margin:6px 0 2px"></div>
+            <div class="row row--toolbar" style="margin:6px 0;gap:8px;flex-wrap:wrap;align-items:center">
+              <input type="file" id="specialBankFile" accept=".json,application/json">
+              <input type="text" id="specialBankTitle" placeholder="题库名（选填）" style="min-width:120px">
+              <input type="text" id="specialBankCode" placeholder="自定义分享码（告诉别人这个）" style="min-width:180px" autocomplete="off" spellcheck="false">
+              <button class="btn primary" id="specialBankCreateBtn" data-testid="special-create-btn">上传为特殊题库</button>
+              <button class="btn" id="specialBanksRefreshBtn" data-testid="special-refresh-btn">刷新列表</button>
+            </div>
+            <div id="specialBanksList" data-testid="special-banks-list"></div>
+            <div class="meta" id="specialBanksOpStatus" data-testid="special-op-status"></div>
+          </details>
+
+          <details class="panel nested-panel" id="aiSettings" data-testid="ai-settings">
+            <summary class="meta"><strong>AI：把填空题转为选择题（生成迷惑选项）</strong></summary>
+            <div class="meta">
+              ⚠️ 安全提示：OpenAI 官方建议 <strong>不要在浏览器端暴露 API Key</strong>。更安全的做法是用你自己的本地/私有代理服务转发请求。
+              <br>（下面提供“直连”与“代理 URL”两种方式）
+            </div>
+            <div class="row row--compact">
+              <input id="apiKey" type="password" placeholder="OPENAI_API_KEY（建议不要在公共电脑输入）" style="min-width:360px" data-testid="api-key">
+            </div>
+            <div class="meta">本页不再记住密钥/密码；旧保存内容请先转存到密码管理器，再在浏览器站点设置中手动清理。</div>
+            <div class="row row--compact">
+              <input id="apiBaseUrl" type="text" value="https://api.openai.com/v1/responses" style="min-width:520px" data-testid="api-base-url">
+              <span class="meta">API / 代理 URL（默认直连）</span>
+            </div>
+            <div class="row row--compact">
+              <input id="apiModel" type="text" value="gpt-4o-mini" class="small" data-testid="api-model">
+              <span class="meta">model（建议 gpt-4o-mini，支持结构化输出）</span>
+              <input id="nDistractors" type="number" value="3" min="2" max="6" class="small" data-testid="n-distractors">
+              <span class="meta">每空生成干扰项数量</span>
+              <input id="temperature" type="number" value="0.8" min="0" max="2" step="0.1" class="small" data-testid="temperature">
+              <span class="meta">temperature</span>
+            </div>
+            <div class="row row--compact">
+              <label class="meta inline-check">
+                <input id="replaceFill" type="checkbox" checked data-testid="replace-fill"> 用选择题替换填空题（多空题会拆成多题）
+              </label>
+              <label class="meta inline-check">
+                <input id="keepFillCopy" type="checkbox" data-testid="keep-fill-copy"> 保留原填空题副本（在 JSON 末尾追加）
+              </label>
+            </div>
+            <div class="row row--compact">
+              <button class="btn primary" id="runAiMCQ" disabled data-testid="run-ai-mcq-btn">运行 AI 转换（会花 API 费用）</button>
+              <button class="btn" id="dryRunAiMCQ" disabled data-testid="dry-run-ai-mcq-btn">Dry-run：只统计填空题数量</button>
+              <span class="meta" id="aiStatus" data-testid="ai-status"></span>
+            </div>
+            <div class="meta">
+              输出：会把转换后的 JSON 写回右侧输出框（out），然后你可以继续点“导出做题单 HTML”。
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="grid" id="list" data-testid="question-list"></div>
+    </div>
+  </div>
+</div>

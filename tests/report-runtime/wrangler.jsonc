@@ -1,0 +1,9 @@
+{
+  "name":"question-bank-report-local-only",
+  "main":"./worker.js",
+  "compatibility_date":"2026-03-10",
+  "durable_objects":{"bindings":[{"name":"REPORT_OPERATIONS","class_name":"ReportOperationStore"}]},
+  "migrations":[{"tag":"report-local-v1","new_sqlite_classes":["ReportOperationStore"]}],
+  "kv_namespaces":[{"binding":"EDITS"}],
+  "vars":{"TELEGRAM_BOT_TOKEN":"local-fake","TELEGRAM_CHAT_ID":"-100123","TELEGRAM_WEBHOOK_SECRET":"local-secret","TELEGRAM_APPROVER_IDS":"456","GITHUB_TOKEN":"local-fake"}
+}

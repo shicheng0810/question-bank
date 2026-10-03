@@ -1,0 +1,17 @@
+export { createLearningSession, answerFromUI, uiFromDraft } from './learning-session.js';
+export { openDataV2 } from './data-v2-entry.js';
+export { exportLocalBackup, restoreLocalBackup } from '../storage/backup/index.js';
+export { validateBankContent } from '../domain/question/bank-content.js';
+export { applyRegistrationPlan, finalizeRegisteredQuestions } from '../domain/question/registered-identity.js';
+export { makeSourceKey } from '../domain/app-data/identity.js';
+export { canonicalContentBytes, sha256Hex } from '../domain/app-data/canonical.js';
+export { registerImportedBank } from './register-import.js';
+export { prepareUnifiedHistory, createUnifiedHistoryPreparation } from './prepare-unified-history.js';
+export { createPendingHistoryInventory } from './pending-history-inventory.js';
+export { resolveLegacyPublicBanks } from './legacy-public-banks.js';
+export { dedupeLegacyQuestionBank } from '../domain/question/legacy-runtime-identity.js';
+export { deleteCompletedOwnerData } from '../storage/profiles/delete-owner-data.js';
+export {requireSnapshotInitializationCapability, refreshAfterLocalSave, showResumeUpgradeNotice} from '../browser/resume-capabilities.js';
+export {createSyncV2Coordinator} from '../browser/sync-v2.js';
+export {encryptProtectedBankV2,decryptProtectedBankV2} from '../browser/protected-bank-v2.js';
+export {validateProtectedBankFileV2,encodeProtectedBankFileV2,decodeProtectedBankFileV2,createProtectedBankFileV2,unlockProtectedBankFileV2} from './protected-file.js';
