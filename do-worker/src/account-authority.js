@@ -1,3 +1,4 @@
+import { validAdminItemsCommand, safeAdminItemsResult } from './native-admin-items-dto.js';
 import { DurableObject } from 'cloudflare:workers';
 import {safeNativeConversionInventory} from './native-conversion-dto.js';
 import {validateSourceDispositionCommand} from './legacy-source-disposition.js';
@@ -1364,6 +1365,19 @@ export class AccountAuthority extends DurableObject {
       if(!safe||after.ok!==true||after.phase!=='active'||after.incarnation!==before.incarnation||after.fence!==before.fence||after.manifestSha256!==before.manifestSha256||safe.principal!==fields.principal||safe.incarnation!==before.incarnation||safe.authorityFence!==before.fence||safe.manifestSha256!==before.manifestSha256||safe.histories.length!==before.historyTotal||safe.banks.length!==before.bankTotal)throw cause('STALE_AUTHORITY');
       return safe;
     }catch(error){return failure(knownError(error));}
+  }
+  async nativeAdminItemsTrusted(command) {
+    if (!validAdminItemsCommand(command)) return { ok: false, error: 'INVALID_INPUT' };
+    try {
+      assertAuthorityIdentity(this.env, this.ctx, command.principal);
+      const current = state => state.ok === true && state.status === 'observed' && state.phase === 'active'
+        && state.principal === command.principal && state.incarnation === command.incarnation && state.fence === command.expectedFence;
+      if (!current(await this.nativeManagerIdentityTrusted({ principal: command.principal }))) return { ok: false, error: 'STALE_AUTHORITY' };
+      const inner = await rpcOk(dataStub(this.env, command.incarnation), 'nativeAdminItemsTrusted', [command],
+        ['status','principal','incarnation','fence','generation','kind','watermark','items','nextCursor']);
+      if (!current(await this.nativeManagerIdentityTrusted({ principal: command.principal }))) return { ok: false, error: 'STALE_AUTHORITY' };
+      return safeAdminItemsResult({ ok: true, ...inner }, command) || { ok: false, error: 'ADMIN_ITEMS_UNAVAILABLE' };
+    } catch (error) { return { ok: false, error: ['STALE_GENERATION','CURSOR_STALE','INVALID_ADMIN_CURSOR','ADMIN_ITEMS_LIMIT','ADMIN_ITEM_TOO_LARGE'].includes(error.code) ? error.code : 'ADMIN_ITEMS_UNAVAILABLE' }; }
   }
   async nativeAdminStatusTrusted(command){
     try{

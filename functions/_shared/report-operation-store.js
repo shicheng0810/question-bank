@@ -1,3 +1,4 @@
+import {projectReportStatus} from '../../src/server/report-status-projection.js';
 import { DurableObject } from 'cloudflare:workers';
 import { frozenPublicBanks } from '../../src/domain/question/frozen-public-registry.js';
 import {RELEASE_HEAD} from './report-release-contract.js';
@@ -14,6 +15,7 @@ export class ReportOperationStore extends DurableObject {
   releaseCAS(expected,next){this.assertHead();return this.ledger.releaseCAS(expected,next);}
   capability() {return {schema:1,banks:frozenPublicBanks.map(bank=>({bankUid:bank.bankUid,revision:bank.revision,questions:bank.questionsrefs}))};}
   receive(pending) { this.assertId(pending.operationId);return this.ledger.receive(pending); }
+  inspectSummaryTrusted(id){this.assertId(id);const summary=projectReportStatus(this.ledger.get(id),id);if(new TextEncoder().encode(JSON.stringify(summary)).byteLength>16384)throw Error('REPORT_SUMMARY_LIMIT');return summary;}
   get(id) { this.assertId(id);return this.ledger.get(id); }
   updateBound(id,state,result,expectedResult){this.assertId(id);return this.ledger.updateBound(id,state,result,expectedResult);}
   transitionBound(id,from,to,result,expectedResult){this.assertId(id);return this.ledger.transition(id,from,to,result,expectedResult);}

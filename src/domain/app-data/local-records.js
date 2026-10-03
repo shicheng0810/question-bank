@@ -265,9 +265,10 @@ export function validateContentChunkRecord(value) {
 }
 
 // Internal module export only; deliberately not exported by app-data/index.js.
-// Its sole caller obtains a fresh private IDB request/cursor value with native
-// getters and validates it synchronously before any await or external handoff.
-// StructuredDeserialize reconstructs typed arrays without custom own properties.
+// Callers obtain either a fresh private native IDB value, or an inaccessible
+// native Uint8Array copy recorded by ownedWriteInput after strict preflight.
+// Neither native deserialization nor native constructor+set copies custom keys.
+// Public/unknown arrays must continue through the complete own-key validator.
 /** @param {unknown} value @returns {import("./contracts").ContentChunkRecord} */
 export function validateContentChunkRecordForFreshNativeRead(value) {
   const { record } = validateContentChunkRecordHead(value);

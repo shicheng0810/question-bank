@@ -1,3 +1,8 @@
+import {validateConfirmedDeletionScope} from './confirmed-deletion-scope.js';
+import {readManagerReportSummaries} from './report-status-read.js';
+import { readPublicationManifest, readBankPublicationEvidence, observeSavedPublicationEvidence } from './publication-evidence.js';
+import { withMigrationOperator } from '../../scripts/migration/local-operator-client.mjs';
+import { readNativeManager } from './native-manager-read.js';
 // 提取器「发布到站点」的本地桥（仅 dev 模式，127.0.0.1）：
 //   GET  /api/local/publish-bank        → 当前 public/banks/index.json（前端用来查重/提示覆盖）
 //   POST /api/local/publish-bank        → {questions,id,title,description,tags,mode,password,target}
@@ -47,15 +52,24 @@ function sendJson(res, status, payload) {
   res.end(JSON.stringify(payload));
 }
 
-export function createLocalPublishVitePlugin({ getRoot } = {}) {
+export function createLocalPublishVitePlugin({ getRoot, usersRead = listUsers, operator = withMigrationOperator, reportRead, specialBanks = { list: listSpecialBanks, create: createSpecialBank, delete: deleteSpecialBank } } = {}) {
   return {
     name: 'local-publish-bank-proxy',
     configureServer(server) {
+      server.middlewares.use('/api/local/report-status',async(req,res)=>{
+        res.setHeader('cache-control','no-store');
+        if(req.method!=='GET'){sendJson(res,405,{ok:false,error:'LOCAL_METHOD_NOT_ALLOWED'});return;}
+        const result=await readManagerReportSummaries(new URL(req.url||'/', 'http://localhost').searchParams,reportRead || (command=>operator(client=>client.call('inspectReportOperationSummaries',command))));
+        sendJson(res,result.status,result.body);
+      });
       server.middlewares.use('/api/local/publish-bank', async (req, res) => {
         const root = (getRoot && getRoot()) || process.cwd();
         try {
           if (req.method === 'GET') {
-            sendJson(res, 200, { ok: true, manifest: readBankManifest(root) });
+            const query = new URL(req.url || '/', 'http://localhost').searchParams;
+            sendJson(res, 200, query.get('evidence') === '1'
+              ? { ok: true, evidence: readBankPublicationEvidence({root,id:query.get('id')}) }
+              : { ok: true, manifest: readPublicationManifest(root) });
             return;
           }
           if (req.method !== 'POST') {
@@ -64,6 +78,7 @@ export function createLocalPublishVitePlugin({ getRoot } = {}) {
           }
           const body = await readJsonBody(req);
           const target = ['all', 'cf', 'gh', 'preview', 'none'].includes(body.target) ? body.target : 'none';
+          readPublicationManifest(root); // Refuse to overwrite an unreadable/corrupt source census.
           const result = await publishBankToRepo({
             root,
             questions: body.questions,
@@ -87,6 +102,7 @@ export function createLocalPublishVitePlugin({ getRoot } = {}) {
           sendJson(res, 200, {
             ok: true,
             ...result,
+            publicationEvidence: observeSavedPublicationEvidence({root,id:result.id}),
             rejected: undefined, // 详单太大，不回传；数量在 rejectedCount
             deploy,
             deployError,
@@ -148,8 +164,10 @@ export function createLocalPublishVitePlugin({ getRoot } = {}) {
         try {
           if (req.method === 'GET') {
             try {
-              const includeLegacy = new URL(req.url || '/', 'http://localhost').searchParams.get('includeLegacy') === '1';
-              sendJson(res, 200, { ok: true, users: await listUsers({ includeLegacy }) });
+              const query = new URL(req.url || '/', 'http://localhost').searchParams;
+              sendJson(res, 200, query.get('view') === 'manager'
+                ? await readNativeManager(query, { list: usersRead, withOperator: operator })
+                : { ok: true, users: await usersRead({ includeLegacy: query.get('includeLegacy') === '1' }) });
             } catch (e) {
               sendJson(res, 503, { ok: false, error: String((e && e.message) || 'CENSUS_UNAVAILABLE') });
             }
@@ -160,15 +178,13 @@ export function createLocalPublishVitePlugin({ getRoot } = {}) {
           const action = String(body.action || '');
           let result = {};
           if (action === 'delete') {
-            result = await deleteUser(String(body.sub || ''));
+            const scope=validateConfirmedDeletionScope(body.confirmedScope);if(scope.sub!==body.sub)throw Error('STALE_CONFIRMED_DELETION_SCOPE');result = await deleteUser(scope.sub,{expectedBinding:scope});
           } else if (action === 'delete-by-code') {
-            const code = String(body.code || '').trim();
-            if (!code) throw new Error('缺少 code');
-            result = await deleteUser(codeToSub(code));
+            throw Error('UNSCOPED_DELETION_DISABLED');
           } else if (action === 'delete-many') {
             const subs = Array.isArray(body.subs) ? body.subs : [];
             if (!subs.length) throw new Error('没有选中用户');
-            result = await deleteUsers(subs);
+            if(!Array.isArray(body.confirmedScopes)||body.confirmedScopes.length!==subs.length||new Set(subs).size!==subs.length)throw Error('CONFIRMED_DELETION_SCOPE_REQUIRED');const scopes=body.confirmedScopes.map(validateConfirmedDeletionScope);if(new Set(scopes.map(s=>s.sub)).size!==subs.length||subs.some(sub=>!scopes.some(s=>s.sub===sub)))throw Error('STALE_CONFIRMED_DELETION_SCOPE');result = await deleteUsers(subs,{confirmedScopes:scopes});
           } else {
             throw new Error(`未知 action: ${action}`);
           }
@@ -185,7 +201,7 @@ export function createLocalPublishVitePlugin({ getRoot } = {}) {
       server.middlewares.use('/api/local/special-banks', async (req, res) => {
         try {
           if (req.method === 'GET') {
-            sendJson(res, 200, { ok: true, banks: listSpecialBanks() });
+            sendJson(res, 200, { ok: true, banks: await specialBanks.list() });
             return;
           }
           if (req.method !== 'POST') { sendJson(res, 405, { ok: false, error: 'method not allowed' }); return; }
@@ -193,13 +209,13 @@ export function createLocalPublishVitePlugin({ getRoot } = {}) {
           const action = String(body.action || '');
           let result = {};
           if (action === 'create') {
-            result = createSpecialBank({ title: body.title, questions: body.questions, shareCode: body.shareCode });
+            result = await specialBanks.create({ title: body.title, questions: body.questions, shareCode: body.shareCode });
           } else if (action === 'delete') {
-            result = deleteSpecialBank(String(body.id || ''));
+            result = await specialBanks.delete(String(body.id || ''));
           } else {
             throw new Error(`未知 action: ${action}`);
           }
-          sendJson(res, 200, { ok: true, ...result, banks: listSpecialBanks() });
+          sendJson(res, 200, { ok: true, ...result, banks: await specialBanks.list() });
         } catch (e) {
           sendJson(res, 400, { ok: false, error: String((e && e.message) || e) });
         }

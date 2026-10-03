@@ -1,3 +1,5 @@
+import {validReportAdminCommand,safeReportAdminResult} from '../../do-worker/src/report-admin-dto.js';
+import { validAdminItemsCommand, safeAdminItemsResult } from '../../do-worker/src/native-admin-items-dto.js';
 import { randomBytes } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { unstable_dev } from 'wrangler';
@@ -7,7 +9,7 @@ import {safeNativeAdminStatus} from '../../do-worker/src/native-admin-status-dto
 import {safeNativeIdentityStatus} from '../../do-worker/src/native-identity-status-dto.js';
 import {validateSourceDispositionCommand,safeSourceDispositionResult} from '../../do-worker/src/legacy-source-disposition.js';
 
-const METHODS = new Set(['declareNativeSourceDisposition','inspectSource', 'inspectAuthority', 'inspectSourceDiagnostics', 'inspectAuthorityByPrincipal', 'inspectNativeIdentity', 'inspectNativeIdentityByPrincipal', 'inspectNativeConversionInventory','inspectNativeAdminStatus','convertNativeHistory','convertNativeBank','migrate', 'delete', 'deleteLegacySource']);
+const METHODS = new Set(['inspectReportOperationSummaries','inspectNativeAdminItems','declareNativeSourceDisposition','inspectSource', 'inspectAuthority', 'inspectSourceDiagnostics', 'inspectAuthorityByPrincipal', 'inspectNativeIdentity', 'inspectNativeIdentityByPrincipal', 'inspectNativeConversionInventory','inspectNativeAdminStatus','convertNativeHistory','convertNativeBank','migrate', 'delete', 'deleteLegacySource']);
 const START_TIMEOUT_MS = 45000;
 const RPC_TIMEOUT_MS = 15000;
 const STOP_TIMEOUT_MS = 8000;
@@ -25,6 +27,8 @@ function timeout(promise, duration, code) {
 }
 
 function validArgs(method, args) {
+  if(method==='inspectReportOperationSummaries')return validReportAdminCommand(args);
+  if (method === 'inspectNativeAdminItems') return validAdminItemsCommand(args);
   if(method==='declareNativeSourceDisposition'){try{validateSourceDispositionCommand(args);return true;}catch{return false;}}
   if(method==='convertNativeHistory'||method==='convertNativeBank')return validNativeConversionCommand(args);
   if (!args || typeof args !== 'object' || Array.isArray(args)) return false;
@@ -133,6 +137,8 @@ export function createMigrationOperatorClient({ startPreview = createStartPrevie
             return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
           })(), rpcTimeoutMs, 'MIGRATION_OPERATOR_RPC_TIMEOUT');
           const result = safePlainResult(JSON.parse(body));
+          if(method==='inspectReportOperationSummaries'){const safe=await safeReportAdminResult(result,args);if(!safe)unavailable();return safe;}
+          if(method==='inspectNativeAdminItems'){const safe=safeAdminItemsResult(result,args);if(!safe)unavailable();return safe;}
           if(method==='inspectNativeAdminStatus'){if(result.ok===false&&Object.keys(result).length===2&&/^[A-Z][A-Z0-9_]{0,63}$/.test(result.error||''))return result;const safe=safeNativeAdminStatus(result);if(!safe||safe.principal!==args.principal)unavailable();return safe;}
           if(method==='inspectNativeIdentity'||method==='inspectNativeIdentityByPrincipal'){
             if(result.ok===false&&Object.keys(result).length===2&&/^[A-Z][A-Z0-9_]{0,63}$/.test(result.error||''))return result;

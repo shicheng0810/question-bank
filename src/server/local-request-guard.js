@@ -1,4 +1,5 @@
 const EXACT_ROUTES = new Map([
+  ['/api/local/report-status', new Set(['GET'])],
   ['/api/local/publish-bank', new Set(['GET', 'POST'])],
   ['/api/local/bank-admin', new Set(['POST'])],
   ['/api/local/users', new Set(['GET', 'POST'])],

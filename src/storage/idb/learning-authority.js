@@ -10,7 +10,7 @@ import { snapshotOwner, sameOwner, assertBusinessDbName } from '../profiles/cont
 import { validatePushRequest, validatePushResponse, validatePushAcknowledgement } from '../../domain/app-data/index.js';
 import { mutationWire, validateSyncReceipt } from '../sync/protocol.js';
 import {withProfileWriteLock,validateProfileWriteLockKey} from '../profiles/write-lock.js';
-import { ownedWriteInput } from './write-input.js';
+import { ownedWriteInput,validateOwnedWriteRecord } from './write-input.js';
 import {prepareStarConflictResolution} from '../sync/star-resolution.js';
 import {STAR_GROUP_FORMAT,STAR_GROUP_STORES,STAR_GROUP_READ_BYTES,prepareStarConflictGroupResolution,projectStarConflictGroup} from '../sync/star-group-resolution.js';
 import {assertHeldCheckpointSourceLease} from '../profiles/managed-profile-registry.js';
@@ -292,7 +292,7 @@ export async function openB1bAuthority({ registry, owner, ownerTabId, blockedTim
       const descriptors = Object.getOwnPropertyDescriptors(row);
       if (!descriptors.store || !descriptors.value || !('value' in descriptors.store) || !('value' in descriptors.value) || Object.keys(descriptors).some(key => !['store', 'value'].includes(key))) throw fail('INVALID_INPUT');
       if (['meta', 'writer_leases', 'mutations', 'outbox'].includes(row.store)) throw fail('INVALID_INPUT');
-      validateStoreRecord(row.store, row.value);
+      validateOwnedWriteRecord(row.store, row.value);
       if(row.store==='import_receipts'&&(['qb-star-conflict-resolution-v1',STAR_GROUP_FORMAT].includes(row.value.provenance?.format)||row.value.sourceId===STAR_GROUP_FORMAT)&&!privateWithdrawal)throw fail('INVALID_INPUT');
     }
     for (const row of conditions) {

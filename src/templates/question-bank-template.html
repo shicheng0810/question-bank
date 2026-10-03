@@ -3948,7 +3948,7 @@
             fbStatus("qb-login-status", text, "");
             const button=document.getElementById("qb-login-go");if(button)button.textContent=uiLang==='zh'?'继续迁移':uiLang==='es'?'Continuar migración':'Continue migration';
           });
-          if(result&&result.cancelled){fbStatus('qb-login-status',uiLang==='zh'?'已取消创建账号。':uiLang==='es'?'Creación cancelada.':'Account creation cancelled.','');return;}
+          if(result&&result.cancelled){if(loginOperation.shareRetry){fbStatus('qb-login-status',uiLang==='zh'?'分享码未找到，请重新输入；未创建账号。':uiLang==='es'?'Código compartido no encontrado; vuelve a introducirlo. No se creó cuenta.':'Share code not found. Re-enter the code; no account was created.','err');return;}fbStatus('qb-login-status',uiLang==='zh'?'已取消创建账号。':uiLang==='es'?'Creación cancelada.':'Account creation cancelled.','');return;}
           if (!accountV2UiOperationIsCurrent(loginOperation)) return; setCandidateDisplayLabel(code,controller);
           fbStatus("qb-login-status", DATA_V2_ENABLED?(uiLang==='zh'?'已登录。学习记录保存到此身份的本机空间；云同步状态单独显示。':uiLang==='es'?'Sesión iniciada. El progreso se guarda localmente para esta identidad; la sincronización se indica por separado.':'Signed in. Learning records save to this identity’s local space; cloud sync status is shown separately.'):"Signed in. Practice progress remains memory-only.", "ok");
           closeLoginModal(true);
@@ -3992,10 +3992,10 @@
       return new Promise(function(resolve){
         var lang=uiLang,dialog=document.createElement('dialog'),text=document.createElement('p'),cancel=document.createElement('button'),create=document.createElement('button');
         dialog.setAttribute('data-testid','account-create-confirm');dialog.setAttribute('aria-label',lang==='zh'?'创建账号':lang==='es'?'Crear cuenta':'Create account');
-        text.textContent=lang==='zh'?'没有找到这个账号。是否创建新的空账号？原来删除的数据不会恢复。':lang==='es'?'No se encontró una cuenta. ¿Crear una cuenta vacía? Los datos eliminados no se restaurarán.':'No account was found. Create a new empty account? Previously deleted data will not be restored.';
-        cancel.textContent=lang==='zh'?'取消':lang==='es'?'Cancelar':'Cancel';create.textContent=lang==='zh'?'创建账号':lang==='es'?'Crear cuenta':'Create account';cancel.type=create.type='button';
+        text.textContent=lang==='zh'?'没有找到可进入的账号或分享题库。若你输入的是分享码，请重新输入，不要创建账号。创建会建立归属于你的空私有账号；原来删除的数据不会恢复。':lang==='es'?'No se encontró cuenta ni banco compartido. Si es un código compartido, vuelve a introducirlo. Crear establece una cuenta privada vacía tuya; no restaura datos eliminados.':'No account or shared bank was found. If this is a share code, re-enter it instead of creating an account. Creating makes a new empty private account owned by you. Previously deleted data will not be restored.';
+        cancel.textContent=lang==='zh'?'取消':lang==='es'?'Cancelar':'Cancel';create.textContent=lang==='zh'?'创建账号':lang==='es'?'Crear cuenta':'Create account';cancel.type=create.type='button';var share=document.createElement('button');share.type='button';share.dataset.testid='unknown-as-share';share.textContent=lang==='zh'?'这是分享码，重新输入':lang==='es'?'Es un código compartido; volver':'This is a share code; re-enter';share.onclick=function(){operation.shareRetry=true;finish(false);};
         function finish(approved){if(NEW_ACCOUNT_CANCEL===abort)NEW_ACCOUNT_CANCEL=null;dialog.close();dialog.remove();resolve(approved&&accountV2UiOperationIsCurrent(operation));}
-        function abort(){finish(false);}NEW_ACCOUNT_CANCEL=abort;cancel.onclick=abort;create.onclick=function(){finish(true);};dialog.oncancel=function(event){event.preventDefault();abort();};dialog.append(text,cancel,create);document.body.append(dialog);dialog.showModal();cancel.focus();
+        function abort(){finish(false);}NEW_ACCOUNT_CANCEL=abort;cancel.onclick=abort;create.onclick=function(){finish(true);};dialog.oncancel=function(event){event.preventDefault();abort();};dialog.append(text,cancel,share,create);document.body.append(dialog);dialog.showModal();cancel.focus();
       });
     }
     function logout(){ if(ACCOUNT_V2_CANDIDATE){ if (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; } clearCandidateDisplayLabel();invalidateAccountV2UiOperation();dataV2ClearLocalImport(); if(ACCOUNT_V2) ACCOUNT_V2.logout(); closeHistory(); return; } dataV2ClearLocalImport();clearAuth(); closeHistory(); }

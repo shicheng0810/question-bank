@@ -3,6 +3,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { canonicalContentBytes,sha256Hex } from '../../src/domain/app-data/canonical.js';
 import { validateBankContent } from '../../src/domain/question/bank-content.js';
+import {writeImmutablePublicManifest} from './write-immutable-public-manifest.mjs';
 
 /** Mandatory after current catalog build: receiver trust for old revisions is
  * useful only if these exact immutable assets are also in the deployment. */
@@ -22,5 +23,6 @@ if(import.meta.url===pathToFileURL(process.argv[1]||'').href){
   const artifacts=await retainedReportArtifacts(manifest,async file=>{const target=await realpath(path.join(root,file));if(path.relative(root,target).startsWith('..')||path.isAbsolute(path.relative(root,target)))throw Error('REPORT_RETAINED_SOURCE_OUTSIDE_ROOT');return new Uint8Array(await readFile(target));});
   const out=await realpath(outDirectory);await mkdir(path.join(out,'banks/v2'),{recursive:true});
   for(const artifact of artifacts)await writeFile(path.join(out,artifact.path),artifact.bytes);
+  await writeImmutablePublicManifest(manifest,out,{sourceRoot:root});
   console.log(JSON.stringify({retainedAssets:artifacts.map(row=>row.path)}));
 }

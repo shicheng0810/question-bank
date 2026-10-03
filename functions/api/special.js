@@ -1,3 +1,6 @@
+import {validSharePointer,shareCodeHash,SHARE_TYPE} from '../../do-worker/src/generation-sharing.js';
+import {decodeAccountRpcOutcome,disposeAccountRpcOutcome} from '../_shared/account-session-handler.js';
+import {exactAdminRecord} from '../../do-worker/src/native-admin-items-dto.js';
 // Cloudflare Pages Function —— /api/special：访客用「分享码」取一个特殊题库（公开、只读、不建账号、不记历史）。
 // POST {code} → 命中则返回那一个特殊题库 {id,title,questions}；未命中 404。轻量限流防暴力猜码。
 // 特殊题库由站主在本地 extractor 里创建（wrangler 写入），键：
@@ -45,10 +48,18 @@ export async function onRequestPost(context) {
 
   let body;
   try { body = await request.json(); } catch { return json({ ok: false, error: 'bad_json' }, 400, origin); }
-  const code = String(body.code == null ? '' : body.code).trim();
+  if(!exactAdminRecord(body,['code'])||typeof body.code!=='string')return json({ok:false,error:'bad_code'},400,origin);
+  const code = body.code.trim();
   if (code.length < 6 || code.length > 80) return json({ ok: false, error: 'bad_code' }, 400, origin); // ≥6 抗暴力猜
 
   const id = await env.EDITS.get('sb:code:' + (await sha256hex('qbshare:v1:' + code)));
+  if(id?.startsWith('{')){
+    let pointer;try{pointer=JSON.parse(id);}catch{return json({ok:false,error:'share_unavailable'},503,origin);}
+    if(!validSharePointer(pointer)||pointer.type!==SHARE_TYPE||pointer.codeHash!==await shareCodeHash(code))return json({ok:false,error:'share_unavailable'},503,origin);
+    let raw,result;try{const stub=env.GENERATION_STORE.getByName(pointer.incarnation);raw=await stub.resolveAccountShareTrusted(pointer);result=decodeAccountRpcOutcome(raw,['ok','bank']);if(result.ok)result.bank=structuredClone(result.bank);}catch{return json({ok:false,error:'share_unavailable'},503,origin);}finally{await disposeAccountRpcOutcome(raw);}
+    if(!result.ok)return json({ok:false,error:['SHARE_NOT_FOUND','STALE_AUTHORITY','STALE_GENERATION','ACCOUNT_DELETED'].includes(result.error)?'not_found':'share_unavailable'},['SHARE_NOT_FOUND','STALE_AUTHORITY','STALE_GENERATION','ACCOUNT_DELETED'].includes(result.error)?404:503,origin);
+    const bank=result.bank;const response=json({ok:true,bank:{id:bank.id,title:bank.title,questions:bank.questions}},200,origin);response.headers.set('X-QB-Share-Bank-Uid',bank.bankUid);response.headers.set('X-QB-Share-Bank-Revision',bank.bankRevision);response.headers.set('Cache-Control','no-store');return response;
+  }
   if (!id) return json({ ok: false, error: 'not_found' }, 404, origin);
   const raw = await env.EDITS.get('sb:bank:' + id);
   if (raw == null) return json({ ok: false, error: 'not_found' }, 404, origin);

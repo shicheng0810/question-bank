@@ -1,3 +1,5 @@
+import {validShareInput,validSharePointer,shareCodeHash,newShareCode,sharingRepository,shareDTO,failShare,SHARE_TYPE} from './generation-sharing.js';
+import { readNativeAdminItems } from './native-admin-items.js';
 import {validateSnapshotContinuationBaseline} from '../../src/domain/app-data/snapshot-continuation.js';
 import { GenerationStore } from './generation-store.js';
 import {createSessionV3Repository,SESSION_V3_FLAG} from './account-session-v3.js';
@@ -191,6 +193,15 @@ export class AccountGenerationStore extends GenerationStore {
   async convertArchivedHistoryTrusted(input) {return this.#convertArchivedNative(input,'history');}
   async nativeConversionInventoryTrusted(input){
     try{validateCall(this.env,this.ctx,{principal:input.principal,incarnation:input.incarnation});return await readNativeConversionInventory(this.ctx.storage.sql,input);}catch(error){return failure(publicError(error));}
+  }
+  nativeAdminItemsTrusted(command) {
+    try {
+      const binding = { principal: command?.principal, incarnation: command?.incarnation };
+      validateCall(this.env, this.ctx, binding); assertBinding(this.ctx.storage.sql, binding);
+      const state = readGeneration(this.ctx.storage.sql, createGenerationRepository(this.ctx.storage));
+      if (state.status !== 'active') return { ok: false, error: 'STALE_AUTHORITY' };
+      return readNativeAdminItems(this.ctx.storage.sql, command, state.generation);
+    } catch (error) { return { ok: false, error: ['INVALID_INPUT','STALE_GENERATION','CURSOR_STALE','INVALID_ADMIN_CURSOR','ADMIN_ITEMS_LIMIT','ADMIN_ITEM_TOO_LARGE'].includes(error.code) ? error.code : 'ADMIN_ITEMS_UNAVAILABLE' }; }
   }
   nativeAdminStatusTrusted(binding){
     try{validateCall(this.env,this.ctx,binding);const sql=this.ctx.storage.sql;assertBinding(sql,binding);const state=readGeneration(sql,createGenerationRepository(this.ctx.storage));if(state.status!=='active')throw cause('STALE_AUTHORITY');return{ok:true,...readNativeAdminStatus(sql,{generation:state.generation})};}catch(error){return failure(publicError(error));}
@@ -578,6 +589,68 @@ export class AccountGenerationStore extends GenerationStore {
       if (state.generation !== claim.generation) throw cause('STALE_GENERATION');
       return operation(createAccountSyncRepository(sql, state.generation), createAccountContentRepository(sql));
     });
+  }
+
+  async #shareGuard(binding) {
+    validateCall(this.env,this.ctx,{principal:binding.principal,incarnation:binding.incarnation});
+    const sql=this.ctx.storage.sql;assertBinding(sql,binding);
+    const state=readGeneration(sql,createGenerationRepository(this.ctx.storage));
+    if(state.status!=='active'||state.generation!==binding.generation)failShare('STALE_GENERATION');
+    const result=await this.env.ACCOUNT_AUTHORITY.getByName(binding.principal).nativeManagerIdentityTrusted({principal:binding.principal});
+    if(result?.ok!==true||result.phase!=='active'||result.principal!==binding.principal||result.incarnation!==binding.incarnation||binding.fence!==undefined&&result.fence!==binding.fence)failShare('STALE_AUTHORITY');
+    assertBinding(sql,binding);const current=readGeneration(sql,createGenerationRepository(this.ctx.storage));
+    if(current.status!=='active'||current.generation!==binding.generation)failShare('STALE_GENERATION');
+    return result.fence;
+  }
+  async accountSharesTrusted(claim,input) {
+    try {
+      if(!validShareInput(input))failShare('INVALID_SHARE_INPUT');
+      const command=structuredClone(input),identity=captureSyncClaim(this.env,this.ctx,claim);
+      const fence=await this.#shareGuard(identity),binding={...identity,fence};
+      if(command.action==='list')return {ok:true,response:this.#syncTransaction(identity,repository=>{
+        const sql=this.ctx.storage.sql;const banks=Array.from(sql.exec("SELECT payload_json FROM gen06_entities e WHERE kind='bank_revision' AND json_extract(payload_json,'$.metadata.visibility')='private' AND NOT EXISTS(SELECT 1 FROM gen06_entity_tombstones t WHERE t.entity_key=e.entity_key AND t.generation=?) ORDER BY entity_key LIMIT 101",identity.generation)).map(r=>{const p=JSON.parse(r.payload_json);return {bankUid:p.bankUid,bankRevision:p.revision,title:p.metadata.title};});
+        if(banks.length>100)failShare('SHARE_LIMIT');return {banks,shares:sharingRepository(sql).list(identity.generation).map(shareDTO)};
+      })};
+      let record;
+      if(command.action==='create'){
+        const stored=await this.#readContentJson(identity,command.bankRevision);if(!stored)failShare('SHARE_BANK_UNAVAILABLE');const checked=await validateBankContent(stored.value);if(checked.contentDigest!==command.bankRevision||checked.content.bankUid!==command.bankUid||checked.content.metadata.visibility!=='private')failShare('SHARE_BANK_UNAVAILABLE');
+        const code=newShareCode(),codeHash=await shareCodeHash(code);
+        await this.#shareGuard(binding);
+        record=this.#syncTransaction(identity,repository=>{
+          const shares=sharingRepository(this.ctx.storage.sql),known=shares.byOperation(command.opId);
+          if(known){if(known.record.generation!==identity.generation||known.record.principal!==identity.principal||known.record.incarnation!==identity.incarnation||known.record.fence!==fence)failShare('SHARE_CONFLICT');if(['action','opId','bankUid','bankRevision'].some(k=>known.command[k]!==command[k]))failShare('SHARE_CONFLICT');return known.record;}
+          const bank=repository.readEntity('bank_revision','bank:'+command.bankUid);
+          if(!bank||bank.metadata.visibility!=='private'||bank.revision!==command.bankRevision||Array.from(this.ctx.storage.sql.exec('SELECT entity_key FROM gen06_entity_tombstones WHERE entity_key=? AND generation=?','bank:'+command.bankUid,identity.generation)).length)failShare('SHARE_BANK_UNAVAILABLE');
+          return shares.insert(command,{type:SHARE_TYPE,principal:identity.principal,incarnation:identity.incarnation,generation:identity.generation,fence,shareId:crypto.randomUUID(),codeHash,code,bankUid:command.bankUid,bankRevision:command.bankRevision,status:'publishing',createdAt:Date.now(),revokedAt:null});
+        });
+        if(record.status==='revoked')return {ok:true,response:shareDTO(record)};
+        const pointer={type:SHARE_TYPE,principal:record.principal,incarnation:record.incarnation,generation:record.generation,fence:record.fence,shareId:record.shareId,codeHash:record.codeHash};
+        const key='sb:code:'+record.codeHash,raw=JSON.stringify(pointer),old=await this.env.EDITS.get(key);
+        if(old!==null&&old!==raw)failShare('SHARE_CODE_OCCUPIED');
+        await this.env.EDITS.put(key,raw);if(await this.env.EDITS.get(key)!==raw)failShare('SHARE_INDEX_UNVERIFIED');
+        await this.#shareGuard(binding);
+        record=this.#syncTransaction(identity,()=>{const repo=sharingRepository(this.ctx.storage.sql),r=repo.get(record.shareId);if(r.status==='revoked')return r;r.status='active';return repo.put(r);});
+      }else{
+        await this.#shareGuard(binding);
+        record=this.#syncTransaction(identity,()=>{const repo=sharingRepository(this.ctx.storage.sql),r=repo.get(command.shareId);if(!r||r.generation!==identity.generation||r.incarnation!==identity.incarnation)failShare('SHARE_NOT_FOUND');repo.rememberRevoke(command,identity.generation);r.status='revoked';r.revokedAt??=Date.now();return repo.put(r);});
+        // Do not erase the bank/account. Keeping an inactive pointer is safe;
+        // each subsequent Enter consults the authoritative revoked record.
+      }
+      return {ok:true,response:shareDTO(record)};
+    }catch(error){return failure(/^SHARE_[A-Z_]+$|^INVALID_SHARE_INPUT$|^STALE_AUTHORITY$/.test(error.code||error.message)?error.code||error.message:publicError(error));}
+  }
+  async resolveAccountShareTrusted(input) {
+    try{
+      if(!validSharePointer(input))failShare('INVALID_SHARE_INPUT');const pointer=structuredClone(input);
+      await this.#shareGuard(pointer);
+      const read=()=>{const r=sharingRepository(this.ctx.storage.sql).get(pointer.shareId);if(!r||r.status!=='active'||['principal','incarnation','generation','fence','codeHash'].some(k=>r[k]!==pointer[k]))failShare('SHARE_NOT_FOUND');
+        if(Array.from(this.ctx.storage.sql.exec('SELECT entity_key FROM gen06_entity_tombstones WHERE entity_key=? AND generation=?','bank:'+r.bankUid,r.generation)).length)failShare('SHARE_NOT_FOUND');return r;};
+      const record=read();const claim={principal:record.principal,incarnation:record.incarnation,generation:record.generation,expiresAt:Date.now()+30000};
+      const stored=await this.#readContentJson(claim,record.bankRevision);if(!stored)failShare('SHARE_BANK_UNAVAILABLE');const checked=await validateBankContent(stored.value);
+      if(checked.contentDigest!==record.bankRevision||checked.content.bankUid!==record.bankUid||checked.content.metadata.visibility!=='private')failShare('SHARE_BANK_UNAVAILABLE');
+      await this.#shareGuard(pointer);read();
+      return {ok:true,bank:{id:record.shareId,title:checked.content.metadata.title,bankUid:record.bankUid,bankRevision:record.bankRevision,questions:checked.content.questions}};
+    }catch(error){return failure(/^SHARE_[A-Z_]+$|^INVALID_SHARE_INPUT$|^STALE_AUTHORITY$/.test(error.code||error.message)?error.code||error.message:publicError(error));}
   }
 
   syncCapabilitiesTrusted(claim) {

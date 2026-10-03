@@ -1,6 +1,16 @@
 import { APP_DATA_CONTENT_LIMITS as LIMITS } from '../../domain/app-data/constants.js';
 import { validateStoreRecord } from '../../domain/app-data/index.js';
+import {validateContentChunkRecordForFreshNativeRead} from '../../domain/app-data/local-records.js';
 import { storageError } from './transaction.js';
+
+const ownedBinaryCopies=new WeakSet();
+const NativeUint8Array=Uint8Array,nativeSet=Uint8Array.prototype.set;
+export function validateOwnedWriteRecord(store,value){
+  // The input was fully validated before this private native copy was made.
+  // External arrays always keep the complete strict validator.
+  if(store==='content_chunks'&&ownedBinaryCopies.has(value?.bytes))return validateContentChunkRecordForFreshNativeRead(value);
+  return validateStoreRecord(store,value);
+}
 
 const invalid = () => { throw storageError('INVALID_INPUT', 'Invalid or oversized write input'); };
 const forbidden = new Set(['__proto__', 'prototype', 'constructor']);
@@ -72,7 +82,7 @@ export function ownedWriteInput(input) {
   inspect(input, 0); // Complete preflight before copying even the first binary chunk.
   function clone(value) {
     if (!value || typeof value !== 'object') return value;
-    if (value instanceof Uint8Array) return Uint8Array.prototype.slice.call(value);
+    if (value instanceof Uint8Array) {const copy=new NativeUint8Array(value.byteLength);nativeSet.call(copy,value);ownedBinaryCopies.add(copy);return copy;}
     if (Array.isArray(value)) return value.map(clone);
     const result = {};
     for (const key of Reflect.ownKeys(value)) result[key] = clone(Object.getOwnPropertyDescriptor(value, key).value);

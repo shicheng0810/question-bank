@@ -1,3 +1,4 @@
+import {assertConfirmedAuthority} from './confirmed-deletion-scope.js';
 // 站主本地后台：只读 Cloudflare metadata census；删除通过受限 MigrationOperator RPC。
 // 不读取/打印用户 payload、会话 token 或原始 Cloudflare API 响应。
 import crypto from 'node:crypto';
@@ -167,6 +168,8 @@ export async function listUsers({ metadataClient = cloudflare(), withOperator = 
       const user = emptyUser(identity.principal);
       user.accountKind = 'native';
       user.accountPhase = identity.phase;
+      user.incarnation = identity.incarnation;
+      user.fence = identity.fence;
       user.deleting = identity.deleting;
       user.nativeStats = identity.nativeStats;
       return user;
@@ -219,10 +222,11 @@ async function authorityForPrincipal(principal, metadataClient = cloudflare(), w
 }
 
 export async function deleteUser(sub, { metadataClient = cloudflare(), withOperator = withMigrationOperator,
-  operatorCall = migrationOperatorCall } = {}) {
+  operatorCall = migrationOperatorCall, expectedBinding } = {}) {
   if (!SUB.test(String(sub))) fail('INVALID_SUB');
   const principal = String(sub);
   const authority = await authorityForPrincipal(principal, metadataClient, withOperator);
+  if(expectedBinding){if(expectedBinding.sub!==principal)fail('STALE_CONFIRMED_DELETION_SCOPE');assertConfirmedAuthority(expectedBinding,authority);}
   if (authority?.phase === 'deleting') return { sub: principal, status: 'pending', deletedBanks: 0 };
   if (authority?.phase === 'active') {
     const result = checked(await operatorCall('delete', {
@@ -247,7 +251,7 @@ export async function deleteUsers(subs, options) {
   const errors = [];
   for (const sub of list) {
     try {
-      const result = await deleteUser(sub, options);
+      const result = await deleteUser(sub, {...options,...(options?.confirmedScopes?{expectedBinding:options.confirmedScopes.find(scope=>scope.sub===sub)}:{})});
       if (result.status === 'complete') {
         deletedUsers += 1;
         deletedBanks += result.deletedBanks || 0;

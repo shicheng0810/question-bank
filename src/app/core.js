@@ -1,3 +1,7 @@
+import {captureDeletionScope} from '../server/confirmed-deletion-scope.js';
+import { mountLocalNativeLifecycle } from './local-native-lifecycle-ui.js';
+import { mountPublicationEvidence, publicationEvidenceSummary } from './publication-evidence-ui.js';
+import { mountNativeManager, confirmAccountRemoval } from './native-manager-ui.js';
 import { initAiMCQFeature } from './features/ai-mcq.js';
 import { userAdminSummary } from './user-admin-summary.js';
 import { slugifyBankId } from '../lib/site-package.js';
@@ -55,6 +59,7 @@ function hasRegisteredIdentity(value){
 }
 
 export function init() {
+mountLocalNativeLifecycle({ container: document.getElementById("app") || document.body });
 const $  = s => document.querySelector(s);
 // D2 is an explicit candidate only. Capture the gate once so a late global
 // mutation cannot change the editor semantics halfway through a session.
@@ -824,8 +829,9 @@ function renderSiteBanksList(manifest){
     return `<div class="row" style="gap:8px;align-items:center;flex-wrap:wrap;border-top:1px solid var(--border,#e5e7eb);padding:7px 0" data-bank-row="${escapeHTML(e.id)}">
       <strong style="min-width:150px">${e.mode === 'protected' ? '🔒 ' : ''}${escapeHTML(e.title || e.id)}</strong>
       ${archived ? '<span class="meta" style="background:var(--muted-bg,#eef1f6);color:var(--muted,#6b7280);border:1px solid var(--border,#e5e7eb);border-radius:999px;padding:1px 8px;font-size:11px" data-testid="bank-archived-badge">旧库</span>' : ''}
-      <span class="meta">${escapeHTML(e.id)} · ${e.question_count ?? '?'} 题 · ${e.mode === 'protected' ? '加密' : '公开'} · ${online ? '在线' : '已下架'}</span>
+      <span class="meta">${escapeHTML(e.id)} · ${e.question_count ?? '?'} 题 · ${e.mode === 'protected' ? '加密' : '公开'} · ${online ? '本地构建清单包含' : '本地构建清单排除'}</span>
       <span style="flex:1"></span>
+      <button class="btn" data-publication-evidence="${escapeHTML(e.id)}">保存/发布证据</button>
       <button class="btn" data-bank-act="up" data-bank-id="${escapeHTML(e.id)}" title="目录页顺序上移" data-testid="bank-up-btn">↑</button>
       <button class="btn" data-bank-act="down" data-bank-id="${escapeHTML(e.id)}" title="目录页顺序下移" data-testid="bank-down-btn">↓</button>
       <button class="btn" data-bank-act="${online ? 'unlist' : 'restore'}" data-bank-id="${escapeHTML(e.id)}" data-testid="bank-${online ? 'unlist' : 'restore'}-btn">${online ? '下架' : '恢复上架'}</button>
@@ -837,14 +843,16 @@ function renderSiteBanksList(manifest){
   }).join('') || '<div class="meta">（清单为空）</div>';
 }
 
+if (siteBanksListEl) mountPublicationEvidence({listElement:siteBanksListEl});
 async function refreshSiteBanks(){
   if (!siteBanksListEl) return;
   if (!publishBridgeAvailable){ renderSiteBanksList([]); return; }
   try{
-    const m = await fetch('/api/local/publish-bank').then(r => r.json());
-    renderSiteBanksList((m && m.manifest) || []);
-  }catch(_e){
-    renderSiteBanksList([]);
+    const response = await fetch('/api/local/publish-bank');const m=await response.json();
+    if (!response.ok || m?.ok !== true || !Array.isArray(m.manifest)) throw new Error(m?.error || '清单响应无效');
+    renderSiteBanksList(m.manifest);
+  }catch(error){
+    setSiteBanksOpStatus('清单读取失败；保留先前观测，保存/发布状态未知：'+error.message,true);
   }
 }
 
@@ -982,6 +990,7 @@ function renderUsersList(users){
       <code style="flex:1;min-width:0;overflow-x:auto;white-space:nowrap;font-size:11px" title="完整用户 id（sub = 码的 sha256）：${escapeHTML(sub)}" data-testid="user-sub">${escapeHTML(sub)}</code>
       <button class="btn" data-user-act="copy" data-user-sub="${escapeHTML(sub)}" data-testid="user-copy-btn" title="复制完整 id">📋</button>
       <span class="meta" data-testid="user-stats"><span>${escapeHTML(summary.phase)}</span><br><span data-testid="user-native-stats">${escapeHTML(summary.native)}</span><br><span data-testid="user-legacy-stats">${escapeHTML(summary.legacy)}</span></span>
+      <button class="btn" data-user-act="detail" data-user-sub="${escapeHTML(sub)}">详情</button>
       <button class="btn danger" data-user-act="delete" data-user-sub="${escapeHTML(sub)}" data-testid="user-delete-btn">🗑 删除全部数据</button>
     </div>`;
   }).join('') || '<div class="meta" style="padding:6px">本次未观察到该范围账号；不代表云端账号总数为零。</div>';
@@ -1021,42 +1030,19 @@ function userDeleteMessage(result, label){
 function userDeleteRefreshWarning(result){
   return result && result.refreshError ? `；删除结果已确认，但名单刷新失败：${result.refreshError}` : '';
 }
+const nativeManager = usersListEl ? mountNativeManager({ listElement: usersListEl, renderUsers: renderUsersList,
+  legacySelected: () => document.getElementById('usersIncludeLegacy')?.checked === true }) : null;
 async function refreshUsers(){
-  if (!usersListEl) return;
-  if (!publishBridgeAvailable){ renderUsersList([]); return; }
-  setUsersOpStatus('读取中…（首次较慢，要跑几次 wrangler）');
-  try{
-    const legacy = document.getElementById('usersIncludeLegacy')?.checked === true;
-    const response = await fetch('/api/local/users' + (legacy ? '?includeLegacy=1' : ''));
-    const d = await response.json().catch(() => ({ ok: false, error: '响应不是合法 JSON' }));
-    if (!response.ok || !d || d.ok !== true || !Array.isArray(d.users)) {
-      throw new Error((d && d.error) || `HTTP ${response.status}`);
-    }
-    renderUsersList(d.users);
-    usersLoaded = true;
-    setUsersOpStatus(`本次观察到 ${lastUsers.length} 条账号/库存记录；不代表云端完整账号总数。`);
-  }catch(e){
-    // Keep the last verified list visible. A census/read failure is not evidence of zero users.
-    setUsersOpStatus(`读取失败：${e && e.message ? e.message : '确认用 extractor.command（dev 模式）打开、且 wrangler 已登录。'}`, true);
-  }
+  if (!publishBridgeAvailable) { setUsersOpStatus('本地管理接口不可用；数量未知', true); return; }
+  await nativeManager?.load(); usersLoaded = true;
 }
 usersRefreshBtn && usersRefreshBtn.addEventListener('click', refreshUsers);
 document.getElementById('usersIncludeLegacy')?.addEventListener('change', refreshUsers);
 usersPanelEl && usersPanelEl.addEventListener('toggle', () => {
   if (usersPanelEl.open && !usersLoaded && publishBridgeAvailable) refreshUsers();
 });
-usersDelByCodeBtn && usersDelByCodeBtn.addEventListener('click', async () => {
-  const code = ((usersDelCodeEl && usersDelCodeEl.value) || '').trim();
-  if (!code){ setUsersOpStatus('先输入那个用户的码。', true); return; }
-  if (!confirm('用「码」定位并删除该用户的全部数据（历史 + 私有题库 + 账号）？\n此操作不可撤销。')) return;
-  try{
-    setUsersOpStatus('删除中…');
-    const r = await usersAdmin({ action: 'delete-by-code', code });
-    if (usersDelCodeEl) usersDelCodeEl.value = '';
-    setUsersOpStatus(`${userDeleteMessage(r, '该用户')}${userDeleteRefreshWarning(r)}`, r.status !== 'complete');
-  }catch(e){
-    setUsersOpStatus(`❌ 删除失败：${e && e.message ? e.message : e}`, true);
-  }
+usersDelByCodeBtn && usersDelByCodeBtn.addEventListener('click', () => {
+  setUsersOpStatus('请先按完整账号 ID 搜索并查看 generation，再从账号行发起删除；码直接删除暂不可诊断范围。', true);
 });
 usersListEl && usersListEl.addEventListener('click', async (ev) => {
   const copyBtn = ev.target && ev.target.closest ? ev.target.closest('[data-user-act="copy"]') : null;
@@ -1070,10 +1056,11 @@ usersListEl && usersListEl.addEventListener('click', async (ev) => {
   if (!btn) return;
   const sub = btn.dataset.userSub;
   if (!sub) return;
-  if (!confirm(`删除这个用户的全部数据（历史 + 私有题库 + 账号）？\nsub: ${sub}\n此操作不可撤销。`)) return;
+  const user = lastUsers.find(user => user.sub === sub);
+  if (!user || !confirmAccountRemoval([user])) return;
   try{
     setUsersOpStatus('删除中…');
-    const r = await usersAdmin({ action: 'delete', sub });
+    const r = await usersAdmin({ action: 'delete', sub, confirmedScope:captureDeletionScope(user) });
     setUsersOpStatus(`${userDeleteMessage(r, '该用户')}${userDeleteRefreshWarning(r)}`, r.status !== 'complete');
   }catch(e){
     setUsersOpStatus(`❌ 删除失败：${e && e.message ? e.message : e}`, true);
@@ -1093,10 +1080,10 @@ usersSelectAllEl && usersSelectAllEl.addEventListener('change', () => {
 usersDeleteSelectedBtn && usersDeleteSelectedBtn.addEventListener('click', async () => {
   const subs = pickedUserSubs();
   if (!subs.length){ setUsersOpStatus('先勾选要删除的用户。', true); return; }
-  if (!confirm(`批量删除选中的 ${subs.length} 个用户的全部数据（历史 + 私有题库 + 账号）？\n此操作不可撤销。`)) return;
+  if (!confirmAccountRemoval(lastUsers.filter(user => subs.includes(user.sub)))) return;
   try{
     setUsersOpStatus(`批量删除中…（${subs.length} 个用户，逐个执行受限DO删除并核对状态）`);
-    const r = await usersAdmin({ action: 'delete-many', subs });
+    const r = await usersAdmin({ action: 'delete-many', subs, confirmedScopes:subs.map(sub=>captureDeletionScope(lastUsers.find(user=>user.sub===sub))) });
     const errN = (r.errors && r.errors.length) || 0;
     const complete = r.status === 'complete' && !errN;
     const pending = r.status === 'pending';
@@ -1126,7 +1113,7 @@ function renderSpecialBanksList(banks){
     specialBanksListEl.innerHTML = '';
     return;
   }
-  if (specialBanksHintEl) specialBanksHintEl.textContent = '把「分享码」告诉谁，谁就能在网站 signin 框输码 → 只做这一个题库（其他全变灰、不联网存历史、刷新即清）。';
+  if (specialBanksHintEl) specialBanksHintEl.textContent = '独立访客分享库（不属于账号 generation），分享码授予此题库只读访问；不共享账号历史。';
   lastSpecialBanks = Array.isArray(banks) ? banks : [];
   specialBanksListEl.innerHTML = lastSpecialBanks.map(b => {
     const id = String(b.id || '');
@@ -1154,13 +1141,14 @@ async function refreshSpecialBanks(){
   if (!publishBridgeAvailable){ renderSpecialBanksList([]); return; }
   setSpecialOpStatus('读取中…（wrangler，稍慢）');
   try{
-    const d = await fetch('/api/local/special-banks').then(r => r.json());
-    renderSpecialBanksList((d && d.banks) || []);
+    const response = await fetch('/api/local/special-banks');
+    const d = await response.json();
+    if (!response.ok || d?.ok!==true || !Array.isArray(d.banks)) throw new Error(d?.error || 'SHARE_LIST_INVALID');
+    renderSpecialBanksList(d.banks);
     specialBanksLoaded = true;
     setSpecialOpStatus('');
-  }catch(_e){
-    renderSpecialBanksList([]);
-    setSpecialOpStatus('读取失败：确认用 extractor.command（dev 模式）打开、且 wrangler 已登录。', true);
+  }catch(e){
+    setSpecialOpStatus(`读取失败：${e.message}；数量未知，保留上次列表。`, true);
   }
 }
 specialBanksRefreshBtn && specialBanksRefreshBtn.addEventListener('click', refreshSpecialBanks);
@@ -1172,7 +1160,7 @@ specialBankCreateBtn && specialBankCreateBtn.addEventListener('click', async () 
   const title = ((specialBankTitleEl && specialBankTitleEl.value) || '').trim();
   const code = ((specialBankCodeEl && specialBankCodeEl.value) || '').trim();
   if (!f){ setSpecialOpStatus('先选一个题库 .json 文件。', true); return; }
-  if (code.length < 3){ setSpecialOpStatus('先填分享码（≥3 个字符）。', true); return; }
+  if (code.length < 6 || code.length > 80){ setSpecialOpStatus('先填分享码（6–80 个字符）。', true); return; }
   try{
     setSpecialOpStatus('读取文件…');
     let parsed;
@@ -1204,6 +1192,7 @@ specialBanksListEl && specialBanksListEl.addEventListener('click', async (ev) =>
     const id = btn.dataset.specialId;
     const entry = lastSpecialBanks.find(b => b.id === id);
     if (!confirm(`删除特殊题库「${entry ? entry.title : id}」？\n分享码立即失效，已分享给别人的将打不开。`)) return;
+    if (prompt(`再次确认删除对象 ${id}（独立访客库，无账号 generation）；输入 DELETE`)!=='DELETE') return;
     try{
       setSpecialOpStatus('删除中…');
       await specialBanksAdmin({ action: 'delete', id });
@@ -1296,15 +1285,10 @@ publishSiteBtn && publishSiteBtn.addEventListener('click', async () => {
     const data = await res.json().catch(() => ({ ok: false, error: '响应解析失败' }));
     if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
 
-    const bits = [`✅ 已${data.replaced ? '更新' : '发布'}「${data.id}」（${data.count} 题${data.entry && data.entry.mode === 'protected' ? '，🔒 加密' : ''}${data.rejectedCount ? `，剔除 ${data.rejectedCount} 条不完整` : ''}）`];
-    if (data.deploy && data.deploy.deployed){
-      if (data.urls && data.urls.cf) bits.push(`Cloudflare：${data.urls.cf}`);
-      if (data.urls && data.urls.gh) bits.push(`GitHub：${data.urls.gh}（约 1 分钟生效）`);
-    } else if (target === 'none'){
-      bits.push('仅保存本地；新版发布通道尚未接通，不会上线。');
-    }
-    if (data.deployError) bits.push(`⚠ 部署失败：${data.deployError}（题库已写入，可重试部署）`);
-    setPublishSiteStatus(bits.join('　·　'), !!data.deployError);
+    const description = `本地${data.replaced ? '更新' : '保存'}「${data.id}」（${data.count} 题）`;
+    let evidenceText = '保存/构建/发布状态未知：响应未提供有效证据';
+    try { evidenceText = publicationEvidenceSummary(data.publicationEvidence); } catch { /* Write result and evidence verification are separate. */ }
+    setPublishSiteStatus(description + '\n' + evidenceText + (data.deployError ? '\n发布流程失败：'+data.deployError : ''));
     refreshSiteBanks();
   }catch(e){
     console.error(e);

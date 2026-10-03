@@ -879,6 +879,7 @@ export function createAccountV2Controller(options = {}) {
     const url = new URL(String(command.path), 'http://bounded.invalid');
     if (url.origin !== 'http://bounded.invalid' || !command.path.startsWith('/v2/') || url.hash) throw failure('INVALID_INPUT');
     const rules = {
+      '/v2/shares': { methods: ['GET','POST'], keys: [], requestMax: 4096, responseMax: 256 * 1024 },
       '/v2/sync/capabilities': { methods: ['GET'], keys: [], responseMax: 1024 },
       '/v2/sync/push': { methods: ['POST'], keys: [], requestMax: 256 * 1024, responseMax: 256 * 1024 },
       '/v2/sync/pull': { methods: ['GET'], keys: ['after', 'until', 'limit'], responseMax: 512 * 1024 },

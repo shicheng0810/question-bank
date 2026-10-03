@@ -1,3 +1,5 @@
+import {validReportAdminCommand,reportAdminPage,safeReportAdminResult,REPORT_ADMIN_MAX_BYTES} from './report-admin-dto.js';
+import { validAdminItemsCommand, safeAdminItemsResult } from './native-admin-items-dto.js';
 import { WorkerEntrypoint } from 'cloudflare:workers';
 import { safeSourceDiagnostics } from './source-diagnostics-dto.js';
 import {safeNativeConversionInventory} from './native-conversion-dto.js';
@@ -142,10 +144,34 @@ function safeLegacySourceDelete(result) {
 }
 
 export class MigrationOperator extends WorkerEntrypoint {
+  // Global public Report metadata. Authorization is the existing private
+  // service caller, not an account principal or an ordinary session.
+  async inspectReportOperationSummaries(command){
+    if(!validReportAdminCommand(command))return invalid();
+    if(!validNamespace(this.env.REPORT_OPERATIONS))return {ok:false,error:'NOT_CONFIGURED'};
+    let page;try{page=await reportAdminPage(command);}catch{return {ok:false,error:'REPORT_CURSOR_STALE'};}
+    const items=[];
+    try{for(const id of page.selected){
+      const summary=await callRpc(this.env.REPORT_OPERATIONS,'name',id,'inspectSummaryTrusted',[id]);
+      const end=page.offset+items.length+1,trial={ok:true,scope:'provided-operation-ids',partial:true,knownOperationCount:page.ids.length,items:[...items,summary],cursor:end<page.ids.length?`${page.scope}:${end}`:null,snapshot:'live-read-not-snapshot'};
+      if(new TextEncoder().encode(JSON.stringify(trial)).byteLength>REPORT_ADMIN_MAX_BYTES){if(!items.length)return unavailable();break;}items.push(summary);
+    }
+    const end=page.offset+items.length,result={ok:true,scope:'provided-operation-ids',partial:true,knownOperationCount:page.ids.length,items,cursor:end<page.ids.length?`${page.scope}:${end}`:null,snapshot:'live-read-not-snapshot'};
+    return await safeReportAdminResult(result,command)||unavailable();
+    }catch{return unavailable();}
+  }
+
   async convertNativeHistory(command) {return this.#convertNative(command,'history');}
   async inspectNativeConversionInventory(command){
     if(!exactRecord(command,['principal'])||!HEX64.test(command.principal))return invalid();
     try{const result=await callRpc(this.env.ACCOUNT_AUTHORITY,'name',command.principal,'nativeConversionInventoryTrusted',[command]);if(result?.ok===false)return safeFailure(result);const safe=safeNativeConversionInventory(result);return safe&&safe.principal===command.principal?safe:unavailable();}catch{return unavailable();}
+  }
+  async inspectNativeAdminItems(command) {
+    if (!validAdminItemsCommand(command)) return invalid();
+    try {
+      const result = await callRpc(this.env.ACCOUNT_AUTHORITY, 'name', command.principal, 'nativeAdminItemsTrusted', [command]);
+      return safeAdminItemsResult(result, command) || unavailable();
+    } catch { return unavailable(); }
   }
   async inspectNativeAdminStatus(command){
     if(!exactRecord(command,['principal'])||!HEX64.test(command.principal))return invalid();

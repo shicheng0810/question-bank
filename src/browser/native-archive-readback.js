@@ -1,0 +1,11 @@
+import {verifySourceDeclaration} from './native-migration-ack.js';
+import {decodeBackup} from '../storage/backup/archive.js';
+import {canonicalContentBytes,sha256Hex,canonicalDigest,canonicalBytes} from '../domain/app-data/index.js';
+const fail=code=>Object.assign(new Error(code),{code});
+const norm=async(store,row)=>store==='content_chunks'?{contentDigest:row.contentDigest,chunkIndex:row.chunkIndex,byteLength:row.bytes.byteLength,sha256:await sha256Hex(row.bytes)}:row;
+export async function verifyNativeArchiveReadback({archive,targetArchive,owner,sourceReceipt=null,isCurrent=()=>true}){
+ const decoded=await decodeBackup(archive,{owner}),target=await decodeBackup(targetArchive,{owner});if(!isCurrent())throw fail('STALE_OWNER');if(sourceReceipt&&(sourceReceipt.format!=='qb-old-native-export-v1'||sourceReceipt.manifestDigest!==await canonicalDigest(decoded.manifest)||new TextDecoder().decode(canonicalBytes(sourceReceipt.owner))!==new TextDecoder().decode(canonicalBytes(owner))))throw fail('SOURCE_RECEIPT_MISMATCH');const declaration=sourceReceipt?await verifySourceDeclaration(sourceReceipt,decoded.manifest,owner):null;if(sourceReceipt&&globalThis.location?.origin!=='https://question-bank-78u.pages.dev')throw fail('TARGET_ORIGIN_INVALID');const sections=[];
+ for(const [store,expected] of Object.entries(decoded.snapshot)){if(['meta','writer_leases'].includes(store))continue;const actual=target.snapshot[store];if(!isCurrent())throw fail('STALE_OWNER');const digest=async row=>sha256Hex(canonicalContentBytes(await norm(store,row)));const available=new Map();for(const row of actual){const d=await digest(row);available.set(d,(available.get(d)||0)+1);}const objects=[];for(const row of expected){const d=await digest(row),n=available.get(d)||0;if(!n)throw fail('NATIVE_OBJECT_READBACK_MISMATCH:'+store);available.set(d,n-1);objects.push(d);}sections.push({namespace:store,objectDigests:objects.sort()});}
+ if(!isCurrent())throw fail('STALE_OWNER');
+ return {format:'qb-native-readback-ack-v1',owner,targetOrigin:globalThis.location?.origin??null,sourceDeclaration:declaration,sourceBindingAuthenticated:false,manifestDigest:await canonicalDigest(decoded.manifest),archiveManifest:decoded.manifest,objects:sections,sourceRetained:true,cloudConfirmed:false,deleteAuthorized:false};
+}

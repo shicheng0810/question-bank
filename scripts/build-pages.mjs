@@ -10,6 +10,7 @@
 // `npm run deploy:cf` 直传同一目录。PAGES_OUT 可覆盖输出目录。
 
 import { writeFileSync, mkdirSync, readFileSync, realpathSync, readdirSync } from 'node:fs';
+import {buildMigrationPages} from './build-migration-pages.mjs';
 import { pinBrowserModuleReferences } from './browser-module-pins.mjs';
 import path from 'node:path';
 import { JSDOM } from 'jsdom';
@@ -1913,7 +1914,7 @@ ${DONATION ? `
           if(shared){sessionStorage.setItem('qb_special',JSON.stringify({code:code,id:shared.id,title:shared.title}));if(!getSpecial())throw new Error('SHARE_STORAGE_FAILED');loginStatus(T('special_ok'),'ok');location.href='player.html?special=1';return;}
           if(!accountV2UiOperationAcceptsTransition(loginOperation))return;
           var result=await controller.enter(code,function(){return confirmNewAccount(loginOperation);});
-          if(result&&result.cancelled){loginStatus(catalogV2Text('Account creation cancelled.','已取消创建账号。','Creación cancelada.'),'');return;}
+          if(result&&result.cancelled){if(loginOperation.shareRetry){loginStatus(catalogV2Text('Share code not found. Re-enter the code; no account was created.','分享码未找到，请重新输入；未创建账号。','Código compartido no encontrado; vuelve a introducirlo. No se creó cuenta.'),'err');return;}loginStatus(catalogV2Text('Account creation cancelled.','已取消创建账号。','Creación cancelada.'),'');return;}
           if (!accountV2UiOperationIsCurrent(loginOperation)) return; setCandidateDisplayLabel(code,controller);
           loginStatus(catalogV2Text('Signed in.','已登录。','Sesión iniciada.'), "ok"); closeLoginModal(true);
         }catch(e){ if (accountV2UiOperationOwns(loginOperation) && (loginOperation.epoch === null || accountV2UiOperationIsCurrent(loginOperation))) loginStatus(accountV2ErrorText(e), "err"); }
@@ -1953,10 +1954,10 @@ ${DONATION ? `
       return new Promise(function(resolve){
         var dialog=document.createElement('dialog'),text=document.createElement('p'),cancel=document.createElement('button'),create=document.createElement('button');
         dialog.setAttribute('data-testid','account-create-confirm');dialog.setAttribute('aria-label',lang==='zh'?'创建账号':lang==='es'?'Crear cuenta':'Create account');
-        text.textContent=lang==='zh'?'没有找到这个账号。是否创建新的空账号？原来删除的数据不会恢复。':lang==='es'?'No se encontró una cuenta. ¿Crear una cuenta vacía? Los datos eliminados no se restaurarán.':'No account was found. Create a new empty account? Previously deleted data will not be restored.';
-        cancel.textContent=lang==='zh'?'取消':lang==='es'?'Cancelar':'Cancel';create.textContent=lang==='zh'?'创建账号':lang==='es'?'Crear cuenta':'Create account';cancel.type=create.type='button';
+        text.textContent=lang==='zh'?'没有找到可进入的账号或分享题库。若你输入的是分享码，请重新输入，不要创建账号。创建会建立归属于你的空私有账号；原来删除的数据不会恢复。':lang==='es'?'No se encontró cuenta ni banco compartido. Si es un código compartido, vuelve a introducirlo. Crear establece una cuenta privada vacía tuya; no restaura datos eliminados.':'No account or shared bank was found. If this is a share code, re-enter it instead of creating an account. Creating makes a new empty private account owned by you. Previously deleted data will not be restored.';
+        cancel.textContent=lang==='zh'?'取消':lang==='es'?'Cancelar':'Cancel';create.textContent=lang==='zh'?'创建账号':lang==='es'?'Crear cuenta':'Create account';cancel.type=create.type='button';var share=document.createElement('button');share.type='button';share.dataset.testid='unknown-as-share';share.textContent=lang==='zh'?'这是分享码，重新输入':lang==='es'?'Es un código compartido; volver':'This is a share code; re-enter';share.onclick=function(){operation.shareRetry=true;finish(false);};
         function finish(approved){if(NEW_ACCOUNT_CANCEL===abort)NEW_ACCOUNT_CANCEL=null;dialog.close();dialog.remove();resolve(approved&&accountV2UiOperationIsCurrent(operation));}
-        function abort(){finish(false);}NEW_ACCOUNT_CANCEL=abort;cancel.onclick=abort;create.onclick=function(){finish(true);};dialog.oncancel=function(event){event.preventDefault();abort();};dialog.append(text,cancel,create);document.body.append(dialog);dialog.showModal();cancel.focus();
+        function abort(){finish(false);}NEW_ACCOUNT_CANCEL=abort;cancel.onclick=abort;create.onclick=function(){finish(true);};dialog.oncancel=function(event){event.preventDefault();abort();};dialog.append(text,cancel,share,create);document.body.append(dialog);dialog.showModal();cancel.focus();
       });
     }
     function logout(){ if (ACCOUNT_V2_CANDIDATE){ if (candidateRecoveryBlocksControls(ACCOUNT_V2_STATE) || ACCOUNT_V2_LOAD_ERROR){ renderCandidateAccountRecovery(ACCOUNT_V2_STATE); return; } clearCandidateDisplayLabel();invalidateAccountV2UiOperation(); if (ACCOUNT_V2) ACCOUNT_V2.logout(); closeHistory(); return; } clearAuth(); closeHistory(); }
@@ -2117,16 +2118,40 @@ ${DONATION ? `
         /*QB_NATIVE_ONLY_REMOVE_END*/
       }catch(error){if(sequence!==CATALOG_V2_SEQUENCE||!catalogV2Current(key))return;catalogV2Error(cloud,'资料读取失败，不能据此认定为空；请登录或重试。','catalog-v2-archive-error');}
     }
+    var CATALOG_IMPORT_BUSY=false;
+    function catalogImportFingerprint(content){
+      var omitted=new Set(['bankUid','questionUid','questionKey','questionRevision','optionIds','provenance']);
+      function stable(value){if(Array.isArray(value))return value.map(stable);if(value&&typeof value==='object'){var out={};Object.keys(value).sort().forEach(function(k){out[k]=stable(value[k]);});return out;}return value;}
+      return JSON.stringify(stable(content.questions.map(function(q){var clean={};Object.keys(q).forEach(function(k){if(!omitted.has(k))clean[k]=q[k];});return clean;})));
+    }
+    function catalogConfirmImport(imported,checked,parsed,key,accountCopy){
+      return new Promise(function(resolve){
+        var dialog=document.createElement('dialog'),summary=document.createElement('p'),preview=document.createElement('pre'),cancel=document.createElement('button'),save=document.createElement('button');
+        dialog.dataset.testid='private-import-preview';dialog.setAttribute('aria-label',catalogV2Text('Review private import','预览私库导入','Revisar importación privada'));
+        summary.textContent=imported.content.metadata.title+' · '+checked.valid.length+' '+catalogV2Text('questions','题','preguntas')+' · '+catalogV2Text('Rejected','拒绝','Rechazadas')+': '+checked.rejected+' · '+(accountCopy?catalogV2Text('Private account copy; cloud sync will be attempted.','账号私库副本；将尝试云同步。','Copia privada de cuenta; se intentará sincronizar.'):catalogV2Text('Private on this device.','本设备私库。','Privado en este dispositivo.'))+(parsed.salvaged?' · '+catalogV2Text('Truncated input: only recovered questions will be saved.','输入不完整：只保存已恢复的题目。','Entrada truncada: solo se guardarán preguntas recuperadas.'):'');
+        preview.textContent=checked.valid.slice(0,3).map(function(q,i){return (i+1)+'. '+q.question;}).join(String.fromCharCode(10));preview.style.maxWidth='min(80vw,640px)';preview.style.whiteSpace='pre-wrap';
+        cancel.type=save.type='button';cancel.textContent=catalogV2Text('Cancel','取消','Cancelar');save.textContent=catalogV2Text('Save private bank','保存私库','Guardar banco privado');save.dataset.testid='private-import-commit';
+        var done=false,timer;function finish(ok){if(done)return;done=true;clearInterval(timer);dialog.close();dialog.remove();resolve(ok&&catalogV2UICurrent(key));}
+        cancel.onclick=function(){finish(false);};save.onclick=function(){finish(true);};dialog.oncancel=function(e){e.preventDefault();finish(false);};dialog.append(summary,preview,cancel,save);document.body.append(dialog);dialog.showModal();cancel.focus();timer=setInterval(function(){if(!catalogV2UICurrent(key))finish(false);},100);
+      });
+    }
     async function catalogV2Import(text,title,opts){
+      opts=opts||{};
+      if(CATALOG_IMPORT_BUSY){importMessage(catalogV2Text('An import is already open.','已有导入正在处理。','Ya hay una importación abierta.'),true);return false;}
       var accountTarget=document.getElementById('import-to-account');
       if((opts.sync||(accountTarget&&accountTarget.checked))&&!isLoggedIn()){importMessage(catalogV2Text('Sign in first, then import an account copy. No guest bank was uploaded.','请先登录，再导入账号副本。没有上传访客题库。','Inicia sesión primero y vuelve a importar una copia de cuenta. No se subió un banco visitante.'),true);openLoginModal();return false;}
       if(typeof text!=='string'||text.length>16*1024*1024){importMessage('导入超过安全大小上限，未保存。',true);return false;}
       if(opts.append){importMessage(catalogV2Text('Appending is not enabled. Combine JSON and import a new bank; existing banks were not overwritten.','新版分批追加尚未启用；请合并 JSON 后导入为新题库。未覆盖任何现有题库。','Añadir lotes no está habilitado. Combina JSON e importa un banco nuevo; nada fue sobrescrito.'),true);return false;}
       var parsed=parseBankFromText(text);if(!parsed.list){importMessage(T('err_parse'),true);return false;}var checked=validateBank(parsed.list);if(!checked.valid.length){importMessage(T('err_shape'),true);return false;}
-      var key=catalogV2Key();try{var session=await catalogV2Session(),mod=await import('./browser/data-v2.js');if(!catalogV2UICurrent(key))return false;var imported=await mod.registerImportedBank(checked.valid,{title:title,sourceOrigin:location.origin});if(!catalogV2UICurrent(key))return false;await session.startBank([{content:imported.content}]);await session.pauseWriting();if(!catalogV2UICurrent(key))return false;
+      var key=catalogV2Key(),accountCopy=!!(opts.sync||(accountTarget&&accountTarget.checked));CATALOG_IMPORT_BUSY=true;
+      try{var session=await catalogV2Session(),mod=await import('./browser/data-v2.js');if(!catalogV2UICurrent(key))return false;var imported=await mod.registerImportedBank(checked.valid,{title:title,sourceOrigin:location.origin});if(!catalogV2UICurrent(key))return false;
+        var fingerprint=catalogImportFingerprint(imported.content),banks=await session.storedBanks();
+        for(var row of banks){if(row.metadata.visibility==='private'&&row.metadata.title===imported.content.metadata.title&&row.metadata.questionCount===checked.valid.length){var stored=await session.repository.readBankContent(row.bankUid,row.revision);if(!catalogV2UICurrent(key))return false;if(catalogImportFingerprint(stored.content)===fingerprint){importMessage(catalogV2Text('This private bank is already saved.','这份私库已保存，未重复导入。','Este banco privado ya está guardado.'),false);if(accountCopy)await catalogV2Sync();return true;}}}
+        if(!(await catalogConfirmImport(imported,checked,parsed,key,accountCopy))){if(catalogV2UICurrent(key))importMessage(catalogV2Text('Import cancelled; nothing was saved.','已取消导入，未保存。','Importación cancelada; no se guardó nada.'),false);return false;}
+        if(!catalogV2UICurrent(key))return false;await session.startBank([{content:imported.content}]);await session.pauseWriting();if(!catalogV2UICurrent(key))return false;
         importMessage(catalogV2Text('Saved on this device','已保存到本设备','Guardado en este dispositivo')+' ('+checked.valid.length+'). '+catalogV2Text('Cloud sync is not confirmed.','未确认云同步。','La nube no está confirmada.')+(checked.rejected?' '+catalogV2Text('Rejected','已拒绝','Rechazadas')+': '+checked.rejected:'')+(parsed.salvaged?' '+catalogV2Text('Input may be truncated; combine the remaining content and import a new copy.','输入可能被截断；请补齐合并后导入新副本。','El texto puede estar truncado; combina el resto e importa una copia nueva.'):''),false);await catalogV2Refresh();
-        var toAccount=document.getElementById('import-to-account');if(opts.sync||(toAccount&&toAccount.checked))await catalogV2Sync();return true;
-      }catch(error){if(catalogV2UICurrent(key))importMessage('导入未完成；请重试或检查账户恢复状态。',true);return false;}
+        if(accountCopy)await catalogV2Sync();return true;
+      }catch(error){if(catalogV2UICurrent(key))importMessage('导入未完成；请重试或检查账户恢复状态。',true);return false;}finally{CATALOG_IMPORT_BUSY=false;}
     }
     async function catalogV2Sync(){
       var node=document.getElementById('catalog-v2-status'),key=catalogV2Key();
@@ -2396,6 +2421,9 @@ const catalogEntries = mergedEntry ? [mergedEntry, ...generated] : generated;
 writeFileSync(path.join(OUT, 'index.html'), catalogHtml(catalogEntries).replace(ACCOUNT_UI_MARKER, ACCOUNT_V2_UI_ENABLED ? 'true' : 'false'));
 writeFileSync(path.join(OUT, '.nojekyll'), '');
 writeFileSync(path.join(OUT, 'build-compatibility.json'), JSON.stringify(BUILD_ENV.compatibility, null, 2) + '\n');
+// Canonical native builds retain migration assets, including future Report
+// rebuilds. Generate inside the safe staging output before pinning/commit.
+const migrationAssets=NATIVE_ONLY_MODE?buildMigrationPages({site:OUT}):[];
 // Pin actual final module bytes, after bundling, across every generated HTML.
 const browserModules = new Map(readdirSync(path.join(OUT, 'browser')).filter(name => name.endsWith('.js')).map(name => [name, readFileSync(path.join(OUT, 'browser', name))]));
 for (const entry of readdirSync(OUT).filter(name => name.endsWith('.html'))) {
@@ -2411,7 +2439,7 @@ for (const entry of readdirSync(OUT).filter(name => name.endsWith('.html'))) {
   }
   writeFileSync(file, pinBrowserModuleReferences(html, browserModules));
 }
-const commitResult = BUILD.commit(['index.html', 'player.html', 'local.html', 'banks/index.json', 'browser/account-v2.js', ...(NATIVE_ONLY_MODE ? ['browser/native-history-sync.js'] : ['browser/legacy-migration-client.js','browser/local-storage-migration.js']), 'browser/html-sanitizer.js', 'build-compatibility.json', ...(DATA_V2_ENABLED ? ['browser/data-v2.js', 'banks/v2/manifest.json'] : [])]);
+const commitResult = BUILD.commit([...migrationAssets,'index.html', 'player.html', 'local.html', 'banks/index.json', 'browser/account-v2.js', ...(NATIVE_ONLY_MODE ? ['browser/native-history-sync.js'] : ['browser/legacy-migration-client.js','browser/local-storage-migration.js']), 'browser/html-sanitizer.js', 'build-compatibility.json', ...(DATA_V2_ENABLED ? ['browser/data-v2.js', 'banks/v2/manifest.json'] : [])]);
 if (commitResult.backupRetained) console.warn(`! new output is active, but prior output backup was retained for manual cleanup: ${commitResult.backupRetained}`);
 if (commitResult.ownerRetained) console.warn(`! new output is active, but its owner journal remains for explicit manual cleanup: ${commitResult.ownerRetained}`);
 console.log(`\nindex.html → 目录页（${catalogEntries.length} 个入口 + 本地导入）`);
