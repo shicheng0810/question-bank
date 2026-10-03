@@ -1,6 +1,7 @@
 import {assertApprovalCallback} from './report-approval.js';
 import {validateApprovalSource} from './native-report-publisher.js';
 import { createNativeReportPR, reconcileNativeReportPR } from './native-report-publisher.js';
+import {identityChallengeCallback} from './report-identity-challenge.js';
 
 async function telegram(env,method,body) {
   try {const response=await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/${method}`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body),signal:AbortSignal.timeout(10000)});return await response.json();}catch{return null;}
@@ -15,6 +16,9 @@ export async function nativeReportWebhook({request,env}) {
   if(!await sameSecret(request.headers.get('X-Telegram-Bot-Api-Secret-Token'),env.TELEGRAM_WEBHOOK_SECRET))return new Response('forbidden',{status:403});
   let update;try{update=await request.json();}catch{return new Response('bad request',{status:400});}
   const callback=update?.callback_query;if(!callback)return new Response('ok');
+  // Shared webhook secret was checked above. Every ti: path terminates here,
+  // before approver checks and any real Report/legacy approval processing.
+  if(typeof callback.data==='string' && callback.data.startsWith('ti:')){try{await identityChallengeCallback(env,callback);}catch{}return new Response('ok');}
   const answer=text=>telegram(env,'answerCallbackQuery',{callback_query_id:callback.id,text,show_alert:true});
   // Delivery chat may be a group. Approval users are configured separately.
   const allowed=String(env.TELEGRAM_APPROVER_IDS||'').split(',').map(value=>value.trim()).filter(Boolean);
