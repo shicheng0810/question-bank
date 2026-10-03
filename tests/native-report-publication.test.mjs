@@ -53,6 +53,6 @@ test('unknown approver, duplicate approval and stale revision never create PR',a
   await call(99);assert.equal(x.ledger.get(x.plan.operationId).state,'pr_created');await call(1);assert.equal(writes,0);
   // New pending operation uses the original immutable payload but stale mapping.
   const f=await reportFixture();await x.ledger.receive(validateReport(f.body,[f.source]));await x.ledger.transition(f.body.operationId,'received','delivering');await x.ledger.transition(f.body.operationId,'delivering','pending_approval');x.plan.operationId=f.body.operationId;
-  await call(1);assert.equal(x.ledger.get(f.body.operationId).state,'conflict');await call(1);assert.equal(writes,0);
+  await call(1);assert.equal(x.ledger.get(f.body.operationId).state,'pending_approval');await call(1);assert.equal(writes,0);
  }finally{globalThis.fetch=original;}
 });

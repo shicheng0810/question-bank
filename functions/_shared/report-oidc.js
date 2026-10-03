@@ -14,9 +14,19 @@ export async function verifyReportOIDC(token,policy,{now=Math.floor(Date.now()/1
  if(keys?.length!==1)fail();
  const key=await crypto.subtle.importKey('jwk',keys[0],{name:'RSASSA-PKCS1-v1_5',hash:'SHA-256'},false,['verify']);
  if(!await crypto.subtle.verify('RSASSA-PKCS1-v1_5',key,decode(s),new TextEncoder().encode(h+'.'+p)))fail();
- return {runId:claims.run_id,runAttempt:claims.run_attempt,workflowSha:claims.workflow_sha,jti:claims.jti};
+ return {issuedAt:claims.iat,runId:claims.run_id,runAttempt:claims.run_attempt,workflowSha:claims.workflow_sha,jti:claims.jti};
 }
 
-export function assertReportRunBinding(job,binding,operationId) {
- if(!binding || binding.operationId!==operationId || binding.runId!==job.runId || binding.runAttempt!==job.runAttempt || binding.workflowSha!==job.workflowSha)throw reportError('REPORT_RUN_BINDING_DENIED');
+export function assertReportRunBinding(job,binding,operationId,fence) {
+ if(!binding || binding.operationId!==operationId || binding.runId!==job.runId || binding.runAttempt!==job.runAttempt || binding.workflowSha!==job.workflowSha || !Number.isSafeInteger(binding.fence) || binding.fence<1 || fence!==binding.fence)throw reportError('REPORT_RUN_BINDING_DENIED');
+}
+
+// Only a strictly newer signed execution can recover. Caller must also supply
+// the precise snapshot/fence it observed; CAS defeats delayed racing snapshots.
+export function nextRecoveryJob(job,binding,id,body,row){
+ if(!binding||binding.operationId!==id||binding.workflowSha!==job.workflowSha||body.expectedResult!==row.result||body.fence!==binding.fence||!Number.isSafeInteger(binding.fence)||binding.fence<1)throw reportError('REPORT_RECOVERY_FENCE');
+ if(!/^\d+$/.test(binding.runId)||!/^\d+$/.test(binding.runAttempt))throw reportError('REPORT_RECOVERY_OWNER');
+ const newer=BigInt(job.runId)>BigInt(binding.runId)||(job.runId===binding.runId&&BigInt(job.runAttempt)>BigInt(binding.runAttempt));
+ if(!newer||job.issuedAt<binding.issuedAt)throw reportError('REPORT_RECOVERY_STALE');
+ return {...job,operationId:id,fence:binding.fence+1};
 }

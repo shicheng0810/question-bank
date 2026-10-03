@@ -229,11 +229,13 @@ export async function openLearningRepository(options) {
     const foreign=parent.attempt.writerStreamId!==stream.clientStreamId;
     if(!foreign&&parent.attempt.status!=='active'&&(parent.attempt.parentAttemptId||parent.snapshotBaseline))throw commandError('CONTINUATION_COMPLETED');
     if(!foreign&&parent.attempt.status==='active')return {attemptId:parentAttemptId,bundle:parent,inPlace:true};
-    if(foreign&&!cloudConfirmed)return {requiresCloudConfirmation:true,bundle:parent};
-    const sourceRefs=foreign?await confirmedReferences():references;
+    const requiresCloudCut=foreign&&owner.ownerKind==='account';
+    if(requiresCloudCut&&!cloudConfirmed)return {requiresCloudConfirmation:true,bundle:parent};
+    const sourceRefs=requiresCloudCut?await confirmedReferences():references;
     const source=sourceRefs.filter(row=>row.kind==='resume_state'&&row.payload.attemptId===parentAttemptId).sort((a,b)=>b.payload.localRevision-a.payload.localRevision)[0];
     if(!source||source.payload.localRevision!==parent.attempt.localRevision)throw commandError('AWAITING_CLOUD_CONFIRMATION');
-    // Complete immutable proof at the authenticated receipt cut, never the highest local revision.
+    // Account foreign writers require the authenticated cut; same-owner guests
+    // use their validated local resume closure after isolated backup activation.
     await historicalProof(source.payload.contentDigest,sourceRefs);
     return {attemptId,commandId,parentAttemptId,parentResumeContentDigest:source.payload.contentDigest,bundle:parent,inPlace:false,existing:false,foreign};
   }

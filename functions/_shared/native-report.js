@@ -58,7 +58,18 @@ export async function applyNativeCorrection(content, pending) {
 export class ReportLedger {
   constructor(storage) {
     this.storage = storage;
+    storage.sql.exec("CREATE TABLE IF NOT EXISTS report_release_head (singleton INTEGER PRIMARY KEY CHECK(singleton=1),value TEXT NOT NULL)");
     storage.sql.exec("CREATE TABLE IF NOT EXISTS report_operation (operation_id TEXT PRIMARY KEY,payload_hash TEXT NOT NULL,payload TEXT NOT NULL,state TEXT NOT NULL,result TEXT,updated_at INTEGER NOT NULL)");
+  }
+  releaseHead(bootstrap) {
+    // One-time reviewed bootstrap only, never a moving/latest reference.
+    if(bootstrap){if(!/^[a-f0-9]{40}$/.test(bootstrap.commit)||!['pagesDeploymentId','workerVersionId','workerDeploymentId'].every(k=>/^[a-f0-9-]{36}$/.test(bootstrap[k]||'')))throw reportError('REPORT_RELEASE_BOOTSTRAP_INVALID');
+      this.storage.sql.exec('INSERT OR IGNORE INTO report_release_head(singleton,value) VALUES(1,?)',JSON.stringify({...bootstrap,generation:0,inflight:null}));}
+    const row=this.storage.sql.exec('SELECT value FROM report_release_head WHERE singleton=1').toArray()[0];
+    return row?JSON.parse(row.value):null;
+  }
+  releaseCAS(expected,next) {
+    return this.storage.sql.exec('UPDATE report_release_head SET value=? WHERE singleton=1 AND value=? RETURNING singleton',JSON.stringify(next),JSON.stringify(expected)).toArray().length===1;
   }
   async receive(pending) {
     const payload = JSON.stringify(pending), hash = await sha256Hex(canonicalContentBytes(pending));
@@ -68,8 +79,11 @@ export class ReportLedger {
     return row;
   }
   get(id) { return this.storage.sql.exec('SELECT * FROM report_operation WHERE operation_id = ?',id).toArray()[0] || null; }
+  updateBound(id,state,result,expectedResult){
+    return this.storage.sql.exec('UPDATE report_operation SET result=?,updated_at=? WHERE operation_id=? AND state=? AND result IS ? RETURNING operation_id',JSON.stringify(result),Date.now(),id,state,expectedResult).toArray().length===1;
+  }
   async transition(id, from, to, result = null, expectedResult = undefined) {
-    const allowed={received:['delivering'],delivering:['pending_approval','delivery_unknown'],pending_approval:['creating_pr'],creating_pr:['pr_created','conflict','provider_unknown'],provider_unknown:['reconciling'],reconciling:['pr_created','conflict','provider_unknown'],pr_created:['awaiting_deployment'],awaiting_deployment:['published','deployment_unknown','readback_failed','receipt_pending','readback_pending'],readback_pending:['readback_failed','receipt_pending'],receipt_pending:['sending_receipt','reconciling_receipt'],reconciling_receipt:['receipt_pending'],sending_receipt:['receipt_pending','published','receipt_unknown']};
+    const allowed={received:['delivering'],delivering:['pending_approval','delivery_unknown'],pending_approval:['creating_pr'],creating_pr:['pr_created','conflict','provider_unknown'],provider_unknown:['reconciling'],reconciling:['pr_created','conflict','provider_unknown'],pr_created:['awaiting_deployment'],awaiting_deployment:['published','deployment_unknown','readback_failed','receipt_pending','readback_pending'],readback_pending:['readback_failed','receipt_pending','reconciling_readback'],readback_failed:['reconciling_readback'],reconciling_readback:['readback_pending'],receipt_pending:['sending_receipt','reconciling_receipt'],reconciling_receipt:['receipt_pending'],sending_receipt:['receipt_pending','published','receipt_unknown']};
     if(!allowed[from]?.includes(to))throw reportError('REPORT_TRANSITION_INVALID');
     if(to==='published' && (!result || !digest.test(result.revision) || !digest.test(result.questionRevision) || !/^[a-f0-9]{40}$/.test(result.sourceCommit) || result.operationId!==id || !Number.isSafeInteger(result.prNumber) || result.prNumber<1 || !/^[a-f0-9]{40}$/.test(result.resultCommit) || result.contentHash!==result.revision || typeof result.domain!=='string' || !/^[a-z0-9.-]+$/.test(result.domain) || typeof result.deploymentId!=='string' || !result.deploymentId || result.readbackVerified!==true))throw reportError('REPORT_PUBLICATION_RECEIPT_REQUIRED');
     const values=[to,result ? JSON.stringify(result) : null,Date.now(),id,from];

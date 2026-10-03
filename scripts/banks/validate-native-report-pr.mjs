@@ -7,6 +7,7 @@ export async function validateReportPR({root,base,head,operationId,sourcesFile,s
   if(!/^[a-f0-9]{40}$/.test(base)||!/^[a-f0-9]{40}$/.test(head)||!/^[a-f0-9-]{36}$/.test(operationId))throw reportError('REPORT_CI_IDENTITY_INVALID');
   const git=(...args)=>execFileSync('git',args,{cwd:root,encoding:'utf8',maxBuffer:80*1024*1024});
   const read=(commit,file)=>git('show',`${commit}:${file}`);
+  for(const commit of [base,head])for(const entry of git('ls-tree','-r','-z',commit).split('\0').filter(Boolean)){if(!/^100644 blob [a-f0-9]{40}\t/.test(entry))throw reportError('REPORT_CI_TREE_MODE_INVALID');}
   const requestPath=`content/report-requests/${operationId}.json`,request=JSON.parse(read(head,requestPath));
   if(request.baseCommit!==base || request.pending.operationId!==operationId)throw reportError('REPORT_CI_BASE_CONFLICT');
   const sources=reportSources({REPORT_SOURCES_JSON:read(base,sourcesFile)});

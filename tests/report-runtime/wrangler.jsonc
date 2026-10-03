@@ -5,5 +5,5 @@
   "durable_objects":{"bindings":[{"name":"REPORT_OPERATIONS","class_name":"ReportOperationStore"}]},
   "migrations":[{"tag":"report-local-v1","new_sqlite_classes":["ReportOperationStore"]}],
   "kv_namespaces":[{"binding":"EDITS"}],
-  "vars":{"TELEGRAM_BOT_TOKEN":"local-fake","TELEGRAM_CHAT_ID":"-100123","TELEGRAM_WEBHOOK_SECRET":"local-secret","TELEGRAM_APPROVER_IDS":"456","GITHUB_TOKEN":"local-fake"}
+  "vars":{"REPORT_RELEASE_BOOTSTRAP_JSON":"{\"commit\":\"9aa96ebdef680e580c4cdbc232f6a0de82d65071\",\"pagesDeploymentId\":\"11111111-1111-4111-8111-111111111111\",\"workerVersionId\":\"22222222-2222-4222-8222-222222222222\",\"workerDeploymentId\":\"33333333-3333-4333-8333-333333333333\"}","TELEGRAM_BOT_TOKEN":"local-fake","TELEGRAM_CHAT_ID":"-100123","TELEGRAM_WEBHOOK_SECRET":"local-secret","TELEGRAM_APPROVER_IDS":"456","GITHUB_TOKEN":"local-fake"}
 }
