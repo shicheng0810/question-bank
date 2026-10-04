@@ -9,57 +9,13 @@ permissions:
   contents: read
   pull-requests: read
   id-token: write
-concurrency:
-  group: question-bank-cloudflare-production
-  cancel-in-progress: false
 jobs:
   publish:
     if: vars.REPORT_AUTOMATION_ENABLED == '1'
-    environment: report-production
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Authorize real merged PR before any checkout
-        id: context
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ inputs.pr_number }}
-          EXPECTED_COMMIT: ${{ inputs.expected_commit }}
-          OPERATION_ID: ${{ inputs.operation_id }}
-          EXPECTED_BOT: ${{ vars.REPORT_BOT_GITHUB_USER_ID }}
-          TRUSTED_SHA: ${{ vars.REPORT_TRUSTED_SOURCE_SHA }}
-        run: |
-          [[ "$PR_NUMBER" =~ ^[0-9]+$ ]]
-          [[ "$EXPECTED_COMMIT" =~ ^[a-f0-9]{40}$ ]]
-          [[ "$TRUSTED_SHA" =~ ^[a-f0-9]{40}$ ]]
-          [[ "$OPERATION_ID" =~ ^[a-f0-9-]{36}$ ]]
-          [[ "$EXPECTED_BOT" =~ ^[0-9]+$ ]]
-          gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" > "$RUNNER_TEMP/report-pr.json"
-          jq -e --arg sha "$EXPECTED_COMMIT" --arg bot "$EXPECTED_BOT" --arg branch "codex/report-$OPERATION_ID" '.merged_at!=null and .merge_commit_sha==$sha and .base.ref=="main" and .base.repo.id==1164285871 and .head.repo.id==1164285871 and .head.ref==$branch and (.user.id|tostring)==$bot' "$RUNNER_TEMP/report-pr.json" >/dev/null
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-        with:
-          ref: ${{ vars.REPORT_TRUSTED_SOURCE_SHA }}
-          path: trusted
-          persist-credentials: false
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
-        with: {node-version: 26}
-      - name: Install locked trusted dependencies; no lifecycle scripts
-        working-directory: trusted
-        run: npm ci --ignore-scripts
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-        with:
-          ref: ${{ inputs.expected_commit }}
-          path: proposed
-          fetch-depth: 0
-          persist-credentials: false
-      - name: Exact trusted tests
-        working-directory: trusted
-        run: node --test tests/native-report*.test.mjs tests/report-*.test.mjs
-      - name: Trusted serial release; proposed checkout is DATA only
-        working-directory: trusted
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          WRANGLER_SEND_METRICS: 'false'
-          PR_NUMBER: ${{ inputs.pr_number }}
-          EXPECTED_COMMIT: ${{ inputs.expected_commit }}
-          OPERATION_ID: ${{ inputs.operation_id }}
-        run: node scripts/banks/report-publication-runner.mjs ../proposed "$PR_NUMBER" "$EXPECTED_COMMIT" "$OPERATION_ID"
+    # This literal code commit is independent of advancing caller/main data.
+    # The called job owns main-only report-production and global concurrency.
+    uses: shicheng0810/question-bank/.github/workflows/report-publication-executor.yml@878ee1f92545b4bd4be952dd92e3e4f1f044983f
+    with:
+      pr_number: ${{ inputs.pr_number }}
+      expected_commit: ${{ inputs.expected_commit }}
+      operation_id: ${{ inputs.operation_id }}
