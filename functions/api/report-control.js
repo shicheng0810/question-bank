@@ -21,6 +21,7 @@ export async function onRequestPost({request,env}) {
   if(body.action==='claim'){
    if(row.state!=='pr_created')return json({claimed:false,state:row.state});
    const plan=body.plan,pending=JSON.parse(row.payload),prResult=JSON.parse(row.result);
+   if(plan?.resultCommit!==job.runSha)throw Error('REPORT_CONTROL_RUN_COMMIT_CONFLICT');
    if(plan?.operationId!==id||plan.prNumber!==prResult.number||plan.sourceCommit!==prResult.base||prResult.approval?.sourceBase!==plan.sourceCommit||plan.bankUid!==pending.bankUid||plan.questionKey!==pending.questionKey||plan.domain!=='question-bank-78u.pages.dev'||plan.revision!==plan.contentHash||!/^[a-f0-9]{64}$/.test(plan.revision)||!/^[a-f0-9]{64}$/.test(plan.questionRevision)||!/^[a-f0-9]{40}$/.test(plan.resultCommit)||!/^banks\/v2\/[\w.-]+\.json$/.test(plan.staticRef||''))throw Error('REPORT_CONTROL_PLAN_CONFLICT');
    const pr=await github(env,'pulls/'+plan.prNumber);
    if(!pr.merged_at||pr.merge_commit_sha!==plan.resultCommit||pr.base.ref!=='main'||pr.base.repo.id!==1164285871||pr.head.repo.id!==1164285871||pr.head.ref!=='codex/report-'+id||String(pr.user.id)!==String(env.REPORT_BOT_GITHUB_USER_ID))throw Error('REPORT_CONTROL_PR_CONFLICT');
@@ -40,7 +41,10 @@ export async function onRequestPost({request,env}) {
   async function trustedRecoveryExecution(){
    const run=await github(env,'actions/runs/'+job.runId,true);
    const attempt=await github(env,'actions/runs/'+job.runId+'/attempts/'+job.runAttempt,true);
-   for(const value of [run,attempt])if(String(value.id)!==job.runId||String(value.run_attempt)!==job.runAttempt||value.status!=='in_progress'||value.event!=='workflow_dispatch'||value.head_sha!==job.workflowSha||!policy.workflowPaths.some(p=>p===('shicheng0810/question-bank/'+value.path+'@refs/heads/main')))throw Error('REPORT_RECOVERY_EXECUTION_DENIED');
+   for(const value of [run,attempt]){
+    // REST path may include @main (documented response) or omit its suffix.
+    if(String(value.id)!==job.runId||String(value.run_attempt)!==job.runAttempt||value.status!=='in_progress'||value.event!=='workflow_dispatch'||value.head_sha!==job.runSha||value.head_branch!=='main'||value.repository?.id!==1164285871||value.repository?.owner?.id!==74512891||!['.github/workflows/report-publication.yml','.github/workflows/report-publication.yml@main'].includes(value.path)||!value.referenced_workflows?.some(w=>w.path==='shicheng0810/question-bank/.github/workflows/report-publication-executor.yml@'+job.workflowSha&&w.sha===job.workflowSha))throw Error('REPORT_RECOVERY_EXECUTION_DENIED');
+   }
   }
   if(body.action==='resumeReadback'){
    const saved=authorizeReadbackRecovery(row,body,id);

@@ -52,6 +52,8 @@ export async function runReportCI({mode,prNumber,expectedHead,root=process.cwd()
     if(!names.has('native-report-content'))throw Error('REPORT_CI_BRANCH_PROTECTION_REQUIRED');
     const merged=await api('PUT',`${prefix}/pulls/${prNumber}/merge`,{sha:context.head,merge_method:'squash'});
     if(merged.merged!==true || !/^[a-f0-9]{40}$/.test(merged.sha))throw Error('REPORT_CI_MERGE_UNCONFIRMED');
+    const publicationHead=await api('GET',`${prefix}/git/ref/heads/main`);
+    if(publicationHead.object.sha!==merged.sha)throw Error('REPORT_CI_PUBLICATION_HEAD_MOVED');
     await api('POST',`${prefix}/actions/workflows/report-publication.yml/dispatches`,{ref:'main',inputs:{pr_number:String(prNumber),expected_commit:merged.sha,operation_id:context.operationId}});
     return {...verified,state:'publication_dispatched',resultCommit:merged.sha};
   }catch(error){await status(context.head,'failure','Report content validation failed; no merge authorization').catch(()=>{});throw error;}
