@@ -1,0 +1,16 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "qb-migration-operator-local-preview",
+  "main": "./remote-operator-adapter-worker.mjs",
+  "compatibility_date": "2025-06-01",
+  "account_id": "1cb5e6e63a6b3c3ea0ad9bb01dac30e9",
+  "workers_dev": false,
+  "services": [
+    {
+      "binding": "MIGRATION_OPERATOR",
+      "service": "qb-do",
+      "entrypoint": "MigrationOperator",
+      "remote": true
+    }
+  ]
+}

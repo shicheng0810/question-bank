@@ -1,0 +1,26 @@
+name: native-report-launch
+on:
+  pull_request_target:
+    branches: [main]
+    types: [opened, reopened]
+permissions:
+  contents: read
+  pull-requests: read
+  actions: write
+jobs:
+  launch:
+    if: vars.REPORT_AUTOMATION_ENABLED == '1'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Validate actual approved PR metadata; no checkout or PR code execution
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          EXPECTED_BOT: ${{ vars.REPORT_BOT_GITHUB_USER_ID }}
+        run: |
+          [[ "$PR_NUMBER" =~ ^[0-9]+$ ]]
+          [[ "$EXPECTED_BOT" =~ ^[0-9]+$ ]]
+          gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" > "$RUNNER_TEMP/report-pr.json"
+          jq -e --arg repo "$GITHUB_REPOSITORY" --arg bot "$EXPECTED_BOT" '.state=="open" and .draft==false and .base.ref=="main" and .base.repo.full_name==$repo and .head.repo.full_name==$repo and (.user.id|tostring)==$bot and (.head.ref|test("^codex/report-[a-f0-9-]{36}$"))' "$RUNNER_TEMP/report-pr.json" > /dev/null
+          head=$(jq -r .head.sha "$RUNNER_TEMP/report-pr.json")
+          gh workflow run native-report-control.yml --ref main -f mode=produce -f pr_number="$PR_NUMBER" -f expected_head="$head"

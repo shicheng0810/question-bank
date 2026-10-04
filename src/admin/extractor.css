@@ -1,0 +1,157 @@
+:root {
+  color-scheme: light;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  color: #18212f;
+  background: #f4f7fb;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+.shell {
+  width: min(100% - 32px, 1040px);
+  margin: 0 auto;
+  padding: 36px 0 64px;
+}
+header {
+  margin-bottom: 22px;
+}
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+h1 {
+  margin-bottom: 8px;
+}
+h2 {
+  font-size: 1.05rem;
+}
+.eyebrow {
+  color: #3b5d9a;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+}
+.panel {
+  margin: 16px 0;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #d7e0ed;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #18212f0d;
+}
+.hint {
+  color: #566273;
+  font-size: 0.9rem;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+button {
+  padding: 8px 13px;
+  border: 1px solid #315a96;
+  border-radius: 7px;
+  color: #fff;
+  background: #315a96;
+  cursor: pointer;
+}
+button:disabled {
+  border-color: #b6beca;
+  background: #b6beca;
+  cursor: not-allowed;
+}
+#cancel {
+  color: #4a5565;
+  border-color: #aeb8c6;
+  background: #fff;
+}
+#status {
+  min-height: 1.4em;
+  margin: 14px 0 0;
+  font-weight: 600;
+}
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.metric {
+  padding: 8px 10px;
+  border-radius: 7px;
+  background: #edf3fc;
+}
+.metric.review {
+  background: #fff5db;
+}
+.metric.rejected {
+  background: #ffe8e8;
+}
+.issues,
+.preview,
+.cloud-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+.issue,
+.question {
+  padding: 12px;
+  border-left: 4px solid #8393a8;
+  background: #f7f9fc;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.issue.review {
+  border-color: #c48608;
+}
+.issue.rejected {
+  border-color: #b73c3c;
+}
+.question h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+.question pre {
+  margin: 0;
+  font: inherit;
+  white-space: pre-wrap;
+}
+textarea {
+  width: 100%;
+  min-height: 280px;
+  padding: 12px;
+  border: 1px solid #aeb8c6;
+  border-radius: 7px;
+  font:
+    12px ui-monospace,
+    monospace;
+  resize: vertical;
+}
+.ack {
+  display: block;
+  color: #3d4858;
+}
+.cloud-list button {
+  width: 100%;
+  color: #18212f;
+  border-color: #aeb8c6;
+  background: #f7f9fc;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .shell {
+    width: min(100% - 20px, 1040px);
+    padding-top: 20px;
+  }
+  .panel {
+    padding: 15px;
+  }
+}

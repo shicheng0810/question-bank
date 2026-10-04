@@ -1,0 +1,66 @@
+# Install this thin control-plane file as .github/workflows/native-report-control.yml
+# on default main. Proposed PR contents are read only as data by pinned trusted code.
+name: native-report-control
+on:
+  workflow_dispatch:
+    inputs:
+      mode: {type: choice, required: true, options: [produce, verify]}
+      pr_number: {type: string, required: true}
+      expected_head: {type: string, required: false}
+permissions:
+  contents: read
+  pull-requests: read
+concurrency:
+  group: native-report-control-${{ inputs.pr_number }}
+  cancel-in-progress: false
+jobs:
+  produce:
+    if: vars.REPORT_AUTOMATION_ENABLED == '1' && inputs.mode == 'produce'
+    runs-on: ubuntu-24.04
+    permissions: {contents: write, pull-requests: read, statuses: write, actions: write}
+    steps: &controller_steps
+      - name: Resolve and authorize actual PR metadata before source checkout
+        id: context
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ inputs.pr_number }}
+          EXPECTED_BOT: ${{ vars.REPORT_BOT_GITHUB_USER_ID }}
+        shell: bash
+        run: |
+          [[ "$PR_NUMBER" =~ ^[0-9]+$ ]]
+          test -n "$EXPECTED_BOT"
+          [[ "${{ vars.REPORT_TRUSTED_SOURCE_SHA }}" =~ ^[a-f0-9]{40}$ ]]
+          gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" > "$RUNNER_TEMP/report-pr.json"
+          jq -e --arg repo "$GITHUB_REPOSITORY" --arg bot "$EXPECTED_BOT" '.state=="open" and .draft==false and .base.ref=="main" and .base.repo.full_name==$repo and .head.repo.full_name==$repo and (.user.id|tostring)==$bot and (.head.ref|test("^codex/report-[a-f0-9-]{36}$"))' "$RUNNER_TEMP/report-pr.json" > /dev/null
+          printf 'base=%s\n' "$(jq -r .base.sha "$RUNNER_TEMP/report-pr.json")" >> "$GITHUB_OUTPUT"
+          printf 'head=%s\n' "$(jq -r .head.sha "$RUNNER_TEMP/report-pr.json")" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ vars.REPORT_TRUSTED_SOURCE_SHA }}
+          path: trusted
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with: {node-version: 26}
+      - name: Install protected source dependencies only
+        working-directory: trusted
+        run: npm ci --ignore-scripts
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ steps.context.outputs.head }}
+          path: proposed
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Run protected controller; PR checkout is data only
+        working-directory: proposed
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPORT_BOT_GITHUB_USER_ID: ${{ vars.REPORT_BOT_GITHUB_USER_ID }}
+          MODE: ${{ inputs.mode }}
+          PR_NUMBER: ${{ inputs.pr_number }}
+          EXPECTED_HEAD: ${{ inputs.expected_head }}
+        run: node ../trusted/scripts/banks/native-report-ci-controller.mjs "$MODE" "$PR_NUMBER" "$EXPECTED_HEAD"
+  verify:
+    if: vars.REPORT_AUTOMATION_ENABLED == '1' && inputs.mode == 'verify'
+    runs-on: ubuntu-24.04
+    permissions: {contents: write, pull-requests: write, statuses: write, actions: write}
+    steps: *controller_steps

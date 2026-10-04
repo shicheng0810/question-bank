@@ -1,0 +1,47 @@
+{
+  "name": "question-bank-extractor",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "build:pages": "node scripts/build-pages.mjs",
+    "extract:mhtml": "node scripts/extract-mhtml.mjs",
+    "extract:quizlet": "node scripts/extract-quizlet.mjs",
+    "sync:from-prod": "node scripts/sync-from-prod.mjs",
+    "deploy:do": "node scripts/reject-unreviewed-deploy.mjs do-worker",
+    "deploy:cloudflare": "node scripts/reject-unreviewed-deploy.mjs cloudflare-pages",
+    "deploy:github": "node scripts/reject-unreviewed-deploy.mjs github-pages",
+    "deploy:cf": "node scripts/reject-unreviewed-deploy.mjs cloudflare-and-github",
+    "deploy:preview": "node scripts/reject-unreviewed-deploy.mjs cloudflare-preview",
+    "test": "vitest run",
+    "test:cloudflare": "vitest run --config vitest.cloudflare.config.js",
+    "typecheck:app-data": "tsc -p tsconfig.app-data.json --noEmit",
+    "test:e2e": "playwright test",
+    "rapidocr:install": "python3 -m venv .venv-rapidocr && .venv-rapidocr/bin/python -m pip install --upgrade pip && .venv-rapidocr/bin/python -m pip install -r scripts/requirements-rapidocr.txt",
+    "rapidocr:server": ".venv-rapidocr/bin/python scripts/rapidocr_server.py --host 127.0.0.1 --port 8765",
+    "bank:211": "node scripts/banks/build-bank.mjs \"$HOME/Documents/EVCC SUMMER 2026/AMT&211 - Sheet Metal/assignment\" /tmp/211-sheet-metal.json --overrides scripts/banks/211-sheet-metal.overrides.json --reuse-images public/banks/211-sheet-metal.json",
+    "feedback:read": "node scripts/read-feedback.mjs",
+    "kv:usage": "node scripts/kv-usage.mjs"
+  },
+  "dependencies": {
+    "@noble/hashes": "2.4.0",
+    "@streamparser/json": "0.0.26",
+    "dompurify": "3.4.16",
+    "fflate": "^0.8.2",
+    "idb": "8.0.3",
+    "jszip": "^3.10.1",
+    "parse5": "7.3.0"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "0.12.21",
+    "@playwright/test": "^1.54.2",
+    "debug": "^4.4.3",
+    "jsdom": "^26.1.0",
+    "loupe": "^3.2.1",
+    "typescript": "5.9.3",
+    "vite": "^7.1.7",
+    "vitest": "3.2.4"
+  }
+}

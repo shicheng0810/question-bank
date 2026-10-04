@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <meta name="robots" content="noindex,nofollow">
+    <title>管理员登录</title>
+    <link rel="stylesheet" href="./login.css">
+    <script src="./login.js" defer></script>
+  </head>
+  <body>
+    <main class="login-card">
+      <p class="eyebrow">独立管理员入口</p>
+      <h1>管理员登录</h1>
+      <p class="notice">这是独立管理员身份，不是学习访问码。请粘贴由管理员安全初始化流程提供的凭据。</p>
+
+      <form id="login-form" autocomplete="off" novalidate>
+        <label for="credential">管理员凭据</label>
+        <input id="credential" name="credential" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" required>
+        <button id="login-button" type="submit">登录</button>
+      </form>
+
+      <section id="session-panel" class="session-panel" aria-live="polite" aria-atomic="true">
+        <p id="status" class="status" role="status">正在检查管理员会话…</p>
+        <p id="expiry" class="expiry" hidden></p>
+        <a id="admin-shell-link" href="/admin/" hidden>进入管理员控制台</a>
+        <button id="refresh-button" class="secondary" type="button">检查会话</button>
+        <button id="logout-button" class="secondary" type="button" hidden>注销当前会话</button>
+      </section>
+    </main>
+  </body>
+</html>
