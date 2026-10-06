@@ -2388,7 +2388,7 @@
     ]
   },
   {
-    "id": "quiz_1_131-1__fluid_lines",
+    "id": "quiz_1_131-1",
     "question": "Which of the following defects are not acceptable for metal lines? 1.) Cracked flare 2.) Seams 3.) Dents in the heel of a bend less than 20% of the diameter 4.) Scratches/nicks on the inside of a bend less than 10% of wall thickness 5.) Dents in straight sections that are 20% of tube diameter",
     "choices": [
       "1, 2, 3, 4, and 5",
@@ -2401,7 +2401,7 @@
     ]
   },
   {
-    "id": "quiz_1_131-2__fluid_lines",
+    "id": "quiz_1_131-2",
     "question": "Which of the following hose materials are compatible with phosphate-ester base hydraulic fluids? 1.) Butyl. 2.) Teflon. 3.) Buna-N. 4.) Neoprene.",
     "choices": [
       "1 and 3.",
@@ -2414,7 +2414,7 @@
     ]
   },
   {
-    "id": "quiz_1_131-3__fluid_lines",
+    "id": "quiz_1_131-3",
     "question": "What type of inner liner material in a flexible fluid line is considered to be compatible with nearly every liquid used, within a very broad range of operating temperatures?",
     "choices": [
       "Buna-N",
@@ -2427,7 +2427,7 @@
     ]
   },
   {
-    "id": "quiz_1_131-4__fluid_lines",
+    "id": "quiz_1_131-4",
     "question": "What determines the amount of pressure a flexible fluid line is rated to withstand?",
     "choices": [
       "The type of fluid being carried.",
@@ -2440,7 +2440,7 @@
     ]
   },
   {
-    "id": "quiz_1_131-5__fluid_lines",
+    "id": "quiz_1_131-5",
     "question": "When a Teflon hose has been in service for a time, what condition may have occurred and/or what precaution should be taken when it is temporarily removed from the aircraft?",
     "choices": [
       "Limber the hose by flexing and moving before re-installation.",
@@ -2455,7 +2455,7 @@
     "answer": 2
   },
   {
-    "id": "quiz_1_131-6__fluid_lines",
+    "id": "quiz_1_131-6",
     "question": "Which statement(s) about Military Standard (MS) flareless fittings is/are correct?\n1. During installation, MS flareless fittings are normally tightened by turning the nut a specified amount, rather than being torqued.\n2. New MS flareless tubing/fittings should be assembled clean and dry without lubrication.\n3. During installation, MS flareless fittings are normally tightened by applying a specified torque to the nut.",
     "choices": [
       "3.",
@@ -2469,7 +2469,7 @@
     "answer": 2
   },
   {
-    "id": "quiz_1_131-7__fluid_lines",
+    "id": "quiz_1_131-7",
     "question": "What is the color of an AN steel flared-tube fitting?",
     "choices": [
       "Blue.",
@@ -2483,7 +2483,7 @@
     "answer": 2
   },
   {
-    "id": "quiz_1_131-8__fluid_lines",
+    "id": "quiz_1_131-8",
     "question": "Scratches or nicks on the straight portion of aluminum alloy tubing may be repaired if they are no deeper than",
     "choices": [
       "20 percent of the wall thickness.",
@@ -2497,7 +2497,7 @@
     "answer": 2
   },
   {
-    "id": "quiz_1_131-9__fluid_lines",
+    "id": "quiz_1_131-9",
     "question": "In a metal tubing installation,",
     "choices": [
       "tension is undesirable because pressurization will cause it to expand and shift.",
@@ -2511,7 +2511,7 @@
     "answer": 0
   },
   {
-    "id": "quiz_1_131-10__fluid_lines",
+    "id": "quiz_1_131-10",
     "question": "Which statement is true regarding flattening of tubing in bends?",
     "choices": [
       "The small diameter portion in the bend cannot exceed more than 75 percent of the diameter of straight tubing.",
@@ -2525,7 +2525,7 @@
     "answer": 2
   },
   {
-    "id": "quiz_1_131-11__fluid_lines",
+    "id": "quiz_1_131-11",
     "question": "Excessive stress on fluid or pneumatic metal tubing caused by expansion and contraction due to temperature changes can best be avoided by",
     "choices": [
       "using short, straight sections of tubing between fixed parts of the aircraft.",
@@ -2539,7 +2539,7 @@
     "answer": 1
   },
   {
-    "id": "quiz_1_131-12__fluid_lines",
+    "id": "quiz_1_131-12",
     "question": "The best tool to use when cutting aluminum tubing, or any tubing of moderately soft metal is a",
     "choices": [
       "circular-saw equipped with an abrasive cutting wheel.",
@@ -2554,7 +2554,7 @@
     "answer": 2
   },
   {
-    "id": "quiz_1_131-13__fluid_lines",
+    "id": "quiz_1_131-13",
     "question": "What is the color code for fluid lines carrying fuel?",
     "choices": [
       "Blue",
@@ -2567,7 +2567,7 @@
     ]
   },
   {
-    "id": "quiz_1_131-14__fluid_lines",
+    "id": "quiz_1_131-14",
     "question": "What is the color code for fluid lines carrying hydraulic fluid?",
     "choices": [
       "Red/White",
@@ -2581,7 +2581,7 @@
     "answer": 2
   },
   {
-    "id": "quiz_1_131-15__fluid_lines",
+    "id": "quiz_1_131-15",
     "question": "To find the inside diameter of rigid tubing, twice the wall thickness must be subtracted from the _______ diameter.",
     "choices": [
       "flare",
@@ -7138,7 +7138,7 @@
     ]
   },
   {
-    "id": "test_131-1__fluid_lines",
+    "id": "test_131-1",
     "question": "A scratch or nick in aluminum tubing can be repaired provided it does not",
     "choices": [
       "exceed 10 percent of the tube OD on a straight section.",
@@ -7164,7 +7164,7 @@
     ]
   },
   {
-    "id": "test_131-4__fluid_lines",
+    "id": "test_131-4",
     "question": "Which coupling nut should be selected for use with 1/2-inch aluminum oil lines which are to be assembled using flared tube ends and standard AN nuts, sleeves, and fittings?",
     "choices": [
       "AN-818-8.",
@@ -7177,7 +7177,7 @@
     ]
   },
   {
-    "id": "test_131-6__fluid_lines",
+    "id": "test_131-6",
     "question": "Flexible lines must be installed with",
     "choices": [
       "a slack of at least 10 to 12 percent of the length.",
@@ -7190,7 +7190,7 @@
     ]
   },
   {
-    "id": "test_131-7__fluid_lines",
+    "id": "test_131-7",
     "question": "A 3/8 inch aircraft high pressure flexible hose as compared to 3/8 inch metal tubing used in the same system will",
     "choices": [
       "usually have interchangeable applications.",
@@ -7203,7 +7203,7 @@
     ]
   },
   {
-    "id": "test_131-8__fluid_lines",
+    "id": "test_131-8",
     "question": "Flexible lines must be installed with",
     "choices": [
       "As much slack as the area allows.",
@@ -7217,7 +7217,7 @@
     ]
   },
   {
-    "id": "test_131-9__fluid_lines",
+    "id": "test_131-9",
     "question": "When installing bonded clamps to support metal tubing,",
     "choices": [
       "paint clamp and tube after clamp installation to prevent corrosion.",
@@ -7230,7 +7230,7 @@
     ]
   },
   {
-    "id": "test_131-12__fluid_lines",
+    "id": "test_131-12",
     "question": "Every tubing installation must have at least one bend to",
     "choices": [
       "prevent excess stress on the tubing.",
@@ -7256,7 +7256,7 @@
     ]
   },
   {
-    "id": "test_131-14__fluid_lines",
+    "id": "test_131-14",
     "question": "(1) Bonded clamps are used for support when installing metal tubing.\n(2) Unbonded clamps are used for support when installing wiring.\nRegarding the above statements,",
     "choices": [
       "both No. 1 and No. 2 are true.",
@@ -7297,7 +7297,7 @@
     ]
   },
   {
-    "id": "test_131-19__fluid_lines",
+    "id": "test_131-19",
     "question": "What process is necessary prior to installing new flareless fittings?",
     "choices": [
       "Annealing",
@@ -7310,7 +7310,7 @@
     ]
   },
   {
-    "id": "test_131-20__fluid_lines",
+    "id": "test_131-20",
     "question": "In most aircraft hydraulic systems, two-piece tube connectors consisting of a sleeve and a nut are used when a tubing flare is required. The use of this type of connector eliminates",
     "choices": [
       "the possibility of reducing flare thickness by wiping or ironing when tightened correctly.",
@@ -7324,7 +7324,7 @@
     ]
   },
   {
-    "id": "test_131-21__fluid_lines",
+    "id": "test_131-21",
     "question": "Which of the following hose materials are compatible with phosphate-ester base hydraulic fluids?\n1. Butyl.\n2. Teflon.\n3. Buna-N.\n4. Neoprene.",
     "choices": [
       "1 and 2.",
@@ -7337,7 +7337,7 @@
     ]
   },
   {
-    "id": "test_131-24__fluid_lines",
+    "id": "test_131-24",
     "question": "From the following sequences of steps, indicate the proper order you would use to make a single flare on a piece of tubing:\n1. Place the tube in the proper size hold in the flaring block.\n2. Project the end of the tube slightly from the top of the flaring tool, about the thickness of a dime.\n3. Slip the fitting nut and sleeve on the tube.\n4. Strike the plunger several light blows with a lightweight hammer or mallet and turn the plunger one-half turn after each blow.\n5. Tighten the clamp bar securely to prevent slippage.\n6. Center the plunger or flaring pin over the tube.",
     "choices": [
       "3, 1, 6, 2, 5, 4.",
@@ -7350,7 +7350,7 @@
     ]
   },
   {
-    "id": "test_131-25__fluid_lines",
+    "id": "test_131-25",
     "question": "When bending a tube, flattening in the bend by not more than 25% of the original diameter is permissible.",
     "choices": [
       "True",
@@ -7362,7 +7362,7 @@
     ]
   },
   {
-    "id": "test_131-27__fluid_lines",
+    "id": "test_131-27",
     "question": "The best tool to use when cutting aluminum tubing, or any tubing of moderately soft metal is a",
     "choices": [
       "Hand operated wheel-type cutter",
@@ -7389,7 +7389,7 @@
     ]
   },
   {
-    "id": "test_131-30__fluid_lines",
+    "id": "test_131-30",
     "question": "Which tubings have the characteristics (high strength, abrasion resistance) necessary for use in a high-pressure (3,000 PSI) hydraulic system for operation of landing gear and flaps?",
     "choices": [
       "Corrosion-resistant steel annealed or 1/4H.",
@@ -7402,7 +7402,7 @@
     ]
   },
   {
-    "id": "test_131-31__fluid_lines",
+    "id": "test_131-31",
     "question": "The maximum distance between end fittings to which a straight hose assembly is to be connected is 50 inches. The minimum hose length to make such a connection should be",
     "choices": [
       "54-1/2 inches.",
@@ -7441,7 +7441,7 @@
     ]
   },
   {
-    "id": "test_131-35__fluid_lines",
+    "id": "test_131-35",
     "question": "Rolling-type Flaring Tools are used to flare X, X, and X tubing.",
     "choices": [
       "Titanium, soft copper, corrosion resistant steel.",
@@ -7454,7 +7454,7 @@
     ]
   },
   {
-    "id": "test_131-39__fluid_lines",
+    "id": "test_131-39",
     "question": "High-pressure oxygen is typically carried in a stainless steel line.",
     "choices": [
       "True",

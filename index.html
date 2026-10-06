@@ -910,7 +910,7 @@
     }
     function toggleTheme(){ setTheme(currentTheme() === "dark" ? "light" : "dark"); }
     /* ===== 登录 + 做题历史（目录页：与做题页同源，共用 token / 历史）===== */
-    var QB_API_BASE = "https://question-bank-legacy.pages.dev/api";
+    var QB_API_BASE = "https://question-bank-78u.pages.dev/api";
     var AUTH_KEY = "qb_auth_v1";
     function getAuth(){ try{ return JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); }catch(e){ return null; } }
     function setAuth(a){ try{ localStorage.setItem(AUTH_KEY, JSON.stringify(a)); }catch(e){} updateAuthUI(); }
