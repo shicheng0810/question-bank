@@ -71,6 +71,7 @@
     .btn:active{transform:translateY(1px) scale(.98)} /* P2 按压态 */
     .btn:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
     .btn-sm{padding:6px 10px; font-size:12px}
+    a.btn{text-decoration:none} /* P5-T2 FA-B7：a.btn（← Catalog）不带下划线 */
     .btn:disabled{opacity:.55; cursor:not-allowed; box-shadow:none}
     .submit-btn,.confirm-btn{background:var(--brand); color:var(--on-brand); border-color:transparent; box-shadow:0 1px 2px var(--brand-ring)}
     .submit-btn:hover,.confirm-btn:hover{background:var(--brand-strong)}
@@ -97,7 +98,7 @@
     .qb-menu-item.qb-menu-lang,.qb-menu-item.qb-menu-lang:hover{cursor:default; background:transparent}
     .qb-mi-ic{width:1.3em; text-align:center; flex:0 0 auto; font-size:15px}
     .qb-mi-tx{flex:1 1 auto}
-    #qb-menu #theme-toggle,#qb-menu #motion-toggle{width:auto; height:auto; border-radius:8px;
+    #qb-menu #theme-toggle,#qb-menu #motion-toggle{width:auto; height:auto; border-radius:8px; padding:9px 11px; /* P5-T2 FA-B6：补回 .qb-menu-item 的 padding（#theme-toggle 的 padding:0 特异性更高） */
       justify-content:flex-start; font-size:14px; box-shadow:none; border:0; background:transparent}
     #qb-menu #theme-toggle:hover,#qb-menu #motion-toggle:hover{background:var(--hover)}
     #qb-menu #ui-lang{height:32px}
@@ -285,6 +286,12 @@
     .question-card.qb-flash{animation:qbFlash .45s ease}
     @keyframes qbFlash{0%{box-shadow:0 0 0 3px var(--brand-ring)}100%{box-shadow:0 0 0 0 rgba(0,0,0,0)}}
     @media (max-width:560px){ #qp-sheet span{display:none} }
+    /* P5-T2 FA-B8：▦ / 🎯 换成 currentColor 的内联 SVG（emoji / 符号字形在深色下对比度不足、各平台渲染不一）；颜色 = 按钮文字色 */
+    .qp-ic{width:14px; height:14px; flex:0 0 auto; fill:currentColor}
+    .qp-ic-goal{fill:none; stroke:currentColor; stroke-width:1.6}
+    .qp-ic-goal .qp-ic-dot{fill:currentColor; stroke:none}
+    #qp-goal{gap:5px}
+    @media (max-width:359px){ #qp-goal.qp-goal-unset #qp-goal-txt{display:none} } /* 最窄屏：没设目标时只留图标（同 ▦ 在 ≤560px 只留图标），避免进度行横向溢出 */
 
     /* ===== P8 键盘流 ===== */
     .question-card.kb-focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-ring)}
@@ -395,8 +402,8 @@
     <div class="qp-meta">
       <span id="qp-text"></span>
       <button class="btn btn-sm" id="qp-next" type="button" onclick="jumpToNextUnanswered()">Next unanswered →</button>
-      <button class="btn btn-sm" id="qp-sheet" type="button" onclick="toggleSheet()">▦ <span data-i18n="sheet_btn">Answer sheet</span></button>
-      <button class="btn btn-sm" id="qp-goal" type="button" onclick="toggleGoalPop()">🎯<span id="qp-goal-txt"></span></button>
+      <button class="btn btn-sm" id="qp-sheet" type="button" onclick="toggleSheet()"><svg class="qp-ic" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 2h3.5v3.5H2zM6.25 2h3.5v3.5h-3.5zM10.5 2H14v3.5h-3.5zM2 6.25h3.5v3.5H2zM6.25 6.25h3.5v3.5h-3.5zM10.5 6.25H14v3.5h-3.5zM2 10.5h3.5V14H2zM6.25 10.5h3.5V14h-3.5zM10.5 10.5H14V14h-3.5z"/></svg><span data-i18n="sheet_btn">Answer sheet</span></button>
+      <button class="btn btn-sm" id="qp-goal" type="button" onclick="toggleGoalPop()"><svg class="qp-ic qp-ic-goal" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.4"/><circle cx="8" cy="8" r="3.6"/><circle cx="8" cy="8" r="1.3" class="qp-ic-dot"/></svg><span id="qp-goal-txt"></span></button>
       <button class="btn btn-sm" id="qp-filter" type="button" onclick="toggleQpFilter()" aria-label="Filters">☰</button>
     </div>
   </div>
@@ -580,6 +587,12 @@
     .coffee-fab .cf-emoji{font-size:17px}
     @keyframes cfWiggle{0%,55%,100%{transform:rotate(0)}68%{transform:rotate(-8deg) scale(1.05)}84%{transform:rotate(8deg) scale(1.05)}}
     @media (max-width:560px){.coffee-fab .cf-text{display:none}.coffee-fab{padding:13px;border-radius:50%;font-size:18px}}
+    /* P5-T2 FA-B5：≤600px 不再在抖动时切成 position:fixed 钉到右上角（会盖住 h1 / 筛选箭头）——FAB 留在 Filter 行里、排在筛选栏右侧（占位，不重叠） */
+    @media (max-width:600px){
+      .filter-row{display:flex; align-items:flex-start; gap:8px}
+      .filter-row>.filter-panel{flex:1 1 0; min-width:0; width:auto}
+      .filter-row>.coffee-fab,.filter-row>.coffee-fab.wiggle{position:relative; top:auto; right:auto; flex:0 0 auto}
+    }
     .coffee-card{max-width:430px;position:relative;text-align:center;overflow:hidden}
     /* 咖啡师现做：机头 → 豆子落下 → 咖啡注入杯中 → 热气 */
     .barista{height:118px;position:relative;display:flex;align-items:flex-end;justify-content:center;margin:6px 0 2px}
@@ -617,8 +630,10 @@
     .coffee-custom input::-webkit-outer-spin-button,.coffee-custom input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
     .coffee-thanks{animation:qbPop .45s cubic-bezier(.2,.9,.3,1.3)}
     @keyframes qbPop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
-    .coffee-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:110;display:flex;align-items:center;gap:11px;background:var(--card);border:1px solid var(--border-strong);border-radius:14px;box-shadow:var(--shadow-lg);padding:11px 13px;max-width:min(440px,92vw);animation:qbToastIn .45s cubic-bezier(.2,.9,.3,1.2)}
+    .coffee-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:89;display:flex;align-items:center;gap:11px;background:var(--card);border:1px solid var(--border-strong);border-radius:14px;box-shadow:var(--shadow-lg);padding:11px 13px;max-width:min(440px,92vw);animation:qbToastIn .45s cubic-bezier(.2,.9,.3,1.2)}
     .coffee-toast[hidden]{display:none}
+    /* P5-T2 FA-B3：任一 .tut-overlay（总结 / 历史 / 指南 / 咖啡…）打开时延后 coffee-toast（关掉弹窗后再出现）；z-index 89 < 弹窗 90 兜底不支持 :has 的浏览器 */
+    body:has(.tut-overlay:not([hidden])) .coffee-toast{display:none}
     .coffee-toast .ct-spark{font-size:22px}
     .coffee-toast strong{font-size:14px}
     .coffee-toast .qb-x{width:30px;height:30px}
@@ -777,7 +792,7 @@
         fb_cancel: "Cancel", fb_need_type: "Please choose a problem type.", fb_need_msg: "Please add a short note.",
         fb_sending: "Sending…", fb_thanks: "✅ Got it — thank you!", fb_mailto_hint: "Opening your email app…", fb_copied_hint: "Copied to clipboard — paste it to {email}", fb_error: "Couldn't send, please try later.",
         login_btn: "Sign in", account_history: "History", login_title: "Sign in to save your history", login_hint: "Pick a code and remember it — use the same code on any device to find your history. Anyone who knows the code can see that history, so don't reuse a real password.", login_ph: "your code (4+ characters)", login_go: "Enter", login_cancel: "Cancel", login_ing: "Signing in…", login_ok: "✅ Signed in", login_fail: "Couldn't sign in, try again.", login_too_short: "Code needs at least 4 characters.", login_rate: "Too many tries — wait a minute.", login_neterr: "Network error, try again later.",
-        history_title: "Your practice history", history_sub: "Your latest 10 rounds (the oldest is dropped). “Load” reopens a round with your answers.", hist_loading: "Loading…", hist_empty: "No saved rounds yet — answer a few questions and they'll show up here.", hist_load: "Load", hist_neterr: "Couldn't load history.", hist_del_confirm: "Delete this record?", hist_load_fail: "Couldn't load that round.", hist_logout: "Sign out", hist_unanswered: "not started", mybank_need_login: "Sign in to open your private bank — it's stored in your account and visible only to you.", mybank_not_found: "Private bank not found — it may have been removed, or you're signed in with a different code.", del_account_btn: "Delete my data", del_account_confirm: "Permanently delete your account and ALL your data (history + private banks)? This cannot be undone. (You can sign in again later with the same code to start fresh.)", del_account_done: "✅ Your account and all your data were deleted.", del_account_fail: "Couldn't delete — please try again.", special_ok: "✅ Opening the shared bank…", special_need_code: "Enter your share code to open the shared bank.", special_not_found: "Share code not found — it may have been removed, or the code is wrong.", special_exit_confirm: "Exit this shared bank? Your practice here is not saved.", special_exit: "Exit",
+        history_title: "Your practice history", history_sub: "Your latest 10 rounds (the oldest is dropped). “Load” reopens a round with your answers.", hist_loading: "Loading…", hist_empty: "No saved rounds yet — answer a few questions and they'll show up here.", hist_load: "Load", hist_neterr: "Couldn't load history.", hist_autosave_failed: "The last auto-save failed — your latest answers may be missing here.", hist_del_confirm: "Delete this record?", hist_load_fail: "Couldn't load that round.", hist_logout: "Sign out", hist_unanswered: "not started", mybank_need_login: "Sign in to open your private bank — it's stored in your account and visible only to you.", mybank_not_found: "Private bank not found — it may have been removed, or you're signed in with a different code.", del_account_btn: "Delete my data", del_account_confirm: "Permanently delete your account and ALL your data (history + private banks)? This cannot be undone. (You can sign in again later with the same code to start fresh.)", del_account_done: "✅ Your account and all your data were deleted.", del_account_fail: "Couldn't delete — please try again.", special_ok: "✅ Opening the shared bank…", special_need_code: "Enter your share code to open the shared bank.", special_not_found: "Share code not found — it may have been removed, or the code is wrong.", special_exit_confirm: "Exit this shared bank? Your practice here is not saved.", special_exit: "Exit",
         filter_summary: "Filter Question Banks",
         select_all: "Select All", select_none: "Select None", confirm: "Confirm",
         randomize: "Randomize + Reset",
@@ -874,7 +889,7 @@
         fb_cancel: "取消", fb_need_type: "请选择问题类型。", fb_need_msg: "请填写一句话说明。",
         fb_sending: "提交中…", fb_thanks: "✅ 已收到，谢谢你的反馈！", fb_mailto_hint: "正在打开你的邮件应用…", fb_copied_hint: "已复制到剪贴板——请粘贴发给 {email}", fb_error: "提交失败，请稍后再试。",
         login_btn: "登录", account_history: "历史", login_title: "登录以保存历史", login_hint: "自定义一个码并记住它——换设备也用同一个码就能找回你的历史。知道这个码的人就能看到那份历史，所以别用你别处的真实密码。", login_ph: "你的码（4 位以上）", login_go: "进入", login_cancel: "取消", login_ing: "登录中…", login_ok: "✅ 已登录", login_fail: "登录失败，请重试。", login_too_short: "码至少要 4 位。", login_rate: "尝试太频繁，请稍等一分钟。", login_neterr: "网络错误，请稍后再试。",
-        history_title: "你的做题历史", history_sub: "最近 10 轮（超出自动删最旧）。点「载入」回到那一轮、带上你当时的作答。", hist_loading: "加载中…", hist_empty: "还没有记录——做几道题就会出现在这里。", hist_load: "载入", hist_neterr: "加载历史失败。", hist_del_confirm: "删除这条记录？", hist_load_fail: "载入这一轮失败。", hist_logout: "退出登录", hist_unanswered: "未开始", mybank_need_login: "登录后才能打开你的私有题库——它存在你的账号里，只有你能看到。", mybank_not_found: "找不到这个私有题库——可能已被移除，或你登录用的码不是当初上传的那个。", del_account_btn: "删除我的数据", del_account_confirm: "永久删除你的账号和全部数据（历史 + 私有题库）？此操作无法撤销。（之后仍可用同一个码重新登录、从空账号开始。）", del_account_done: "✅ 你的账号和全部数据已删除。", del_account_fail: "删除失败，请重试。", special_ok: "✅ 正在打开分享题库…", special_need_code: "输入分享码以打开分享题库。", special_not_found: "找不到这个分享码——可能已被移除，或码输错了。", special_exit_confirm: "退出这个分享题库？这里的做题不会保存。", special_exit: "退出",
+        history_title: "你的做题历史", history_sub: "最近 10 轮（超出自动删最旧）。点「载入」回到那一轮、带上你当时的作答。", hist_loading: "加载中…", hist_empty: "还没有记录——做几道题就会出现在这里。", hist_load: "载入", hist_neterr: "加载历史失败。", hist_autosave_failed: "最近一次自动保存失败——最新的作答可能没有出现在这里。", hist_del_confirm: "删除这条记录？", hist_load_fail: "载入这一轮失败。", hist_logout: "退出登录", hist_unanswered: "未开始", mybank_need_login: "登录后才能打开你的私有题库——它存在你的账号里，只有你能看到。", mybank_not_found: "找不到这个私有题库——可能已被移除，或你登录用的码不是当初上传的那个。", del_account_btn: "删除我的数据", del_account_confirm: "永久删除你的账号和全部数据（历史 + 私有题库）？此操作无法撤销。（之后仍可用同一个码重新登录、从空账号开始。）", del_account_done: "✅ 你的账号和全部数据已删除。", del_account_fail: "删除失败，请重试。", special_ok: "✅ 正在打开分享题库…", special_need_code: "输入分享码以打开分享题库。", special_not_found: "找不到这个分享码——可能已被移除，或码输错了。", special_exit_confirm: "退出这个分享题库？这里的做题不会保存。", special_exit: "退出",
         filter_summary: "筛选题库",
         select_all: "全选", select_none: "全不选", confirm: "确认",
         randomize: "打乱并重置",
@@ -971,7 +986,7 @@
         fb_cancel: "Cancelar", fb_need_type: "Elige un tipo de problema.", fb_need_msg: "Escribe una breve nota.",
         fb_sending: "Enviando…", fb_thanks: "✅ ¡Recibido, gracias!", fb_mailto_hint: "Abriendo tu app de correo…", fb_copied_hint: "Copiado — pégalo y envíalo a {email}", fb_error: "No se pudo enviar, inténtalo más tarde.",
         login_btn: "Entrar", account_history: "Historial", login_title: "Entra para guardar tu historial", login_hint: "Elige un código y recuérdalo — usa el mismo en cualquier dispositivo para encontrar tu historial. Quien conozca el código verá ese historial, así que no uses una contraseña real.", login_ph: "tu código (4+ caracteres)", login_go: "Entrar", login_cancel: "Cancelar", login_ing: "Entrando…", login_ok: "✅ Sesión iniciada", login_fail: "No se pudo entrar, reinténtalo.", login_too_short: "El código necesita 4+ caracteres.", login_rate: "Demasiados intentos — espera un minuto.", login_neterr: "Error de red, inténtalo más tarde.",
-        history_title: "Tu historial de práctica", history_sub: "Tus últimas 10 rondas (se elimina la más antigua). “Cargar” reabre una ronda con tus respuestas.", hist_loading: "Cargando…", hist_empty: "Aún no hay rondas — responde algunas preguntas y aparecerán aquí.", hist_load: "Cargar", hist_neterr: "No se pudo cargar el historial.", hist_del_confirm: "¿Eliminar este registro?", hist_load_fail: "No se pudo cargar esa ronda.", hist_logout: "Cerrar sesión", hist_unanswered: "sin empezar", mybank_need_login: "Inicia sesión para abrir tu banco privado — está en tu cuenta y solo tú puedes verlo.", mybank_not_found: "Banco privado no encontrado — puede que se haya eliminado o que hayas entrado con otro código.", del_account_btn: "Eliminar mis datos", del_account_confirm: "¿Eliminar permanentemente tu cuenta y TODOS tus datos (historial + bancos privados)? No se puede deshacer. (Puedes volver a entrar con el mismo código y empezar de cero.)", del_account_done: "✅ Tu cuenta y todos tus datos se eliminaron.", del_account_fail: "No se pudo eliminar — inténtalo de nuevo.", special_ok: "✅ Abriendo el banco compartido…", special_need_code: "Introduce tu código para abrir el banco compartido.", special_not_found: "Código no encontrado — puede que se haya eliminado o sea incorrecto.", special_exit_confirm: "¿Salir de este banco compartido? Tu práctica aquí no se guarda.", special_exit: "Salir",
+        history_title: "Tu historial de práctica", history_sub: "Tus últimas 10 rondas (se elimina la más antigua). “Cargar” reabre una ronda con tus respuestas.", hist_loading: "Cargando…", hist_empty: "Aún no hay rondas — responde algunas preguntas y aparecerán aquí.", hist_load: "Cargar", hist_neterr: "No se pudo cargar el historial.", hist_autosave_failed: "Falló el último guardado automático: puede que tus respuestas más recientes no aparezcan aquí.", hist_del_confirm: "¿Eliminar este registro?", hist_load_fail: "No se pudo cargar esa ronda.", hist_logout: "Cerrar sesión", hist_unanswered: "sin empezar", mybank_need_login: "Inicia sesión para abrir tu banco privado — está en tu cuenta y solo tú puedes verlo.", mybank_not_found: "Banco privado no encontrado — puede que se haya eliminado o que hayas entrado con otro código.", del_account_btn: "Eliminar mis datos", del_account_confirm: "¿Eliminar permanentemente tu cuenta y TODOS tus datos (historial + bancos privados)? No se puede deshacer. (Puedes volver a entrar con el mismo código y empezar de cero.)", del_account_done: "✅ Tu cuenta y todos tus datos se eliminaron.", del_account_fail: "No se pudo eliminar — inténtalo de nuevo.", special_ok: "✅ Abriendo el banco compartido…", special_need_code: "Introduce tu código para abrir el banco compartido.", special_not_found: "Código no encontrado — puede que se haya eliminado o sea incorrecto.", special_exit_confirm: "¿Salir de este banco compartido? Tu práctica aquí no se guarda.", special_exit: "Salir",
         filter_summary: "Filtrar bancos de preguntas",
         select_all: "Seleccionar todo", select_none: "Ninguno", confirm: "Confirmar",
         randomize: "Mezclar y reiniciar",
@@ -1829,6 +1844,7 @@
 
     function render(questions){
       currentQuestions=questions;
+      _roundScopeReset = true; // P5-T2 FA-B2：换视图 / 换范围后的首次进度计算只「对齐」完成状态，不庆祝
       kbIndex = -1; // P8 列表重建后旧键盘焦点索引失效，重置（下次 j/k 从视口重新定位）
       const wrap=document.getElementById("quiz");
       if(!questions.length){
@@ -2583,7 +2599,7 @@
       if (!bar) return;
       const list = Array.isArray(currentQuestions) ? currentQuestions : [];
       const total = list.length;
-      if (!total){ bar.hidden = true; return; }
+      if (!total){ bar.hidden = true; lastRoundComplete = false; _roundScopeReset = false; return; }
       let done = 0;
       for (const q of list){ const st = uiState[q.id]; if (st && st.submitted) done++; }
       const pct = Math.round((done / total) * 100);
@@ -2602,6 +2618,10 @@
       }
       // 整轮做完 → 庆祝（<10 题的小轮只弹轻 toast，见 celebrateRoundCompletion）；仅在「未完成→完成」跃迁触发一次
       const complete = (total > 0 && done >= total);
+      // P5-T2 FA-B2：切换视图 / 范围（Wrong Only、Star Only、Random 150、Back to All、Randomize、筛选确认、还原）后的 render 里
+      // 先把 lastRoundComplete 设成新范围当前的完成状态——进入一个「本来就全做完」的列表（如只有 1 道已答错题的 Wrong Only）不算跃迁；
+      // 只有之后由提交导致的「未完成→完成」才庆祝。不加 viewMode / 题数门槛。
+      if (_roundScopeReset){ _roundScopeReset = false; lastRoundComplete = complete; return; }
       if (complete && !lastRoundComplete && total > 0) celebrateRoundCompletion(total);
       lastRoundComplete = complete;
     }
@@ -3015,19 +3035,54 @@
       clearTimeout(_snapTimer);
       _snapTimer = setTimeout(saveSnapshotNow, 1500);
     }
+    // P5-T2 Bug-1：浏览器对 keepalive 请求体有 64KiB 上限，超了 fetch 直接被拒（以前被 catch 静默吞掉 → 大轮次永远存不上）。
+    // ≤60KiB 才带 keepalive（离开页面时仍能送达）；更大的用普通 fetch。快照格式不变（scope 不压缩、不用 sendBeacon——带不了 Authorization）。
+    var SNAP_KEEPALIVE_MAX = 60 * 1024;
+    var _snapLastFailed = false; // 最近一次自动保存是否失败（历史面板显示一行小字）
+    function snapBodyBytes(body){ try{ return new Blob([body]).size; }catch(_e){ return String(body).length * 3; } }
     async function saveSnapshotNow(){
+      clearTimeout(_snapTimer); _snapTimer = null;
       if(!isLoggedIn()) return;
       var snap = buildSnapshot();
       if(!snap.count) return; // 没有已提交的题就不存
+      var body = JSON.stringify({ snapshot: snap });
+      var opts = {
+        method: "POST",
+        headers: Object.assign({ "Content-Type": "application/json" }, authHeaders()),
+        body: body
+      };
+      if(snapBodyBytes(body) <= SNAP_KEEPALIVE_MAX) opts.keepalive = true;
       try{
-        await fetch(QB_API_BASE + "/history", {
-          method: "POST",
-          headers: Object.assign({ "Content-Type": "application/json" }, authHeaders()),
-          body: JSON.stringify({ snapshot: snap }),
-          keepalive: true
-        });
-      }catch(_e){ /* 自动保存失败静默，不打断做题 */ }
+        var res = await fetch(QB_API_BASE + "/history", opts);
+        if(!res.ok) throw new Error("HTTP " + res.status);
+        _snapLastFailed = false;
+      }catch(e){
+        _snapLastFailed = true; // 不打断做题；控制台留痕 + 历史面板提示
+        try{ console.warn("[qb] history auto-save failed:", (e && e.message) || e); }catch(_e){}
+      }
     }
+    // P5-T2 Bug-1(2)：还在 1.5s 防抖里的保存，在离开页面前立刻发出（pagehide / 切到后台 / 点 ← Catalog）。
+    // 返回 null = 没有待发的保存；否则 { keepalive, done }。
+    function flushSnapshotSave(){
+      if(!_snapTimer) return null;
+      clearTimeout(_snapTimer); _snapTimer = null;
+      var big = false;
+      try{ big = snapBodyBytes(JSON.stringify({ snapshot: buildSnapshot() })) > SNAP_KEEPALIVE_MAX; }catch(_e){}
+      return { keepalive: !big, done: saveSnapshotNow() };
+    }
+    window.addEventListener("pagehide", function(){ flushSnapshotSave(); });
+    document.addEventListener("visibilitychange", function(){ if(document.visibilityState === "hidden") flushSnapshotSave(); });
+    function onBackCatalogClick(ev){
+      var f = flushSnapshotSave();
+      if(!f || f.keepalive) return; // 小快照带 keepalive，照常跳转也能送达
+      // 大快照（>60KiB，不能 keepalive）：先等它存完（最多 4s）再跳，避免跳转把请求取消
+      var a = ev.currentTarget;
+      var href = (a && a.href) || "./";
+      ev.preventDefault();
+      var go = function(){ location.href = href; };
+      Promise.race([f.done, new Promise(function(r){ setTimeout(r, 4000); })]).then(go, go);
+    }
+    (function(){ var b = document.getElementById("back-catalog"); if (b) b.addEventListener("click", onBackCatalogClick); })();
 
     /* ---- 历史面板 ---- */
     function openHistory(){
@@ -3046,8 +3101,9 @@
         if(res.status === 401){ clearAuth(); closeHistory(); openLoginModal(); return; }
         var d = {}; try{ d = await res.json(); }catch(_e){}
         var items = (d && d.items) || [];
-        if(!items.length){ box.innerHTML = '<div class="meta" style="padding:8px">' + escHTML(T("hist_empty")) + '</div>'; return; }
-        box.innerHTML = items.map(function(it){
+        var warn = _snapLastFailed ? '<div class="meta qb-hist-warn" data-testid="hist-autosave-failed" style="padding:4px 8px;color:var(--danger-ink);font-size:12px">' + escHTML(T("hist_autosave_failed")) + '</div>' : '';
+        if(!items.length){ box.innerHTML = warn + '<div class="meta" style="padding:8px">' + escHTML(T("hist_empty")) + '</div>'; return; }
+        box.innerHTML = warn + items.map(function(it){
           var sc = it.score ? (it.score.correct + "/" + it.score.answered + " ✓ · " + it.score.answered + "/" + it.score.total) : escHTML(T("hist_unanswered"));
           var id = escapeAttr(it.id);
           return '<div class="qb-hist-row">'
@@ -3376,6 +3432,7 @@
     /* ------------------ ☕ Buy me a coffee（打赏） ------------------ */
     const COFFEE_CELEBRATED_KEY = "qb_coffee_celebrated_v1"; // 首次做完整轮的庆祝 toast 只弹一次（跨题库共享）
     let lastRoundComplete = false;                            // 仅在「未完成→完成」的跃迁时庆祝，避免重复触发
+    var _roundScopeReset = false;                             // P5-T2 FA-B2：render() 置位，updateProgress 消费（见上）
 
     // 依赖无关的轻量彩带：从 (x,y) 爆开一蓬彩色碎片，~1.5s 自清。prefers-reduced-motion 下静默跳过。
     function fireConfetti(x, y){
@@ -3970,9 +4027,25 @@
       kbFocusCard(best);
     }
     function toggleKbSheet(){ const el = document.getElementById("qb-kbsheet"); if (el) el.hidden = !el.hidden; }
+    // P5-T2 FA-B4：Esc 关闭最上层打开的 .tut-overlay（走各自的 close 函数，副作用与点 ✕ 相同）。
+    // 例外：#qb-allbanks 是 All Banks 的必选起步对话框（没有它页面是空的；它也不响应点遮罩关闭）。
+    const OVERLAY_CLOSERS = {
+      "qb-guide": () => closeGuide(), "qb-report": () => closeReportModal(), "qb-suggest": () => closeSuggestModal(),
+      "qb-login": () => closeLoginModal(), "qb-history": () => closeHistory(), "qb-tutorial": () => endTutorial(),
+      "qb-coffee": () => closeCoffee(), "qb-recap": () => closeRecap()
+    };
+    function closeTopOverlay(){
+      const open = [...document.querySelectorAll(".tut-overlay:not([hidden])")].filter(el => el.id !== "qb-allbanks");
+      if (!open.length) return false;
+      const top = open.reduce((a, b) => ((parseInt(getComputedStyle(b).zIndex, 10) || 0) >= (parseInt(getComputedStyle(a).zIndex, 10) || 0) ? b : a));
+      const fn = OVERLAY_CLOSERS[top.id];
+      try{ if (fn) fn(); else top.hidden = true; }catch(_e){ top.hidden = true; }
+      return true;
+    }
     document.addEventListener("keydown", function(e){
       if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
       const t = e.target;
+      if (e.key === "Escape" && closeTopOverlay()){ e.preventDefault(); return; } // 弹窗里的输入框中按 Esc 也关弹窗
       if (t && t.closest && t.closest("input, textarea, select, [contenteditable]")) return;
       if (e.key === "Escape"){
         let closed = false;
@@ -4116,8 +4189,10 @@
       if (!txt || !btn) return;
       if (IS_SPECIAL){ btn.hidden = true; return; }
       const g = loadGoal();
-      if (!g){ txt.textContent = ""; btn.title = T("goal_set"); return; }
       const cur = loadActivity()[todayKey()] | 0;
+      // P5-T2 FA-B8：没设目标时不再只剩一个图标——显示「今日已答/–」（– = 还没设目标；title 提示点开设定）
+      btn.classList.toggle("qp-goal-unset", !g);
+      if (!g){ txt.textContent = " " + cur + "/\u2013"; btn.title = T("goal_set"); return; }
       txt.textContent = " " + Math.min(cur, g.n) + "/" + g.n;
       btn.title = T("goal_progress", {cur: cur, n: g.n});
       if (cur >= g.n && g.done !== todayKey()){ // 达标庆祝：同一天只弹一次（done 记当天日期）
