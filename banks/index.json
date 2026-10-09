@@ -7,6 +7,8 @@
     "tags": [],
     "question_count": 34,
     "has_images": true,
+    "category": "airframe",
+    "term": 2,
     "json": "banks/239-airframe-elec.json"
   },
   {
@@ -17,7 +19,8 @@
     "tags": [],
     "question_count": 112,
     "has_images": false,
-    "archived": true,
+    "category": "airframe",
+    "term": 1,
     "json": "banks/205-finishes.json"
   },
   {
@@ -28,7 +31,8 @@
     "tags": [],
     "question_count": 29,
     "has_images": false,
-    "archived": true,
+    "category": "airframe",
+    "term": 1,
     "json": "banks/215-helicopter.json"
   },
   {
@@ -39,7 +43,7 @@
     "tags": [],
     "question_count": 1139,
     "has_images": true,
-    "archived": true,
+    "category": "general",
     "json": "banks/general.json"
   },
   {
@@ -50,6 +54,8 @@
     "tags": [],
     "question_count": 35,
     "has_images": false,
+    "category": "airframe",
+    "term": 2,
     "json": "banks/201-composite.json"
   },
   {
@@ -60,6 +66,8 @@
     "tags": [],
     "question_count": 246,
     "has_images": true,
+    "category": "airframe",
+    "term": 2,
     "json": "banks/211-sheet-metal.json"
   },
   {
@@ -70,6 +78,8 @@
     "tags": [],
     "question_count": 25,
     "has_images": false,
+    "category": "airframe",
+    "term": 2,
     "json": "banks/231-ice-rain.json"
   },
   {
@@ -80,6 +90,8 @@
     "tags": [],
     "question_count": 64,
     "has_images": false,
+    "category": "airframe",
+    "term": 2,
     "json": "banks/231-fire-pos-warning.json"
   },
   {

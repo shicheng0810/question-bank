@@ -3663,7 +3663,33 @@
       const msg = document.getElementById("ab-msg");
       if (msg) msg.hidden = true;
       document.getElementById("qb-allbanks").hidden = false;
-      maybeAutoMergeRestore(); // 「重新加载历史」指向合并页时：自动勾选并开始
+      // 「重新加载历史」指向合并页时：自动勾选并开始；否则看目录页带来的 ?scope=（按大类 / 学期合并练习）
+      if (!maybeAutoMergeRestore()) maybeAutoScope();
+    }
+    // 目录页「Practice all / Practice Airframe N」：player.html?bank=all-banks&scope=airframe 或 airframe-2。
+    // 只按清单里的 category / term 预勾选公开库并直接开始；匹配不到就照常显示选库对话框。
+    function scopeOf(){
+      try{
+        const m = /^(general|airframe|powerplant)(?:-([123]))?$/.exec(new URLSearchParams(location.search).get("scope") || "");
+        return m ? { category: m[1], term: m[2] ? Number(m[2]) : null } : null;
+      }catch(_e){ return null; }
+    }
+    function maybeAutoScope(){
+      const sc = scopeOf();
+      if (!sc) return false;
+      const want = {};
+      AB_PUBLIC_ENTRIES.forEach(e => {
+        if (e && e.category === sc.category && (sc.term == null || Number(e.term) === sc.term)) want[e.id] = 1;
+      });
+      const boxes = document.querySelectorAll('#ab-public-list [data-ab-pub]');
+      let matched = 0;
+      boxes.forEach(b => { const on = !!want[b.value]; b.checked = on; if (on) matched++; });
+      if (!matched){ boxes.forEach(b => { b.checked = true; }); return false; }
+      const name = sc.category.charAt(0).toUpperCase() + sc.category.slice(1) + (sc.term ? " " + sc.term : "");
+      document.title = name;
+      setPageHeading(name);
+      setTimeout(function(){ try{ startAllBanksMerged(); }catch(_e){} }, 30);
+      return true;
     }
     async function abUnlock(id){
       const row = document.querySelector('#ab-list [data-ab-id="' + id + '"]');
