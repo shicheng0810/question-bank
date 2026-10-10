@@ -1,53 +1,801 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-title-en="Format Guide · AMT Practice" data-title-zh="格式说明 · AMT Practice">
 <head>
-  <meta charset="UTF-8" />
-  <title>Question Bank JSON Format / 题库 JSON 格式说明</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <style>
-    :root{--ink:#2d3b45;--muted:#6b7280;--border:#e5e7eb;--bg:#f9fafb;--brand:#2563eb;--card:#fff}
+<meta charset="UTF-8" />
+<title>Format Guide · AMT Practice</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<script>(function(){try{var k="qb_theme",s=localStorage.getItem(k),m=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,t=(s==="dark"||s==="light")?s:(m?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}try{var l=localStorage.getItem("qb_ui_lang");document.documentElement.lang=(l==="zh")?"zh-CN":"en";}catch(e){}})();</script>
+<style>
+    :root{
+      /* 方向 D token（documents/design-review/directions/D/d.css + d-shared.css + d-aux.css）。深色用产品既有的 html[data-theme="dark"]：
+         目录页 head 里的脚本总会把 data-theme 设成 light / dark，所以不需要 prefers-color-scheme 分支。 */
+      color-scheme: light;
+      --bg:#f5f5f3; --surface:#ffffff; --surface-2:#f0f0ed;
+      --text:#1d1d1f; --text-2:#6e6e73; --text-3:#a1a1a6;
+      --hairline:rgba(0,0,0,.08); --hairline-strong:rgba(0,0,0,.14);
+      --accent:#2b74f0; --accent-soft:rgba(43,116,240,.09);
+      --ok:#1e9e57; --ok-soft:#e8f6ee; --bad:#e5484d; --bad-soft:#fdeeee; --star:#f2b100;
+      --primary:#111111; --on-primary:#ffffff;
+      --shadow-1:0 1px 2px rgba(0,0,0,.04), 0 1px 1px rgba(0,0,0,.02);
+      --shadow-2:0 1px 2px rgba(0,0,0,.04), 0 10px 30px -8px rgba(0,0,0,.08);
+      --shadow-float:0 2px 6px rgba(0,0,0,.06), 0 18px 40px -12px rgba(0,0,0,.18);
+      --r-sm:10px; --r-md:14px; --r-lg:20px;
+      --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+      --font-display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter","Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+      --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+      --ease:cubic-bezier(.2,.8,.2,1);
+      --t1:#2b74f0; --t1-soft:#e6effd; --t2:#f08a00; --t2-soft:#fdf1e1; --t3:#1e9e57; --t3-soft:#e5f5ec;
+      --t4:#0ea5b7; --t4-soft:#e2f5f7; --t5:#e5484d; --t5-soft:#fdeaea; --t6:#7c5cff; --t6-soft:#efebff;
+      /* d-shared / d-aux 派生色 */
+      --sh-bad-ink:color-mix(in srgb, var(--bad) 72%, var(--text));
+      --sh-ok-ink:color-mix(in srgb, var(--ok) 62%, var(--text));
+      --sh-accent-ink:color-mix(in srgb, var(--accent) 85%, var(--text));
+      --sh-text-2:color-mix(in srgb, var(--text-2) 85%, var(--text));
+      --sh-fill:color-mix(in srgb, var(--text) 6%, transparent);
+      --aux-scrim:color-mix(in srgb, var(--text) 22%, transparent);
+      --aux-fill:color-mix(in srgb, var(--text) 6%, transparent);
+      --aux-float-bg:var(--surface); --aux-float-ring:var(--shadow-float); --aux-on-warn:var(--primary);
+    }
+    html[data-theme="dark"]{
+      color-scheme: dark;
+      --bg:#161617; --surface:#232325; --surface-2:#2c2c2f;
+      --text:#f5f5f7; --text-2:#a1a1a6; --text-3:#6e6e73;
+      --hairline:rgba(255,255,255,.08); --hairline-strong:rgba(255,255,255,.16);
+      --accent:#4a8dff; --accent-soft:rgba(74,141,255,.16);
+      --ok:#3ccf7a; --ok-soft:rgba(60,207,122,.13); --bad:#ff6369; --bad-soft:rgba(255,99,105,.13);
+      --primary:#f5f5f7; --on-primary:#111111;
+      --shadow-1:0 0 0 1px rgba(255,255,255,.04);
+      --shadow-2:0 0 0 1px rgba(255,255,255,.05), 0 10px 30px -8px rgba(0,0,0,.5);
+      --shadow-float:0 0 0 1px rgba(255,255,255,.08), 0 18px 40px -12px rgba(0,0,0,.7);
+      --t1-soft:rgba(43,116,240,.18); --t2-soft:rgba(240,138,0,.18); --t3-soft:rgba(30,158,87,.2);
+      --t4-soft:rgba(14,165,183,.2); --t5-soft:rgba(229,72,77,.2); --t6-soft:rgba(124,92,255,.22);
+      --sh-accent-ink:color-mix(in srgb, var(--accent) 68%, var(--text));
+      --sh-fill:color-mix(in srgb, var(--text) 8%, transparent);
+      --aux-scrim:color-mix(in srgb, var(--bg) 62%, transparent);
+      --aux-fill:color-mix(in srgb, var(--text) 8%, transparent);
+      --aux-float-bg:color-mix(in srgb, var(--surface) 92%, var(--text));
+      --aux-float-ring:var(--shadow-float), 0 0 0 1px var(--hairline-strong);
+      --aux-on-warn:var(--on-primary);
+    }
+
+    /* ---------- 基础 ---------- */
     *{box-sizing:border-box}
-    body{font-family:system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--bg);max-width:860px;margin:20px auto;line-height:1.7;padding:0 12px}
-    h1{font-size:1.4rem;margin:8px 0}
-    h2{font-size:1.15rem;margin:28px 0 8px;border-bottom:1px solid var(--border);padding-bottom:6px}
-    h3{font-size:1rem;margin:18px 0 6px}
-    code{background:#eef2ff;border:1px solid #e0e7ff;border-radius:4px;padding:1px 5px;font-size:13px}
-    pre{background:#0f172a;color:#e2e8f0;border-radius:10px;padding:16px;overflow-x:auto;font-size:13px;line-height:1.6}
-    pre code{background:none;border:none;color:inherit;padding:0}
-    table{border-collapse:collapse;width:100%;font-size:14px}
-    th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
-    th{background:#f3f4f6}
-    .muted{color:var(--muted)}
-    .back{display:inline-block;margin-bottom:10px;color:var(--brand);font-weight:600;text-decoration:none}
-    .pill{display:inline-block;font-weight:600;font-size:12px;background:#eef2ff;color:#3730a3;border:1px solid #e0e7ff;padding:2px 10px;border-radius:999px}
-    .callout{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:4px 16px 14px;margin:18px 0}
-    .callout h2{border:none;margin-top:12px}
-    .copybtn{background:var(--brand);color:#fff;border:none;border-radius:6px;padding:7px 13px;font-weight:600;cursor:pointer;font-size:13px}
-    .copybtn:hover{background:#1d4ed8}
-    kbd{background:#fff;border:1px solid var(--border);border-radius:4px;padding:0 5px;font-size:12px}
-    .xlink{display:block;background:#fff;border:1px solid var(--border);border-left:4px solid var(--brand);border-radius:8px;padding:12px 14px;margin:16px 0;text-decoration:none;color:inherit}
-    .xlink:hover{border-color:var(--brand)}
-    .xlink strong{color:var(--brand)}
-  </style>
+    [hidden]{display:none !important} /* 否则组件的 display 会盖过 hidden 属性 */
+    html{-webkit-text-size-adjust:100%; scroll-padding-top:96px}
+    body{margin:0; min-height:100vh; background:var(--bg); color:var(--text); font:400 16px/1.5 var(--font); letter-spacing:-.006em; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; overflow-x:hidden}
+    button{font:inherit; color:inherit}
+    a{color:inherit; text-decoration:none}
+    svg{display:block}
+    :focus-visible{outline:3px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset:2px; border-radius:8px}
+    .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+
+    .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; height:40px; padding:0 18px; border-radius:999px; border:0; cursor:pointer; font-weight:600; font-size:15px; letter-spacing:-.01em; white-space:nowrap; transition:transform .16s var(--ease), background .2s, opacity .2s}
+    .btn:active{transform:scale(.97)}
+    .btn svg{width:16px; height:16px; flex:none}
+    .btn-primary{background:var(--primary); color:var(--on-primary)}
+    .btn-primary[disabled]{opacity:.28; cursor:default; transform:none}
+    .btn-ghost{background:transparent; color:var(--text); box-shadow:inset 0 0 0 1px var(--hairline-strong)}
+    @media (hover:hover){ .btn-ghost:hover{background:var(--surface-2)} }
+    .btn-text{background:transparent; color:var(--text-2); padding:0 10px; height:34px; font-weight:500}
+    @media (hover:hover){ .btn-text:hover{color:var(--text)} }
+    .btn-sm{height:34px; padding:0 14px; font-size:14px}
+    .icon-btn{width:36px; height:36px; border-radius:999px; border:0; background:transparent; cursor:pointer; display:inline-grid; place-items:center; color:var(--text-2); flex:none; padding:0}
+    @media (hover:hover){ .icon-btn:hover{background:var(--surface-2); color:var(--text)} }
+    .icon-btn svg{width:18px; height:18px}
+    .tile{width:40px; height:40px; border-radius:11px; display:grid; place-items:center; flex:none}
+    .tile svg{width:22px; height:22px}
+    .tile.sm{width:28px; height:28px; border-radius:8px}
+    .tile.sm svg{width:16px; height:16px}
+    .t1{background:var(--t1-soft); color:var(--t1)} .t2{background:var(--t2-soft); color:var(--t2)} .t3{background:var(--t3-soft); color:var(--t3)}
+    .t4{background:var(--t4-soft); color:var(--t4)} .t5{background:var(--t5-soft); color:var(--t5)} .t6{background:var(--t6-soft); color:var(--t6)}
+    .tile.n0{background:var(--aux-fill); color:var(--text-2)}
+    /* 进度条：<svg class="meter qb-ring">（带 <title>，悬停显示「已练 p/t」）；两条 rect 用百分比宽度，圆角不变形 */
+    .meter{display:block; width:100%; height:4px; border-radius:99px; background:var(--surface-2); overflow:hidden}
+    svg.meter{background:none}
+    .meter .trk{fill:var(--surface-2)}
+    .meter .fill{fill:var(--accent)}
+    .meter.ok .fill{fill:var(--ok)}
+    .dot{width:6px; height:6px; border-radius:50%; display:inline-block; flex:none; box-shadow:inset 0 0 0 1.5px var(--text-3)}
+    /* 旧类名保留：.pill 仍是 JS 依赖的类（.pill.wrongs）；.pill.muted 是通用的灰色小标签 */
+    .pill{display:inline-flex; align-items:center; white-space:nowrap}
+    .pill.muted{height:22px; padding:0 8px; border-radius:99px; background:var(--aux-fill); color:color-mix(in srgb, var(--text-2) 80%, var(--text)); font-size:12px; font-weight:600}
+
+    /* ---------- 顶栏（悬浮胶囊） ---------- */
+    body::before{content:""; position:fixed; z-index:9; top:0; left:0; right:0; height:46px; background:var(--bg); pointer-events:none}
+    .nav{position:sticky; top:16px; z-index:10; max-width:1120px; margin:16px auto 0; display:flex; align-items:center; gap:10px; height:60px; padding:0 10px 0 18px; background:color-mix(in srgb, var(--surface) 82%, transparent); -webkit-backdrop-filter:saturate(180%) blur(20px); backdrop-filter:saturate(180%) blur(20px); border-radius:999px; box-shadow:var(--shadow-2)}
+    .brand{display:flex; align-items:center; gap:10px; font:650 17px/1 var(--font-display); letter-spacing:-.02em; min-width:0; white-space:nowrap}
+    .brand-mark{width:28px; height:28px; border-radius:8px; background:var(--accent); color:#fff; display:grid; place-items:center; flex:none}
+    .brand-mark svg{width:16px; height:16px}
+    .nav .spacer{flex:1}
+    .lang{position:relative; display:inline-flex; align-items:center; gap:4px; height:36px; padding:0 4px 0 8px; border-radius:999px; color:var(--text-2); font-size:14px; cursor:pointer}
+    .lang:hover{background:var(--surface-2); color:var(--text)}
+    .lang svg{width:16px; height:16px; flex:none}
+    .lang select{appearance:none; -webkit-appearance:none; border:0; background:transparent; color:inherit; font:inherit; font-size:14px; height:36px; padding:0 6px 0 2px; cursor:pointer; border-radius:999px}
+    .lang select:focus-visible{outline:none}
+    .lang:has(select:focus-visible){outline:3px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset:2px}
+    #theme-toggle .ic-sun{display:none}
+    html[data-theme="dark"] #theme-toggle .ic-sun{display:block}
+    html[data-theme="dark"] #theme-toggle .ic-moon{display:none}
+
+    /* 账号入口（d-shared .qb-acct）：未登录 = 黑色 Sign in 胶囊；已登录 = 头像 + 名字描边胶囊 */
+    .qb-avatar{width:26px; height:26px; border-radius:50%; flex:none; display:grid; place-items:center; background:var(--t1-soft); color:var(--sh-accent-ink); font:650 12.5px/1 var(--font-display); text-transform:uppercase}
+    .qb-avatar svg{width:16px; height:16px}
+    .qb-avatar.lg{width:36px; height:36px; font-size:15px}
+    .qb-acct{position:relative; display:inline-flex; align-items:center; gap:8px; height:36px; max-width:220px; border:0; border-radius:999px; cursor:pointer; font:600 14px/1 var(--font); letter-spacing:-.01em; white-space:nowrap; flex:none; transition:background .16s var(--ease), transform .16s var(--ease)}
+    .qb-acct:active{transform:scale(.97)}
+    .qb-acct.out{padding:0 16px; background:var(--primary); color:var(--on-primary)}
+    .qb-acct.out .qb-avatar{display:none}
+    .qb-acct.in{padding:0 14px 0 5px; background:transparent; color:var(--text); box-shadow:inset 0 0 0 1px var(--hairline-strong)}
+    .qb-acct.in:hover{background:var(--surface-2)}
+    .qb-acct-l{overflow:hidden; text-overflow:ellipsis}
+
+    /* ---------- 首屏 ---------- */
+    .wrap{max-width:1120px; margin:0 auto; padding:0 24px}
+    .hero{padding:88px 0 40px; display:grid; grid-template-columns:1.15fr 1fr; gap:56px; align-items:end}
+    .hero > div{min-width:0}
+    .eyebrow{font-size:14px; font-weight:600; color:var(--sh-accent-ink); margin:0 0 14px; letter-spacing:-.005em}
+    .hero h1{font:600 56px/1.04 var(--font-display); letter-spacing:-.035em; margin:0 0 20px; text-wrap:balance}
+    .hero p.lede{font-size:19px; line-height:1.5; color:var(--text-2); margin:0; max-width:30ch; letter-spacing:-.012em}
+    .offbar{margin:0; padding:10px 16px; text-align:center; font-size:14px; background:var(--surface-2)}
+    .hero .sync{margin:22px 0 0; font-size:15px; color:var(--text-2)}
+    .hero .sync button, .hero .sync a{border:0; background:none; padding:0; cursor:pointer; color:var(--sh-accent-ink); font-weight:600; font-size:inherit}
+    .hero .sync b{color:var(--text); font-weight:600}
+    .special-mode .hero .sync{display:none}
+
+    .resume{display:block; background:var(--surface); border-radius:var(--r-lg); box-shadow:var(--shadow-2); padding:22px 22px 20px; transition:transform .25s var(--ease), box-shadow .25s var(--ease); min-width:0}
+    .resume:hover{transform:translateY(-2px)}
+    .resume-top{display:flex; align-items:center; gap:14px}
+    .resume-top > div{min-width:0}
+    .resume-top .label{font-size:13px; color:var(--text-2); font-weight:500}
+    .resume-top .title{font:600 19px/1.25 var(--font-display); letter-spacing:-.02em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+    .resume-top .btn{margin-left:auto}
+    .resume-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:20px 0 18px}
+    .stat{background:var(--surface-2); border-radius:12px; padding:12px 14px; min-width:0}
+    .stat b{display:block; font:600 22px/1.1 var(--font-display); letter-spacing:-.02em; font-variant-numeric:tabular-nums}
+    .stat span{display:block; font-size:13px; color:var(--text-2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+    .stat.bad b{color:var(--bad)}
+    .resume-foot{display:flex; align-items:center; gap:16px}
+    .resume-foot .meter{flex:1}
+    .resume-foot .pct{font-size:13px; color:var(--text-2); font-variant-numeric:tabular-nums; white-space:nowrap}
+
+    /* ---------- 分区标题 / 跳转条 / 分类 ---------- */
+    .sec-head{display:flex; align-items:baseline; justify-content:space-between; gap:4px 16px; flex-wrap:wrap; margin:40px 0 16px}
+    .sec-head h2{font:600 22px/1.2 var(--font-display); letter-spacing:-.02em; margin:0}
+    .sec-head .count{font-size:15px; color:var(--text-2); font-variant-numeric:tabular-nums}
+    .sec-head.mix{margin-top:48px}
+    .sec-head.mix h2{font-size:18px}
+    .areas{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 8px}
+    .areas a{display:inline-flex; align-items:baseline; gap:8px; height:36px; padding:0 14px; border-radius:999px; background:var(--surface); box-shadow:var(--shadow-1); font-size:14px; font-weight:600; letter-spacing:-.01em; line-height:36px; white-space:nowrap; transition:box-shadow .2s var(--ease), transform .2s var(--ease)}
+    .areas a:hover{box-shadow:var(--shadow-2); transform:translateY(-1px)}
+    .areas a .n{font-weight:500; color:var(--text-2); font-variant-numeric:tabular-nums}
+    .areas a.soon{background:transparent; box-shadow:inset 0 0 0 1px var(--hairline); color:var(--text-2)}
+    .area{scroll-margin-top:96px}
+    .area-head{display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 12px; margin:40px 0 14px; padding-top:22px; border-top:1px solid var(--hairline)}
+    .areas + .area .area-head, .area.first .area-head{border-top:0; padding-top:0; margin-top:28px}
+    .area-head h3{font:600 20px/1.2 var(--font-display); letter-spacing:-.02em; margin:0}
+    .area-head .sub, .term-head .sub{font-size:14px; color:var(--text-2); font-variant-numeric:tabular-nums}
+    .area-head .all{margin-left:auto; display:inline-flex; align-items:center; gap:4px; font-size:14px; font-weight:600; color:var(--sh-accent-ink); padding:6px 2px; border-radius:8px}
+    .area-head .all svg{width:16px; height:16px; transition:transform .2s var(--ease)}
+    .area-head .all:hover svg{transform:translateX(2px)}
+    .term-head{display:flex; align-items:baseline; gap:10px; margin:22px 0 12px}
+    .area-head + .term-head{margin-top:4px}
+    .term-head h4{font:600 15px/1.2 var(--font); letter-spacing:-.01em; margin:0}
+    .term-head .sub{font-size:13px}
+    .term-head .all{margin-left:auto; font-size:13px; font-weight:500; color:var(--text-2); padding:4px 2px}
+    .term-head .all:hover{color:var(--sh-accent-ink)}
+    .term-head .l-short{display:none}
+    .term-empty{display:flex; align-items:center; gap:10px; margin:16px 2px 0; font-size:14px; color:var(--text-2)}
+    .soon-card{display:flex; align-items:center; gap:16px; padding:20px 22px; border-radius:var(--r-lg); box-shadow:inset 0 0 0 1.5px var(--hairline); color:var(--text-2); font-size:15px}
+    .soon-card b{color:var(--text); font-weight:600}
+    .soon-card .tile{background:var(--surface-2); color:var(--text-2)}
+    .empty-banks{padding:40px 24px; text-align:center; border-radius:var(--r-lg); box-shadow:inset 0 0 0 1px var(--hairline)}
+    .empty-banks .tile{margin:0 auto 14px}
+    .empty-banks b{display:block; font:600 18px/1.3 var(--font-display); letter-spacing:-.016em}
+    .empty-banks p{margin:6px auto 0; color:var(--text-2); font-size:15px; max-width:36ch}
+
+    /* ---------- 题库卡片 ---------- */
+    .banks{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px}
+    .bank{position:relative; background:var(--surface); border-radius:var(--r-lg); box-shadow:var(--shadow-1); padding:20px 20px 18px; display:flex; flex-direction:column; gap:14px; min-height:176px; min-width:0; transition:transform .25s var(--ease), box-shadow .25s var(--ease)}
+    a.bank:hover, .bank:has(.stretch:hover){transform:translateY(-2px); box-shadow:var(--shadow-2)}
+    .bank .body{display:flex; flex-direction:column; flex:1; min-width:0}
+    .bank h3{font:600 18px/1.25 var(--font-display); letter-spacing:-.02em; margin:0; padding-right:22px; overflow-wrap:anywhere}
+    .bank .meta{font-size:14px; color:var(--text-2); margin-top:3px; display:flex; flex-wrap:wrap; align-items:center; gap:4px 0}
+    .bank .meta > * + *:not(.aux-tag)::before{content:"\00B7"; margin:0 6px}
+    .bank .meta .aux-tag{margin-left:8px}
+    .bank .m-sub, .bank .badge{display:none}
+    .bank .foot{margin-top:auto; padding-top:14px; display:flex; align-items:center; gap:12px; min-height:18px; font-size:13px; color:var(--text-2); font-variant-numeric:tabular-nums}
+    .bank .foot .meter{flex:1; min-width:40px}
+    .bank .foot .tag-wrong{color:var(--sh-bad-ink); font-weight:500; white-space:nowrap}
+    .bank .foot .done-l{color:var(--sh-ok-ink); font-weight:500; white-space:nowrap}
+    .bank .go{position:absolute; top:20px; right:18px; width:18px; height:18px; color:var(--text-3); transition:transform .25s var(--ease), color .2s}
+    a.bank:hover .go{color:var(--text); transform:translateX(2px)}
+    .bank.wide, .bank.feature{grid-column:1 / -1; flex-direction:row; align-items:center; min-height:0; padding:22px 24px; gap:18px}
+    .bank.wide .tile{width:48px; height:48px; border-radius:13px}
+    .bank.wide .foot{padding-top:10px; max-width:420px}
+    .bank.wide .go, .bank.feature .go{position:static; margin-left:8px}
+    .bank.wide h3, .bank.feature h3{padding-right:0}
+    .bank.feature .tile{width:52px; height:52px; border-radius:14px}
+    .bank.feature .tile svg{width:26px; height:26px}
+    .bank.feature p{margin:4px 0 0; color:var(--text-2); font-size:15px}
+    .bank.feature .btn{margin-left:auto}
+    .bank.feature .go{display:none}
+    .bank.feature .m-desc{display:none}
+    .merge-row{margin-top:4px}
+    .aux-tag{display:inline-flex; align-items:center; gap:4px; height:22px; padding:0 8px 0 7px; border-radius:99px; font-size:12px; font-weight:600; letter-spacing:0; white-space:nowrap; background:var(--aux-fill); color:var(--text-2)}
+    .aux-tag svg{width:13px; height:13px; flex:none}
+    .aux-tag.cloud{background:var(--accent-soft); color:var(--sh-accent-ink)}
+    .aux-tag.lock{background:color-mix(in srgb, var(--t2) 14%, transparent); color:color-mix(in srgb, var(--t2) 55%, var(--text))}
+    /* 自己的题库：标题链接铺满整张卡（.stretch），操作按钮浮在上面 */
+    .bank .stretch::after{content:""; position:absolute; inset:0; border-radius:inherit}
+    .bank .stretch:focus-visible{outline:none}
+    .bank:has(.stretch:focus-visible){outline:3px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset:2px}
+    .bank .acts{position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:4px 14px; margin-top:12px}
+    .bank .acts button{border:0; background:none; padding:4px 0; cursor:pointer; font-size:13px; font-weight:600; color:var(--text-2)}
+    .bank .acts button:hover{color:var(--text)}
+    .bank .acts button.danger:hover{color:var(--sh-bad-ink)}
+    .bank .qb-last{white-space:nowrap}
+    .special-mode #bank-list, .special-mode #yours{opacity:.38; filter:grayscale(1); pointer-events:none; user-select:none}
+
+    /* ---------- 你的题库 + 导入 ---------- */
+    .ygrid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px}
+    .ygrid .contents{display:contents}
+    .ygrid .bank{min-height:152px}
+    .ygrid .note{grid-column:1 / -1; display:flex; align-items:center; gap:14px; padding:16px 16px 16px 18px; border-radius:var(--r-lg); box-shadow:inset 0 0 0 1px var(--hairline); font-size:15px; color:var(--text-2)}
+    .sk{pointer-events:none}
+    .sk .tile,.sk i{background:var(--aux-fill)}
+    .sk i{display:block; height:10px; width:60%; margin-top:12px; border-radius:5px}
+    .sk i+i{width:34%}
+    .status{grid-column:1 / -1; display:flex; align-items:flex-start; gap:14px; padding:14px 12px 14px 18px; border-radius:var(--r-lg); background:var(--surface); box-shadow:var(--shadow-1); font-size:15px; line-height:1.5}
+    .status .mk{width:28px; height:28px; border-radius:50%; display:grid; place-items:center; flex:none; color:#fff; background:var(--ok)}
+    .status .mk svg{width:16px; height:16px}
+    .status.bad .mk{background:var(--bad)}
+    .status.warn .mk{background:var(--t2); color:var(--aux-on-warn)}
+    .status.busy .mk{background:var(--aux-fill); color:var(--text-2)}
+    .status .body{flex:1; min-width:0; padding-top:3px; overflow-wrap:anywhere}
+    .status .acts{display:flex; gap:4px; align-items:center; flex:none}
+    .qb-spin{width:16px; height:16px; border-radius:50%; border:2px solid currentColor; border-right-color:transparent; animation:qbSpin .8s linear infinite}
+    @keyframes qbSpin{to{transform:rotate(360deg)}}
+    .drop{grid-column:1 / -1; display:flex; align-items:center; gap:18px; padding:22px 24px; border-radius:var(--r-lg); border:1.5px dashed var(--hairline-strong); transition:background .2s var(--ease), border-color .2s var(--ease)}
+    .drop .tile{width:48px; height:48px; border-radius:14px}
+    .drop .head{display:contents}
+    .drop .body{flex:1; min-width:0}
+    .drop h3{font:600 18px/1.25 var(--font-display); letter-spacing:-.02em; margin:0}
+    .drop p{margin:4px 0 0; font-size:15px; color:var(--text-2)}
+    .drop .acts{display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end}
+    .drop .over-only, .drop .m-only{display:none}
+    .drop.over{border-style:solid; border-color:var(--accent); background:var(--accent-soft)}
+    .drop.over .over-only{display:block}
+    .drop.over .idle-only{display:none}
+    .drop.over .tile{background:var(--accent); color:#fff}
+    .drop .fmt{font-size:14px; color:var(--text-2); white-space:nowrap}
+    .drop .fmt:hover{color:var(--text)}
+    .drop input[type=file]{position:absolute; width:1px; height:1px; opacity:0; pointer-events:none}
+    .drop label.btn:has(+ input:focus-visible){outline:3px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset:2px}
+    .paste > summary{list-style:none}
+    .paste > summary::-webkit-details-marker{display:none}
+    .acct-toggle{grid-column:1 / -1; margin:-4px 4px 0}
+
+    /* 开关（d-aux .toggle + d.css .switch）：真实复选框，外观是开关 */
+    .toggle{display:flex; align-items:center; gap:12px; width:100%; min-height:48px; padding:8px 0; cursor:pointer; text-align:left; font-size:15px; color:var(--text)}
+    .toggle .t{flex:1; min-width:0}
+    .toggle .t small{display:block; font-size:13px; color:var(--text-2); margin-top:1px}
+    .toggle input[type=checkbox]{appearance:none; -webkit-appearance:none; flex:none; position:relative; width:34px; height:20px; margin:0; border-radius:99px; background:var(--hairline-strong); cursor:pointer; transition:background .2s var(--ease)}
+    .toggle input[type=checkbox]::after{content:""; position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.2); transition:left .2s var(--ease)}
+    .toggle input[type=checkbox]:checked{background:var(--accent)}
+    .toggle input[type=checkbox]:checked::after{left:16px}
+
+    /* ---------- 页脚 ---------- */
+    .foot-bar{margin:72px 0 48px; padding-top:20px; border-top:1px solid var(--hairline); display:flex; align-items:center; flex-wrap:wrap; gap:12px 22px; font-size:14px; color:var(--text-2)}
+    .foot-bar .sp{flex:1}
+    .foot-bar a, .foot-bar button{border:0; background:none; padding:4px 0; cursor:pointer; color:inherit; font-size:14px}
+    .foot-bar a:hover, .foot-bar button:hover{color:var(--text)}
+    .foot-bar .coffee-link{display:inline-flex; align-items:center; gap:6px}
+    .coffee-link svg{width:16px; height:16px}
+
+    /* ---------- 对话框（登录 / 账号 / 粘贴 / 反馈 / 使用说明 / 咖啡）：电脑居中，手机底部抽屉 ---------- */
+    .qb-ov{position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--aux-scrim); -webkit-backdrop-filter:blur(10px) saturate(140%); backdrop-filter:blur(10px) saturate(140%); animation:qbFade .2s var(--ease) both}
+    .qb-ov[hidden]{display:none}
+    .qb-card, .dlg{position:relative; width:min(480px, 100%); max-height:calc(100vh - 48px); overflow:auto; overscroll-behavior:contain; background:var(--aux-float-bg); border-radius:22px; box-shadow:var(--aux-float-ring); padding:24px; animation:qbRise .26s var(--ease) both}
+    .qb-card h2, .dlg h2{font:600 20px/1.25 var(--font-display); letter-spacing:-.02em; margin:0}
+    .qb-card .row, .dlg-head{display:flex; align-items:flex-start; gap:14px}
+    .qb-card .row h2, .dlg-head h2{flex:1; min-width:0; padding-top:6px}
+    .dlg-head{margin-bottom:20px}
+    .dlg-head p{margin:4px 0 0; color:var(--text-2); font-size:15px; line-height:1.5}
+    .qb-x{width:36px; height:36px; flex:none; margin:-2px -6px 0 auto; padding:0; border:0; border-radius:999px; background:transparent; display:grid; place-items:center; cursor:pointer; color:var(--text-2)}
+    .qb-x:hover{background:var(--surface-2); color:var(--text)}
+    .qb-x svg{width:16px; height:16px}
+    .qb-hint{color:var(--text-2); font-size:14px; margin:8px 0 0; line-height:1.5}
+    .field, .qb-card input[type=text]{display:block; width:100%; height:48px; margin:0; padding:0 14px; border:0; border-radius:12px; font:inherit; font-size:16px; color:var(--text); background:var(--surface); box-shadow:inset 0 0 0 1px var(--hairline-strong); transition:box-shadow .18s var(--ease)}
+    .qb-card input[type=text]{margin-top:16px}
+    .field::placeholder, .qb-card input::placeholder{color:var(--text-3)}
+    .field:focus, .qb-card input[type=text]:focus{outline:none; box-shadow:inset 0 0 0 2px var(--accent)}
+    textarea.field{height:168px; padding:12px 14px; resize:vertical; font:13px/1.55 var(--mono)}
+    .flabel{display:block; font-size:13px; font-weight:600; color:var(--text-2); margin:0 0 6px}
+    .stack > * + *{margin-top:16px}
+    .qb-acts, .dlg-foot{display:flex; align-items:center; gap:8px; margin-top:22px}
+    .qb-acts .spacer, .dlg-foot .sp{flex:1}
+    .qb-btn{display:inline-flex; align-items:center; justify-content:center; gap:6px; height:40px; padding:0 18px; border:0; border-radius:999px; background:transparent; color:var(--text); box-shadow:inset 0 0 0 1px var(--hairline-strong); font:inherit; font-size:15px; font-weight:600; cursor:pointer; white-space:nowrap}
+    @media (hover:hover){ .qb-btn:hover{background:var(--surface-2)} }
+    .qb-btn.primary{background:var(--primary); color:var(--on-primary); box-shadow:none}
+    @media (hover:hover){ .qb-btn.primary:hover{background:var(--primary); opacity:.88} }
+    .qb-btn[disabled]{opacity:.4; cursor:default}
+    .qb-danger{color:var(--sh-bad-ink)}
+    .qb-status{font-size:14px; min-height:1.3em; margin-top:10px; color:var(--text-2)}
+    .qb-status.ok{color:var(--sh-ok-ink)} .qb-status.err{color:var(--sh-bad-ink)}
+    .dlg-msg{margin:14px 0 0; font-size:14px; line-height:1.5; color:var(--sh-ok-ink)}
+    .dlg-msg.err{color:var(--sh-bad-ink)}
+    .grabber{display:none}
+    /* 粘贴对话框：放在 <details data-testid="paste-box"> 里，打开 = details[open] */
+    .paste-ov{display:none}
+    .paste[open] .paste-ov{display:flex}
+
+    /* 账号面板（#history-modal）：电脑锚在右上角头像下，手机底部抽屉 */
+    .acct-ov{align-items:flex-start; justify-content:flex-end; padding:84px max(16px, calc((100vw - 1120px) / 2 + 8px)) 16px 16px; background:transparent; -webkit-backdrop-filter:none; backdrop-filter:none}
+    .acct-card{width:360px; max-height:calc(100vh - 100px); padding:8px; border-radius:18px}
+    .menu-who{display:flex; align-items:center; gap:12px; padding:8px 4px 14px 10px; margin-bottom:6px; border-bottom:1px solid var(--hairline)}
+    .qb-acct-tx{flex:1; min-width:0}
+    .qb-card .qb-acct-tx h2{margin:0; font-size:15px; font-weight:600; letter-spacing:-.01em; line-height:1.3; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+    .qb-acct-tx span{display:block; margin-top:1px; font-size:13px; line-height:1.35; color:var(--text-2)}
+    .qb-acct-tx span::before{content:""; display:inline-block; width:6px; height:6px; margin-right:6px; border-radius:50%; background:var(--ok); vertical-align:1px}
+    .ahist{padding:6px 4px 10px}
+    .rsh{display:flex; align-items:baseline; gap:8px; margin:0 8px 8px}
+    .rsh h3{margin:0; font:600 15px/1.3 var(--font-display); letter-spacing:-.012em}
+    .rsh .c{font-size:13.5px; color:var(--text-2); font-variant-numeric:tabular-nums}
+    .rsh h3 + .c:not(button){margin-left:auto}
+    .rsh button.c{position:relative; margin:-4px -6px -4px auto; padding:4px 6px; border:0; border-radius:6px; background:transparent; color:var(--sh-accent-ink); font:inherit; font-size:13.5px; font-weight:500; cursor:pointer}
+    .rsh button.c::after{content:""; position:absolute; inset:-8px -4px}
+    .rsh button.c:hover{background:var(--accent-soft)}
+    .mi{display:flex; align-items:center; gap:12px; width:100%; min-height:40px; padding:8px 10px; border:0; border-radius:10px; background:transparent; cursor:pointer; text-align:left; font-size:15px; color:var(--text)}
+    .mi:hover{background:color-mix(in srgb, var(--text) 5%, transparent)}
+    .mi svg{width:18px; height:18px; color:var(--text-2); flex:none}
+    .mi .n{margin-left:auto; font-size:13px; color:var(--text-2); font-variant-numeric:tabular-nums}
+    .mi .n + svg{width:16px; height:16px}
+    .mi.danger, .mi.danger svg{color:var(--sh-bad-ink)}
+    .sep{height:1px; background:var(--hairline); margin:6px 4px}
+    .hist-card{width:min(540px, 100%)}
+    .hist-card .row{margin-bottom:16px}
+    .hist-card .hh{flex:1; min-width:0}
+    .qb-btn.txt{box-shadow:none; background:transparent; padding:0 12px; color:var(--text-2)}
+    .qb-btn.txt:hover{background:transparent; color:var(--text)}
+    #hist-edit{color:var(--sh-accent-ink); height:36px}
+    .hlist{border-radius:var(--r-md); box-shadow:inset 0 0 0 1px var(--hairline); overflow:hidden}
+    .hrow{position:relative; display:flex; align-items:stretch; min-height:64px}
+    .hrow + .hrow::before{content:""; position:absolute; top:0; left:56px; right:0; border-top:1px solid var(--hairline); z-index:1}
+    .hrow .hit{flex:1; min-width:0; display:flex; align-items:center; gap:14px; padding:10px 16px 10px 14px; border:0; border-radius:0; background:transparent; color:var(--text); font:inherit; text-align:left; cursor:pointer}
+    .hrow .hm{flex:1; min-width:0}
+    .hrow .name{display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; font-size:15px; font-weight:600; letter-spacing:-.01em; line-height:1.3}
+    .hrow .sub{display:block; margin-top:1px; font-size:13px; line-height:1.4; color:var(--text-2); font-variant-numeric:tabular-nums}
+    .hrow .sub span{display:block}
+    .hrow .chev{width:16px; height:16px; flex:none; color:var(--text-2)}
+    .hrow .qb-spin{flex:none; color:var(--text-2)}
+    .hrow.failed .hit{background:color-mix(in srgb, var(--bad) 5%, transparent)}
+    .hrow .del{position:absolute; right:4px; top:50%; width:44px; height:44px; margin:-22px 0 0; color:var(--sh-bad-ink); opacity:0; pointer-events:none; visibility:hidden}
+    .hrow .del:hover{background:transparent}
+    .hrow .del svg{width:18px; height:18px}
+    .hlist.ed .del{opacity:1; pointer-events:auto; visibility:visible}
+    .hlist.ed .chev{opacity:0}
+    .hlist.ed .hit{cursor:default}
+    @media (hover:hover){ .hrow .del:hover{background:var(--bad-soft)} .hrow .hit:hover{background:color-mix(in srgb, var(--text) 3%, transparent)} }
+    @media (min-width:761px) and (hover:hover){
+      .hrow .del{visibility:visible}
+      .hrow:hover .del,.hrow:focus-within .del{opacity:1; pointer-events:auto}
+      .hrow:hover .chev,.hrow:focus-within .chev{opacity:0}
+      #hist-edit{display:none}
+    }
+    .days{margin-bottom:20px}
+    .days-plot{display:grid; grid-template-columns:repeat(14, 1fr); gap:6px; align-items:end; height:56px; padding:0 2px; border-bottom:1px solid var(--hairline)}
+    .days-plot i{display:block; min-height:2px; border-radius:4px 4px 0 0; background:color-mix(in srgb, var(--ok) 42%, var(--surface))}
+    .days-plot i.zero{background:var(--hairline-strong); border-radius:1px}
+    .days-plot i.today{background:var(--ok)}
+    .days-x{display:grid; grid-template-columns:repeat(14, 1fr); gap:6px; padding:6px 2px 0; font-size:11.5px; color:var(--text-2); text-align:center}
+    .days-x .today{color:var(--text); font-weight:600}
+    .skel{display:flex; align-items:center; gap:14px; min-height:64px; padding:10px 14px}
+    .skel + .skel{border-top:1px solid var(--hairline)}
+    .skel i{display:block; border-radius:6px; background:var(--surface-2)}
+    .skel .t{width:28px; height:28px; border-radius:8px}
+    .skel .l{flex:1; display:grid; gap:8px}
+    .skel .l i:first-child{width:52%; height:12px} .skel .l i:last-child{width:74%; height:10px}
+    .h-state{padding:28px 20px; text-align:center; border-radius:var(--r-md); background:var(--surface-2)}
+    .h-state h3{margin:0; font:600 16px/1.35 var(--font-display); letter-spacing:-.012em}
+    .h-state p{margin:4px auto 0; max-width:34ch; font-size:14.5px; color:var(--text-2)}
+    .h-state .qb-btn{margin-top:16px}
+    .warn{padding:12px 14px; margin-bottom:16px; border-radius:var(--r-md); background:var(--bad-soft); font-size:14px; line-height:1.45}
+    .qb-status{display:flex; gap:6px; align-items:flex-start}
+    .qb-status svg{width:16px; height:16px; margin-top:2px; flex:none}
+    .qb-status.soft{color:var(--text)}
+    .qb-card input[type=text].err{box-shadow:inset 0 0 0 1.5px var(--sh-bad-ink), 0 0 0 4px var(--bad-soft)}
+    .qb-card input.shake{animation:qbShk .32s}
+    @keyframes qbShk{20%{transform:translateX(-3px)}50%{transform:translateX(3px)}75%{transform:translateX(-1px)}}
+    .qb-btn.primary.is-off{background:color-mix(in srgb, var(--primary) 24%, var(--surface)); color:color-mix(in srgb, var(--on-primary) 92%, transparent)}
+    .qb-card:focus{outline:none}
+    #login-modal .qb-card{width:min(420px, 100%); padding:28px 28px 24px; border-radius:22px}
+    #login-modal h2{font-size:22px; font-weight:650; letter-spacing:-.022em; padding-right:8px}
+    #login-modal .qb-hint{font-size:15px; line-height:1.55; margin:8px 0 20px}
+    #login-modal input[type=text]{height:52px; margin-top:0; padding:0 16px; font-size:17px; border-radius:var(--r-md)}
+    #login-modal .qb-acts{margin-top:8px}
+    .qb-btn.primary.is-off:hover{opacity:1}
+    .qb-btn.primary.danger{background:var(--sh-bad-ink); color:var(--surface)}
+    .qb-hint.fine{font-size:13px; margin-top:16px}
+    .qb-hint.fine b{font-weight:600}
+    .cf-card{width:min(400px, 100%)}
+    .qb-toast{position:fixed; left:50%; bottom:28px; transform:translateX(-50%); z-index:90; display:flex; align-items:center; gap:10px; width:max-content; max-width:min(440px, calc(100vw - 32px)); min-height:48px; padding:10px 18px; background:var(--aux-float-bg); color:var(--text); border-radius:26px; box-shadow:var(--aux-float-ring); font-size:15px; font-weight:500; line-height:1.35}
+    .qb-toast[hidden]{display:none}
+    .qb-toast:has(.qb-toast-act){padding:6px 6px 6px 18px}
+    .qb-toast-act{height:36px; padding:0 14px; border:0; border-radius:999px; background:transparent; color:var(--sh-accent-ink); font:600 15px/1 var(--font); cursor:pointer}
+    .qb-toast-act:hover{background:var(--accent-soft)}
+
+    /* 使用说明 */
+    .how{list-style:none; display:grid; gap:12px; margin:18px 0 0; padding:0}
+    .how li{display:flex; align-items:flex-start; gap:12px; font-size:15px; line-height:1.45; color:var(--text-2)}
+    .how li svg{width:18px; height:18px; flex:none; margin-top:2px; color:var(--text-2)}
+
+    @keyframes qbFade{from{opacity:0}}
+    @keyframes qbRise{from{opacity:0; transform:translateY(10px) scale(.985)}}
+    @keyframes qbSheet{from{transform:translateY(100%)}}
+
+    /* ☕ 打赏（方向 D）：SVG 杯子 + 金额档 radiogroup + 谢谢；表单完成面板 .fx-done 共用 .fx-mark */
+    .coffee-card{--coffee:color-mix(in srgb, var(--t2) 62%, var(--text)); text-align:center}
+    .coffee-card .qb-x{position:absolute; top:14px; right:14px; margin:0; z-index:3}
+    .coffee-card h2{margin:0 0 8px}
+    .coffee-card .qb-hint{max-width:36ch; margin:0 auto}
+    .coffee-card .qb-hint.via{margin-top:12px; font-size:13px}
+    .barista{width:72px; height:72px; margin:4px auto 16px; color:var(--text)}
+    .barista svg{width:72px; height:72px; overflow:visible}
+    .barista .fill{fill:var(--coffee); transform-box:fill-box; transform-origin:50% 100%}
+    .barista .steam{stroke:var(--text-2); stroke-dasharray:14}
+    .barista.brewing .fill{animation:cfBrew 1.15s .4s var(--ease) both}
+    .barista.brewing .steam{animation:cfSteam .45s 1.45s var(--ease) both}
+    @keyframes cfBrew{from{transform:scaleY(0)}}
+    @keyframes cfSteam{from{stroke-dashoffset:14; opacity:0}}
+    .coffee-reveal.wait{visibility:hidden}
+    .coffee-reveal:not(.wait){animation:qbRise .3s var(--ease) both}
+    .coffee-tiers{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:20px}
+    .coffee-tier{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; min-width:0; min-height:96px; padding:12px 6px; border:0; border-radius:14px; cursor:pointer; background:var(--surface); color:var(--text); font:600 14.5px/1.2 var(--font); letter-spacing:-.01em; box-shadow:inset 0 0 0 1px var(--hairline-strong)}
+    .coffee-tier:hover{background:var(--surface-2)}
+    .coffee-tier svg{width:28px; height:28px; margin-bottom:4px; color:var(--coffee)}
+    .coffee-tier .ct-amt{font-size:13px; font-weight:400; color:var(--text-2)}
+    .coffee-tier[aria-checked="true"]{background:var(--accent-soft); box-shadow:inset 0 0 0 2px var(--accent)}
+    .coffee-tier[aria-checked="true"] .ct-amt{color:var(--sh-accent-ink); font-weight:600}
+    .coffee-custom{display:flex; align-items:center; gap:8px; height:48px; margin-top:8px; padding:0 16px; border-radius:14px; background:var(--surface-2); box-shadow:inset 0 0 0 1px var(--hairline)}
+    .coffee-custom[hidden]{display:none}
+    .coffee-custom label{flex:1; text-align:left; font-size:14.5px; color:var(--sh-text-2); white-space:nowrap}
+    .coffee-custom input{flex:0 0 72px; height:100%; padding:0; border:0; outline:none; background:transparent; color:var(--text); font:500 16px var(--font); -moz-appearance:textfield}
+    .coffee-custom input::-webkit-outer-spin-button,.coffee-custom input::-webkit-inner-spin-button{-webkit-appearance:none; margin:0}
+    .coffee-card .qb-btn.primary{width:100%; height:48px; margin-top:16px}
+    .coffee-thanks{padding-top:8px; animation:qbRise .3s var(--ease) both}
+    .coffee-thanks[hidden]{display:none}
+    .fx-mark{display:grid; place-items:center; width:56px; height:56px; margin:0 auto 16px; border-radius:50%; background:var(--ok); color:#fff}
+    .fx-mark svg{width:28px; height:28px}
+    .fx-mark.info{background:var(--accent-soft); color:var(--sh-accent-ink)}
+    .fx-mark.heart{background:var(--t5-soft); color:var(--t5)}
+    .fx-done{text-align:center; padding:28px 0 4px}
+    .fx-done[hidden],#fb-form[hidden]{display:none}
+    .fx-done h3{margin:0; font:600 19px/1.3 var(--font-display); letter-spacing:-.02em; text-wrap:balance}
+    .fx-done .qb-btn{margin-top:24px; min-width:160px}
+
+    /* ---------- 手机：分区标题计数换行；题库卡 → iOS inset grouped 列表；对话框 → 底部抽屉 ---------- */
+    @media (max-width:760px){
+      body::before{height:36px}
+      .nav{top:10px; margin:10px 12px 0; height:52px; padding:0 6px 0 14px; gap:6px}
+      .nav .lang{width:36px; padding:0; justify-content:center; color:var(--text-2)}
+      .nav .lang select{position:absolute; inset:0; width:100%; opacity:0}
+      .wrap{padding:0 16px}
+      .hero{grid-template-columns:1fr; gap:28px; padding:44px 0 8px}
+      .hero h1{font-size:38px; letter-spacing:-.03em; margin-bottom:14px}
+      .hero p.lede{font-size:17px}
+      .hero .sync{font-size:14px}
+      .resume{padding:18px}
+      .resume-stats{margin:16px 0 14px}
+      .stat b{font-size:20px}
+      .sec-head{flex-direction:column; align-items:flex-start; justify-content:flex-start; gap:2px; margin:32px 4px 10px}
+      .areas{flex-wrap:nowrap; overflow-x:auto; margin:0 -16px 4px; padding:2px 16px 6px; scrollbar-width:none}
+      .areas::-webkit-scrollbar{display:none}
+      .areas a{flex:none; height:34px; line-height:34px; padding:0 13px}
+      .area{scroll-margin-top:80px}
+      .area-head{border-top:0; padding-top:0; margin:26px 4px 8px; gap:2px 8px}
+      .area-head h3{font-size:17px; letter-spacing:-.015em}
+      .area-head .sub{font-size:13px}
+      .area-head .all svg{display:none}
+      .term-head{margin:14px 6px 6px; font-size:13px}
+      .area-head + .term-head{margin-top:2px}
+      .term-head h4{font-size:13px; font-weight:600; color:var(--text-2)}
+      .term-head .all{font-weight:500; color:var(--sh-accent-ink); white-space:nowrap}
+      .term-head h4, .term-head .sub{white-space:nowrap}
+      .term-head .l-long{display:none}
+      .term-head .l-short{display:inline}
+      .nav .brand{margin-right:4px}
+      .term-empty{margin:10px 6px 0; font-size:13px}
+      .soon-card{padding:16px; font-size:14px}
+      .banks{display:block; background:var(--surface); border-radius:16px; box-shadow:var(--shadow-1); overflow:hidden}
+      .banks > .bank{flex-direction:row; align-items:center; gap:14px; min-height:64px; padding:12px 16px; border-radius:0; box-shadow:none; background:transparent}
+      .banks > .bank + .bank::before{content:""; position:absolute; top:0; left:68px; right:0; border-top:1px solid var(--hairline)}
+      a.bank:hover{transform:none; box-shadow:none}
+      .banks > .bank .tile, .banks > .bank.wide .tile, .banks > .bank.feature .tile{width:38px; height:38px; border-radius:11px}
+      .banks > .bank .tile svg{width:21px; height:21px}
+      .banks > .bank h3{font:600 16px/1.3 var(--font); letter-spacing:-.012em; padding-right:0}
+      .banks > .bank .meta{font-size:13px; margin-top:1px}
+      .banks > .bank .meta .gm{display:none}
+      .banks > .bank .foot{display:none}
+      .banks > .bank.has-prog .meta{display:none}
+      .banks > .bank.has-prog .m-sub{display:block; font-size:13px; color:var(--text-2); margin-top:1px}
+      .banks > .bank .m-sub.ok{color:var(--sh-ok-ink)}
+      .banks > .bank .badge:not([hidden]){display:grid; place-items:center; flex:none; min-width:22px; height:22px; padding:0 7px; border-radius:99px; background:var(--bad); color:#fff; font-size:12px; font-weight:600; font-variant-numeric:tabular-nums}
+      .banks > .bank .go{position:static; width:16px; height:16px; margin-left:0}
+      .bank.feature p{font-size:13px; margin-top:1px}
+      .bank.feature .d-desc{display:none}
+      .bank.feature .m-desc{display:block}
+      .bank.feature .btn{display:none}
+      .bank.feature .go{display:block}
+      .ygrid{grid-template-columns:1fr; gap:10px}
+      .ygrid .bank{min-height:0; padding:14px 16px; border-radius:16px; gap:10px}
+      .ygrid .bank .foot{display:none}
+      .ygrid .bank h3{font-size:16px}
+      .drop{flex-direction:column; align-items:stretch; padding:18px; gap:14px}
+      .drop .head{display:flex; align-items:center; gap:14px}
+      .drop .acts{justify-content:stretch}
+      .drop .acts .btn, .drop .acts .paste{flex:1}
+      .drop .acts .paste > summary{width:100%}
+      .drop .acts .btn{height:44px}
+      .drop .fmt{text-align:center; padding:6px 0 0; flex-basis:100%; position:relative}
+      .drop .fmt::after, .qb-acct::after{content:""; position:absolute; inset:-6px 0} /* 44px touch targets, no visual change */
+      .qb-x{position:relative}
+      .qb-x::after{content:""; position:absolute; inset:-4px}
+      #hist-edit{height:44px}
+      .days-plot, .days-x{gap:4px}
+      #login-modal .qb-acts{flex-direction:column-reverse; align-items:stretch}
+      #login-modal .qb-acts .qb-btn{flex:none}
+      #login-modal .qb-acts .txt{height:44px}
+      .drop .hide-m{display:none}
+      .drop .m-only{display:inline}
+      .status{padding:14px 8px 14px 14px; gap:12px}
+      .foot-bar{gap:12px 18px; margin:48px 0 32px}
+      .foot-bar .sp{display:none}
+      .qb-ov, .acct-ov{align-items:flex-end; justify-content:stretch; padding:0; background:var(--aux-scrim); -webkit-backdrop-filter:blur(10px) saturate(140%); backdrop-filter:blur(10px) saturate(140%)}
+      .qb-card, .dlg, .acct-card{width:100%; max-height:calc(100vh - 40px); border-radius:22px 22px 0 0; padding:8px 16px max(20px, env(safe-area-inset-bottom)); animation:qbSheet .3s var(--ease) both}
+      .grabber{display:block; width:36px; height:5px; border-radius:99px; background:var(--hairline-strong); margin:0 auto 14px}
+      .qb-acts .qb-btn, .dlg-foot .btn{height:48px; flex:1}
+      .qb-acts .spacer, .dlg-foot .sp, .dlg-foot .hide-m{display:none}
+      .mi{min-height:48px; font-size:16px}
+      .qb-toast{bottom:max(20px, env(safe-area-inset-bottom))}
+      textarea.field{font-size:16px; height:152px}
+      .coffee-card .qb-x{top:10px; right:10px}
+      .coffee-tier{min-height:88px}
+      .barista,.barista svg{width:64px; height:64px}
+      .fx-done .qb-btn{width:100%; height:48px}
+    }
+    @media (max-width:360px){
+      .nav{margin:8px 8px 0; padding:0 6px 0 12px}
+      .brand{font-size:16px; gap:8px}
+      .wrap{padding:0 12px}
+      .areas{margin:0 -12px 4px; padding:2px 12px 6px}
+      .hero h1{font-size:32px}
+      .hero p.lede{font-size:16px}
+      .resume{padding:16px}
+      .resume-top{gap:12px}
+      .resume-top .title{font-size:17px}
+      .resume-stats{gap:6px}
+      .stat{padding:10px}
+      .stat b{font-size:18px}
+      .stat span{font-size:12px}
+      .banks > .bank{padding:12px; gap:12px}
+      .banks > .bank + .bank::before{left:62px}
+      .drop{padding:16px}
+    }
+    @media (prefers-reduced-motion: reduce){
+      *, *::before, *::after{animation:none !important; transition:none !important}
+    }
+
+/* 格式文档页（format.html / format-ielts.html）：方向 D（documents/design-review/directions/D/aux-format.html + d-aux.css §1）。叠在 catalog.css 之后；token 全部来自 catalog.css 的 :root。 */
+   ================================================================= */
+.nav .crumb-sep { color: var(--text-3); margin: 0 -2px; }
+.nav .crumb { font-size: 15px; color: var(--text-2); font-weight: 500; }
+.doc { max-width: 1120px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 200px minmax(0, 680px); gap: 80px; justify-content: center; }
+.toc { position: sticky; top: 104px; align-self: start; margin-top: 88px; }
+.toc .cap { font-size: 12px; font-weight: 600; color: var(--text-2); padding: 0 10px 8px; }
+.toc a { display: block; padding: 6px 10px; border-radius: 8px; font-size: 14px; line-height: 1.35; color: var(--text-2); }
+.toc a:hover { color: var(--text); }
+.toc a.on { color: var(--text); font-weight: 600; background: color-mix(in srgb, var(--text) 6%, transparent); }
+.toc .toc-alt { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--hairline); }
+.toc .toc-alt a { display: flex; align-items: center; gap: 6px; color: var(--sh-accent-ink); font-weight: 600; }
+.doc-main { min-width: 0; padding: 88px 0 40px; }
+.doc-head h1 { font: 600 48px/1.06 var(--font-display); letter-spacing: -.032em; margin: 0 0 18px; text-wrap: balance; }
+.doc-head .lede { font-size: 19px; line-height: 1.55; color: var(--text-2); margin: 0; letter-spacing: -.012em; max-width: 34em; }
+.doc-head .back-to { display: inline-flex; align-items: center; gap: 2px; font-size: 14px; color: var(--text-2); margin: 0 0 20px -4px; padding: 4px; border-radius: 8px; }
+.doc-head .back-to:hover { color: var(--text); }
+.doc-sec { margin-top: 72px; scroll-margin-top: 104px; }
+.doc-sec > h2 { font: 600 28px/1.2 var(--font-display); letter-spacing: -.024em; margin: 0 0 10px; }
+.doc-sec > p, .doc-sec .p { font-size: 16px; line-height: 1.65; margin: 0 0 16px; }
+.doc-sec .intro { color: var(--text-2); font-size: 17px; line-height: 1.6; margin-bottom: 24px; }
+.doc-sec h3 { font: 600 13px/1.3 var(--font); color: var(--text-2); margin: 32px 0 8px 4px; letter-spacing: 0; }
+
+.card { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-1); }
+.steps { list-style: none; margin: 0; padding: 4px 0; }
+.steps li { position: relative; display: flex; gap: 16px; padding: 16px 24px; font-size: 16px; line-height: 1.55; }
+.steps li + li::before { content: ""; position: absolute; top: 0; left: 68px; right: 0; border-top: 1px solid var(--hairline); }
+.steps .n { width: 28px; height: 28px; border-radius: 50%; flex: none; display: grid; place-items: center; margin-top: -1px;
+  font-size: 13px; font-weight: 600; color: var(--text-2); box-shadow: inset 0 0 0 1.5px var(--hairline-strong); font-variant-numeric: tabular-nums; }
+.steps b { font-weight: 600; }
+.steps .s { display: block; color: var(--text-2); font-size: 15px; margin-top: 2px; }
+
+.note { display: flex; gap: 12px; padding: 16px 18px; margin: 16px 0 0; border-radius: var(--r-md); background: var(--aux-fill); font-size: 15px; line-height: 1.6; color: var(--text-2); }
+.note svg { width: 18px; height: 18px; flex: none; margin-top: 2px; color: var(--text-2); }
+.note b { color: var(--text); font-weight: 600; }
+
+.code { margin: 16px 0 0; border-radius: var(--r-md); background: var(--surface); box-shadow: var(--shadow-1), inset 0 0 0 1px var(--hairline); overflow: hidden; }
+.code-head { display: flex; align-items: center; gap: 8px; height: 48px; padding: 0 8px 0 16px; border-bottom: 1px solid var(--hairline); font-size: 13px; color: var(--text-2); }
+.code-head .t { font-weight: 600; color: var(--text); font-size: 14px; }
+.code-head .sp { flex: 1; }
+.code-head .btn { height: 32px; padding: 0 12px; font-size: 13px; gap: 6px; }
+.code-head .btn svg { width: 15px; height: 15px; }
+.code-head .btn.done { color: var(--ok); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ok) 45%, transparent); }
+.code pre { margin: 0; padding: 16px 18px 18px; font: 13px/1.65 var(--mono); color: var(--text); overflow: auto; tab-size: 2; }
+.code pre.pw { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 360px; }
+.code pre.json { max-height: 520px; }
+.code .jk { color: var(--sh-accent-ink); }
+.code .jp { color: var(--text-2); }
+.code .jn { color: color-mix(in srgb, var(--t2) 45%, var(--text)); }
+:root[data-theme="dark"] .code .jn { color: color-mix(in srgb, var(--t2) 70%, var(--text)); }
+.code code { background: none; padding: 0; font: inherit; }
+
+.xlink { display: flex; align-items: center; gap: 16px; padding: 18px 20px; margin-top: 24px; border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--shadow-1); transition: box-shadow .25s var(--ease), transform .25s var(--ease); }
+.xlink:hover { box-shadow: var(--shadow-2); transform: translateY(-1px); }
+.xlink .body { flex: 1; min-width: 0; }
+.xlink b { display: block; font: 600 17px/1.3 var(--font-display); letter-spacing: -.016em; }
+.xlink span { display: block; font-size: 14.5px; color: var(--text-2); margin-top: 2px; line-height: 1.5; }
+.xlink .chev { width: 18px; height: 18px; color: var(--text-3); flex: none; }
+
+.rows { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-1); overflow: hidden; }
+.rx { display: grid; grid-template-columns: 152px minmax(0, 1fr); gap: 4px 24px; padding: 16px 20px; }
+.rx + .rx { border-top: 1px solid var(--hairline); }
+.rx .f { min-width: 0; }
+.rx .f code { background: none; padding: 0; font-size: 14px; font-weight: 600; color: var(--text); }
+.rx .f .w { display: block; font-size: 12.5px; color: var(--text-2); margin-top: 3px; font-weight: 500; }
+.rx .f .w.req { color: var(--sh-accent-ink); }
+.rx .d { font-size: 15px; line-height: 1.6; }
+.rx .d .m { color: var(--text-2); }
+.rx.wide { grid-template-columns: 216px minmax(0, 1fr); }
+.rx.wide .f { font-weight: 600; font-size: 15px; line-height: 1.5; }
+
+.dots { list-style: none; margin: 0; padding: 4px 20px; background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-1); }
+.dots li { position: relative; padding: 14px 0 14px 20px; font-size: 15px; line-height: 1.6; }
+.dots li + li { border-top: 1px solid var(--hairline); }
+.dots li::before { content: ""; position: absolute; left: 2px; top: 24px; width: 6px; height: 6px; border-radius: 50%; background: var(--text-3); }
+
+.doc-end { display: flex; align-items: center; gap: 16px; margin-top: 72px; padding: 24px; border-radius: var(--r-lg); background: var(--surface); box-shadow: var(--shadow-1); }
+.doc-end .body { flex: 1; min-width: 0; }
+.doc-end b { display: block; font: 600 19px/1.3 var(--font-display); letter-spacing: -.018em; }
+.doc-end span { color: var(--text-2); font-size: 15px; }
+.doc-foot { margin: 56px 0 48px; padding-top: 20px; border-top: 1px solid var(--hairline); display: flex; gap: 22px; font-size: 14px; color: var(--text-2); flex-wrap: wrap; }
+.doc-foot a:hover { color: var(--text); }
+
+/* 手机目录抽屉 */
+.toc-sheet a { display: flex; align-items: center; min-height: 48px; padding: 0 12px; border-radius: 12px; font-size: 16px; color: var(--text); }
+.toc-sheet a { position: relative; }
+.toc-sheet a + a::before { content: ""; position: absolute; top: 0; left: 12px; right: 12px; border-top: 1px solid var(--hairline); }
+.toc-sheet a.on { font-weight: 600; color: var(--sh-accent-ink); }
+
+@media (max-width: 960px) and (min-width: 761px) {
+  .doc { grid-template-columns: 172px minmax(0, 1fr); gap: 40px; }
+}
+@media (max-width: 760px) {
+  .doc { display: block; padding: 0 16px; }
+  .toc { display: none; }
+  .doc-main { padding: 40px 0 24px; }
+  .doc-head h1 { font-size: 34px; letter-spacing: -.028em; margin-bottom: 14px; }
+  .doc-head .lede { font-size: 17px; }
+  .doc-sec { margin-top: 56px; scroll-margin-top: 80px; }
+  .doc-sec > h2 { font-size: 24px; }
+  .doc-sec .intro { font-size: 16px; }
+  .steps li { padding: 14px 16px; gap: 14px; font-size: 15.5px; }
+  .steps li + li::before { left: 58px; }
+  .rx, .rx.wide { grid-template-columns: 1fr; padding: 14px 16px; }
+  .rx .f .w { display: inline; margin: 0 0 0 8px; }
+  .dots { padding: 2px 16px; }
+  .code pre.json { max-height: none; }
+  .xlink { padding: 16px; gap: 14px; }
+  .doc-end { flex-direction: column; align-items: stretch; text-align: left; padding: 20px; }
+  .doc-end .btn { height: 48px; }
+  .nav .crumb, .nav .crumb-sep { display: none; }
+}
+
+/* ---- 以下是接到真实页面时补的 ---- */
+/* 单语：页面跟随界面语言（qb_ui_lang）。每处文字写两遍，用 data-l 切换；不显示的那份对读屏也不可见。 */
+html[lang^="zh"] [data-l="en"], html:not([lang^="zh"]) [data-l="zh"] { display: none !important; }
+.m-only { display: none; }
+@media (max-width: 760px) { .m-only { display: inline-grid; } .hide-m { display: none !important; } }
+.nav .crumb { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.doc a.link, .doc-foot a, .xlink { text-decoration: none; }
+.doc a.link { color: var(--sh-accent-ink); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, var(--sh-accent-ink) 40%, transparent); }
+.doc a.link:hover { text-decoration-color: currentColor; }
+.doc code { padding: 1px 6px; border-radius: 6px; background: var(--aux-fill); font: .88em/1.4 var(--mono); overflow-wrap: anywhere; }
+.doc .rx .f code, .doc .code code { background: none; padding: 0; }
+.doc .rx .f code { white-space: nowrap; }
+.doc kbd { padding: 1px 6px; border-radius: 6px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--hairline-strong); font: 12px/1.4 var(--mono); }
+.doc-head .eyebrow { margin-bottom: 14px; }
+.doc-sec h3 { margin-bottom: 8px; }
+.doc-sec .rows + .hint, .doc-sec .hint { font-size: 13.5px; color: var(--sh-text-2); }
+.toc a:focus-visible, .code pre:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset: 2px; }
+.code pre:focus-visible { outline-offset: -3px; }
+.xlink:focus-visible { outline-offset: 3px; border-radius: var(--r-lg); }
+.doc-main p, .doc-main li { text-wrap: pretty; }
+.qb-toast .sub { color: var(--text-2); font-weight: 400; margin-left: 2px; }
+@media (max-width: 760px) {
+  .doc-head h1 { text-wrap: balance; }
+  .code-head { padding-left: 14px; }
+}
+/* 对比度：灰字落在浅灰底（note / 行内 code）上要 ≥ 4.5:1，所以正文级灰字用更深一档，行内 code 一律用正文色 */
+.doc .doc-head .lede, .doc .doc-sec .intro, .doc .steps .s, .doc .note, .doc .rx .d .m, .doc .doc-sec .hint { color: var(--sh-text-2); }
+.doc code { color: var(--text); }
+.doc .note b { color: var(--text); }
+
+</style>
 </head>
 <body>
-  <a class="back" href="./">← Back to catalog / 返回目录</a>
-  <h1>Question Bank JSON Format <span class="muted">/ 题库 JSON 格式说明</span></h1>
-  <p class="muted">Write your own bank as a <code>.json</code> file (UTF-8) and import it on the catalog page — or skip the file entirely and <strong>paste an AI’s reply straight into the catalog’s “📋 Paste the AI’s reply” box</strong>. Nothing is uploaded; it stays in your browser. <span>/ 可以写成 <code>.json</code> 文件导入，也可以完全不碰文件——<strong>把 AI 的回复直接粘进目录页的「📋 直接粘贴 AI 的回复」</strong>。内容不上传，只存在你的浏览器里。</span></p>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.8v2.2M12 19v2.2M2.8 12H5M19 12h2.2M5.5 5.5 7 7M17 17l1.5 1.5M5.5 18.5 7 17M17 7l1.5-1.5"/></g></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></g></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-toc" viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="11" height="11" rx="2.5"/><path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2"/></g></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5c-1.8-1.3-4.3-2-7.5-2v13c3.2 0 5.7.7 7.5 2 1.8-1.3 4.3-2 7.5-2v-13c-3.2 0-5.7.7-7.5 2Z"/><path d="M12 6.5v13"/></g></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4.5m-4.5 4.5L12 4.5 16.5 9"/><path d="M4.5 14.5v3a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-3"/></g></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 17.5h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.9v.2h5v-.2c0-.8.4-1.5 1-1.9A6 6 0 0 0 12 3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></g></symbol>
+  </defs></svg>
+<nav class="nav" aria-label="Main">
+  <a class="brand" href="./"><span class="brand-mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span>AMT Practice</a>
+  <span class="crumb-sep" aria-hidden="true">/</span>
+  <span class="crumb"><span data-l="en">Format guide</span><span data-l="zh" lang="zh-CN">格式说明</span></span>
+  <div class="spacer"></div>
+  <label class="lang"><svg aria-hidden="true"><use href="#i-globe"/></svg>
+    <select id="doc-lang" data-testid="ui-lang-select" aria-label="Language / 语言">
+      <option value="en">English</option>
+      <option value="zh">中文</option>
+    </select>
+  </label>
+  <button id="theme-toggle" class="icon-btn" type="button" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme"><svg class="ic-moon" aria-hidden="true"><use href="#i-moon"/></svg><svg class="ic-sun" aria-hidden="true"><use href="#i-sun"/></svg></button>
+  <button class="icon-btn m-only" id="toc-open" type="button" aria-haspopup="dialog" aria-controls="toc-ov" aria-label="On this page / 本页目录"><svg width="20" height="20" aria-hidden="true"><use href="#i-toc"/></svg></button>
+  <a class="btn btn-primary btn-sm hide-m" href="./#yours" data-testid="import-link"><span data-l="en">Import a bank</span><span data-l="zh" lang="zh-CN">导入题库</span></a>
+</nav>
+<div class="doc">
+  <aside class="toc" aria-label="On this page / 本页目录">
+    <div class="cap"><span data-l="en">On this page</span><span data-l="zh" lang="zh-CN">本页目录</span></div>
+    <a href="#ai"><span data-l="en">Write it with an AI</span><span data-l="zh" lang="zh-CN">用 AI 来写</span></a>
+    <a href="#fields"><span data-l="en">Question fields</span><span data-l="zh" lang="zh-CN">题目字段</span></a>
+    <a href="#grading"><span data-l="en">How answers are graded</span><span data-l="zh" lang="zh-CN">怎么判分</span></a>
+    <a href="#autofix"><span data-l="en">Fixed on import</span><span data-l="zh" lang="zh-CN">导入时自动修复</span></a>
+    <a href="#troubleshoot"><span data-l="en">If an import fails</span><span data-l="zh" lang="zh-CN">导入失败了怎么办</span></a>
+    <a href="#example"><span data-l="en">Complete example</span><span data-l="zh" lang="zh-CN">完整示例</span></a>
+    <div class="toc-alt"><a href="format-ielts.html"><span data-l="en">IELTS reading banks</span><span data-l="zh" lang="zh-CN">雅思阅读题库</span><svg width="14" height="14" aria-hidden="true"><use href="#i-chev"/></svg></a></div>
+  </aside>
 
-  <div class="callout" id="ai">
-    <h2>🤖 Using an AI to extract questions? <span class="muted">/ 用 AI 提取题目？</span></h2>
-    <p style="margin:0 0 8px"><strong>No paid plan, no file download needed.</strong> Free ChatGPT / Gemini can do this — you just copy their reply. <span class="muted">/ <strong>不需要付费、不需要下载文件</strong>，免费版 ChatGPT / Gemini 就够——把它的回复复制过来即可。</span></p>
-    <ol style="margin:0 0 10px;padding-left:20px;line-height:1.75">
-      <li><strong>Copy</strong> the prompt below. <span class="muted">/ 复制下面的提示词。</span></li>
-      <li>Paste it into the AI, then <strong>put your questions (or attach screenshots) right after the <code>=== MATERIAL ===</code> line</strong> at the very end. <span class="muted">/ 粘进 AI，再把你的题目（或贴截图）接在最后那行 <code>=== MATERIAL ===</code> 后面。</span></li>
-      <li><strong>Select the AI’s whole reply, copy it</strong>, and paste it into <strong>“📋 No file? Paste the AI’s reply instead”</strong> on the catalog page. No saving, no <kbd>.json</kbd> file, works on a phone. <span class="muted">/ <strong>把 AI 的整段回复选中复制</strong>，粘进目录页的<strong>「📋 没有文件？直接粘贴 AI 的回复」</strong>。不用存文件、不用弄 <kbd>.json</kbd>，手机上也行。</span></li>
-      <li>The prompt makes the AI stop every 15 questions and print <code>MORE AVAILABLE</code>. Type <strong>more</strong>, then paste that batch too with <strong>“add to the same bank”</strong> ticked. Repeat until it prints <code>DONE</code>. <span class="muted">/ 提示词会让 AI 每 15 题停一次并打印 <code>MORE AVAILABLE</code>。回一句 <strong>more</strong>，把这批也粘进去（勾上<strong>「并入同名题库」</strong>），直到它打印 <code>DONE</code>。</span></li>
-    </ol>
-    <p class="muted" style="margin:0 0 10px">Why batches: a free account’s reply gets cut off partway through a long bank. Fifteen at a time never hits the limit — and if one does get cut off, the importer still recovers every complete question and tells you to ask for the rest. <span>/ 为什么分批：免费账号的回复在长题库上会被截断。每次 15 题不会触顶；万一还是被截断，导入器也会把已完整的题全部抢救出来并提示你去要剩下的。</span></p>
-    <p class="muted" style="margin:0 0 10px">Tip: cheap models read <strong>pasted text and screenshots</strong> far better than a raw saved <kbd>.mhtml</kbd> (those are huge and encoded — that’s usually why an AI just echoes the prompt back). Open the page and copy the visible questions, or screenshot them. <span>/ 提示：便宜模型对<strong>粘贴的文字、截图</strong>的识别远好于直接丢原始 .mhtml（又大又是编码——AI 复读提示词多半就是这个原因）。打开网页复制可见题目，或截图即可。</span></p>
-    <button class="copybtn" type="button" onclick="(function(b){navigator.clipboard.writeText(document.getElementById('ai-prompt').textContent).then(function(){var o=b.getAttribute('data-label');b.textContent='Copied \u2713';setTimeout(function(){b.textContent=o;},1500);});})(this)" data-label="Copy prompt / 复制提示词">Copy prompt / 复制提示词</button>
-    <pre style="margin-top:10px"><code id="ai-prompt">Turn the material at the bottom into a question-bank JSON array. Reply with JSON only — do not restate these instructions.
+  <main class="doc-main">
+    <header class="doc-head">
+      <p class="eyebrow"><span data-l="en">Format guide</span><span data-l="zh" lang="zh-CN">格式说明</span></p>
+      <h1><span data-l="en">Write your own question&nbsp;bank.</span><span data-l="zh" lang="zh-CN">写一份你自己的题库。</span></h1>
+      <p class="lede"><span data-l="en">A bank is a JSON file — a list of questions. Import it on the catalog page, or skip the file and paste an AI’s reply. It stays in your browser unless you save it to your account.</span><span data-l="zh" lang="zh-CN">题库就是一个 JSON 文件——一串题目。到目录页导入，或者干脆不要文件，直接粘贴 AI 的回复。内容只存在你的浏览器里，除非你把它存到账号。</span></p>
+    </header>
+
+    <section class="doc-sec" id="ai">
+      <h2><span data-l="en">Write it with an AI</span><span data-l="zh" lang="zh-CN">用 AI 来写</span></h2>
+      <p class="intro"><span data-l="en">Free ChatGPT or Gemini is enough. No paid plan, no file to download — you only copy its reply.</span><span data-l="zh" lang="zh-CN">免费版 ChatGPT 或 Gemini 就够了。不用付费，也不用下载文件——只要复制它的回复。</span></p>
+      <ol class="steps card">
+        <li><span class="n">1</span><div><span data-l="en"><b>Copy the prompt below.</b></span><span data-l="zh" lang="zh-CN"><b>复制下面的提示词。</b></span></div></li>
+        <li><span class="n">2</span><div><span data-l="en"><b>Paste it into the AI, then add your questions</b> — text or screenshots — after the <code>=== MATERIAL ===</code> line at the end.</span><span data-l="zh" lang="zh-CN"><b>粘贴给 AI，再把你的题目接上去</b>——文字或截图都行——放在最后那行 <code>=== MATERIAL ===</code> 后面。</span></div></li>
+        <li><span class="n">3</span><div><span data-l="en"><b>Copy the AI’s whole reply</b> and paste it into <b>Paste an AI reply</b> on the catalog page.<span class="s">No saving, no .json file. Works on a phone.</span></span><span data-l="zh" lang="zh-CN"><b>复制 AI 的整段回复</b>，粘贴到目录页的<b>粘贴 AI 回复</b>里。<span class="s">不用存文件，不用弄 .json，手机上也行。</span></span></div></li>
+        <li><span class="n">4</span><div><span data-l="en"><b>Ask for more until it says <code>DONE</code>.</b><span class="s">The AI stops every 15 questions and prints <code>MORE AVAILABLE</code>. Reply “more”, then paste that batch with <b>Add to the same bank</b> on.</span></span><span data-l="zh" lang="zh-CN"><b>继续要，直到它说 <code>DONE</code>。</b><span class="s">AI 每 15 题停一次并打印 <code>MORE AVAILABLE</code>。回一句 “more”，再把这一批粘进去，并打开<b>并入同名题库</b>。</span></span></div></li>
+      </ol>
+
+      <div class="code" id="prompt-block">
+        <div class="code-head"><span class="t"><span data-l="en">Prompt</span><span data-l="zh" lang="zh-CN">提示词</span></span><span><span data-l="en">· plain text</span><span data-l="zh" lang="zh-CN">· 纯文本</span></span><span class="sp"></span>
+          <button class="btn btn-ghost" type="button" data-copy="ai-prompt" onclick="docCopy(this);setTimeout(function(){document.querySelectorAll('[data-copy].done').forEach(function(n){n.classList.remove('done')})},1600)"><svg aria-hidden="true"><use href="#i-copy"/></svg><span><span data-l="en">Copy prompt</span><span data-l="zh" lang="zh-CN">复制提示词</span></span></button></div>
+<pre tabindex="0" class="pw"><code id="ai-prompt">Turn the material at the bottom into a question-bank JSON array. Reply with JSON only — do not restate these instructions.
 
 BATCHES (important — free ChatGPT/Gemini cut long replies off): give me AT MOST 15 questions per reply. Stop after 15, and end that reply with the single line: MORE AVAILABLE. When I type "more", continue with the NEXT questions in the same format, never repeating ones you already gave. If everything fits in 15, end with: DONE.
 
@@ -71,83 +819,92 @@ You may put the JSON in a code block and write a sentence before it — the impo
 
 === MATERIAL ===
 </code></pre>
-    <p class="muted" style="margin:8px 0 2px">The importer auto-handles a few common AI slips (code fences, an outer <code>{"questions":[…]}</code> wrapper, a missing <code>id</code>) — but the rules below still matter. <span>/ 导入器会自动兜底几种常见小毛病（代码围栏、外层 <code>{"questions":[…]}</code> 包裹、缺 <code>id</code>），但下面的规则仍需遵守。</span></p>
-  </div>
+      </div>
 
-  <a class="xlink" href="format-ielts.html" data-testid="ielts-link">
-    <strong>📖 Building an IELTS-style reading bank? Read the IELTS page →</strong><br>
-    <span class="muted">Reading passages, <code>section</code> grouping (passage first, then its questions — never shuffled), and how each IELTS task type maps onto the fields below. / 雅思式阅读题库：阅读文章、<code>section</code> 分组（先文章再作答、不打乱），以及各雅思题型怎么落到下面的字段上。</span>
-  </a>
+      <div class="note"><svg aria-hidden="true"><use href="#i-bulb"/></svg><div><span data-l="en"><b>Why 15 at a time?</b> Free accounts cut long replies off. If one still gets cut off, the importer keeps every complete question and tells you to ask for the rest. Paste text or screenshots rather than a saved .mhtml page — cheaper models read those far better.</span><span data-l="zh" lang="zh-CN"><b>为什么一次 15 题？</b>免费账号会把长回复截断。万一还是被截断，导入器会保留所有已完整的题，并提示你去要剩下的。请粘贴文字或截图，别直接丢保存下来的 .mhtml 网页——便宜的模型读前者好得多。</span></div></div>
 
-  <h2>English</h2>
-  <p>A bank is a <strong>JSON array of question objects</strong>. Three <em>graded</em> question types are supported: single-choice, multiple-answer, and fill-in-the-blank. Any question can also carry an image, an explanation, and a section (for reading-passage banks).</p>
+      <a class="xlink" id="ielts-link" href="format-ielts.html" data-testid="ielts-link">
+        <span class="tile t4"><svg aria-hidden="true"><use href="#i-book"/></svg></span>
+        <span class="body"><b><span data-l="en">Building an IELTS-style reading bank?</span><span data-l="zh" lang="zh-CN">想做雅思式阅读题库？</span></b><span><span data-l="en">Reading passages, <code>section</code> grouping, and how each IELTS task type maps onto the fields below.</span><span data-l="zh" lang="zh-CN">阅读文章、<code>section</code> 分组，以及每种雅思题型怎么落到下面的字段上。</span></span></span>
+        <svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg>
+      </a>
+    </section>
 
-  <h3>Fields</h3>
-  <table>
-    <tr><th>Field</th><th>Required</th><th>Meaning</th></tr>
-    <tr><td><code>id</code></td><td>✅ every question</td><td>Unique string within the file, e.g. <code>"ch3-12"</code>. Progress (wrong/star records) is keyed on it.</td></tr>
-    <tr><td><code>question</code></td><td>✅ (unless <code>image</code> present)</td><td>The stem, plain text. <code>\n</code> makes a line break.</td></tr>
-    <tr><td><code>choices</code></td><td>✅ for choice questions</td><td>Array of <strong>at least 2</strong> strings.</td></tr>
-    <tr><td><code>answer</code></td><td>single-choice</td><td><strong>0-based</strong> index into <code>choices</code> (first choice = 0).</td></tr>
-    <tr><td><code>answers</code></td><td>multiple-answer</td><td>Array of 0-based indexes, e.g. <code>[0,2]</code>. Player switches to checkboxes automatically; all must match.</td></tr>
-    <tr><td><code>type</code></td><td>fill-in only</td><td>Set <code>"fill"</code> (or just provide <code>blanks</code>).</td></tr>
-    <tr><td><code>blanks</code></td><td>fill-in</td><td>One array per blank, each listing the accepted answers: <code>[["8","eight"]]</code> = 1 blank with 2 accepted spellings; <code>[["a"],["b"]]</code> = 2 blanks.</td></tr>
-    <tr><td><code>question_html</code></td><td>optional (fill-in)</td><td>HTML stem with <code>&lt;input data-blank="1"&gt;</code> placed where blanks belong (1-based). Omit it and inputs are appended below the stem.</td></tr>
-    <tr><td><code>answer_sets</code></td><td>optional (fill-in)</td><td>Alternative whole-row combinations; any ONE set matching counts as correct.</td></tr>
-    <tr><td><code>image</code></td><td>optional</td><td>Image URL or base64 <code>data:image/...</code> string — or an array of them. Shown above the choices.</td></tr>
-    <tr><td><code>source</code></td><td>optional</td><td>Where the question came from; shown small under the card. May also be an <strong>array</strong> of strings (a merged question keeps every origin; they render joined by <code>|</code>).</td></tr>
-    <tr><td><code>explanation</code></td><td>optional</td><td>Why the answer is right. Shown with a 💡 only after the learner submits <strong>and then taps <kbd>Show Correct Answers</kbd></strong> — it shares one reveal gate with the correct answer, so it can never leak the answer early. Plain text (HTML is escaped, not rendered).</td></tr>
-    <tr><td><code>section</code></td><td>optional</td><td>Group name, e.g. a reading passage title. Turns the bank into a <strong>section bank</strong>: questions keep their array order (never shuffled) and the filter panel lists sections instead of id prefixes. See the <a href="format-ielts.html">IELTS page</a>.</td></tr>
-    <tr><td><code>passage</code></td><td>optional</td><td>The reading text for this <code>section</code>, shown in a collapsible “Reading Passage” box above the section’s first question. Read from the <strong>first question of each section</strong>. See the <a href="format-ielts.html">IELTS page</a>.</td></tr>
-    <tr><td><code>banks</code></td><td>optional</td><td>Array of filter-group keys this question belongs to. Defaults to the part of <code>id</code> before the first <code>-</code>. Use it when one question should appear under several groups.</td></tr>
-  </table>
-  <p class="muted">Anything else you add is ignored, so extra bookkeeping fields are harmless. <code>type:"essay"</code> renders as an ungraded free-text card in the player, but the <strong>importer drops it</strong> (a record needs <code>choices</code> or <code>blanks</code>) — so don’t put essay questions in a bank you plan to import.</p>
+    <section class="doc-sec" id="fields">
+      <h2><span data-l="en">Question fields</span><span data-l="zh" lang="zh-CN">题目字段</span></h2>
+      <p class="intro"><span data-l="en">A bank is a JSON array of question objects. Three question types are graded: single choice, multiple answer and fill in the blank. Any question can also carry an image, an explanation and a section.</span><span data-l="zh" lang="zh-CN">题库是一个由题目对象组成的 JSON 数组。可判分的题型有三种：单选、多选、填空。任何一题还可以带图片、解析和 section。</span></p>
 
-  <h3>Grading rules</h3>
-  <ul>
-    <li>Multiple-answer questions require the exact set — no partial credit.</li>
-    <li>Fill-in matching ignores <strong>case</strong>, extra spaces, and spacing differences (<code>check list</code> = <code>checklist</code>). It also normalizes typography before comparing: curly quotes → straight, en/em dashes → <code>-</code>, non-breaking space → space, and a trailing <code>. , ; : ! ?</code> is dropped (<code>8.</code> = <code>8</code>).</li>
-    <li>Numbers compare as numbers, but <strong>only when the expected answer is itself numeric</strong> (so text answers are never loosened): thousands separators, a percent sign, one trailing unit word and scientific notation are tolerated — <code>1,000</code> = <code>1000</code>, <code>8 RPM</code> = <code>8</code>, <code>8%</code> = <code>8</code>. No unit conversion — <code>1 ft</code> ≠ <code>12 in</code>.</li>
-    <li><code>blanks</code> matches each blank independently. <code>answer_sets</code> instead matches whole rows: any one set matching all blanks counts as correct. Every blank must be filled before the answer is graded.</li>
-    <li>Files are validated on import; invalid records are skipped with a reason (fewer than 2 choices, out-of-range <code>answer</code>, fill-in without accepted answers, neither <code>choices</code> nor <code>blanks</code>…).</li>
-  </ul>
+      <h3><span data-l="en">Every question</span><span data-l="zh" lang="zh-CN">每一题</span></h3>
+      <div class="rows">
+        <div class="rx"><div class="f"><code>id</code><span class="w req"><span data-l="en">Required</span><span data-l="zh" lang="zh-CN">必填</span></span></div><div class="d"><span data-l="en">Unique within the file, e.g. <code>"ch3-12"</code>. Wrong answers and stars are saved against it. A missing one becomes <code>auto-1</code>, <code>auto-2</code>…, but auto ids shift if you reorder the file.</span><span data-l="zh" lang="zh-CN">文件内唯一，如 <code>"ch3-12"</code>。错题和收藏都记在它名下。缺了会补成 <code>auto-1</code>、<code>auto-2</code>……但调整文件顺序后自动 id 会变。</span></div></div>
+        <div class="rx"><div class="f"><code>question</code><span class="w req"><span data-l="en">Required</span><span data-l="zh" lang="zh-CN">必填</span></span></div><div class="d"><span data-l="en">The stem, as plain text. <code>\n</code> makes a line break. <span class="m">May be empty when the question has an <code>image</code>.</span></span><span data-l="zh" lang="zh-CN">题干，纯文本。<code>\n</code> 表示换行。<span class="m">有 <code>image</code> 时可以留空。</span></span></div></div>
+      </div>
 
-  <h3>Fixed for you automatically on import</h3>
-  <p class="muted" style="margin-top:0">These common slips (mostly from cheap AI output) are repaired rather than rejected — but a clean file is still safer:</p>
-  <ul>
-    <li>Markdown <strong>code fences</strong> around the JSON, and an outer <code>{"questions":[…]}</code> wrapper, are stripped.</li>
-    <li>A missing <code>id</code> is auto-filled (<code>auto-1</code>, <code>auto-2</code>…). Give real ids anyway: wrong/star history is keyed on them, so auto ids shift if you re-order the file.</li>
-    <li>A numeric <code>id</code> becomes a string; index written as a string (<code>"2"</code>) becomes a number.</li>
-    <li><code>answer:[2]</code> becomes <code>answer:2</code>; <code>answer:[0,2]</code> becomes <code>answers:[0,2]</code>.</li>
-  </ul>
+      <h3><span data-l="en">Choice questions</span><span data-l="zh" lang="zh-CN">选择题</span></h3>
+      <div class="rows">
+        <div class="rx"><div class="f"><code>choices</code><span class="w req"><span data-l="en">Required</span><span data-l="zh" lang="zh-CN">必填</span></span></div><div class="d"><span data-l="en">At least 2 strings.</span><span data-l="zh" lang="zh-CN">至少 2 个字符串。</span></div></div>
+        <div class="rx"><div class="f"><code>answer</code><span class="w"><span data-l="en">Single choice</span><span data-l="zh" lang="zh-CN">单选</span></span></div><div class="d"><span data-l="en">The <b>0-based</b> index of the correct choice. The first choice is 0.</span><span data-l="zh" lang="zh-CN">正确选项的下标，<b>从 0 开始</b>。第一个选项是 0。</span></div></div>
+        <div class="rx"><div class="f"><code>answers</code><span class="w"><span data-l="en">Multiple answer</span><span data-l="zh" lang="zh-CN">多选</span></span></div><div class="d"><span data-l="en">Array of 0-based indexes, e.g. <code>[0,2]</code>. The player switches to checkboxes; every one must match.</span><span data-l="zh" lang="zh-CN">下标数组，如 <code>[0,2]</code>。播放器自动变成复选框，必须全对。</span></div></div>
+      </div>
 
-  <h3>If it says “invalid / no valid questions” — why a record is skipped, and the fix</h3>
-  <table>
-    <tr><th>Symptom</th><th>Fix</th></tr>
-    <tr><td>Whole file rejected (“Not valid JSON”)</td><td>It must be valid JSON. Remove markdown <strong>code fences</strong>, comments, and trailing commas; use straight <code>"</code> quotes.</td></tr>
-    <tr><td>“No valid questions found”</td><td>Top level must be a <strong>bare array</strong> <code>[…]</code>. Don’t wrap it as <code>{"questions":[…]}</code>. (The importer tries to unwrap, but a bare array is safest.)</td></tr>
-    <tr><td>Every question skipped</td><td>Usually a missing <code>id</code> or a bad <code>answer</code>. Give each a unique <code>id</code>; make <code>answer</code> a <strong>0-based integer</strong> in range (not the text, not 1-based).</td></tr>
-    <tr><td>One question skipped</td><td>Choice Q needs <code>choices</code> (2+) and a valid <code>answer</code>/<code>answers</code>; fill-in needs <code>blanks</code> with at least one accepted answer; or give it an <code>image</code> if there’s no stem text.</td></tr>
-  </table>
+      <h3><span data-l="en">Fill in the blank</span><span data-l="zh" lang="zh-CN">填空题</span></h3>
+      <div class="rows">
+        <div class="rx"><div class="f"><code>type</code><span class="w"><span data-l="en">Fill in</span><span data-l="zh" lang="zh-CN">填空</span></span></div><div class="d"><span data-l="en">Set to <code>"fill"</code> — or just provide <code>blanks</code>.</span><span data-l="zh" lang="zh-CN">写成 <code>"fill"</code>——或者只提供 <code>blanks</code> 也行。</span></div></div>
+        <div class="rx"><div class="f"><code>blanks</code><span class="w"><span data-l="en">Fill in</span><span data-l="zh" lang="zh-CN">填空</span></span></div><div class="d"><span data-l="en">One array per blank, listing every accepted answer. <code>[["8","eight"]]</code> is one blank with two spellings; <code>[["a"],["b"]]</code> is two blanks.</span><span data-l="zh" lang="zh-CN">每个空一个数组，列出全部可接受的答案。<code>[["8","eight"]]</code> 是一个空、两种写法；<code>[["a"],["b"]]</code> 是两个空。</span></div></div>
+        <div class="rx"><div class="f"><code>question_html</code><span class="w"><span data-l="en">Optional</span><span data-l="zh" lang="zh-CN">可选</span></span></div><div class="d"><span data-l="en">A stem with <code>&lt;input data-blank="1"&gt;</code> where each blank goes (1-based). Leave it out and the boxes appear under the stem.</span><span data-l="zh" lang="zh-CN">题干里用 <code>&lt;input data-blank="1"&gt;</code> 标出每个空的位置（从 1 数起）。不写则输入框出现在题干下面。</span></div></div>
+        <div class="rx"><div class="f"><code>answer_sets</code><span class="w"><span data-l="en">Optional</span><span data-l="zh" lang="zh-CN">可选</span></span></div><div class="d"><span data-l="en">Whole-row combinations. Any one set that matches every blank counts as correct.</span><span data-l="zh" lang="zh-CN">整行组合。任意一组与所有空都匹配即算对。</span></div></div>
+      </div>
 
-  <h2>中文</h2>
-  <p>题库就是一个 <strong>JSON 数组</strong>，每个元素是一道题。<strong>可判分</strong>的题型有三种：单选、多选、填空；任何题都还能带图片、解析、以及 section（阅读文章型题库用）。</p>
-  <ul>
-    <li><code>id</code>：文件内唯一（错题/收藏记录靠它存）。缺了会自动补 <code>auto-1</code>…，但仍建议自己给——自动 id 会随文件顺序变动，历史就断了。</li>
-    <li><code>question</code>：题干纯文本（有 <code>image</code> 时可留空）；<code>\n</code> 换行。</li>
-    <li>单选：<code>choices</code>（≥2 个选项）+ <code>answer</code>（正确选项的下标，<strong>从 0 开始</strong>）。</li>
-    <li>多选：用 <code>answers: [0,2]</code> 数组代替 <code>answer</code>，播放器自动变复选框，需全对（无部分分）。</li>
-    <li>填空：<code>type:"fill"</code> + <code>blanks</code>——每个空一个数组，列出全部可接受答案，如 <code>[["8","eight"]]</code>。</li>
-    <li><code>explanation</code>（解析）：提交后<strong>再点卡片上的「Show Correct Answers」</strong>才以 💡 显示——与正确答案共用同一道揭示闸，绝不会提前泄题；纯文本（写 HTML 会被转义）。</li>
-    <li><code>section</code> + <code>passage</code>：阅读文章型题库（雅思等）。带 <code>section</code> 的库<strong>不打乱</strong>、筛选面板按篇分组；<code>passage</code> 是该篇的文章，显示在该篇第一题上方的可折叠框里。详见 <a href="format-ielts.html">雅思专页</a>。</li>
-    <li>其他可选：<code>image</code>（图片 URL 或 base64 data-URI，可数组）、<code>source</code>（来源，可为数组）、<code>question_html</code>（题干内嵌输入框 <code>&lt;input data-blank="1"&gt;</code>）、<code>answer_sets</code>（多组合答案，任一组全匹配即对）、<code>banks</code>（自定义筛选分组，默认取 id 第一个 <code>-</code> 之前的部分）。</li>
-    <li>判分细节：忽略大小写、多余空格、空格有无（<code>check list</code> = <code>checklist</code>）；比较前统一弯引号/破折号/不换行空格，去掉句尾标点（<code>8.</code> = <code>8</code>）；<strong>期望答案本身是数字时</strong>才按数值比（<code>1,000</code>=<code>1000</code>、<code>8 RPM</code>=<code>8</code>、<code>8%</code>=<code>8</code>），但不做单位换算。</li>
-    <li>导入时自动校验，不合格的题会被跳过并提示原因（选项不足 2 个 / answer 越界 / 填空没有可接受答案 / 既无 choices 也无 blanks 等）。代码围栏、外层 <code>{"questions":[…]}</code>、缺 id、数字 id、<code>answer:[2]</code> 这类常见毛病会自动兜底修好。</li>
-    <li><code>type:"essay"</code>（问答题）播放器能显示但不判分，且<strong>导入时会被剔除</strong>——要导入的题库别放问答题。</li>
-  </ul>
+      <h3><span data-l="en">Optional extras</span><span data-l="zh" lang="zh-CN">可选字段</span></h3>
+      <div class="rows">
+        <div class="rx"><div class="f"><code>image</code></div><div class="d"><span data-l="en">An image URL or a base64 <code>data:image/…</code> string, or an array of them. Shown above the choices.</span><span data-l="zh" lang="zh-CN">图片 URL 或 base64 <code>data:image/…</code> 字符串，也可以是它们的数组。显示在选项上方。</span></div></div>
+        <div class="rx"><div class="f"><code>explanation</code></div><div class="d"><span data-l="en">Why the answer is right, as plain text (HTML is shown literally). Hidden until the learner answers: <b>Show explanation</b> after a right answer, <b>Show answer</b> after a wrong one. It never gives the answer away early.</span><span data-l="zh" lang="zh-CN">答案为什么对，纯文本（写 HTML 会原样显示）。作答前一直隐藏：答对后点<b>Show explanation</b>，答错后点<b>Show answer</b>。绝不会提前泄题。</span></div></div>
+        <div class="rx"><div class="f"><code>source</code></div><div class="d"><span data-l="en">Where the question came from, shown small under the card. May be an array — a merged question keeps every origin.</span><span data-l="zh" lang="zh-CN">题目出处，小字显示在卡片下方。可以是数组——合并后的题会保留每个来源。</span></div></div>
+        <div class="rx"><div class="f"><code>section</code></div><div class="d"><span data-l="en">A group name, such as a reading passage title. Questions keep their order and are never shuffled. <a class="link" href="format-ielts.html">IELTS page</a></span><span data-l="zh" lang="zh-CN">分组名，比如阅读文章的标题。带 section 的题保持原顺序，不会被打乱。<a class="link" href="format-ielts.html">雅思专页</a></span></div></div>
+        <div class="rx"><div class="f"><code>passage</code></div><div class="d"><span data-l="en">The reading text for a <code>section</code>, shown once above its first question. Read from the first question of each section only.</span><span data-l="zh" lang="zh-CN">某个 <code>section</code> 的阅读文章，显示在该组第一题上方，只出现一次。只读取每组第一题上的 passage。</span></div></div>
+        <div class="rx"><div class="f"><code>banks</code></div><div class="d"><span data-l="en">Filter groups this question belongs to. Defaults to the part of <code>id</code> before the first <code>-</code>.</span><span data-l="zh" lang="zh-CN">这道题所属的筛选分组。默认取 <code>id</code> 中第一个 <code>-</code> 之前的部分。</span></div></div>
+      </div>
+      <p class="hint" style="margin:12px 4px 0"><span data-l="en">Other fields are ignored, so extra bookkeeping is harmless. <code>type:"essay"</code> is shown but not graded, and the importer drops it.</span><span data-l="zh" lang="zh-CN">其他字段会被忽略，所以多写几个备注字段无妨。<code>type:"essay"</code>（问答题）能显示但不判分，而且导入时会被剔除。</span></p>
+    </section>
 
-  <h2>Complete example / 完整示例</h2>
-  <pre><code>[
+    <section class="doc-sec" id="grading">
+      <h2><span data-l="en">How answers are graded</span><span data-l="zh" lang="zh-CN">怎么判分</span></h2>
+      <ul class="dots">
+        <li><span data-l="en">Multiple-answer questions need the exact set. There is no partial credit.</span><span data-l="zh" lang="zh-CN">多选题必须选对完整的一组，没有部分分。</span></li>
+        <li><span data-l="en">Fill-in answers ignore case, extra spaces and spacing — <code>check list</code> = <code>checklist</code>. Curly quotes, dashes and a trailing full stop are evened out first, so <code>8.</code> = <code>8</code>.</span><span data-l="zh" lang="zh-CN">填空忽略大小写、多余空格和空格有无——<code>check list</code> = <code>checklist</code>。比较前会先统一弯引号、破折号并去掉句尾标点，所以 <code>8.</code> = <code>8</code>。</span></li>
+        <li><span data-l="en">Numbers compare as numbers, but only when the expected answer is numeric: <code>1,000</code> = <code>1000</code>, <code>8 RPM</code> = <code>8</code>, <code>8%</code> = <code>8</code>. Units are not converted — <code>1 ft</code> ≠ <code>12 in</code>.</span><span data-l="zh" lang="zh-CN">数字按数值比较，但仅当期望答案本身是数字时：<code>1,000</code> = <code>1000</code>、<code>8 RPM</code> = <code>8</code>、<code>8%</code> = <code>8</code>。不做单位换算——<code>1 ft</code> ≠ <code>12 in</code>。</span></li>
+        <li><span data-l="en"><code>blanks</code> checks each blank on its own; <code>answer_sets</code> checks whole rows. Every blank must be filled before a question is graded.</span><span data-l="zh" lang="zh-CN"><code>blanks</code> 逐个空判断；<code>answer_sets</code> 按整行判断。所有空都填了才会判分。</span></li>
+      </ul>
+    </section>
+
+    <section class="doc-sec" id="autofix">
+      <h2><span data-l="en">Fixed on import</span><span data-l="zh" lang="zh-CN">导入时自动修复</span></h2>
+      <p class="intro"><span data-l="en">Common slips, mostly from AI replies, are repaired instead of rejected. A clean file is still safer.</span><span data-l="zh" lang="zh-CN">常见的小毛病（多半来自 AI 的回复）会被修好而不是拒收。不过文件干净总是更稳。</span></p>
+      <ul class="dots">
+        <li><span data-l="en">Code fences around the JSON, and an outer <code>{"questions":[…]}</code> wrapper, are removed.</span><span data-l="zh" lang="zh-CN">JSON 外面的代码围栏，以及外层的 <code>{"questions":[…]}</code> 包裹，都会被去掉。</span></li>
+        <li><span data-l="en">A missing <code>id</code> becomes <code>auto-1</code>, <code>auto-2</code>… Give real ids anyway — history is saved against them, and auto ids shift if the file is reordered.</span><span data-l="zh" lang="zh-CN">缺 <code>id</code> 会补成 <code>auto-1</code>、<code>auto-2</code>……还是请自己写真正的 id——历史记录靠它保存，调整文件顺序后自动 id 会变。</span></li>
+        <li><span data-l="en">A numeric <code>id</code> becomes a string; an index written as <code>"2"</code> becomes a number.</span><span data-l="zh" lang="zh-CN">数字 <code>id</code> 会变成字符串；写成 <code>"2"</code> 的下标会变成数字。</span></li>
+        <li><span data-l="en"><code>answer:[2]</code> becomes <code>answer:2</code>, and <code>answer:[0,2]</code> becomes <code>answers:[0,2]</code>.</span><span data-l="zh" lang="zh-CN"><code>answer:[2]</code> 会变成 <code>answer:2</code>，<code>answer:[0,2]</code> 会变成 <code>answers:[0,2]</code>。</span></li>
+      </ul>
+    </section>
+
+    <section class="doc-sec" id="troubleshoot">
+      <h2><span data-l="en">If an import fails</span><span data-l="zh" lang="zh-CN">导入失败了怎么办</span></h2>
+      <div class="rows">
+        <div class="rx wide"><div class="f"><span data-l="en">“Not valid JSON”</span><span data-l="zh" lang="zh-CN">“Not valid JSON”（不是合法 JSON）</span></div><div class="d m"><span data-l="en">Remove comments and trailing commas, and use straight <code>"</code> quotes.</span><span data-l="zh" lang="zh-CN">去掉注释和多余的尾逗号，并使用直引号 <code>"</code>。</span></div></div>
+        <div class="rx wide"><div class="f"><span data-l="en">“No valid questions found”</span><span data-l="zh" lang="zh-CN">“No valid questions found”（没有有效题目）</span></div><div class="d m"><span data-l="en">The top level must be a bare array <code>[…]</code>, not an object.</span><span data-l="zh" lang="zh-CN">最外层必须是裸数组 <code>[…]</code>，不能是对象。</span></div></div>
+        <div class="rx wide"><div class="f"><span data-l="en">Every question skipped</span><span data-l="zh" lang="zh-CN">所有题都被跳过</span></div><div class="d m"><span data-l="en">Usually a missing <code>id</code> or a bad <code>answer</code>. Make <code>answer</code> a 0-based whole number in range — not the text, not 1-based.</span><span data-l="zh" lang="zh-CN">通常是缺 <code>id</code> 或 <code>answer</code> 不对。<code>answer</code> 要写成范围内、从 0 开始的整数——不是文字，也不是从 1 开始。</span></div></div>
+        <div class="rx wide"><div class="f"><span data-l="en">One question skipped</span><span data-l="zh" lang="zh-CN">只有一题被跳过</span></div><div class="d m"><span data-l="en">A choice question needs 2+ <code>choices</code> and a valid <code>answer</code>; a fill-in needs <code>blanks</code> with at least one accepted answer.</span><span data-l="zh" lang="zh-CN">选择题需要 2 个以上 <code>choices</code> 和有效的 <code>answer</code>；填空题需要 <code>blanks</code>，且每个空至少一个可接受答案。</span></div></div>
+      </div>
+    </section>
+
+    <section class="doc-sec" id="example">
+      <h2><span data-l="en">Complete example</span><span data-l="zh" lang="zh-CN">完整示例</span></h2>
+      <p class="intro"><span data-l="en">Four questions: single choice, multiple answer, fill in the blank, and one with an image and an explanation.</span><span data-l="zh" lang="zh-CN">四道题：单选、多选、填空，以及一道带图片和解析的题。</span></p>
+      <div class="code">
+        <div class="code-head"><span class="t">my-bank.json</span><span class="sp"></span>
+          <button class="btn btn-ghost" type="button" data-copy="example-json" onclick="docCopy(this);setTimeout(function(){document.querySelectorAll('[data-copy].done').forEach(function(n){n.classList.remove('done')})},1600)"><svg aria-hidden="true"><use href="#i-copy"/></svg><span><span data-l="en">Copy</span><span data-l="zh" lang="zh-CN">复制</span></span></button></div>
+<pre tabindex="0" class="json"><code id="example-json">[
   {
     "id": "demo-1",
     "question": "Which fabric is approved for aircraft covering?",
@@ -177,6 +934,111 @@ You may put the JSON in a code block and write a sentence before it — the impo
     "source": "Chapter 5 – Structures"
   }
 ]</code></pre>
-  <p class="muted">Save as e.g. <code>my-bank.json</code> → catalog page → “Import your own bank”. The Extractor's “导出全部合并 JSON” produces exactly this format. / 保存为 <code>.json</code> 后到目录页导入即可；提取器导出的合并 JSON 就是这个格式。</p>
+      </div>
+    </section>
+
+    <div class="doc-end">
+      <span class="tile t1"><svg aria-hidden="true"><use href="#i-upload"/></svg></span>
+      <div class="body"><b><span data-l="en">Ready to try it?</span><span data-l="zh" lang="zh-CN">准备好试试了吗？</span></b><span><span data-l="en">Drop the file on the catalog page, or paste the AI’s reply.</span><span data-l="zh" lang="zh-CN">把文件拖到目录页，或粘贴 AI 的回复。</span></span></div>
+      <a class="btn btn-ghost" href="./#yours"><span data-l="en">Import a bank</span><span data-l="zh" lang="zh-CN">导入题库</span><svg width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+    <footer class="doc-foot"><a href="./"><span data-l="en">Question banks</span><span data-l="zh" lang="zh-CN">题库目录</span></a><a href="format-ielts.html"><span data-l="en">IELTS reading banks</span><span data-l="zh" lang="zh-CN">雅思阅读题库</span></a></footer>
+  </main>
+</div>
+<div class="qb-ov" id="toc-ov" hidden>
+  <div class="dlg toc-sheet" id="toc-sheet" role="dialog" aria-modal="true" aria-labelledby="toc-sheet-h">
+    <div class="grabber" aria-hidden="true"></div>
+    <div class="dlg-head"><div><h2 id="toc-sheet-h"><span data-l="en">On this page</span><span data-l="zh" lang="zh-CN">本页目录</span></h2></div><button class="icon-btn x" id="toc-close" type="button" aria-label="Close / 关闭"><svg width="18" height="18" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+    <nav class="toc-list" aria-label="On this page / 本页目录"></nav>
+  </div>
+</div>
+<div class="qb-toast" id="doc-toast" role="status" aria-live="polite" hidden></div>
+<script>
+(function () {
+  var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+  function toggleTheme() { var d = document.documentElement, t = d.getAttribute("data-theme") === "dark" ? "light" : "dark"; d.setAttribute("data-theme", t); try { localStorage.setItem("qb_theme", t); } catch (e) {} }
+  window.toggleTheme = toggleTheme;
+  // 语言：跟随目录页 / 做题页共用的 qb_ui_lang；只有用户在这里改了才写回（西语偏好不会被页面悄悄改掉）
+  var sel = $("#doc-lang");
+  function isZh() { return document.documentElement.lang.indexOf("zh") === 0; }
+  function paintLang() {
+    var zh = isZh();
+    if (sel) sel.value = zh ? "zh" : "en";
+    var t = document.documentElement.getAttribute(zh ? "data-title-zh" : "data-title-en"); if (t) document.title = t;
+    buildToc();
+  }
+  if (sel) sel.addEventListener("change", function () {
+    document.documentElement.lang = sel.value === "zh" ? "zh-CN" : "en";
+    try { localStorage.setItem("qb_ui_lang", sel.value); } catch (e) {}
+    paintLang();
+  });
+  // JSON 轻量着色：键 = 蓝，数字 = 橙，标点 = 灰
+  $$("pre.json code").forEach(function (c) {
+    var t = c.textContent, out = "", last = 0;
+    var esc = function (s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;"); };
+    t.replace(/("(?:\\.|[^"\\])*")(\s*:)?|(-?\d+(?:\.\d+)?)|([\[\]{},])/g, function (m, str, colon, num, p, i) {
+      out += esc(t.slice(last, i)); last = i + m.length;
+      if (str) out += colon ? '<span class="jk">' + esc(str) + '</span><span class="jp">' + colon + "</span>" : esc(str);
+      else if (num) out += '<span class="jn">' + num + "</span>";
+      else out += '<span class="jp">' + p + "</span>";
+      return m;
+    });
+    c.innerHTML = out + esc(t.slice(last));
+  });
+  // 复制 + 一个通用 toast（CANON §5）
+  var toast = $("#doc-toast"), tt;
+  function say(main, sub) {
+    toast.innerHTML = ""; var b = document.createElement("b"); b.textContent = main; toast.appendChild(b);
+    if (sub) { var s = document.createElement("span"); s.className = "sub"; s.textContent = sub; toast.appendChild(s); }
+    toast.hidden = false; clearTimeout(tt); tt = setTimeout(function () { toast.hidden = true; }, 2800);
+  }
+  function copyText(txt) {
+    if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(txt);
+    return new Promise(function (ok, no) {
+      var ta = document.createElement("textarea"); ta.value = txt; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;left:-9999px;top:0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy") ? ok() : no(); } catch (e) { no(e); } document.body.removeChild(ta);
+    });
+  }
+  // 复制按钮的 onclick 调这里（内联，和旧版一样；Copied 状态的复位计时器也在内联里）
+  window.docCopy = function (b) {
+    var id = b.getAttribute("data-copy"), prompt = /prompt/.test(id), zh = isZh();
+    copyText(document.getElementById(id).textContent).then(function () {
+      b.classList.add("done");
+      say(zh ? "已复制" : "Copied", prompt ? (zh ? "粘贴到 AI 里" : "Paste it into the AI") : "");
+    }, function () { say(zh ? "没能复制" : "Couldn’t copy", zh ? "请选中文字后手动复制" : "Select the text and copy it"); });
+  };
+  // 目录：当前节高亮 + 手机底部抽屉
+  var links = $$(".toc > a");
+  function visibleText(a) { var c = a.cloneNode(true); $$("[data-l]", c).forEach(function (n) { var zh = n.getAttribute("data-l") === "zh"; if (zh !== isZh()) n.remove(); }); return c.textContent; }
+  var cur = null;
+  function buildToc() {
+    var list = $(".toc-list"); if (!list) return;
+    list.innerHTML = links.map(function (a) { return '<a href="' + a.getAttribute("href") + '"' + (a === cur ? ' class="on" aria-current="true"' : "") + ">" + visibleText(a) + "</a>"; }).join("");
+  }
+  function track() {
+    var c = links[0];
+    links.forEach(function (a) { var s = document.getElementById(a.getAttribute("href").slice(1)); if (s && s.getBoundingClientRect().top < 160) c = a; });
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) c = links[links.length - 1];
+    if (c === cur) return; cur = c;
+    links.forEach(function (a) { a.classList.toggle("on", a === c); if (a === c) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
+    buildToc();
+  }
+  addEventListener("scroll", track, { passive: true });
+  var ov = $("#toc-ov"), opener = null;
+  function openToc() { opener = document.activeElement; ov.hidden = false; buildToc(); $("#toc-close").focus(); }
+  function closeToc() { ov.hidden = true; if (opener && opener.focus) opener.focus(); }
+  $("#toc-open").addEventListener("click", openToc);
+  $("#toc-close").addEventListener("click", closeToc);
+  ov.addEventListener("click", function (e) { if (e.target === ov || e.target.closest(".toc-list a")) closeToc(); });
+  ov.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") { e.preventDefault(); closeToc(); return; }
+    if (e.key !== "Tab") return;
+    var f = $$("a[href], button", ov).filter(function (n) { return n.offsetParent !== null; }), i = f.indexOf(document.activeElement);
+    if (!f.length) return; e.preventDefault(); f[(i + (e.shiftKey ? f.length - 1 : 1) + f.length) % f.length].focus();
+  });
+  paintLang(); track();
+})();
+</script>
 </body>
 </html>
