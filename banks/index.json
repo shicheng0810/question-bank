@@ -95,13 +95,25 @@
     "json": "banks/231-fire-pos-warning.json"
   },
   {
+    "id": "223-hydraulics-pneumatics",
+    "title": "Hydraulics & Pneumatics",
+    "mode": "public",
+    "description": "AMT&223 — Quiz #1–#6",
+    "tags": [],
+    "question_count": 60,
+    "has_images": true,
+    "category": "airframe",
+    "term": 3,
+    "json": "banks/223-hydraulics-pneumatics.json"
+  },
+  {
     "id": "all-banks",
     "title": "All Banks · Merged Practice",
     "mode": "public",
     "virtual": true,
     "description": "Pick any combination of banks and practice them together.",
     "tags": [],
-    "question_count": 1409,
+    "question_count": 1469,
     "has_images": true
   }
 ]
