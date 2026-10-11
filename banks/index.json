@@ -107,13 +107,25 @@
     "json": "banks/223-hydraulics-pneumatics.json"
   },
   {
+    "id": "241-instrument-systems",
+    "title": "Instrument Systems",
+    "mode": "public",
+    "description": "AMT&241 — Homework 1a–2b + Quiz",
+    "tags": [],
+    "question_count": 56,
+    "has_images": false,
+    "category": "airframe",
+    "term": 3,
+    "json": "banks/241-instrument-systems.json"
+  },
+  {
     "id": "all-banks",
     "title": "All Banks · Merged Practice",
     "mode": "public",
     "virtual": true,
     "description": "Pick any combination of banks and practice them together.",
     "tags": [],
-    "question_count": 1469,
+    "question_count": 1524,
     "has_images": true
   }
 ]

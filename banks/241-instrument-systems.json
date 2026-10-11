@@ -1,0 +1,735 @@
+[
+  {
+    "id": "hw_241_ais-1a-1",
+    "question": "Who is authorized to repair an aircraft instrument?\n1. A certified mechanic with an airframe rating.\n2. A certificated repairman with an airframe rating.\n3. A certificated repair station approved for that class instrument.\n4. A certificated airframe repair station.",
+    "choices": [
+      "3 and 4.",
+      "3.",
+      "1, 2, 3, and 4."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT241 – Homework – AIS 1a – Q1"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1a-2",
+    "question": "When installing an instrument in an aircraft, who is responsible for making sure it is properly marked?",
+    "choices": [
+      "The aircraft owner.",
+      "The instrument installer.",
+      "The instrument manufacturer."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT241 – Homework – AIS 1a – Q2"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1a-3",
+    "question": "Where may a person look for the information necessary to determine the required markings on an engine instrument?",
+    "choices": [
+      "Engine manufacturer's specifications.",
+      "Instrument manufacturer's specifications.",
+      "Aircraft flight manual and Aircraft Maintenance manual."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT241 – Homework – AIS 1a – Q3"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1a-4",
+    "question": "Aircraft instruments should be marked and graduated in accordance with",
+    "choices": [
+      "the specific aircraft maintenance or flight manual.",
+      "both the aircraft and engine manufacturers' specifications.",
+      "the instrument manufacturer's specifications."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 1a – Q4"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1a-5",
+    "question": "The green arc on an aircraft temperature gauge indicates",
+    "choices": [
+      "the desirable temperature range.",
+      "a low, unsafe temperature range.",
+      "the instrument is not calibrated."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 1a – Q5"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1a-6",
+    "question": "Which procedure should you use if you find a vacuum operated instrument glass loose?",
+    "choices": [
+      "Mark the case and glass with a slippage mark.",
+      "Install another instrument.",
+      "Replace the glass."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT241 – Homework – AIS 1a – Q6"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1a-7",
+    "question": "A Bourdon tube instrument may be used to indicate",
+    "choices": [
+      "pressure and temperature.",
+      "position only",
+      "pressure only"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 1a – Q7"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1a-8",
+    "question": "There are several instrument discrepancies that can be corrected by an aviation mechanic.\n1. Red line missing.\n2. Case leaking.\n3. Glass cracked.\n4. Mounting screws loose.\n5. Case paint chipped.\n6. Leaking at line B nut.\n7. Will not zero out.\n8. Fogged.",
+    "choices": [
+      "2, 3, 7",
+      "1, 4, 5, 6",
+      "8"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT241 – Homework – AIS 1a – Q8"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1a-9",
+    "question": "What would require a replacement of an instrument?",
+    "choices": [
+      "Missing red line",
+      "Mounting screw missing",
+      "Case leaking"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT241 – Homework – AIS 1a – Q9"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1a-10",
+    "question": "What does a reciprocating engine manifold pressure gauge indicate when the engine is not operating?",
+    "choices": [
+      "The existing atmospheric pressure.",
+      "The differential between the manifold pressure and the atmospheric pressure.",
+      "Zero pressure."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 1a – Q10"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1a-11",
+    "question": "Fuel flow transmitters are designed to transmit data",
+    "choices": [
+      "mechanically.",
+      "utilizing fluid power.",
+      "electrically."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT241 – Homework – AIS 1a – Q11"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-1",
+    "question": "Which instrument is connected to both Pitot and Static lines in an aircraft system?",
+    "choices": [
+      "Altimeter",
+      "Vertical Speed Indicator",
+      "Airspeed indicator",
+      "Attitude Indicator"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q1"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-2",
+    "question": "Which instruments is connected to the Static line in an aircraft system?",
+    "choices": [
+      "Heading Indicator and the Turn Coordinator.",
+      "Altimeter and the Vertical Speed Indicator.",
+      "Altimeter and the Airspeed Indicator."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q2"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-3",
+    "question": "How many of the following are controlled by gyroscopes?\nAttitude indicator.\nHeading indicator.\nTurn needle of the turn and slip indicator.",
+    "choices": [
+      "One",
+      "Three",
+      "Two"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q3"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-4",
+    "question": "The Pitot heater for deicing can cause severe burns.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q4"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-5",
+    "question": "Commercial aircraft how many Pitot probes for airspeed indication.",
+    "choices": [
+      "Three",
+      "Two",
+      "One"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q5"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-6",
+    "question": "What will be the result if the instrument static pressure line becomes disconnected inside a pressurized cabin during cruising flight?",
+    "choices": [
+      "The altimeter and airspeed indicator will both read low.",
+      "The altimeter and airspeed indicator will both read high.",
+      "The altimeter will read low and the airspeed indicator will read high."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q6",
+      "AMT241 – Quiz – AIS – Q9"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-7",
+    "question": "Instrument static system leakage can be detected by observing the rate of change in indication of the",
+    "choices": [
+      "altimeter after suction has been applied to the static system to cause a prescribed equivalent altitude to be indicated.",
+      "altimeter after pressure has been applied to the static system to cause a prescribed equivalent altitude to be indicated.",
+      "airspeed indicator after suction has been applied to the static system to cause a prescribed equivalent airspeed to be indicated."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q7"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-8",
+    "question": "The requirements for testing and inspection of instrument static systems required by Section 91.411 are contained in",
+    "choices": [
+      "Type Certificate Data Sheets.",
+      "AC 43.13-1A.",
+      "Part 43, appendix E."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q8"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-9",
+    "question": "When performing the static system leakage check required by Section 91.411, the technician utilizes",
+    "choices": [
+      "positive pressure.",
+      "static pressure.",
+      "negative pressure"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q9"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-10",
+    "question": "When an unpressurized aircraft's static pressure system is leak checked to comply with the requirements of Section 91.411, what aircraft instrument may be used in lieu of a pitot-static system tester?",
+    "choices": [
+      "Altimeter.",
+      "Vertical speed indicator.",
+      "Airspeed indicator."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q10"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-11",
+    "question": "The maximum altitude loss permitted during an unpressurized aircraft instrument static pressure system integrity check is",
+    "choices": [
+      "100 feet in 1 minute.",
+      "50 feet in 1 minute.",
+      "20 feet in 1 minute."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q11"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-12",
+    "question": "If a static pressure system check reveals excessive leakage, the leak(s) may be located by",
+    "choices": [
+      "isolating portions of the line and testing each portion systematically, starting at the instrument connections.",
+      "disconnecting the non-working instruments.",
+      "pressurizing the system and adding leak detection dye."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q12"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-13",
+    "question": "Cases for electrically operated instruments are made of",
+    "choices": [
+      "iron and steel cases.",
+      "Bakelite or plastic cases.",
+      "Aluminum or composite cases."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q13"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-14",
+    "question": "When an aircraft altimeter is set at 29.92\" Hg on the ground, the altimeter will read",
+    "choices": [
+      "pressure altitude.",
+      "field elevation.",
+      "density altitude."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q14"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-15",
+    "question": "A radar altimeter determines altitude by",
+    "choices": [
+      "receiving signals transmitted from ground radar stations.",
+      "transmitting a signal and receiving back a reflected signal.",
+      "means of transponder interrogation."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q15"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-16",
+    "question": "A radar altimeter indicates",
+    "choices": [
+      "altitude above ground level.",
+      "flight level (pressure) altitude.",
+      "altitude above sea level."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q16"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-17",
+    "question": "The lubber line on a directional gyro is used to",
+    "choices": [
+      "represent the nose of the aircraft.",
+      "align the instrument glass in the case.",
+      "represent the wings of the aircraft."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q17"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-18",
+    "question": "When swinging a magnetic compass, the compensators are adjusted to correct for magnetic influence deviation.",
+    "choices": [
+      "magnetic variations.",
+      "compass card oscillations.",
+      "magnetic influence deviation."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q18"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-19",
+    "question": "Which of the following causes of aircraft magnetic compass inaccuracies may be compensated for by mechanics?",
+    "choices": [
+      "Deviation.",
+      "Variation.",
+      "Magnetic compass current."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q19"
+    ]
+  },
+  {
+    "id": "hw_241_ais-1b-20",
+    "question": "The maximum deviation (during level flight) permitted in a compensated magnetic direction indicator installed on an aircraft certificated under Federal Aviation Regulation Part 23 is",
+    "choices": [
+      "20 Degrees",
+      "30 Degrees",
+      "10 Degrees"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT241 – Homework – AIS 1b – Q20"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2a-1",
+    "question": "Data transmitted between components in an EFIS are converted into",
+    "choices": [
+      "digital signals",
+      "analog signals.",
+      "carrier wave signals."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2a – Q1"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2a-2",
+    "question": "The function of a display controller in an EFIS is to",
+    "choices": [
+      "allow the pilot to select the appropriate system configuration for the current flight situation.",
+      "display alphanumeric data and representations of aircraft instruments.",
+      "receive and process input signals from aircraft and engine sensors and send the data to the appropriate display."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2a – Q2"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2a-3",
+    "question": "The function of a CRT in an EFIS is to",
+    "choices": [
+      "display alphanumeric data and representations of aircraft instruments.",
+      "receive and process input signals from aircraft and engine sensors and send the data to the appropriate display.",
+      "allow the pilot to select the appropriate system configuration for the current flight situation."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2a – Q3"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2a-4",
+    "question": "The function of a symbol generator (SG) in an EFIS is to",
+    "choices": [
+      "receive and process input signals from aircraft and engine sensors and send the data to the appropriate display.",
+      "allow the pilot to select the appropriate system configuration for the current flight situation.",
+      "display alphanumeric data and representations of aircraft instruments."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2a – Q4"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2a-5",
+    "question": "Aircraft instrument panels are generally shock mounted to absorb",
+    "choices": [
+      "low frequency, high amplitude shocks.",
+      "high frequency, high amplitude shocks",
+      "all vibration"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2a – Q5"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2a-6",
+    "question": "What must be done to an instrument panel that is supported by shock mounts?",
+    "choices": [
+      "Bonding straps must be installed across the instrument mounts as a current path.",
+      "The instrument mounts must be grounded to the aircraft structure as a current path.",
+      "The instrument mounts must be tightened to the specified torque required by the maintenance manual."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2a – Q6"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2a-7",
+    "question": "An aircraft instrument panel is electrically bonded to the aircraft structure to",
+    "choices": [
+      "provide current return paths.",
+      "provide a locking mechanism for the instrument panel.",
+      "allow ease of access for tools and maintenance personnel."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2a – Q7"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2a-8",
+    "question": "How is a flangeless instrument case mounted in an instrument panel?",
+    "choices": [
+      "By an expanding type clamp secured to the back of the panel and tightened by a screw from the front of the instrument panel.",
+      "By four machine screws which extend through the instrument panel.",
+      "By a metal shelf separate from and located behind the instrument panel."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2a – Q8"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2a-9",
+    "question": "The method of mounting aircraft instruments in their respective panels depends on the",
+    "choices": [
+      "design of the instrument case.",
+      "design of the instrument panel.",
+      "instrument manufacturer."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2a – Q9",
+      "AMT241 – Quiz – AIS – Q10"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2a-10",
+    "question": "Which of the following instruments will normally have range markings?",
+    "choices": [
+      "Cylinder head temperature gauge, airspeed indicator",
+      "Altimeter.",
+      "Altimeter, airspeed indicator."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2a – Q10"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2a-11",
+    "question": "Aircraft instruments are color-coded to direct attention to operational ranges and limitations.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2a – Q11"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2a-12",
+    "question": "The red radial lines on the face of an engine oil pressure gauge indicates",
+    "choices": [
+      "minimum and/ or maximum safe operating limits.",
+      "minimum precautionary safe operating range.",
+      "minimum engine safe RPM operating range."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2a – Q12",
+      "AMT241 – Quiz – AIS – Q3"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2a-13",
+    "question": "How would an airspeed indicator be marked to show the best rate of climb speed (one engine inoperative)?",
+    "choices": [
+      "A blue radial line.",
+      "A red radial line.",
+      "A green arc."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2a – Q13"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2a-14",
+    "question": "What marking color is used to indicate if a cover glass has slipped?",
+    "choices": [
+      "White.",
+      "Yellow.",
+      "Red."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2a – Q14",
+      "AMT241 – Quiz – AIS – Q5"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2b-1",
+    "question": "A turn coordinator instrument indicates",
+    "choices": [
+      "both roll and yaw.",
+      "the longitudinal attitude of the aircraft during climb and descent.",
+      "the need for corrections in pitch and bank."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2b – Q1",
+      "AMT241 – Quiz – AIS – Q4"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2b-2",
+    "question": "Which condition would be most likely to cause excessive vacuum in a vacuum system?",
+    "choices": [
+      "Vacuum relief valve improperly adjusted.",
+      "Vacuum pump overspeed.",
+      "Vacuum relief valve spring weak."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2b – Q2"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2b-3",
+    "question": "Dry type vacuum pumps with carbon vanes are very susceptible to damage from solid airborne particles and must take in only filtered air.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2b – Q3"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2b-4",
+    "question": "When flags such as NAV, HDG, or GS are displayed on an HSI, the indication is",
+    "choices": [
+      "that function is inoperative.",
+      "to call attention to deviation from the desired setting, or flight path, or heading, etc.",
+      "that function is operating."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2b – Q4"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2b-5",
+    "question": "A synchro transmitter is connected to a synchro receiver",
+    "choices": [
+      "electrically with wires.",
+      "electromagnetically without wires",
+      "mechanically through linkage."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2b – Q5",
+      "AMT241 – Quiz – AIS – Q8"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2b-6",
+    "question": "The operation of an angle of attack indicating system is based on detection of differential pressure at a point where the airstream flows in a direction",
+    "choices": [
+      "not parallel to the true angle of attack of the aircraft.",
+      "parallel to the longitudinal axis of the aircraft.",
+      "parallel to the angle of attack of the aircraft."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2b – Q6"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2b-7",
+    "question": "Aircraft temperature thermocouple leads may",
+    "choices": [
+      "not be altered and are designed for a specific installation.",
+      "be installed with either lead to either post of the indicator.",
+      "be repaired using solderless connectors."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2b – Q7",
+      "AMT241 – Quiz – AIS – Q6"
+    ]
+  },
+  {
+    "id": "hw_241_ais-2b-8",
+    "question": "Turbine engine exhaust gas temperatures are measured by using",
+    "choices": [
+      "chromel/alumel thermocouples",
+      "iron/constantan thermocouples.",
+      "ratiometer electrical resistance thermometers"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT241 – Homework – AIS 2b – Q8"
+    ]
+  },
+  {
+    "id": "quiz_241_ais-1",
+    "question": "A certificated mechanic may perform",
+    "choices": [
+      "instrument overhaul.",
+      "minor repairs to instruments.",
+      "100-hour inspections of instruments."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT241 – Quiz – AIS – Q1"
+    ]
+  },
+  {
+    "id": "quiz_241_ais-2",
+    "question": "The maximum altitude loss permitted during an unpressurized aircraft instrument static pressure system integrity check is",
+    "choices": [
+      "200 feet in 1 minute.",
+      "50 feet in 1 minute.",
+      "100 feet in 1 minute."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT241 – Quiz – AIS – Q2"
+    ]
+  },
+  {
+    "id": "quiz_241_ais-7",
+    "question": "Where may a person look for the information necessary to determine the required markings on an engine instrument?\n1. Engine manufacturer's specifications.\n2. Aircraft flight manual.\n3. Instrument manufacturer's specifications.\n4. Aircraft maintenance manual.",
+    "choices": [
+      "1 or 4.",
+      "2 or 4.",
+      "2 or 3."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT241 – Quiz – AIS – Q7"
+    ]
+  }
+]
