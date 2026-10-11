@@ -729,6 +729,37 @@ html[lang^="zh"] [data-l="en"], html:not([lang^="zh"]) [data-l="zh"] { display: 
 .doc code { color: var(--text); }
 .doc .note b { color: var(--text); }
 
+/* ---- 快速开始 + 「给 AI 什么材料」表（手机上上下堆叠）---- */
+.doc-head .quick { margin-top: 28px; padding: 2px 0; max-width: 34em; }
+.doc-head .quick li { padding: 12px 20px; align-items: center; font-size: 15.5px; line-height: 1.5; }
+.doc-head .quick li + li::before { left: 64px; }
+.doc-head .quick .n { margin-top: 0; }
+.doc-head .quick b { display: block; }
+.doc-head .quick .sub { display: block; margin-top: 2px; font-size: 14.5px; color: var(--sh-text-2); text-wrap: pretty; }
+.doc-head .quick .sub b { display: inline; color: var(--text); }
+.doc-head .quick a.link { white-space: nowrap; }
+.doc-sec .note.phone { margin: 0 0 14px; }
+.mx { display: grid; grid-template-columns: 188px minmax(0, 1fr); gap: 6px 24px; padding: 18px 20px; }
+.mx + .mx { border-top: 1px solid var(--hairline); }
+.mx .t { font-weight: 600; font-size: 15.5px; line-height: 1.4; min-width: 0; }
+.mx .t code { background: none; padding: 0; font-size: 14px; font-weight: 600; }
+.mx .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip { display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 11px; font-size: 12px; font-weight: 600; line-height: 1; white-space: nowrap; background: var(--aux-fill); color: var(--sh-text-2); }
+.chip.good { background: color-mix(in srgb, var(--accent) 12%, transparent); color: color-mix(in srgb, var(--accent) 68%, var(--text)); }
+.chip.file { background: transparent; box-shadow: inset 0 0 0 1px var(--hairline-strong); }
+.mx .d p { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 0 12px; margin: 0 0 10px; font-size: 15px; line-height: 1.6; }
+.mx .d code { white-space: nowrap; }
+.mx .d p:last-child { margin-bottom: 0; }
+.mx .d .k { font-size: 12.5px; font-weight: 600; color: var(--sh-text-2); padding-top: 2px; }
+@media (max-width: 760px) {
+  .doc-head .quick li { padding: 12px 16px; gap: 14px; }
+  .doc-head .quick li + li::before { left: 58px; }
+  .mx { grid-template-columns: 1fr; padding: 16px; }
+  .mx .chips { margin-top: 6px; }
+  .mx .d p { grid-template-columns: 1fr; margin-bottom: 12px; }
+  .mx .d .k { padding-top: 0; }
+}
+
 </style>
 </head>
 <body>
@@ -766,6 +797,7 @@ html[lang^="zh"] [data-l="en"], html:not([lang^="zh"]) [data-l="zh"] { display: 
 <div class="doc">
   <aside class="toc" aria-label="On this page / 本页目录">
     <div class="cap"><span data-l="en">On this page</span><span data-l="zh" lang="zh-CN">本页目录</span></div>
+    <a href="#material"><span data-l="en">What to give the AI</span><span data-l="zh" lang="zh-CN">给 AI 什么材料</span></a>
     <a href="#ai"><span data-l="en">Write it with an AI</span><span data-l="zh" lang="zh-CN">用 AI 来写</span></a>
     <a href="#fields"><span data-l="en">Question fields</span><span data-l="zh" lang="zh-CN">题目字段</span></a>
     <a href="#grading"><span data-l="en">How answers are graded</span><span data-l="zh" lang="zh-CN">怎么判分</span></a>
@@ -779,23 +811,41 @@ html[lang^="zh"] [data-l="en"], html:not([lang^="zh"]) [data-l="zh"] { display: 
     <header class="doc-head">
       <p class="eyebrow"><span data-l="en">Format guide</span><span data-l="zh" lang="zh-CN">格式说明</span></p>
       <h1><span data-l="en">Write your own question&nbsp;bank.</span><span data-l="zh" lang="zh-CN">写一份你自己的题库。</span></h1>
-      <p class="lede"><span data-l="en">A bank is a JSON file — a list of questions. Import it on the catalog page, or skip the file and paste an AI’s reply. It stays in your browser unless you save it to your account.</span><span data-l="zh" lang="zh-CN">题库就是一个 JSON 文件——一串题目。到目录页导入，或者干脆不要文件，直接粘贴 AI 的回复。内容只存在你的浏览器里，除非你把它存到账号。</span></p>
+      <p class="lede"><span data-l="en">A bank is a JSON file. Let a free AI write it from your quiz, then paste its reply on the catalog page. It stays in your browser unless you save it to your account.</span><span data-l="zh" lang="zh-CN">题库就是一个 JSON 文件。让免费的 AI 照着你的题目写出来，再把它的回复粘贴到目录页。内容只存在你的浏览器里，除非你把它存到账号。</span></p>
+      <ol class="steps card quick" aria-label="Quick start">
+        <li><span class="n">1</span><div><b><span data-l="en">Copy the prompt</span><span data-l="zh" lang="zh-CN">复制提示词</span></b><span class="sub"><span data-l="en">Paste it into a free AI chat. <a class="link" href="#ai">Get the prompt</a></span><span data-l="zh" lang="zh-CN">粘贴到免费 AI 的对话框里。<a class="link" href="#ai">去复制</a></span></span></div></li>
+        <li><span class="n">2</span><div><b><span data-l="en">Give it your quiz</span><span data-l="zh" lang="zh-CN">把题目发给它</span></b><span class="sub"><span data-l="en">Text copied from the answers page works with every AI. <a class="link" href="#material">What to give</a></span><span data-l="zh" lang="zh-CN">从带答案的页面复制的文字，哪个 AI 都能用。<a class="link" href="#material">给什么材料</a></span></span></div></li>
+        <li><span class="n">3</span><div><b><span data-l="en">Paste its reply on the catalog</span><span data-l="zh" lang="zh-CN">把回复粘贴到目录页</span></b><span class="sub"><span data-l="en">Copy the whole reply into <b>Paste AI reply</b>, then Import. <a class="link" href="./#yours">Open the catalog</a></span><span data-l="zh" lang="zh-CN">复制整段回复，粘贴到<b>粘贴 AI 回复</b>里，再点导入。<a class="link" href="./#yours">打开目录页</a></span></span></div></li>
+      </ol>
     </header>
+
+    <section class="doc-sec" id="material">
+      <h2><span data-l="en">What to give the AI</span><span data-l="zh" lang="zh-CN">给 AI 什么材料</span></h2>
+      <p class="intro"><span data-l="en">Start with copied text. Use screenshots for figures. Saved pages and PDFs need a computer and an AI that takes uploads.</span><span data-l="zh" lang="zh-CN">先用复制的文字；有图的题用截图；保存的网页和 PDF 需要电脑，并且 AI 要支持上传文件。</span></p>
+      <div class="note phone"><svg aria-hidden="true"><use href="#i-bulb"/></svg><div><span data-l="en"><b>On a phone?</b> Copy the text or take screenshots. Saving a web page or a PDF is for a computer.</span><span data-l="zh" lang="zh-CN"><b>用手机？</b>复制文字，或者截图。保存网页和导出 PDF 要在电脑上做。</span></div></div>
+      <div class="rows">
+        <div class="mx"><div class="t"><span data-l="en">Copied text</span><span data-l="zh" lang="zh-CN">复制的文字</span><div class="chips"><span class="chip good"><span data-l="en">Recommended</span><span data-l="zh" lang="zh-CN">推荐</span></span><span class="chip"><span data-l="en">Any AI</span><span data-l="zh" lang="zh-CN">任何 AI</span></span></div></div><div class="d"><p><span class="k"><span data-l="en">How</span><span data-l="zh" lang="zh-CN">做法</span></span><span><span data-l="en">Open the quiz results or review page that shows the correct answers. Select the questions (<kbd>⌘A</kbd> or <kbd>Ctrl+A</kbd> takes the whole page), copy, and paste them after the <code>=== MATERIAL ===</code> line.</span><span data-l="zh" lang="zh-CN">打开显示正确答案的测验结果或回顾页面，选中题目（<kbd>⌘A</kbd> 或 <kbd>Ctrl+A</kbd> 选中整页），复制，粘贴到 <code>=== MATERIAL ===</code> 那一行后面。</span></span></p><p><span class="k"><span data-l="en">On a phone</span><span data-l="zh" lang="zh-CN">手机上</span></span><span><span data-l="en">Long-press the text, drag the handles or choose <b>Select all</b>, then <b>Copy</b>.</span><span data-l="zh" lang="zh-CN">长按文字，拖动两端的手柄或选<b>全选</b>，再点<b>拷贝</b>。</span></span></p><p><span class="k"><span data-l="en">Works with</span><span data-l="zh" lang="zh-CN">适用</span></span><span><span data-l="en">Every AI, free ChatGPT and Gemini included. If it says the message is too long, send half the quiz first.</span><span data-l="zh" lang="zh-CN">所有 AI，包括免费版 ChatGPT 和 Gemini。如果它说消息太长，先发前一半。</span></span></p></div></div>
+        <div class="mx"><div class="t"><span data-l="en">Screenshots or photos</span><span data-l="zh" lang="zh-CN">截图或照片</span><div class="chips"><span class="chip"><span data-l="en">Any AI</span><span data-l="zh" lang="zh-CN">任何 AI</span></span><span class="chip"><span data-l="en">Best for figures</span><span data-l="zh" lang="zh-CN">有图的题</span></span></div></div><div class="d"><p><span class="k"><span data-l="en">How</span><span data-l="zh" lang="zh-CN">做法</span></span><span><span data-l="en">One screen at a time. Each one must show the question, <b>all</b> the choices, the <b>marked correct answer</b> and any figure. Attach the images to the same message as the prompt.</span><span data-l="zh" lang="zh-CN">一次一屏。每张都要拍到题干、<b>全部</b>选项、<b>标出的正确答案</b>，以及题里的图。和提示词放在同一条消息里发送。</span></span></p><p><span class="k"><span data-l="en">Works with</span><span data-l="zh" lang="zh-CN">适用</span></span><span><span data-l="en">Any AI that accepts images, on a phone too. Use it for questions that have a figure, which copied text loses.</span><span data-l="zh" lang="zh-CN">任何支持图片的 AI，手机上也行。带图的题用它，因为复制文字会丢掉图。</span></span></p></div></div>
+        <div class="mx"><div class="t"><span data-l="en">Saved web page <code>.mhtml</code></span><span data-l="zh" lang="zh-CN">保存的网页 <code>.mhtml</code></span><div class="chips"><span class="chip file"><span data-l="en">Computer only</span><span data-l="zh" lang="zh-CN">仅限电脑</span></span><span class="chip file"><span data-l="en">Upload needed</span><span data-l="zh" lang="zh-CN">需要上传文件</span></span></div></div><div class="d"><p><span class="k"><span data-l="en">How</span><span data-l="zh" lang="zh-CN">做法</span></span><span><span data-l="en">In <b>Chrome or Edge</b> on a computer, press <kbd>⌘S</kbd> or <kbd>Ctrl+S</kbd>, choose <b>Webpage, Single File</b>, and save. Attach the <code>.mhtml</code> file to your message.</span><span data-l="zh" lang="zh-CN">在电脑上的 <b>Chrome 或 Edge</b> 里按 <kbd>⌘S</kbd> 或 <kbd>Ctrl+S</kbd>，格式选 <b>Webpage, Single File</b>（网页，单个文件）并保存。把 <code>.mhtml</code> 文件作为附件发给 AI。</span></span></p><p><span class="k"><span data-l="en">Not Safari</span><span data-l="zh" lang="zh-CN">别用 Safari</span></span><span><span data-l="en">File → Save As → <b>Web Archive</b> makes a <code>.webarchive</code>, which is not the same thing and AIs usually cannot read it. Use Chrome or Edge.</span><span data-l="zh" lang="zh-CN">Safari 的 文件 → 保存为… → 格式选<b>网页归档</b>，得到的是 <code>.webarchive</code>，不是同一种格式，AI 通常读不了。请改用 Chrome 或 Edge。</span></span></p><p><span class="k"><span data-l="en">On a phone</span><span data-l="zh" lang="zh-CN">手机上</span></span><span><span data-l="en">Chrome and Edge on a phone cannot save this format. Copy the text or take screenshots instead.</span><span data-l="zh" lang="zh-CN">手机上的 Chrome 和 Edge 存不了这种格式。请改为复制文字或截图。</span></span></p><p><span class="k"><span data-l="en">Works with</span><span data-l="zh" lang="zh-CN">适用</span></span><span><span data-l="en">Only AIs that accept file uploads (ChatGPT, Claude, Gemini). Free plans may refuse the file or read only part of it. Best when you have many questions at once.</span><span data-l="zh" lang="zh-CN">只有支持上传文件的 AI（ChatGPT、Claude、Gemini）。免费版可能拒收，或只读一部分。适合一次有很多题的时候。</span></span></p></div></div>
+        <div class="mx"><div class="t"><span data-l="en">PDF</span><span data-l="zh" lang="zh-CN">PDF</span><div class="chips"><span class="chip file"><span data-l="en">Computer only</span><span data-l="zh" lang="zh-CN">仅限电脑</span></span><span class="chip file"><span data-l="en">Upload needed</span><span data-l="zh" lang="zh-CN">需要上传文件</span></span></div></div><div class="d"><p><span class="k"><span data-l="en">How</span><span data-l="zh" lang="zh-CN">做法</span></span><span><span data-l="en">On a computer, print (<kbd>⌘P</kbd> or <kbd>Ctrl+P</kbd>), set the destination to <b>Save as PDF</b>, and attach the file.</span><span data-l="zh" lang="zh-CN">在电脑上打印（<kbd>⌘P</kbd> 或 <kbd>Ctrl+P</kbd>），目标选<b>另存为 PDF</b>，再把文件作为附件发给 AI。</span></span></p><p><span class="k"><span data-l="en">On a phone</span><span data-l="zh" lang="zh-CN">手机上</span></span><span><span data-l="en">Skip it. Copy the text or take screenshots.</span><span data-l="zh" lang="zh-CN">别用这个，复制文字或截图。</span></span></p><p><span class="k"><span data-l="en">Works with</span><span data-l="zh" lang="zh-CN">适用</span></span><span><span data-l="en">Same limits as <code>.mhtml</code>: it needs file upload, and free plans may cut a long file short.</span><span data-l="zh" lang="zh-CN">限制和 <code>.mhtml</code> 一样：需要能上传文件，免费版可能把长文件截短。</span></span></p></div></div>
+      </div>
+
+      <h3><span data-l="en">Before you send anything</span><span data-l="zh" lang="zh-CN">发送之前</span></h3>
+      <ul class="dots">
+        <li><span data-l="en"><b>Use the page with the correct answers.</b> Without it the AI has to guess, and marks those questions <code>"source":"answer unverified"</code>.</span><span data-l="zh" lang="zh-CN"><b>用带正确答案的页面。</b>否则 AI 只能猜，并把这些题标成 <code>"source":"answer unverified"</code>（答案未核实）。</span></li>
+        <li><span data-l="en"><b>Figures do not come through.</b> An AI cannot put a picture into the JSON, and the catalog has no picture upload. Give it a screenshot so it can see the figure, and let it describe the figure in the question text — or skip that question. Adding a real picture means editing the file by hand: the <code>image</code> field takes a public link or a <code>data:image/…</code> string (<a class="link" href="#fields">Question fields</a>). A link that needs a Canvas login will not show.</span><span data-l="zh" lang="zh-CN"><b>图片带不过去。</b>AI 没法把图片放进 JSON，目录页也不能上传图片。给它截图让它看见图，并让它把图用文字写进题干——或者跳过这道题。想放真正的图，只能手动改文件：<code>image</code> 字段接受公开链接或 <code>data:image/…</code> 字符串（见<a class="link" href="#fields">题目字段</a>）。要登录 Canvas 才能看的链接是显示不出来的。</span></li>
+        <li><span data-l="en"><b>Mind your privacy.</b> Quiz pages can show your name, scores and course. Copy or crop just the questions if you would rather not share the rest. The prompt tells the AI to ignore them, but it still receives whatever you send.</span><span data-l="zh" lang="zh-CN"><b>注意隐私。</b>测验页面可能带着你的姓名、分数和课程名。不想分享的话，只复制或截取题目部分。提示词会让 AI 忽略这些，但你发出去的内容它都会收到。</span></li>
+      </ul>
+    </section>
 
     <section class="doc-sec" id="ai">
       <h2><span data-l="en">Write it with an AI</span><span data-l="zh" lang="zh-CN">用 AI 来写</span></h2>
-      <p class="intro"><span data-l="en">Free ChatGPT or Gemini is enough. No paid plan, no file to download — you only copy its reply.</span><span data-l="zh" lang="zh-CN">免费版 ChatGPT 或 Gemini 就够了。不用付费，也不用下载文件——只要复制它的回复。</span></p>
-      <ol class="steps card">
-        <li><span class="n">1</span><div><span data-l="en"><b>Copy the prompt below.</b></span><span data-l="zh" lang="zh-CN"><b>复制下面的提示词。</b></span></div></li>
-        <li><span class="n">2</span><div><span data-l="en"><b>Paste it into the AI, then add your questions</b> — text or screenshots — after the <code>=== MATERIAL ===</code> line at the end.</span><span data-l="zh" lang="zh-CN"><b>粘贴给 AI，再把你的题目接上去</b>——文字或截图都行——放在最后那行 <code>=== MATERIAL ===</code> 后面。</span></div></li>
-        <li><span class="n">3</span><div><span data-l="en"><b>Copy the AI’s whole reply</b> and paste it into <b>Paste an AI reply</b> on the catalog page.<span class="s">No saving, no .json file. Works on a phone.</span></span><span data-l="zh" lang="zh-CN"><b>复制 AI 的整段回复</b>，粘贴到目录页的<b>粘贴 AI 回复</b>里。<span class="s">不用存文件，不用弄 .json，手机上也行。</span></span></div></li>
-        <li><span class="n">4</span><div><span data-l="en"><b>Ask for more until it says <code>DONE</code>.</b><span class="s">The AI stops every 15 questions and prints <code>MORE AVAILABLE</code>. Reply “more”, then paste that batch with <b>Add to the same bank</b> on.</span></span><span data-l="zh" lang="zh-CN"><b>继续要，直到它说 <code>DONE</code>。</b><span class="s">AI 每 15 题停一次并打印 <code>MORE AVAILABLE</code>。回一句 “more”，再把这一批粘进去，并打开<b>并入同名题库</b>。</span></span></div></li>
-      </ol>
+      <p class="intro"><span data-l="en">Free ChatGPT or Gemini is enough. Paste the prompt, then add your material after the last line or attach it.</span><span data-l="zh" lang="zh-CN">免费版 ChatGPT 或 Gemini 就够了。先粘贴提示词，再把材料接在最后一行后面，或作为附件发出。</span></p>
 
       <div class="code" id="prompt-block">
         <div class="code-head"><span class="t"><span data-l="en">Prompt</span><span data-l="zh" lang="zh-CN">提示词</span></span><span><span data-l="en">· plain text</span><span data-l="zh" lang="zh-CN">· 纯文本</span></span><span class="sp"></span>
           <button class="btn btn-ghost" type="button" data-copy="ai-prompt" onclick="docCopy(this);setTimeout(function(){document.querySelectorAll('[data-copy].done').forEach(function(n){n.classList.remove('done')})},1600)"><svg aria-hidden="true"><use href="#i-copy"/></svg><span><span data-l="en">Copy prompt</span><span data-l="zh" lang="zh-CN">复制提示词</span></span></button></div>
-<pre tabindex="0" class="pw"><code id="ai-prompt">Turn the material at the bottom into a question-bank JSON array. Reply with JSON only — do not restate these instructions.
+<pre tabindex="0" class="pw"><code id="ai-prompt">Turn the material at the bottom (pasted text, or attached screenshots / PDF / .mhtml file) into a question-bank JSON array. Reply with JSON only — do not restate these instructions.
 
 BATCHES (important — free ChatGPT/Gemini cut long replies off): give me AT MOST 15 questions per reply. Stop after 15, and end that reply with the single line: MORE AVAILABLE. When I type "more", continue with the NEXT questions in the same format, never repeating ones you already gave. If everything fits in 15, end with: DONE.
 
@@ -814,6 +864,9 @@ RULES
 5. Optional: "explanation" (one short sentence of why), "source" (where it came from).
 6. Include every question in this batch. Use the answer the material marks correct; if none is marked, pick the best-supported one and add "source":"answer unverified".
 7. Straight ASCII quotes. No trailing commas. Do not wrap the array in an object.
+8. Attached file or screenshots: read EVERY question in it, use the correct answer the page marks, and ignore interface text (scores, names, dates, buttons).
+9. Never invent an image or an image URL. If a question needs a figure, describe the figure in words inside "question".
+10. If an attachment is unreadable or looks cut off, do not guess: put ONE plain line saying so BEFORE the JSON (no square brackets in it), then give the JSON for what you could read, and still end with MORE AVAILABLE or DONE.
 
 You may put the JSON in a code block and write a sentence before it — the importer strips that. Just never split one batch across two replies.
 
@@ -821,7 +874,14 @@ You may put the JSON in a code block and write a sentence before it — the impo
 </code></pre>
       </div>
 
-      <div class="note"><svg aria-hidden="true"><use href="#i-bulb"/></svg><div><span data-l="en"><b>Why 15 at a time?</b> Free accounts cut long replies off. If one still gets cut off, the importer keeps every complete question and tells you to ask for the rest. Paste text or screenshots rather than a saved .mhtml page — cheaper models read those far better.</span><span data-l="zh" lang="zh-CN"><b>为什么一次 15 题？</b>免费账号会把长回复截断。万一还是被截断，导入器会保留所有已完整的题，并提示你去要剩下的。请粘贴文字或截图，别直接丢保存下来的 .mhtml 网页——便宜的模型读前者好得多。</span></div></div>
+      <h3><span data-l="en">Long quiz? It comes in batches of 15</span><span data-l="zh" lang="zh-CN">题很多？会分批，每批 15 题</span></h3>
+      <ul class="dots">
+        <li><span data-l="en">The AI stops every 15 questions and ends with <code>MORE AVAILABLE</code>. Reply “more” for the next batch, until a reply ends with <code>DONE</code>.</span><span data-l="zh" lang="zh-CN">AI 每 15 题停一次，并以 <code>MORE AVAILABLE</code> 结尾。回一句 “more” 要下一批，直到某次回复以 <code>DONE</code> 结尾。</span></li>
+        <li><span data-l="en">Paste every batch on the catalog with the <b>same bank name</b> and <b>Add to the same bank</b> on (it is on by default). Questions already in the bank are skipped.</span><span data-l="zh" lang="zh-CN">每一批都粘贴到目录页，<b>题库名称保持一致</b>，并保持<b>并入同名题库</b>开着（默认就是开的）。已经在题库里的题会被跳过。</span></li>
+        <li><span data-l="en"><b>A different quiz? Give it a new bank name.</b> The default name (“My bank”) is the same every time, so a second quiz pasted under it is merged into the first. With the switch off, a paste under an existing name replaces that bank.</span><span data-l="zh" lang="zh-CN"><b>换了另一份题？请起一个新的题库名称。</b>默认名称（“我的题库”）每次都一样，用它粘贴第二份题会被并进第一份。把开关关掉的话，用已有的名称粘贴会替换掉那个题库。</span></li>
+      </ul>
+
+      <div class="note"><svg aria-hidden="true"><use href="#i-bulb"/></svg><div><span data-l="en"><b>Why 15 at a time?</b> Free accounts cut long replies off. If one still gets cut off, the importer keeps every complete question and tells you to ask the AI for the rest.</span><span data-l="zh" lang="zh-CN"><b>为什么一次 15 题？</b>免费账号会把长回复截断。万一还是被截断，导入器会保留所有已完整的题，并提示你去向 AI 要剩下的。</span></div></div>
 
       <a class="xlink" id="ielts-link" href="format-ielts.html" data-testid="ielts-link">
         <span class="tile t4"><svg aria-hidden="true"><use href="#i-book"/></svg></span>
@@ -832,7 +892,7 @@ You may put the JSON in a code block and write a sentence before it — the impo
 
     <section class="doc-sec" id="fields">
       <h2><span data-l="en">Question fields</span><span data-l="zh" lang="zh-CN">题目字段</span></h2>
-      <p class="intro"><span data-l="en">A bank is a JSON array of question objects. Three question types are graded: single choice, multiple answer and fill in the blank. Any question can also carry an image, an explanation and a section.</span><span data-l="zh" lang="zh-CN">题库是一个由题目对象组成的 JSON 数组。可判分的题型有三种：单选、多选、填空。任何一题还可以带图片、解析和 section。</span></p>
+      <p class="intro"><span data-l="en">A bank is a JSON array of question objects, graded as single choice, multiple answer or fill in the blank. Using an AI? You can skip to <a class="link" href="#troubleshoot">If an import fails</a>. Writing by hand? Start here.</span><span data-l="zh" lang="zh-CN">题库是一个由题目对象组成的 JSON 数组，可判分的题型有单选、多选、填空三种。用 AI 写的话，可以直接跳到<a class="link" href="#troubleshoot">导入失败了怎么办</a>；手写的话，从这里看起。</span></p>
 
       <h3><span data-l="en">Every question</span><span data-l="zh" lang="zh-CN">每一题</span></h3>
       <div class="rows">
@@ -881,7 +941,9 @@ You may put the JSON in a code block and write a sentence before it — the impo
       <h2><span data-l="en">Fixed on import</span><span data-l="zh" lang="zh-CN">导入时自动修复</span></h2>
       <p class="intro"><span data-l="en">Common slips, mostly from AI replies, are repaired instead of rejected. A clean file is still safer.</span><span data-l="zh" lang="zh-CN">常见的小毛病（多半来自 AI 的回复）会被修好而不是拒收。不过文件干净总是更稳。</span></p>
       <ul class="dots">
-        <li><span data-l="en">Code fences around the JSON, and an outer <code>{"questions":[…]}</code> wrapper, are removed.</span><span data-l="zh" lang="zh-CN">JSON 外面的代码围栏，以及外层的 <code>{"questions":[…]}</code> 包裹，都会被去掉。</span></li>
+        <li><span data-l="en">Chat text around the JSON, code fences, and an outer <code>{"questions":[…]}</code> wrapper are removed.</span><span data-l="zh" lang="zh-CN">JSON 前后的聊天文字、代码围栏，以及外层的 <code>{"questions":[…]}</code> 包裹，都会被去掉。</span></li>
+        <li><span data-l="en">Curly quotes and trailing commas are straightened out. A reply cut off halfway keeps every complete question.</span><span data-l="zh" lang="zh-CN">弯引号和多余的尾逗号会被修正。回复被截断在半途时，已完整的题都会保留。</span></li>
+        <li><span data-l="en"><b>About the “looked cut off” warning.</b> It appears whenever the importer had to fix curly quotes or trailing commas, or recover questions one by one — even if only a comma was wrong. Check the question count in the message: if it matches your quiz, ignore the warning; if not, ask the AI to continue and paste the rest with <b>Add to the same bank</b> on.</span><span data-l="zh" lang="zh-CN"><b>关于“看起来被截断”的警告。</b>只要导入器修过弯引号或尾逗号，或是逐条抢救过题目，就会出现——哪怕只是错了一个逗号。看一下提示里的题数：和你的题目数一致，就不用理会；不一致，就让 AI 接着写，并在<b>并入同名题库</b>开着的情况下粘贴剩下的。</span></li>
         <li><span data-l="en">A missing <code>id</code> becomes <code>auto-1</code>, <code>auto-2</code>… Give real ids anyway — history is saved against them, and auto ids shift if the file is reordered.</span><span data-l="zh" lang="zh-CN">缺 <code>id</code> 会补成 <code>auto-1</code>、<code>auto-2</code>……还是请自己写真正的 id——历史记录靠它保存，调整文件顺序后自动 id 会变。</span></li>
         <li><span data-l="en">A numeric <code>id</code> becomes a string; an index written as <code>"2"</code> becomes a number.</span><span data-l="zh" lang="zh-CN">数字 <code>id</code> 会变成字符串；写成 <code>"2"</code> 的下标会变成数字。</span></li>
         <li><span data-l="en"><code>answer:[2]</code> becomes <code>answer:2</code>, and <code>answer:[0,2]</code> becomes <code>answers:[0,2]</code>.</span><span data-l="zh" lang="zh-CN"><code>answer:[2]</code> 会变成 <code>answer:2</code>，<code>answer:[0,2]</code> 会变成 <code>answers:[0,2]</code>。</span></li>
@@ -894,6 +956,8 @@ You may put the JSON in a code block and write a sentence before it — the impo
         <div class="rx wide"><div class="f"><span data-l="en">“Not valid JSON”</span><span data-l="zh" lang="zh-CN">“Not valid JSON”（不是合法 JSON）</span></div><div class="d m"><span data-l="en">Remove comments and trailing commas, and use straight <code>"</code> quotes.</span><span data-l="zh" lang="zh-CN">去掉注释和多余的尾逗号，并使用直引号 <code>"</code>。</span></div></div>
         <div class="rx wide"><div class="f"><span data-l="en">“No valid questions found”</span><span data-l="zh" lang="zh-CN">“No valid questions found”（没有有效题目）</span></div><div class="d m"><span data-l="en">The top level must be a bare array <code>[…]</code>, not an object.</span><span data-l="zh" lang="zh-CN">最外层必须是裸数组 <code>[…]</code>，不能是对象。</span></div></div>
         <div class="rx wide"><div class="f"><span data-l="en">Every question skipped</span><span data-l="zh" lang="zh-CN">所有题都被跳过</span></div><div class="d m"><span data-l="en">Usually a missing <code>id</code> or a bad <code>answer</code>. Make <code>answer</code> a 0-based whole number in range — not the text, not 1-based.</span><span data-l="zh" lang="zh-CN">通常是缺 <code>id</code> 或 <code>answer</code> 不对。<code>answer</code> 要写成范围内、从 0 开始的整数——不是文字，也不是从 1 开始。</span></div></div>
+        <div class="rx wide"><div class="f"><span data-l="en">The AI can’t open or only half-read the file</span><span data-l="zh" lang="zh-CN">AI 打不开文件，或只读了一半</span></div><div class="d m"><span data-l="en">Free plans often refuse or truncate uploads. Paste the copied text instead, or send screenshots a few at a time. Safari’s <code>.webarchive</code> will not work.</span><span data-l="zh" lang="zh-CN">免费版常常拒收或截断上传的文件。改为粘贴复制的文字，或几张几张地发截图。Safari 的 <code>.webarchive</code> 不行。</span></div></div>
+        <div class="rx wide"><div class="f"><span data-l="en">Questions say “answer unverified”</span><span data-l="zh" lang="zh-CN">题目的 source 写着 “answer unverified”</span></div><div class="d m"><span data-l="en">The material did not show the correct answers, so the AI guessed. Redo it from the results or review page that marks them.</span><span data-l="zh" lang="zh-CN">材料里没有显示正确答案，AI 是猜的。请从标出正确答案的结果或回顾页面重来。</span></div></div>
         <div class="rx wide"><div class="f"><span data-l="en">One question skipped</span><span data-l="zh" lang="zh-CN">只有一题被跳过</span></div><div class="d m"><span data-l="en">A choice question needs 2+ <code>choices</code> and a valid <code>answer</code>; a fill-in needs <code>blanks</code> with at least one accepted answer.</span><span data-l="zh" lang="zh-CN">选择题需要 2 个以上 <code>choices</code> 和有效的 <code>answer</code>；填空题需要 <code>blanks</code>，且每个空至少一个可接受答案。</span></div></div>
       </div>
     </section>

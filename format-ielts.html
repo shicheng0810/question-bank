@@ -729,6 +729,37 @@ html[lang^="zh"] [data-l="en"], html:not([lang^="zh"]) [data-l="zh"] { display: 
 .doc code { color: var(--text); }
 .doc .note b { color: var(--text); }
 
+/* ---- 快速开始 + 「给 AI 什么材料」表（手机上上下堆叠）---- */
+.doc-head .quick { margin-top: 28px; padding: 2px 0; max-width: 34em; }
+.doc-head .quick li { padding: 12px 20px; align-items: center; font-size: 15.5px; line-height: 1.5; }
+.doc-head .quick li + li::before { left: 64px; }
+.doc-head .quick .n { margin-top: 0; }
+.doc-head .quick b { display: block; }
+.doc-head .quick .sub { display: block; margin-top: 2px; font-size: 14.5px; color: var(--sh-text-2); text-wrap: pretty; }
+.doc-head .quick .sub b { display: inline; color: var(--text); }
+.doc-head .quick a.link { white-space: nowrap; }
+.doc-sec .note.phone { margin: 0 0 14px; }
+.mx { display: grid; grid-template-columns: 188px minmax(0, 1fr); gap: 6px 24px; padding: 18px 20px; }
+.mx + .mx { border-top: 1px solid var(--hairline); }
+.mx .t { font-weight: 600; font-size: 15.5px; line-height: 1.4; min-width: 0; }
+.mx .t code { background: none; padding: 0; font-size: 14px; font-weight: 600; }
+.mx .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip { display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 11px; font-size: 12px; font-weight: 600; line-height: 1; white-space: nowrap; background: var(--aux-fill); color: var(--sh-text-2); }
+.chip.good { background: color-mix(in srgb, var(--accent) 12%, transparent); color: color-mix(in srgb, var(--accent) 68%, var(--text)); }
+.chip.file { background: transparent; box-shadow: inset 0 0 0 1px var(--hairline-strong); }
+.mx .d p { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 0 12px; margin: 0 0 10px; font-size: 15px; line-height: 1.6; }
+.mx .d code { white-space: nowrap; }
+.mx .d p:last-child { margin-bottom: 0; }
+.mx .d .k { font-size: 12.5px; font-weight: 600; color: var(--sh-text-2); padding-top: 2px; }
+@media (max-width: 760px) {
+  .doc-head .quick li { padding: 12px 16px; gap: 14px; }
+  .doc-head .quick li + li::before { left: 58px; }
+  .mx { grid-template-columns: 1fr; padding: 16px; }
+  .mx .chips { margin-top: 6px; }
+  .mx .d p { grid-template-columns: 1fr; margin-bottom: 12px; }
+  .mx .d .k { padding-top: 0; }
+}
+
 </style>
 </head>
 <body>
@@ -844,11 +875,11 @@ html[lang^="zh"] [data-l="en"], html:not([lang^="zh"]) [data-l="zh"] { display: 
 
     <section class="doc-sec" id="ai">
       <h2><span data-l="en">Write it with an AI</span><span data-l="zh" lang="zh-CN">用 AI 来写</span></h2>
-      <p class="intro"><span data-l="en">This prompt adds the IELTS rules — identical <code>section</code> strings, <code>passage</code> on the first question only, task-type mapping — to the general one. Paste the passages <b>and</b> the questions after <code>=== MATERIAL ===</code>, with the answer key if you have one.</span><span data-l="zh" lang="zh-CN">这份提示词在通用版之上加了雅思专属规则——<code>section</code> 字符串完全一致、<code>passage</code> 只放第一题、题型映射。把文章<b>和</b>题目一起贴在 <code>=== MATERIAL ===</code> 之后，有答案就一并给。</span></p>
+      <p class="intro"><span data-l="en">This prompt adds the IELTS rules — identical <code>section</code> strings, <code>passage</code> on the first question only, task-type mapping — to the general one. Give it the passages <b>and</b> the questions — pasted after <code>=== MATERIAL ===</code> or attached — with the answer key if you have one. <a class="link" href="format.html#material">What to give the AI</a></span><span data-l="zh" lang="zh-CN">这份提示词在通用版之上加了雅思专属规则——<code>section</code> 字符串完全一致、<code>passage</code> 只放第一题、题型映射。把文章<b>和</b>题目一起给它——贴在 <code>=== MATERIAL ===</code> 之后，或作为附件——有答案就一并给。<a class="link" href="format.html#material">给什么材料</a></span></p>
       <div class="code">
         <div class="code-head"><span class="t"><span data-l="en">IELTS prompt</span><span data-l="zh" lang="zh-CN">雅思提示词</span></span><span><span data-l="en">· plain text</span><span data-l="zh" lang="zh-CN">· 纯文本</span></span><span class="sp"></span>
           <button class="btn btn-ghost" type="button" data-copy="ai-prompt" onclick="docCopy(this);setTimeout(function(){document.querySelectorAll('[data-copy].done').forEach(function(n){n.classList.remove('done')})},1600)"><svg aria-hidden="true"><use href="#i-copy"/></svg><span><span data-l="en">Copy prompt</span><span data-l="zh" lang="zh-CN">复制提示词</span></span></button></div>
-<pre tabindex="0" class="pw"><code id="ai-prompt">Turn the IELTS reading material at the bottom into a question-bank JSON array. Reply with JSON only — do not restate these instructions.
+<pre tabindex="0" class="pw"><code id="ai-prompt">Turn the IELTS reading material at the bottom (pasted text, or attached screenshots / PDF / .mhtml file) into a question-bank JSON array. Reply with JSON only — do not restate these instructions.
 
 BATCHES (important — free ChatGPT/Gemini cut long replies off): do ONE passage per reply, and at most 15 questions. End the reply with the line MORE AVAILABLE if a passage is still left, otherwise DONE. When I type "more", do the next passage in the same format.
 
@@ -873,6 +904,8 @@ TASK TYPES
 - Writing/speaking tasks: skip them, they cannot be graded.
 
 Optional and very useful: "explanation" — one sentence naming the paragraph and quoting the few words that prove the answer.
+
+Attached file or screenshots: read EVERY passage and question in it, use the answer key the page marks, and ignore interface text (scores, names, dates, buttons). Never invent an image or an image URL; if a question needs a figure, describe it in words inside "question". If an attachment is unreadable or looks cut off, do not guess: put ONE plain line saying so BEFORE the JSON (no square brackets in it), then give the JSON for what you could read, and still end with MORE AVAILABLE or DONE.
 
 Straight ASCII quotes. No trailing commas. Do not wrap the array in an object. A sentence before the JSON or a code block around it is fine — the importer strips those.
 
