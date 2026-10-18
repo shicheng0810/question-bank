@@ -12,7 +12,7 @@
          目录页 head 里的脚本总会把 data-theme 设成 light / dark，所以不需要 prefers-color-scheme 分支。 */
       color-scheme: light;
       --bg:#f5f5f3; --surface:#ffffff; --surface-2:#f0f0ed;
-      --text:#1d1d1f; --text-2:#6e6e73; --text-3:#a1a1a6;
+      --text:#1d1d1f; --text-2:#6e6e73; --text-3:#86868b;
       --hairline:rgba(0,0,0,.08); --hairline-strong:rgba(0,0,0,.14);
       --accent:#2b74f0; --accent-soft:rgba(43,116,240,.09);
       --ok:#1e9e57; --ok-soft:#e8f6ee; --bad:#e5484d; --bad-soft:#fdeeee; --star:#f2b100;
@@ -62,12 +62,13 @@
     /* ---------- 基础 ---------- */
     *{box-sizing:border-box}
     [hidden]{display:none !important} /* 否则组件的 display 会盖过 hidden 属性 */
-    html{-webkit-text-size-adjust:100%; scroll-padding-top:96px}
+    html{-webkit-text-size-adjust:100%; scroll-padding-top:96px; accent-color:var(--accent); scrollbar-color:var(--hairline-strong) transparent; caret-color:var(--accent)}
+    ::selection{background:color-mix(in srgb, var(--accent) 24%, transparent)}
     body{margin:0; min-height:100vh; background:var(--bg); color:var(--text); font:400 16px/1.5 var(--font); letter-spacing:-.006em; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; overflow-x:hidden}
     button{font:inherit; color:inherit}
     a{color:inherit; text-decoration:none}
     svg{display:block}
-    :focus-visible{outline:3px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset:2px; border-radius:8px}
+    :focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:8px}
     .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
 
     .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; height:40px; padding:0 18px; border-radius:999px; border:0; cursor:pointer; font-weight:600; font-size:15px; letter-spacing:-.01em; white-space:nowrap; transition:transform .16s var(--ease), background .2s, opacity .2s}
@@ -113,7 +114,7 @@
     .lang svg{width:16px; height:16px; flex:none}
     .lang select{appearance:none; -webkit-appearance:none; border:0; background:transparent; color:inherit; font:inherit; font-size:14px; height:36px; padding:0 6px 0 2px; cursor:pointer; border-radius:999px}
     .lang select:focus-visible{outline:none}
-    .lang:has(select:focus-visible){outline:3px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset:2px}
+    .lang:has(select:focus-visible){outline:2px solid var(--accent); outline-offset:2px}
     #theme-toggle .ic-sun{display:none}
     html[data-theme="dark"] #theme-toggle .ic-sun{display:block}
     html[data-theme="dark"] #theme-toggle .ic-moon{display:none}
@@ -132,7 +133,7 @@
 
     /* ---------- 首屏 ---------- */
     .wrap{max-width:1120px; margin:0 auto; padding:0 24px}
-    .hero{padding:88px 0 40px; display:grid; grid-template-columns:1.15fr 1fr; gap:56px; align-items:end}
+    .hero{padding:56px 0 24px; display:grid; grid-template-columns:1.15fr 1fr; gap:56px; align-items:end}
     .hero > div{min-width:0}
     .eyebrow{font-size:14px; font-weight:600; color:var(--sh-accent-ink); margin:0 0 14px; letter-spacing:-.005em}
     .hero h1{font:600 56px/1.04 var(--font-display); letter-spacing:-.035em; margin:0 0 20px; text-wrap:balance}
@@ -196,7 +197,7 @@
 
     /* ---------- 题库卡片 ---------- */
     .banks{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px}
-    .bank{position:relative; background:var(--surface); border-radius:var(--r-lg); box-shadow:var(--shadow-1); padding:20px 20px 18px; display:flex; flex-direction:column; gap:14px; min-height:176px; min-width:0; transition:transform .25s var(--ease), box-shadow .25s var(--ease)}
+    .bank{position:relative; background:var(--surface); border-radius:var(--r-lg); box-shadow:var(--shadow-1); padding:20px 20px 18px; display:flex; flex-direction:column; gap:14px; min-height:148px; min-width:0; transition:transform .25s var(--ease), box-shadow .25s var(--ease)}
     a.bank:hover, .bank:has(.stretch:hover){transform:translateY(-2px); box-shadow:var(--shadow-2)}
     .bank .body{display:flex; flex-direction:column; flex:1; min-width:0}
     .bank h3{font:600 18px/1.25 var(--font-display); letter-spacing:-.02em; margin:0; padding-right:22px; overflow-wrap:anywhere}
@@ -205,6 +206,7 @@
     .bank .meta .aux-tag{margin-left:8px}
     .bank .m-sub, .bank .badge{display:none}
     .bank .foot{margin-top:auto; padding-top:14px; display:flex; align-items:center; gap:12px; min-height:18px; font-size:13px; color:var(--text-2); font-variant-numeric:tabular-nums}
+    .bank:not(.has-prog) .foot{display:none}
     .bank .foot .meter{flex:1; min-width:40px}
     .bank .foot .tag-wrong{color:var(--sh-bad-ink); font-weight:500; white-space:nowrap}
     .bank .foot .done-l{color:var(--sh-ok-ink); font-weight:500; white-space:nowrap}
@@ -229,7 +231,7 @@
     /* 自己的题库：标题链接铺满整张卡（.stretch），操作按钮浮在上面 */
     .bank .stretch::after{content:""; position:absolute; inset:0; border-radius:inherit}
     .bank .stretch:focus-visible{outline:none}
-    .bank:has(.stretch:focus-visible){outline:3px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset:2px}
+    .bank:has(.stretch:focus-visible){outline:2px solid var(--accent); outline-offset:2px}
     .bank .acts{position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:4px 14px; margin-top:12px}
     .bank .acts button{border:0; background:none; padding:4px 0; cursor:pointer; font-size:13px; font-weight:600; color:var(--text-2)}
     .bank .acts button:hover{color:var(--text)}
@@ -271,7 +273,7 @@
     .drop .fmt{font-size:14px; color:var(--text-2); white-space:nowrap}
     .drop .fmt:hover{color:var(--text)}
     .drop input[type=file]{position:absolute; width:1px; height:1px; opacity:0; pointer-events:none}
-    .drop label.btn:has(+ input:focus-visible){outline:3px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset:2px}
+    .drop label.btn:has(+ input:focus-visible){outline:2px solid var(--accent); outline-offset:2px}
     .paste > summary{list-style:none}
     .paste > summary::-webkit-details-marker{display:none}
     .acct-toggle{grid-column:1 / -1; margin:-4px 4px 0}
@@ -308,7 +310,7 @@
     .qb-hint{color:var(--text-2); font-size:14px; margin:8px 0 0; line-height:1.5}
     .field, .qb-card input[type=text]{display:block; width:100%; height:48px; margin:0; padding:0 14px; border:0; border-radius:12px; font:inherit; font-size:16px; color:var(--text); background:var(--surface); box-shadow:inset 0 0 0 1px var(--hairline-strong); transition:box-shadow .18s var(--ease)}
     .qb-card input[type=text]{margin-top:16px}
-    .field::placeholder, .qb-card input::placeholder{color:var(--text-3)}
+    .field::placeholder, .qb-card input::placeholder{color:var(--text-2)}
     .field:focus, .qb-card input[type=text]:focus{outline:none; box-shadow:inset 0 0 0 2px var(--accent)}
     textarea.field{height:168px; padding:12px 14px; resize:vertical; font:13px/1.55 var(--mono)}
     .flabel{display:block; font-size:13px; font-weight:600; color:var(--text-2); margin:0 0 6px}
@@ -488,16 +490,17 @@
       .resume{padding:18px}
       .resume-stats{margin:16px 0 14px}
       .stat b{font-size:20px}
-      .sec-head{flex-direction:column; align-items:flex-start; justify-content:flex-start; gap:2px; margin:32px 4px 10px}
-      .areas{flex-wrap:nowrap; overflow-x:auto; margin:0 -16px 4px; padding:2px 16px 6px; scrollbar-width:none}
+      .sec-head{flex-direction:column; align-items:flex-start; justify-content:flex-start; gap:2px; margin:32px 0 10px}
+      .areas{flex-wrap:nowrap; overflow-x:auto; margin:-2px -16px 4px; padding:4px 16px 6px; scrollbar-width:none}
       .areas::-webkit-scrollbar{display:none}
+      .areas{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 16px),transparent); mask-image:linear-gradient(90deg,#000 calc(100% - 16px),transparent)}
       .areas a{flex:none; height:34px; line-height:34px; padding:0 13px}
       .area{scroll-margin-top:80px}
-      .area-head{border-top:0; padding-top:0; margin:26px 4px 8px; gap:2px 8px}
+      .area-head{border-top:0; padding-top:0; margin:26px 0 8px; gap:2px 8px}
       .area-head h3{font-size:17px; letter-spacing:-.015em}
       .area-head .sub{font-size:13px}
       .area-head .all svg{display:none}
-      .term-head{margin:14px 6px 6px; font-size:13px}
+      .term-head{margin:14px 0 6px; font-size:13px}
       .area-head + .term-head{margin-top:2px}
       .term-head h4{font-size:13px; font-weight:600; color:var(--text-2)}
       .term-head .all{font-weight:500; color:var(--sh-accent-ink); white-space:nowrap}
@@ -505,7 +508,7 @@
       .term-head .l-long{display:none}
       .term-head .l-short{display:inline}
       .nav .brand{margin-right:4px}
-      .term-empty{margin:10px 6px 0; font-size:13px}
+      .term-empty{margin:10px 0 0; font-size:13px}
       .soon-card{padding:16px; font-size:14px}
       .banks{display:block; background:var(--surface); border-radius:16px; box-shadow:var(--shadow-1); overflow:hidden}
       .banks > .bank{flex-direction:row; align-items:center; gap:14px; min-height:64px; padding:12px 16px; border-radius:0; box-shadow:none; background:transparent}
@@ -517,6 +520,7 @@
       .banks > .bank .meta{font-size:13px; margin-top:1px}
       .banks > .bank .meta .gm{display:none}
       .banks > .bank .foot{display:none}
+      .banks > .bank:is(:focus-visible, :has(.stretch:focus-visible)){outline-offset:-2px} /* .banks clips (overflow:hidden): draw the ring inside */
       .banks > .bank.has-prog .meta{display:none}
       .banks > .bank.has-prog .m-sub{display:block; font-size:13px; color:var(--text-2); margin-top:1px}
       .banks > .bank .m-sub.ok{color:var(--sh-ok-ink)}
@@ -568,7 +572,7 @@
       .nav{margin:8px 8px 0; padding:0 6px 0 12px}
       .brand{font-size:16px; gap:8px}
       .wrap{padding:0 12px}
-      .areas{margin:0 -12px 4px; padding:2px 12px 6px}
+      .areas{margin:-2px -12px 4px; padding:4px 12px 6px; -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 12px),transparent); mask-image:linear-gradient(90deg,#000 calc(100% - 12px),transparent)}
       .hero h1{font-size:32px}
       .hero p.lede{font-size:16px}
       .resume{padding:16px}
