@@ -119,13 +119,25 @@
     "json": "banks/241-instrument-systems.json"
   },
   {
+    "id": "207-welding",
+    "title": "Welding",
+    "mode": "public",
+    "description": "",
+    "tags": [],
+    "question_count": 28,
+    "has_images": false,
+    "category": "airframe",
+    "term": 3,
+    "json": "banks/207-welding.json"
+  },
+  {
     "id": "all-banks",
     "title": "All Banks · Merged Practice",
     "mode": "public",
     "virtual": true,
     "description": "Pick any combination of banks and practice them together.",
     "tags": [],
-    "question_count": 1524,
+    "question_count": 1552,
     "has_images": true
   }
 ]

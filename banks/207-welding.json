@@ -1,0 +1,376 @@
+[
+  {
+    "id": "quiz_207-1",
+    "question": "In selecting a torch tip size to use in welding, the size of the tip opening determines the",
+    "choices": [
+      "amount of heat applied to the work.",
+      "temperature of the flame.",
+      "melting point of the filler metal."
+    ],
+    "source": [
+      "AMT207 – Quiz – Q1",
+      "AMT207 – Quiz – Welding – Q11"
+    ],
+    "answer": 0,
+    "banks": [
+      "quiz_207",
+      "quiz_207_welding"
+    ]
+  },
+  {
+    "id": "quiz_207-2",
+    "question": "Acetylene at a line pressure above 15 PSI is",
+    "choices": [
+      "dangerously unstable.",
+      "usually necessary when welding metal over 3/8 inch thick.",
+      "used when a reducing flame is necessary."
+    ],
+    "source": [
+      "AMT207 – Quiz – Q2",
+      "AMT207 – Quiz – Welding – Q13"
+    ],
+    "answer": 0,
+    "banks": [
+      "quiz_207",
+      "quiz_207_welding"
+    ]
+  },
+  {
+    "id": "quiz_207-3",
+    "question": "A flame which burns equal amounts of acetylene and oxygen is:",
+    "choices": [
+      "oxidizing flame",
+      "carburizing flame",
+      "neutral flame"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT207 – Quiz – Q3"
+    ]
+  },
+  {
+    "id": "quiz_207-4",
+    "question": "Adding oxygen to a neutral flame results in:",
+    "choices": [
+      "carburizing flame",
+      "oxidizing flame",
+      "reducing flame"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT207 – Quiz – Q4"
+    ]
+  },
+  {
+    "id": "quiz_207-5",
+    "question": "What component prevents fire from travelling back to the bottles in case of flashback?",
+    "choices": [
+      "Regulators",
+      "Flashback arrestors",
+      "Equal Pressure Torch"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT207 – Quiz – Q5"
+    ]
+  },
+  {
+    "id": "quiz_207-6",
+    "question": "Gas welding utilizes what two gases?",
+    "choices": [
+      "Nitrogen and Hydrogen",
+      "Jet A and Jet B",
+      "Oxygen and Acetylene"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT207 – Quiz – Q6"
+    ]
+  },
+  {
+    "id": "quiz_207-7",
+    "question": "Oxygen must never be used in the presence of __________ based substances.",
+    "choices": [
+      "Acetylene",
+      "Water",
+      "Petroleum"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT207 – Quiz – Q7"
+    ]
+  },
+  {
+    "id": "quiz_207-8",
+    "question": "The acetylene hose is colored ________ and has a _________ (right or left) hand threaded fitting at each end.",
+    "choices": [
+      "Purple, Left handed threads",
+      "Red, Left handed threads",
+      "Green, Right handed threads"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT207 – Quiz – Q8"
+    ]
+  },
+  {
+    "id": "quiz_207-9",
+    "question": "The oxygen hose is colored _________ and has a _________ (left or right) hand threaded fitting at each end.",
+    "choices": [
+      "Yellow, Left handed thread",
+      "Green, Right handed thread",
+      "Red, Left handed thread"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT207 – Quiz – Q9"
+    ]
+  },
+  {
+    "id": "quiz_207-10",
+    "question": "Oxyacetylene welding goggles provide adequate eye protection for electric arc welding.",
+    "choices": [
+      "TRUE",
+      "Only when used with liquid argon.",
+      "FALSE"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT207 – Quiz – Q10"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-1",
+    "question": "Why is it necessary to use flux in all silver soldering operations?",
+    "choices": [
+      "To chemically clean the base metal of oxide film.",
+      "To increase heat conductivity.",
+      "To prevent overheating of the base metal."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT207 – Quiz – Welding – Q1"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-2",
+    "question": "Which statement concerning soldering is correct?",
+    "choices": [
+      "If the soldering temperature is too high, the solder will form in lumps and not produce a positive bond.",
+      "Joints in electrical wire to be soldered should be mechanically secure prior to soldering.",
+      "Changeable shades of blue can be observed on the surface of a copper soldering tip when the proper temperature for soldering has been reached."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT207 – Quiz – Welding – Q2"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-3",
+    "question": "Which of the following can normally be welded without adversely affecting strength?\n1. Aircraft Bolts\n2. SAE 4130 chrome /molybdenum tubing\n3. Spring steel struts\n4. Most heat-treated steel/nickel alloy components",
+    "choices": [
+      "2 and 4",
+      "2",
+      "1 and 3"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT207 – Quiz – Welding – Q3"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-4",
+    "question": "Filing or grinding a weld bead",
+    "choices": [
+      "reduces the strength of the joint.",
+      "may be necessary to avoid adding excess weight or to achieve uniform material thickness.",
+      "may be performed to achieve a smoother surface."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT207 – Quiz – Welding – Q4"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-5",
+    "question": "Which statement concerning a welding process is true?",
+    "choices": [
+      "The inert arc welding process uses an inert gas to protect the weld zone from the atmosphere.",
+      "In the oxy-acetylene welding process, the filler rod for steel is covered with a thin coating of flux.",
+      "In the metallic arc welding process, filler material, if needed, is provided by a separate metal rod of the proper material held in the arc."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT207 – Quiz – Welding – Q5"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-6",
+    "question": "What purpose does flux serve in welding aluminum?",
+    "choices": [
+      "Removes dirt, grease, and oil.",
+      "Ensures proper distribution of the filler rod.",
+      "Minimizes or prevents oxidation."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT207 – Quiz – Welding – Q6"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-7",
+    "question": "Oxides form very rapidly when alloys or metals are hot. It is important, therefore, when welding aluminum to use a",
+    "choices": [
+      "flux.",
+      "filler.",
+      "solvent."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT207 – Quiz – Welding – Q7"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-8",
+    "question": "When a butt welded joint is visually inspected for penetration,",
+    "choices": [
+      "look for evidence of excessive heat in the form of a very high bead.",
+      "the penetration should be 25-50% of the thickness of the base metal.",
+      "the penetration should be 100% of the thickness of the base metal."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT207 – Quiz – Welding – Q8"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-9",
+    "question": "Edge notching is generally recommended in butt welding above a certain thickness of aluminum because it",
+    "choices": [
+      "aids in getting full penetration of the metal and prevents local distortion.",
+      "aids in the removal or penetration of oxides on the metal surface.",
+      "helps hold the metal in alignment during welding."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT207 – Quiz – Welding – Q9"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-10",
+    "question": "The oxy-acetylene flame used for aluminum welding should be",
+    "choices": [
+      "slightly oxidizing.",
+      "extremely carburizing.",
+      "a neutral and soft flame."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT207 – Quiz – Welding – Q10"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-12",
+    "question": "The most important considerations(s) when selecting welding rod is",
+    "choices": [
+      "current setting or flame temperature.",
+      "material compatibility.",
+      "ambient conditions."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT207 – Quiz – Welding – Q12"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-14",
+    "question": "Cylinders used to transport and store acetylene",
+    "choices": [
+      "are pressure tested to 3000 PSI.",
+      "are green in color.",
+      "contain acetone."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT207 – Quiz – Welding – Q14"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-15",
+    "question": "A welding torch backfire may be caused by",
+    "choices": [
+      "using too much acetylene.",
+      "a tip temperature that is too cool.",
+      "a loose tip."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT207 – Quiz – Welding – Q15"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-16",
+    "question": "How should a welding torch flame be adjusted to weld stainless steel?",
+    "choices": [
+      "Slightly carburizing.",
+      "Slightly oxidizing.",
+      "Neutral."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT207 – Quiz – Welding – Q16"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-17",
+    "question": "In gas welding, the amount of heat applied to the material being welded is controlled by the",
+    "choices": [
+      "distance the tip is held from the work.",
+      "amount of gas pressure used.",
+      "size of the tip opening."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT207 – Quiz – Welding – Q17"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-18",
+    "question": "Oxygen and acetylene cylinders are made of",
+    "choices": [
+      "seamless aluminum.",
+      "bronze.",
+      "steel."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT207 – Quiz – Welding – Q18"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-19",
+    "question": "If too much acetylene is used in the welding of stainless steel,",
+    "choices": [
+      "oxides will form on the base metal close to the weld.",
+      "a porous weld will result.",
+      "the metal will absorb carbon and lose its resistance to corrosion."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT207 – Quiz – Welding – Q19"
+    ]
+  },
+  {
+    "id": "quiz_207_welding-20",
+    "question": "What method of repair is recommended for a steel tube longeron dented at a cluster?",
+    "choices": [
+      "Welded patch plate.",
+      "Welded outer sleeve.",
+      "Welded split sleeve."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT207 – Quiz – Welding – Q20"
+    ]
+  }
+]
