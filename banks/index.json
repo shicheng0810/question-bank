@@ -41,7 +41,7 @@
     "mode": "public",
     "description": "",
     "tags": [],
-    "question_count": 872,
+    "question_count": 998,
     "has_images": true,
     "category": "general",
     "json": "banks/general.json"
@@ -137,7 +137,7 @@
     "virtual": true,
     "description": "Pick any combination of banks and practice them together.",
     "tags": [],
-    "question_count": 1552,
+    "question_count": 1678,
     "has_images": true
   }
 ]
