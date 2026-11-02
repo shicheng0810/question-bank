@@ -14699,6 +14699,162 @@
     ]
   },
   {
+    "id": "ass_21_161-1",
+    "question": "Liquid penetrant inspection methods may be used on which of the following?\nporous plastics.\nferrous metals.\nnonferrous metals.\nsmooth primer-sealed wood.\nnonporous plastics.",
+    "choices": [
+      "2, 3, 5.",
+      "1, 2, 3.",
+      "2, 3, 4."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT161 – Assignment – #21 – Q1"
+    ]
+  },
+  {
+    "id": "ass_21_161-2",
+    "question": "Liquid penetrant inspection methods may be used on which of the following?",
+    "choices": [
+      "Ferrous and nonferrous metals and nonporous plastics.",
+      "Porous and nonporous plastics and nonferrous metals.",
+      "Ferrous metals and nonporous plastics."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT161 – Assignment – #21 – Q2"
+    ]
+  },
+  {
+    "id": "ass_21_161-4",
+    "question": "If dye penetrant inspection indications are not sharp and clear, the most probable cause is that the part",
+    "choices": [
+      "was not thoroughly washed before the developer was applied.",
+      "has no appreciable damage.",
+      "was not correctly degaussed before the developer was applied."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT161 – Assignment – #21 – Q4"
+    ]
+  },
+  {
+    "id": "ass_21_161-5",
+    "question": "In performing a dye penetrant inspection, the developer",
+    "choices": [
+      "acts as a blotter to produce a visible indication.",
+      "seeps into a surface crack to indicate the presence of a defect.",
+      "thoroughly cleans the surface prior to inspection."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT161 – Assignment – #21 – Q5"
+    ]
+  },
+  {
+    "id": "ass_21_161-6",
+    "question": "Which of the following is a main determinant of the dwell time to use when conducting a dye or fluorescent penetrant inspection?",
+    "choices": [
+      "The size and shape of the discontinuities being looked for",
+      "The size and shape of the part being inspected",
+      "The type and/or density of the part material"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT161 – Assignment – #21 – Q6"
+    ]
+  },
+  {
+    "id": "ass_21_161-7",
+    "question": "In examining and evaluating a welded joint, a mechanic should be familiar with",
+    "choices": [
+      "likely ambient exposure conditions and intended use of the part, along with type of weld and original part material composition",
+      "the welding technique, filler material, and temperature range used.",
+      "the parts, proportions, and formation of a weld"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT161 – Assignment – #21 – Q7"
+    ]
+  },
+  {
+    "id": "ass_21_161-8",
+    "question": "Why should an aircraft maintenance technician be familiar with weld nomenclature?",
+    "choices": [
+      "In order to gain familiarity with the welding technique, filler material, and temperature range used.",
+      "So that accurate visual (pictorial) comparisons can be made.",
+      "In order to compare welds with written (non-pictorial) description standards."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT161 – Assignment – #21 – Q8"
+    ]
+  },
+  {
+    "id": "ass_21_161-9",
+    "question": "One characteristic of a good weld is that no oxide should be formed on the base metal at a distance from the weld of more than",
+    "choices": [
+      "1/2 inch.",
+      "1/4 inch.",
+      "1 inch."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT161 – Assignment – #21 – Q9"
+    ]
+  },
+  {
+    "id": "ass_21_161-11",
+    "question": "Select a characteristic of a good weld on exhaust stacks.",
+    "choices": [
+      "The weld should taper off smoothly into the base metal.",
+      "Porousness or projecting globules should show in the weld.",
+      "The weld should be built up 1/8 inch."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT161 – Assignment – #21 – Q11"
+    ]
+  },
+  {
+    "id": "ass_21_161-12",
+    "question": "Holes and a few projecting globules are found in a weld.\nWhat action should be taken?",
+    "choices": [
+      "Remove all the old weld, and reweld the joint.",
+      "Grind the rough surface smooth, inspect, and reweld all gaps/holes.",
+      "Reweld the defective portions."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT161 – Assignment – #21 – Q12"
+    ]
+  },
+  {
+    "id": "ass_21_161-13",
+    "question": "On a fillet weld, the penetration requirement includes what percentage(s) of the base metal thickness?",
+    "choices": [
+      "25 to 50 percent.",
+      "100 percent.",
+      "60 to 80 percent."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT161 – Assignment – #21 – Q13"
+    ]
+  },
+  {
+    "id": "ass_21_161-14",
+    "question": "Which condition indicates a part has cooled too quickly after being welded?",
+    "choices": [
+      "Cracking adjacent to the weld.",
+      "Discoloration of the base metal.",
+      "Gas pockets, porosity, and slag inclusions."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT161 – Assignment – #21 – Q14"
+    ]
+  },
+  {
     "id": "quiz_9_101-1",
     "question": "The number of joules an electrical load consumes, divided by the elapsed time in seconds, describes which law?",
     "choices": [
