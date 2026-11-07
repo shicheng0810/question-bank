@@ -294,6 +294,14 @@
     .foot-bar a:hover, .foot-bar button:hover{color:var(--text)}
     .foot-bar .coffee-link{display:inline-flex; align-items:center; gap:6px}
     .coffee-link svg{width:16px; height:16px}
+    .cof-fab{position:fixed; right:24px; bottom:24px; z-index:40; display:inline-flex; align-items:center; gap:8px; height:52px; min-width:52px; justify-content:center; padding:0 18px; border:0; border-radius:999px; background:var(--surface); color:var(--text); font:600 15px var(--font); box-shadow:0 6px 24px rgba(0,0,0,.16); cursor:pointer}
+    .cof-fab[hidden]{display:none} .cof-fab svg{width:24px; height:24px; color:var(--accent)} .cof-fab.lv1{padding:0} .cof-fab.lv1 span{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap}
+    .cof-fab{animation:cfWiggle 3.4s ease-in-out infinite !important} /* 主人 2026-11-06「都要晃动 不受用户设置影响」：压过下方 reduced-motion 全局关动画 */ .cof-fab.lv3{background:var(--primary); color:var(--on-primary)} .cof-fab.calm{animation:none !important} .cof-fab.lv3 svg{color:inherit}
+    @keyframes cfWiggle{0%,82%,100%{transform:none}86%{transform:rotate(-7deg)}90%{transform:rotate(6deg)}94%{transform:rotate(-3deg)}}
+    #coffee-close-btn.lock svg{display:none} #coffee-close-btn.lock::after{content:attr(data-n); font-weight:600}
+    .cof-bar{display:flex; align-items:center; gap:12px; margin:16px 0 0; padding:12px 16px; border-radius:14px; background:var(--accent-soft); color:var(--text)} .cof-bar[hidden]{display:none}
+    .cof-bar>svg{flex:none; width:24px; height:24px; color:var(--accent)} .cof-bar p{flex:1; margin:0; font-size:14px; font-weight:500}
+    @media (max-width:760px){ .cof-bar{flex-wrap:wrap} .cof-bar p{flex:1 1 calc(100% - 36px)} .cof-fab{right:16px; bottom:16px} .cof-bar .btn{flex:1; height:44px} }
 
     /* ---------- 对话框（登录 / 账号 / 粘贴 / 反馈 / 使用说明 / 咖啡）：电脑居中，手机底部抽屉 ---------- */
     .qb-ov{position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--aux-scrim); -webkit-backdrop-filter:blur(10px) saturate(140%); backdrop-filter:blur(10px) saturate(140%); animation:qbFade .2s var(--ease) both}
