@@ -1,0 +1,621 @@
+[
+  {
+    "id": "quiz_1_223_landing_gear-1",
+    "question": "What are the basic types of landing gear?",
+    "choices": [
+      "floats / pontoons",
+      "skis",
+      "All are basic types of landing gear.",
+      "skids",
+      "wheels"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q1"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-2",
+    "question": "On most aircraft, the oil level of an air and oil shock strut is checked by",
+    "choices": [
+      "removing the oil filler plug and inserting a gauge.",
+      "measuring the length of the strut extension with a certain air pressure in the strut.",
+      "releasing the air and verifying that the oil is to the level of the filler plug."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q2"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-3",
+    "question": "What should be checked when a shock strut bottoms during landing?",
+    "choices": [
+      "Packing seals for correct installation.",
+      "Air pressure.",
+      "Fluid level."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q3"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-4",
+    "question": "If the extended longitudinal axis of the main landing gear wheel assemblies intersects forward of the aircraft, the wheels can be termed as having",
+    "choices": [
+      "toe-in.",
+      "toe-out.",
+      "positive camber."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q4"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-5",
+    "question": "Over inflated aircraft tires may cause damage to the",
+    "choices": [
+      "brake linings.",
+      "wheel flange.",
+      "wheel hub."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q5"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-6",
+    "question": "A landing gear position and warning system will provide a warning in the cockpit when the throttle is",
+    "choices": [
+      "retarded and gear is not down and locked.",
+      "advanced and gear is down and locked.",
+      "retarded and gear is down and locked."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q6"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-7",
+    "question": "When repair or replacement of landing gear components has occurred, what is the most likely follow-on maintenance?",
+    "choices": [
+      "Swing the gear with aircraft on jacks.",
+      "Conduct a test flight.",
+      "Rerig the gear doors."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q7"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-8",
+    "question": "A stripe or mark applied to a wheel rim and extending onto the sidewall of a tube type tire is a",
+    "choices": [
+      "slippage mark.",
+      "wheel-to-tire balance mark.",
+      "wheel weight reference mark."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q8"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-9",
+    "question": "Most shock struts employ a metering pin for controlling the rate of fluid flow from the lower chamber into the upper chamber.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q9"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-10",
+    "question": "A schrader valve provides a means for inflating the strut with nitrogen as specified by the manufacturer.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q10"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-11",
+    "question": "What is one advantage of tricycle gear over conventional gear?",
+    "choices": [
+      "Firmer stance in upwind taxi.",
+      "Less complicated than conventional gear arrangement.",
+      "Tricycle gear allow the pilot to apply more braking action reducing the risk of nose-over."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q11"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-12",
+    "question": "With a conventional landing gear arrangement, since the MLG are forward of the CG, what is required of the tail wheel?",
+    "choices": [
+      "Be spring-loaded to absorb landing shocks.",
+      "Must be able to retract",
+      "Must be able to rotate."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q12"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-13",
+    "question": "What prevents the tire from exploding if it gets too hot?",
+    "choices": [
+      "Thermostat.",
+      "Thermal relief valve.",
+      "Fusible plug."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q13"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-14",
+    "question": "Adjustment of toe-in or toe-out is by means of",
+    "choices": [
+      "installing wheel bearings of various tapers.",
+      "adding or removing shims at the inboard or outboard trunnion ends.",
+      "adding or removing shims between the torque link halves."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q14"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-15",
+    "question": "In a nose landing gear strut, the ______ aligns the lower cylinder for proper gear retraction.",
+    "choices": [
+      "centering cam",
+      "torque link",
+      "metering orifice"
+    ],
+    "answer": 0,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q15"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-16",
+    "question": "During a gear retraction check (gear swing), you raise the gear handle, and after the process finishes, all three green lights are out, but the gear handle red light does not. What is most likely at fault?",
+    "choices": [
+      "One of the gear doors is not fully closed.",
+      "No fault. This is normal operation.",
+      "One of the struts is underserviced with nitrogen."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q16"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-17",
+    "question": "What is the primary purpose of exercising a strut when servicing?",
+    "choices": [
+      "To ensure unrestricted travel.",
+      "To remove any trapped air.",
+      "To expel any extra fluid."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q17"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-18",
+    "question": "If you need to add air to a strut, only loosen the",
+    "choices": [
+      "body nut.",
+      "drain plug.",
+      "swivel nut."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q18"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-19",
+    "question": "When servicing a strut with fluid, the strut should be",
+    "choices": [
+      "filled with air first.",
+      "fully compressed.",
+      "fully extended."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q19"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-20",
+    "question": "The landing gear emergency extension system should be checked",
+    "choices": [
+      "any time the landing gear needs to be swung.",
+      "with full hydraulic system pressure.",
+      "only during an annual."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q20"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-21",
+    "question": "What item informs multiple systems that the struts are fully extended?",
+    "choices": [
+      "Downlock limit switch",
+      "Radar altimeter",
+      "WoW/squat switch"
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q21"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-22",
+    "question": "What is aircraft wheel camber?",
+    "choices": [
+      "Alignment of a main wheel in the vertical plane.",
+      "Alignment of a main wheel in the horizontal plane.",
+      "Alignment of a main wheel in the lateral plane."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q22"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-24",
+    "question": "A proximity sensor must be rigged so that it barely makes contact with its target.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q24"
+    ]
+  },
+  {
+    "id": "quiz_1_223_landing_gear-25",
+    "question": "To speed the disassembly/reassembly process, an impact driver can be used on the wheel half tie bolts.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT&223 Landing Gear Quiz 1 Q25"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-1",
+    "question": "A pilot reports the left brake feels spongy when the brake pedal is depressed in a normal manner. What is the cause?",
+    "choices": [
+      "The hydraulic master cylinder piston is sticking.",
+      "Air in the brake hydraulic system.",
+      "The hydraulic master cylinder piston return spring is weak."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q1"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-2",
+    "question": "If not caused by air in the brake system, what is the next most likely cause for spongy brakes?",
+    "choices": [
+      "Internal leakage in the master cylinder.",
+      "Worn brake linings.",
+      "Deteriorating flexible hoses."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q2"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-3",
+    "question": "If the piston return spring broke in a brake master cylinder,",
+    "choices": [
+      "the brake travel would become excessive.",
+      "the brake feel would become spongy.",
+      "the brakes would drag."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q3"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-4",
+    "question": "Tire and wheel manufacturers recommend that tires on split wheels be deflated before removing the wheel from the axle",
+    "choices": [
+      "to remove the static load imposed upon the wheel bearings by the inflated tire.",
+      "to relieve the strain on the wheel retaining nut and axle threads.",
+      "in case the tie bolts that hold the wheel halves together have been damaged or weakened."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q4"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-5",
+    "question": "If an owner or operator with a private pilot's license changes a tire, it is considered",
+    "choices": [
+      "minor maintenance.",
+      "an illegal act.",
+      "preventive maintenance."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q5"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-6",
+    "question": "A floating caliper and the ability to replace the brake linings while on the axle are characteristics of the",
+    "choices": [
+      "Cleveland brake.",
+      "Brembo brake.",
+      "McCauley brake."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q6"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-8",
+    "question": "An underinflated tire can be identified by",
+    "choices": [
+      "excessive wear at the tread center.",
+      "excessive wear at the shoulder area.",
+      "random flat spots on the tread."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q8"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-9",
+    "question": "Carbon brakes may be lighter, but they wear out more quickly than segmented brakes.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q9"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-10",
+    "question": "When bleeding aircraft brakes, one of the indications that the air has been purged form the system is",
+    "choices": [
+      "partial brake pedal travel.",
+      "full brake pedal travel.",
+      "firm brake pedals."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q10"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-11",
+    "question": "How does the anti-skid control valve react to a locked wheel?",
+    "choices": [
+      "It releases a metered amount of pressure applied to that brake.",
+      "It automatically pumps the pedals to restart the wheel rotation.",
+      "It releases all pressure applied to that brake."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q11"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-12",
+    "question": "Why should you wait three hours after flight to check tire pressures?",
+    "choices": [
+      "Allow the tire to mold into the tarmac.",
+      "Allow the tires to adjust to ambient temp.",
+      "Allow the thermal plug to cool."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q12"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-13",
+    "question": "Why do most aircraft tire manufacturers recommend that the tubes in newly installed tires be first inflated, fully deflated, and then reinflated to the correct pressure?",
+    "choices": [
+      "To remove moisture from inside the tube.",
+      "To allow the tube to position itself correctly inside the tire.",
+      "To test the entire assembly to ensure it won't burst."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q13"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-14",
+    "question": "Aircraft brakes that require a large volume of fluid to operate,",
+    "choices": [
+      "use a power brake control system.",
+      "rely on accumulators to make up for the lack of supply.",
+      "wheel-to-tire balance mark."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q14"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-15",
+    "question": "Internal leakage in a brake master cylinder unit can cause",
+    "choices": [
+      "the pedal to slowly creep down while pedal pressure is applied.",
+      "a slow release of the brakes.",
+      "fading brakes."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q15"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-16",
+    "question": "The purpose of a relief valve in a brake system is to",
+    "choices": [
+      "compensate for thermal expansion.",
+      "prevent the tire from skidding.",
+      "reduce pressure for brake application."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q16"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-17",
+    "question": "A tire that is showing wear or damage to 50% of the ply layers can only be retreaded/recapped once.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q17"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-18",
+    "question": "Emergency and parking brakes are normally provided by",
+    "choices": [
+      "an accumulator.",
+      "the main hydraulic system.",
+      "a debooster valve."
+    ],
+    "answer": 0,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q18"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-19",
+    "question": "The pressure source for power brakes is",
+    "choices": [
+      "the power brake reservoir.",
+      "the main hydraulic system.",
+      "a master cylinder."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q19"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-20",
+    "question": "The main advantage of the segmented rotor-disc brake is",
+    "choices": [
+      "they are replaceable on the axle.",
+      "the lighter weight allows a faster spin up during landing touchdown.",
+      "built-up heat can be dissipated more quickly."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q20"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-21",
+    "question": "What type of valve is used in the brake actuating line to isolate the emergency brake system from the normal power brake control valve system?",
+    "choices": [
+      "Bypass valve.",
+      "Shuttle valve.",
+      "Orifice check valve."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q21"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-22",
+    "question": "A pilot reports that the brake pedals have excessive travel. A probable cause is",
+    "choices": [
+      "the brake rotors and linings are worn.",
+      "the brake linings are contaminated with leaking brake fluid.",
+      "a lack of fluid in the brake system."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q22"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-23",
+    "question": "What is the purpose of a brake debooster valve?",
+    "choices": [
+      "Ensure rapid application and release of the brakes.",
+      "Reduce the hydraulic system pressure to required brake pressure.",
+      "Increase brake pressure above that of the hydraulic system."
+    ],
+    "answer": 1,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q23"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-24",
+    "question": "In large transport aircraft, the pilots turn of the anti-skid system just after takeoff, and then back on just prior to landing. This keeps the control box from detecting a locked wheel condition during the entire flight.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q24"
+    ]
+  },
+  {
+    "id": "quiz_2_223_landing_gear-25",
+    "question": "When you overhaul wheel & tire assemblies that to be placed in the storage room, you should...",
+    "choices": [
+      "keep the tires deflated to prevent premature application of pressure loading.",
+      "inflate the tires to 110% of operating pressure to prevent flat spots forming while in storage.",
+      "inflate the tires to 80% of operating pressure to reduce environmental degradation."
+    ],
+    "answer": 2,
+    "source": [
+      "AMT&223 Landing Gear Quiz 2 Q25"
+    ]
+  }
+]
