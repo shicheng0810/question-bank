@@ -297,8 +297,18 @@
     .cof-fab{position:fixed; right:24px; bottom:24px; z-index:40; display:inline-flex; align-items:center; gap:8px; height:52px; min-width:52px; justify-content:center; padding:0 18px; border:0; border-radius:999px; background:var(--surface); color:var(--text); font:600 15px var(--font); box-shadow:0 6px 24px rgba(0,0,0,.16); cursor:pointer}
     .cof-fab[hidden]{display:none} .cof-fab svg{width:24px; height:24px; color:var(--accent)} .cof-fab.lv1{padding:0} .cof-fab.lv1 span{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap}
     .cof-fab{animation:cfWiggle 3.4s ease-in-out infinite !important} /* 主人 2026-11-06「都要晃动 不受用户设置影响」：压过下方 reduced-motion 全局关动画 */ .cof-fab.lv3{background:var(--primary); color:var(--on-primary)} .cof-fab.calm{animation:none !important} .cof-fab.lv3 svg{color:inherit}
+    .cof-fab.lv3{display:inline-grid; grid-template-columns:24px auto; column-gap:10px; align-content:center; justify-content:start; height:56px; padding:0 20px 0 16px; max-width:calc(100vw - 32px); text-align:left}
+    .cof-fab.lv3 svg{grid-row:1 / span 2; align-self:center}
+    .cof-fab.lv3 .cf-f{grid-column:2; font-size:12px; font-weight:500; line-height:1.3; opacity:.8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    .cof-fab.lv3 #cof-fab-t{grid-column:2; font-size:15px; font-weight:650; line-height:1.3; white-space:nowrap}
+    .cof-fab .cf-f[hidden]{display:none}
+    .cof-pad .foot-bar{margin-bottom:104px}
+    @media (max-width:760px){ .cof-pad .qb-toast{bottom:calc(88px + env(safe-area-inset-bottom, 0px))} }
+    #lgn-guide{background:rgb(0 0 0 / .14); -webkit-backdrop-filter:none; backdrop-filter:none}
+    #lgn-guide .qb-card{width:min(420px, 100%)}
+    #lgn-guide .qb-hint{font-size:15px; line-height:1.5}
+    #lgn-guide .why{color:var(--text); font-weight:600; text-wrap:balance}
     @keyframes cfWiggle{0%,82%,100%{transform:none}86%{transform:rotate(-7deg)}90%{transform:rotate(6deg)}94%{transform:rotate(-3deg)}}
-    #coffee-close-btn.lock svg{display:none} #coffee-close-btn.lock::after{content:attr(data-n); font-weight:600}
     .cof-bar{display:flex; align-items:center; gap:12px; margin:16px 0 0; padding:12px 16px; border-radius:14px; background:var(--accent-soft); color:var(--text)} .cof-bar[hidden]{display:none}
     .cof-bar>svg{flex:none; width:24px; height:24px; color:var(--accent)} .cof-bar p{flex:1; margin:0; font-size:14px; font-weight:500}
     @media (max-width:760px){ .cof-bar{flex-wrap:wrap} .cof-bar p{flex:1 1 calc(100% - 36px)} .cof-fab{right:16px; bottom:16px} .cof-bar .btn{flex:1; height:44px} }
