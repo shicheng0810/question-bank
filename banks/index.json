@@ -143,13 +143,25 @@
     "json": "banks/223-landing-gear.json"
   },
   {
+    "id": "245-cabin-environment",
+    "title": "Cabin Environment",
+    "mode": "public",
+    "description": "AMT&245 — Cabin Environmental Quiz + Practice Quiz",
+    "tags": [],
+    "question_count": 27,
+    "has_images": false,
+    "category": "airframe",
+    "term": 3,
+    "json": "banks/245-cabin-environment.json"
+  },
+  {
     "id": "all-banks",
     "title": "All Banks · Merged Practice",
     "mode": "public",
     "virtual": true,
     "description": "Pick any combination of banks and practice them together.",
     "tags": [],
-    "question_count": 2110,
+    "question_count": 2137,
     "has_images": true
   }
 ]

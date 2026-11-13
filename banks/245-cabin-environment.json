@@ -1,0 +1,376 @@
+[
+  {
+    "id": "quiz_245_cabin-1",
+    "question": "The function of the condenser in a vapor cooling system is to",
+    "choices": [
+      "transfer heat from the cabin air to the liquid refrigerant.",
+      "transfer heat from the refrigerant to ambient air.",
+      "change liquid refrigerant into a gas before it enters the compressor."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_245_cabin-2",
+    "question": "The point at which refrigerant flowing through a vapor cycle cooling system gives up heat and changes from a gas to a liquid is the",
+    "choices": [
+      "evaporator.",
+      "condenser.",
+      "expansion valve."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_245_cabin-3",
+    "question": "The operation of an aircraft combustion heater is usually controlled by a thermostat circuit which",
+    "choices": [
+      "regulates the voltage applied to the heaters ignition transformer.",
+      "alternately turns the fuel on and off, a process known as cycling.",
+      "meters the amount of fuel continuously entering the heater and therefore regulates the heaters BTU output."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_245_cabin-4",
+    "question": "What is ventilating air used for on a combustion heater?",
+    "choices": [
+      "Carries heat to the places where needed.",
+      "Provides combustion air for ground blower.",
+      "Provides air required to support the flame."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_245_cabin-5",
+    "question": "When a vapor cycle cooling system is not in operation, what is an indication that the system is leaking refrigerant?",
+    "choices": [
+      "An ozone-like odor in the immediate area.",
+      "Bubbles in the sight glass.",
+      "Oil seepage."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_245_cabin-6",
+    "question": "Hot compressor bleed air operates the conditioned air system on some turbine aircraft, how is cold air supplied?",
+    "choices": [
+      "By the ram cycle cooling unit.",
+      "By the air cycle machine turbine.",
+      "By the flow control unit."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_245_cabin-7",
+    "question": "Where does the last stage of cooling in an air cycle air conditioning system occur?",
+    "choices": [
+      "Refrigeration unit compressor.",
+      "Expansion turbine.",
+      "Secondary heat exchanger."
+    ],
+    "source": [
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_245_cabin-8",
+    "question": "What unit in a vapor cycle cooling system serves as a reservoir for the refrigerant?",
+    "choices": [
+      "Receiver dryer.",
+      "Evaporator.",
+      "Condenser."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_245_cabin-9",
+    "question": "When charging a vapor cycle cooling system after evacuation, the low pressure gauge fails to come out of a vacuum. What is indicated?",
+    "choices": [
+      "Blockage in the system.",
+      "The expansion valve failed to close.",
+      "The compressor is not engaging."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_245_cabin-10",
+    "question": "The air cycle cooling system produces cold air by",
+    "choices": [
+      "passing air through cooling coils that contain a refrigerant.",
+      "extracting heat energy across a compressor.",
+      "extracting heat energy across an expansion turbine."
+    ],
+    "source": [
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_245_cabin-11",
+    "question": "The point at which refrigerant flowing through a vapor cycle cooling system absorbs heat and changes from a liquid to a gas is the",
+    "choices": [
+      "expansion valve.",
+      "condenser.",
+      "evaporator."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_245_cabin-12",
+    "question": "What component in a vapor cycle cooling system would most likely be at fault if a system would not take a charge?",
+    "choices": [
+      "Condenser.",
+      "Expansion valve.",
+      "Receiver dryer."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_245_cabin-13",
+    "question": "What component might possibly be damaged if liquid refrigerant is introduced into the low side of a vapor cycle cooling system when the pressure is too high or the outside air temperature is too low?",
+    "choices": [
+      "Compressor.",
+      "Evaporator.",
+      "Condenser."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_245_cabin-14",
+    "question": "At which component in an air cycle cooling system does air undergo a pressure and temperature drop?",
+    "choices": [
+      "Primary heat exchanger.",
+      "Refrigeration bypass valve.",
+      "Expansion turbine."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_245_cabin-15",
+    "question": "The position of the thermostatic expansion valve in a vapor cycle cooling system is determined by the temperature and the pressure of the",
+    "choices": [
+      "air in the outlet of the condenser.",
+      "refrigerant at the outlet of the evaporator.",
+      "refrigerant at the inlet of the evaporator."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_245_cabin-16",
+    "question": "What is the condition of the refrigerant as it leaves the evaporator of a vapor cycle cooling system?",
+    "choices": [
+      "Low pressure liquid.",
+      "Low pressure vapor.",
+      "High pressure liquid."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_245_cabin-17",
+    "question": "If the liquid level gauge in a vapor cycle cooling system indicates a low charge, the system should",
+    "choices": [
+      "be operated and a pressure check performed.",
+      "be operated for a period of time to reach a stable condition and then the refrigerant level rechecked.",
+      "not be operated until refrigerant and oil have been added."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_245_cabin-18",
+    "question": "The basic air cycle cooling system consists of",
+    "choices": [
+      "a source of compressed air, heat exchangers, and a turbine.",
+      "heaters, coolers, and compressors.",
+      "ram air source, compressors, and engine bleeds."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_245_cabin-19",
+    "question": "What is the purpose of a mixing valve in a compressor bleed air air-conditioning system?",
+    "choices": [
+      "Distribute conditioned air evenly to all parts of the cabin.",
+      "Combine ram air with conditioned air.",
+      "Control the supply of hot, cool, and cold air."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_245_cabin-20",
+    "question": "Frost or ice buildup on a vapor cycle cooling system evaporator would most likely be caused by",
+    "choices": [
+      "the mixing valve sticking closed.",
+      "inadequate airflow through the evaporator.",
+      "moisture in the evaporator."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_245_cabin-21",
+    "question": "When checking a vapor cooling system, a steady stream of bubbles in the sight gauge indicates the charge is",
+    "choices": [
+      "high.",
+      "correct.",
+      "low."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_245_cabin-22",
+    "question": "What is the condition of the refrigerant as it enters the evaporator of a vapor cycle cooling system?",
+    "choices": [
+      "Low pressure liquid.",
+      "High pressure vapor.",
+      "High pressure liquid."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_245_cabin-23",
+    "question": "Turbine engine air used for air conditioning and pressurization is generally called",
+    "choices": [
+      "ram air.",
+      "compressed air.",
+      "bleed air."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_245_cabin-24",
+    "question": "The function of an expansion valve in a vapor cooling system is to act as a metering device and to",
+    "choices": [
+      "increase the pressure of the liquid refrigerant.",
+      "reduce the pressure of the liquid refrigerant.",
+      "reduce the pressure of the gaseous refrigerant."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_245_cabin-25",
+    "question": "In a vapor cycle cooling system, where is cooling air obtained for the condenser?",
+    "choices": [
+      "Pressurized cabin air.",
+      "Ambient air.",
+      "Turbine engine compressor."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_245_cabin-26",
+    "question": "How can it be determined that a vapor cycle cooling system is charged with the proper amount of refrigerant?",
+    "choices": [
+      "Air bubbles in the sight glass disappear.",
+      "Air bubbles appear in the sight glass.",
+      "The compressor loads up and the RPM decreases."
+    ],
+    "source": [
+      "AMT245 – Quiz – Cabin Environmental",
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_245_cabin-27",
+    "question": "The function of the evaporator in a vapor cooling system is to",
+    "choices": [
+      "liquefy the refrigerant in the line between the compressor and the condenser.",
+      "transfer heat from the refrigerant to the ambient air.",
+      "lower the temperature of the cabin air."
+    ],
+    "source": [
+      "AMT245 – Practice Quiz"
+    ],
+    "answer": 2
+  }
+]
