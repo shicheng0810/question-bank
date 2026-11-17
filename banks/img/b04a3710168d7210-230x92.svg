@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 92">
+<defs>
+<linearGradient id="ball" gradientUnits="userSpaceOnUse" x1="28" y1="16" x2="52" y2="42"><stop offset="0" stop-color="#dfdfdf"/><stop offset="0.35" stop-color="#dcdcdc"/><stop offset="1" stop-color="#b0b0b0"/></linearGradient>
+<linearGradient id="sh" gradientUnits="userSpaceOnUse" x1="0" y1="21" x2="0" y2="34.5"><stop offset="0" stop-color="#808080"/><stop offset="0.12" stop-color="#828282"/><stop offset="0.2" stop-color="#e2e2e2"/><stop offset="0.25" stop-color="#e2e2e2"/><stop offset="1" stop-color="#b0b0b0"/></linearGradient>
+<clipPath id="bc"><ellipse cx="41.3" cy="32.3" rx="17.4" ry="19"/></clipPath>
+<pattern id="hat" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="translate(5.5 0)"><rect width="6" height="6" fill="#d2d2d2"/><path d="M-1 -1L7 7M-7 -1L1 7M5 -1L13 7" stroke="#4a4a4a" stroke-width="1.7" fill="none"/></pattern>
+</defs>
+<rect width="230" height="92" fill="#fff"/>
+<rect x="105" y="24" width="105.5" height="15.5" fill="url(#hat)"/>
+<rect x="105" y="24" width="105.5" height="1" fill="#b2b2b2"/>
+<rect x="105" y="39" width="105.5" height="1" fill="#000"/>
+<rect x="210" y="24" width="1" height="16" fill="#6e6e6e"/>
+<rect x="59" y="34" width="46" height="10" fill="#000"/>
+<rect x="58.5" y="20.3" width="46" height="14.2" fill="url(#sh)"/>
+<rect x="104" y="21" width="1.2" height="23" fill="#707070"/>
+<rect x="59" y="44" width="46" height="0.8" fill="#8a8a8a"/>
+<ellipse cx="41.3" cy="32.3" rx="18" ry="19.6" fill="#000" stroke="#606060" stroke-width="1.4"/>
+<circle cx="38" cy="24.5" r="18.4" fill="url(#ball)" clip-path="url(#bc)"/>
+<text x="24.3" y="76.2" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="20" textLength="15.8" lengthAdjust="spacingAndGlyphs" fill="#000">A</text>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 141 88">
+<rect width="141" height="88" fill="#fff"/>
+<rect x="7" y="13.3" width="60" height="3.7" fill="#2a2a2a"/>
+<path d="M8 15.5H66" stroke="#9a9a9a" stroke-width="1"/>
+<path d="M7.3 17.5L20.6 25.4M66.5 17.5L53.4 25.4" stroke="#0a0a0a" stroke-width="1.5" fill="none"/>
+<polygon points="10.5,17.5 15,17.5 27.5,24.5 21,25" fill="#c8c8c8"/>
+<polygon points="62.5,17.5 58,17.5 47.5,24.5 53,25" fill="#c8c8c8"/>
+<path d="M12 18L21 24M15 17.5L25 23.5M17.5 18L26 23M60 18L54 23.5M57 17.5L50 23M55 18L48 23.5" stroke="#7a7a7a" stroke-width=".9" fill="none"/>
+<path d="M20.7 25.4H53" stroke="#222" stroke-width="1.2"/>
+<path d="M21 26.5H52" stroke="#9a9a9a" stroke-width="1"/>
+<path d="M20.5 25V74.5" stroke="#000" stroke-width="1.2"/>
+<path d="M21.6 26V73.5" stroke="#aaa" stroke-width="1"/>
+<path d="M23.5 31V73" stroke="#888" stroke-width="1"/>
+<path d="M24.6 33V73" stroke="#d2d2d2" stroke-width="1"/>
+<path d="M26.5 36V50M26.5 54V59M26.5 63V73" stroke="#8a8a8a" stroke-width="1"/>
+<path d="M29.5 35V48M29.5 53V73" stroke="#666" stroke-width="1"/>
+<path d="M30.5 35V73" stroke="#e8e8e8" stroke-width="1"/>
+<path d="M44.5 35V73" stroke="#999" stroke-width="1"/>
+<path d="M45.5 35V73" stroke="#ececec" stroke-width="1"/>
+<path d="M46.5 33V50" stroke="#ddd" stroke-width="1"/>
+<path d="M47.5 33V63" stroke="#666" stroke-width="1"/>
+<path d="M47.5 66V73" stroke="#bbb" stroke-width="2"/>
+<path d="M50.5 33V73" stroke="#444" stroke-width="1"/>
+<path d="M52.5 25V74.5" stroke="#222" stroke-width="1.2"/>
+<path d="M53.5 26V74" stroke="#666" stroke-width="1"/>
+<path d="M21 73.4H53" stroke="#bbb" stroke-width="1"/>
+<path d="M20 74.5H53" stroke="#1a1a1a" stroke-width="1.5"/>
+<path d="M71 13.5H121" stroke="#7a7a7a" stroke-width="1.1"/>
+<path d="M58 25.5H90" stroke="#555" stroke-width="1.1"/>
+<path d="M58 75H121" stroke="#939393" stroke-width="1.6"/>
+<g fill="#000"><polygon points="78.4,26 75.2,35 81.6,35"/><polygon points="78.4,73.6 75.2,66 81.6,66"/><polygon points="115.9,14 112.9,22.3 118.9,22.3"/><polygon points="115.9,73.6 112.9,65.6 118.9,65.6"/></g>
+<path d="M78.4 34V43.5M78.4 56V66.5" stroke="#000" stroke-width="1.5"/>
+<path d="M115.9 21V44M115.9 55V66" stroke="#2a2a2a" stroke-width="1.8"/>
+<g font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="bold" fill="#000"><text x="75" y="53.8" textLength="6.8" lengthAdjust="spacingAndGlyphs">A</text><text x="112.6" y="53.8" textLength="6.4" lengthAdjust="spacingAndGlyphs">B</text></g>
+</svg>

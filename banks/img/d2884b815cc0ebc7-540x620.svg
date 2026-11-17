@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 620">
+<rect width="540" height="620" fill="#ffffff"/>
+<g fill="none" stroke="#000" stroke-width="8.8">
+<path d="M157 59.8H319.1M319.1 59.8H506.6V556.5H432"/>
+<path d="M319.1 59.8V123M319.1 187.5V257.4M319.1 257.4V326M319.1 390V461"/>
+<path d="M157 257.4H319.1H419V461"/>
+<path d="M157 554.8H306"/>
+</g>
+<g fill="none" stroke="#000">
+<circle cx="144.8" cy="59.8" r="12.2" stroke-width="7"/>
+<circle cx="145" cy="257.5" r="12.2" stroke-width="7"/>
+<circle cx="145" cy="554.7" r="12.2" stroke-width="7"/>
+<circle cx="319.2" cy="132.5" r="8.9" stroke-width="8.8"/>
+<circle cx="319.2" cy="178.7" r="8.9" stroke-width="8.8"/>
+<circle cx="319.2" cy="335" r="8.9" stroke-width="8.8"/>
+<circle cx="319.2" cy="381.7" r="8.9" stroke-width="8.8"/>
+<circle cx="319.5" cy="473.8" r="12.4" stroke-width="6.8"/>
+<circle cx="419.7" cy="473.3" r="12.4" stroke-width="6.8"/>
+<circle cx="319.5" cy="556.7" r="12.4" stroke-width="6.8"/>
+<circle cx="419.7" cy="556.7" r="12.4" stroke-width="6.8"/>
+<rect x="290.3" y="436.8" width="157.6" height="154.1" stroke-width="7.1"/>
+<path d="M294.8 121.1V188.9M269.8 141.9V163.9M269.8 154.2H294.8" stroke-width="8.8" stroke-linecap="round"/>
+<path d="M336.7 323.6V391.4M287.5 346.9V370.6M287.5 357.9H336.7" stroke-width="8.8" stroke-linecap="round"/>
+<path d="M331 474.5H350A9.4 9.4 0 0 1 347.4 493.3A10.3 11.35 0 0 1 347.4 516A10 10 0 0 1 347.4 536A9.3 9.3 0 0 1 350 553.3H331" stroke-width="5.2" stroke-linejoin="bevel"/>
+<path d="M368.2 473.3V555.5M377 473.3V555.5" stroke-width="5.4"/>
+<path d="M420.8 486L395.1 555.3" stroke-width="3.2"/>
+</g>
+<path d="M312 46.3H326.7L332.5 55V62.5L324 70.8H314.5L306 62.5V55Z"/>
+<path d="M315 243.3H323.5L332.5 252.5V261L323.5 269.5H315L305.8 261V252.5Z"/>
+<g fill="#000" font-family="'Times New Roman', Times, serif" font-weight="bold" font-size="36.5">
+<text x="57" y="72.7" textLength="58" lengthAdjust="spacingAndGlyphs">Hot</text>
+<text x="178" y="128.7" textLength="77" lengthAdjust="spacingAndGlyphs">Push</text>
+<text x="179.5" y="163.7" textLength="76" lengthAdjust="spacingAndGlyphs">Start</text>
+<text x="101" y="209.2" textLength="182.5" lengthAdjust="spacingAndGlyphs">Norm Open</text>
+<text x="25.5" y="270.4" textLength="80.5" lengthAdjust="spacingAndGlyphs">Load</text>
+<text x="39" y="564.3" textLength="74.5" lengthAdjust="spacingAndGlyphs">Com</text>
+</g>
+<g fill="#000" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="21.5">
+<text x="17.2" y="372.8" textLength="161" lengthAdjust="spacingAndGlyphs">Low level switch</text>
+<text x="16.8" y="401.8" textLength="281.2" lengthAdjust="spacingAndGlyphs">Opens when limit is reached</text>
+</g>
+</svg>

@@ -9,7 +9,8 @@
     "has_images": true,
     "category": "airframe",
     "term": 2,
-    "json": "banks/239-airframe-elec.json"
+    "json": "banks/239-airframe-elec.json",
+    "light": "banks/light/239-airframe-elec.json"
   },
   {
     "id": "205-finishes",
@@ -44,7 +45,8 @@
     "question_count": 1385,
     "has_images": true,
     "category": "general",
-    "json": "banks/general.json"
+    "json": "banks/general.json",
+    "light": "banks/light/general.json"
   },
   {
     "id": "201-composite",
@@ -68,7 +70,8 @@
     "has_images": true,
     "category": "airframe",
     "term": 2,
-    "json": "banks/211-sheet-metal.json"
+    "json": "banks/211-sheet-metal.json",
+    "light": "banks/light/211-sheet-metal.json"
   },
   {
     "id": "231-ice-rain",
@@ -104,7 +107,8 @@
     "has_images": true,
     "category": "airframe",
     "term": 3,
-    "json": "banks/223-hydraulics-pneumatics.json"
+    "json": "banks/223-hydraulics-pneumatics.json",
+    "light": "banks/light/223-hydraulics-pneumatics.json"
   },
   {
     "id": "241-instrument-systems",

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 746 418">
+<rect width="746" height="418" fill="#fff"/>
+<rect x="16" y="14" width="713" height="390" fill="none" stroke="#000" stroke-width="2"/>
+<g fill="none" stroke="#000" stroke-width="1.3">
+<path d="M77.3 168.6 V55.3 H359.6 M405.9 55.3 H687.3 V224.5 M687.3 232.7 V369 H419.5 M348.5 369 H77.3 V254.2"/>
+<path d="M665 224.5 H708.2 M665 233.3 H708.2"/>
+<circle cx="77.3" cy="211.4" r="42.8"/>
+<path d="M40.3 212 C40.3 200 48 194.4 57 194.4 C68 194.4 76.6 201 76.6 211.2 C76.6 222 84 228.8 94 228.8 C104 228.8 110.6 221 110.6 211" stroke-width="1.6"/>
+</g>
+<path d="M359.6 55.3 L363.5 44.1 L371.5 66 L379 44.1 L386.6 66 L394.4 44.1 L401.9 66 L405.9 55.3" fill="none" stroke="#000" stroke-width="1.5" stroke-linejoin="miter"/>
+<g fill="none" stroke="#000" stroke-width="1.6">
+<path d="M348.5 367 A9 9.5 0 0 0 366.5 367 A9 9.5 0 0 0 383.6 367 A9 9.5 0 0 0 401.5 367 A9 9.5 0 0 0 419.5 367" />
+</g>
+<g font-family="Helvetica, Arial, sans-serif" font-size="20" fill="#000">
+<text x="349.8" y="98.5" textLength="22.2" lengthAdjust="spacingAndGlyphs">48</text>
+<text x="380" y="98.5" textLength="17" lengthAdjust="spacingAndGlyphs" fill="#333" font-size="21">Ω</text>
+<text x="592" y="234.4" textLength="63.4" lengthAdjust="spacingAndGlyphs">220 uF</text>
+<text x="354" y="350.9" textLength="61" lengthAdjust="spacingAndGlyphs" font-size="20.5">65 mH</text>
+</g>
+<g font-family="Helvetica, Arial, sans-serif" font-size="22" fill="#444">
+<text x="144.5" y="208" textLength="83.5" lengthAdjust="spacingAndGlyphs">110 V AC</text>
+<text x="143" y="238" textLength="87.5" lengthAdjust="spacingAndGlyphs">60 cycles</text>
+</g>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 726 437"><rect width="726" height="437" fill="#fff"/>
+<defs><g id="c"><circle r="4.5" fill="#fff"/></g>
+<g id="lamp"><circle r="30.8" fill="#fff"/></g>
+<g id="gnd" fill="none"><path d="M0 0V0M-14.5 0H12.5" /><path stroke-width="2" d="M-10 4.2H8.2"/><path stroke-width="1.7" d="M-5.2 10.4H3"/></g></defs>
+<g fill="none" stroke="#2d2b28" stroke-width="2.1" stroke-linejoin="miter">
+<g stroke-width="2.1"><use href="#lamp" x="102" y="84.6"/><use href="#lamp" x="632.8" y="85"/></g>
+<path d="M126.8 85.5H214.5M241 85.5H340.5M349.5 85.5H462M489.5 85.5H607"/>
+<path d="M345.3 65.5V81M345.3 89.5V121M345.2 146V197.5H323.5M323.5 216.5H343.8V277.5H300M277.5 277.3H187.5M250 276.8H187.5"/>
+<path d="M90.2 108.6V249.5M89.3 278.8V382H220.5M225.8 310V329M225.8 350V377.5"/>
+<path d="M187 305.8H220.5M231 306.3H320M354 304.7H420.5M429 305H480M510.5 305.8H561M427 352M"/>
+<path d="M644.7 109.6V188M644.5 215V300"/>
+<path d="M611 304.5H645M551.3 350H587M517 351.3H480M470.5 351.3H475" />
+<path d="M263.8 379H327.5M355 379.5H447.5M185 403M212.5 403.3H236.5M147.5 402.5H180M147.5 402.5V419"/>
+<path stroke-width="2" d="M30.5 74.3V98M30.5 74.3H39.5M67.5 74.3H90M645 74.5H667.5M697.5 74.5H707.5M704.3 74.5V99.5"/>
+<path d="M98.5 54V115.5M110.2 54V115.5" stroke-width="2.1"/>
+</g>
+<g fill="none" stroke="#2d2b28" stroke-width="2">
+<path d="M84.9 98.2L95.9 91.7M639.3 92.7L651 100.5M625.3 55V116M638 55V116"/>
+<path stroke-width="2" d="M16 98H43M20.5 102.2H38.7M25.5 108.5H33M691 99.5H717.5M695.5 103.8H713.8M700 108.8H709M135 419.5H160M139 424H157M143 429.5H152.5"/>
+<path d="M295 8.2L300.2 11.8L293.2 16.5L299.8 20.2M295 8.2H387.5M296 26H386M387.2 9L386.5 11.5L382.3 13.3L385 16.5L386.8 18L387.3 22L385.5 24L382.6 25.2"/>
+<path d="M349 35.2Q360 40.5 360 47Q358 55 348.9 59.4M360 46.4H369.8M369.8 38.6V53.2"/>
+<path d="M285.5 173.8V241L308.8 225.5H331.3V190.5H312.5L285.5 173.8"/>
+<path d="M145 267H181.9V273M145 267V274M134.3 276.4L143.9 304.2M168.6 274.3L180.9 301.6M145 312.5V323.9H181.7V301M263 378.5M258.2 369.5L243 399.5M453.1 374.9L469.8 343.6M606.3 295.2L588.8 321.6"/>
+<path d="M587 330V350M565.8 306.3M"/>
+</g>
+<g fill="#fff" stroke="#2d2b28" stroke-width="2.2">
+<circle cx="122.2" cy="85" r="3.4"/><circle cx="90.2" cy="104.7" r="3.4"/><circle cx="611.3" cy="85" r="3.4"/><circle cx="644.7" cy="105.5" r="3.4"/>
+<circle cx="345.9" cy="32.8" r="3.2"/><circle cx="345.6" cy="61.8" r="3.2"/><circle cx="345" cy="85.5" r="3.4"/>
+<circle cx="318.8" cy="197.5" r="3.2"/><circle cx="318.8" cy="216.5" r="3.2"/>
+<circle cx="145" cy="278.3" r="3.4"/><circle cx="145" cy="308.3" r="3.4"/><circle cx="181.9" cy="277.4" r="3.4"/><circle cx="181.7" cy="305.7" r="3.4"/>
+<circle cx="225.5" cy="306" r="3.4"/><circle cx="225.5" cy="382.5" r="3.4"/><circle cx="258.8" cy="378.8" r="3.4"/><circle cx="241.3" cy="403.8" r="3.4"/>
+<circle cx="425.9" cy="304.6" r="3.4"/><circle cx="425.9" cy="351.6" r="3.4"/><circle cx="452" cy="380" r="3.4"/><circle cx="470.5" cy="351.3" r="3.4"/>
+<circle cx="565.8" cy="306.3" r="3.4"/><circle cx="606.3" cy="305.5" r="3.4"/><circle cx="587" cy="325.5" r="3.4"/>
+</g>
+<path d="M425.9 308V348" fill="none" stroke="#2d2b28" stroke-width="2"/>
+<g fill="#2d2b28"><path fill="none" stroke="#2d2b28" stroke-width="1.8" d="M79.7 74.4L84.4 81.3L90.5 74.4M645.2 74.7L652 82L661 74.7"/>
+<path d="M186.3 255L203 251.3L200.5 255L203 259Z"/><path d="M293.8 353.3L277 349L279.5 353.3L277 357.5Z"/><path d="M496.3 328.8L480 324.5L482.5 328.8L480 333Z"/><path d="M621.3 281L604 277L606.5 281L604 285.5Z"/></g>
+<path d="M203 255H242M241 353.3H279M441 328.8H482M566 281H606" stroke="#2d2b28" stroke-width="2" fill="none"/>
+<g fill="#2d2b28" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="16" lengthAdjust="spacingAndGlyphs">
+<text x="314.5" y="23" textLength="45.5">28V DC</text>
+<text x="42.5" y="79.5" textLength="20.5">#13</text><text x="100.8" y="89.5" textLength="7.2">R</text>
+<text x="219.5" y="89.5" textLength="13">#1</text><text x="469.5" y="90" textLength="14.5">#8</text>
+<text x="626.3" y="90" textLength="10">G</text><text x="672" y="82.5" textLength="21.8">#12</text>
+<text x="339" y="139.5" textLength="15">#7</text>
+<text x="240" y="156" textLength="68.8" font-size="15.4">WARNING</text><text x="240" y="171" textLength="42" font-size="15.4">HORN</text>
+<text x="85.8" y="268" textLength="14.7">#2</text>
+<text x="112.5" y="245.5" textLength="130" font-size="15.4">THROTTLE (OPEN)</text><text x="112.5" y="259.3" textLength="54.5" font-size="15.4">SWITCH</text>
+<text x="281" y="284.5" textLength="15">#6</text><text x="218.8" y="343.8" textLength="16.7">#4</text><text x="241.3" y="343.8" textLength="48.7">DOWN</text>
+<text x="332" y="311" textLength="14.3">#5</text><text x="638.8" y="209.5" textLength="15">#9</text><text x="485" y="309.5" textLength="21">#10</text>
+<text x="433.8" y="320.5" textLength="40">DOWN</text><text x="550.8" y="272" textLength="59.2">NEUTRAL</text>
+<text x="596.5" y="332.5" textLength="64.5" font-size="15.4">CONTROL</text><text x="596.5" y="347.5" textLength="43.5" font-size="15.4">VALVE</text><text x="596.5" y="364" textLength="50.5" font-size="15.4">SWITCH</text>
+<text x="525" y="357" textLength="19.5">#11</text><text x="335" y="387.5" textLength="15">#3</text><text x="185" y="408" textLength="21">#14</text>
+<text x="248.8" y="408" textLength="80" font-size="15.4">LEFT GEAR</text><text x="248.8" y="422.5" textLength="55.7" font-size="15.4">SWITCH</text>
+<text x="463.3" y="379" textLength="81.7" font-size="15.4">RIGHT GEAR</text><text x="463.3" y="394.5" textLength="51.7" font-size="15.4">SWITCH</text></g>
+</svg>

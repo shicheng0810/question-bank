@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 478 493"><rect width="478" height="493" fill="#fff"/>
+<g fill="none" stroke="#2f2f2f" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="butt">
+<path stroke-width="5" d="M10.5 12L469.5 13L469.5 448.8L10.5 447.2Z"/>
+<path stroke-width="2.6" d="M295.5 77.4H333"/><path stroke-width="2.1" d="M295.5 77.4L228 126"/><path d="M158.6 36V200M263.7 41V200"/>
+<path d="M159 37C170 34 188 34.5 200 38L211 41.5C222 38 232 35.3 244 35C252 35 259 36 264 41.5"/>
+<path d="M159 38C165 44 177 48 190 48.3C198 48.2 205 46 211 43.5"/>
+<path d="M211.2 20V105.5M211.2 111V134M211.2 140V383M211.2 386V386.5M211.2 400V423M211.2 428V444"/>
+<path stroke-width="1.8" d="M206.5 93V154M217.5 93V154"/>
+<path d="M79.6 125.5L85.4 124L89.6 121.4L93 125L96 129.4L100 126L103.6 127L106.4 121L108 119.4L112.4 123L124 126C127 140 130 152 134 166C139 178 148 190 158 200C170 208 184 214 200 217L211 217.5C235 216 252 211 264 201C278 189 290 172 296 158C299 150 300 144 301 128L302 125L307 120.4L313 123.6L318 119.6L325 128.4L330 128L333 119.6L339 119.6L342 125.4L347 126.4L350 124L348.4 128L345 146L341 166L336 184L332 200L328.4 218L318 262L309 300L306 312L303.6 338L300 343L298 344.6H122L119 342L115.6 338L115 308L111 290L109 280L100 230L94 200L90 180L86 163L83 150L80 131Z"/>
+<path d="M143 339V393M278 343V386"/>
+<path d="M144 389C148 384 154 381.6 164 381C176 382 186 385 196 388C201 389.5 206 390.5 210 392.4C214 394 220 396 230 398C244 398.5 256 395 266 391C272 389 275 387.5 278 385"/>
+<path d="M144 393C146 398 149 399 160 400.6C170 400.4 180 398 190 395C198 393 204 392 210 392"/>
+<g stroke-linecap="butt" fill="none" stroke="#2f2f2f"><path stroke-width="1.8" stroke-dasharray="2.5 2" d="M151 396L155 385M160 397L164 384.5M170 396L173.5 387M179 396L182.5 387M187 394L190 388"/><path stroke-width="2" stroke-dasharray="2 2" d="M166.5 43L168 37.5M173 44L175.5 36.5M181 42.5L183 36.5M187.5 46L190.5 38M195.5 44.5L198 40"/></g><path d="M68 268.6H145M138 270H152M232 371.3H306.6M300 210.4H375M77 62H145M175 100H190M221 100H246M300 210.4L235 191M300 210.4L240 234"/>
+</g>
+<g fill="none" stroke="#2f2f2f" stroke-width="2.2" stroke-dasharray="8 3.2">
+<path stroke-dasharray="3.5 4.5" d="M142.8 316V339"/><path d="M158.2 200V296L151 318M263.3 200V290L267.4 310L271 317L278 319V342"/>
+<path d="M158 292.7H262M141 317H277M152 233.2H270.5M152 249.8H270.5M151.5 233V250M270.5 235V250"/>
+<path d="M157 201L166 210L182 220L197 226L205 228M214 228L227 226L242 222L255 214L262 205"/>
+</g>
+<g fill="#2f2f2f"><rect x="204" y="158" width="13" height="54"/><rect x="204" y="220" width="12" height="36"/><ellipse cx="211.5" cy="269.6" rx="7.5" ry="7.2"/>
+<path d="M139 57.5L157 61.6L139 66.7Z"/><path d="M203 100L185 95.5V104.5Z"/><path d="M221 100L238 95.7V104.8Z"/>
+<path d="M224.2 129.2L236.7 116.3L240 124.7Z"/><path d="M219 188.4L237 190L233 196Z"/><path d="M219 238.6L235 229L238 236Z"/><path d="M152 268.4L138 264V273Z"/><path d="M215 371.4L232 366.5V376.5Z"/></g>
+<g font-family="Helvetica, Arial, sans-serif" fill="#2f2f2f" font-size="16.5"><text x="228.5" y="90" textLength="31" lengthAdjust="spacingAndGlyphs">0.25</text><text x="49" y="65">1</text><text x="44.5" y="274">2</text><text x="341" y="82.5">3</text><text x="316" y="377">4</text>
+<text x="386" y="208.7" font-size="18.8" textLength="45" lengthAdjust="spacingAndGlyphs">PAINT</text><text x="386" y="227.5" font-size="18.8" textLength="57" lengthAdjust="spacingAndGlyphs">STRIPE</text></g>
+<text x="148" y="480" font-family="'Times New Roman', Times, serif" font-size="17" fill="#2f2f2f" textLength="184" lengthAdjust="spacingAndGlyphs">Figure 35. Aircraft Drawing.</text></svg>

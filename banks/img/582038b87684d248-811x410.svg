@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 811 410">
+<rect width="811" height="410" fill="#fff"/>
+<g fill="none" stroke="#2a2a2a">
+<rect x="12.8" y="10.5" width="788.4" height="351.3" stroke-width="5"/>
+<g stroke-width="2.8">
+<path d="M261.5 25H341.5V75.5H402.5V96.5H533.8V136.5H261.5Z"/>
+<path d="M44.5 205.5H319.5V318H44.5Z"/>
+<path d="M359 203H460.5V315.8H359Z"/>
+<path d="M494.5 205H769.5V317.5H494.5ZM575 205V317.5M635.5 205V317.5" stroke-width="3"/>
+</g>
+<path d="M115.5 206.5V317M187.5 206.5V317" stroke-width="2.6" stroke-dasharray="5.5 2.5"/>
+<path d="M360 254.5H460" stroke-width="3" stroke-dasharray="6.5 3.5"/>
+<path d="M360 274.5H460" stroke-width="2.6" stroke-dasharray="5 2.5"/>
+</g>
+<g font-family="Helvetica, Arial, sans-serif" font-weight="bold" fill="#2a2a2a">
+<text x="316.3" y="168.3" font-size="28" stroke="#2a2a2a" stroke-width=".7" textLength="87" lengthAdjust="spacingAndGlyphs">FRONT</text>
+<text x="418.8" y="168.3" font-size="28" stroke="#2a2a2a" stroke-width=".7" textLength="63" lengthAdjust="spacingAndGlyphs">VIEW</text>
+<text x="154.5" y="348.5" font-size="25" stroke="#2a2a2a" stroke-width=".9" textLength="9" lengthAdjust="spacingAndGlyphs">1</text>
+<text x="407" y="348.5" font-size="25" stroke="#2a2a2a" stroke-width=".9" textLength="12" lengthAdjust="spacingAndGlyphs">2</text>
+<text x="630" y="348.5" font-size="25" stroke="#2a2a2a" stroke-width=".9" textLength="12" lengthAdjust="spacingAndGlyphs">3</text>
+</g>
+<text x="325" y="391.5" font-family="'Times New Roman', Times, serif" font-size="17" fill="#2a2a2a" textLength="162" lengthAdjust="spacingAndGlyphs">Figure 30. Object Views.</text>
+</svg>

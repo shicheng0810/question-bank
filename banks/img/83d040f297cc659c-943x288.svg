@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 943 288"><rect width="943" height="288" fill="#fff"/>
+<defs>
+<clipPath id="k"><circle r="66"/></clipPath>
+<linearGradient id="s" gradientUnits="userSpaceOnUse" x1="-2.5" y1="0" x2="12.5" y2="0"><stop offset="0" stop-color="#a0c6d9"/><stop offset="1" stop-color="#002640"/></linearGradient>
+<linearGradient id="h" gradientUnits="userSpaceOnUse" x1="-4" y1="0" x2="27" y2="0"><stop offset="0" stop-color="#a0c6d9"/><stop offset="1" stop-color="#002640"/></linearGradient>
+<radialGradient id="d" cx=".5" cy=".5" r=".5" fx=".35" fy=".3"><stop offset="0" stop-color="#e02a30"/><stop offset=".5" stop-color="#ab1a1e"/><stop offset="1" stop-color="#4f0000"/></radialGradient>
+<g id="bg"><circle r="66" fill="#e2e3e4"/></g>
+</defs>
+<rect x="15.5" y="13.5" width="914" height="225.5" rx="7" fill="#f6fafc" stroke="#000" stroke-width="2.2"/>
+<g transform="translate(164.5 106)"><use href="#bg"/><g clip-path="url(#k)"><g transform="translate(0 -106)"><rect x="-70" y="92" width="140" height="30" fill="#e4be9d"/><rect x="-70" y="122" width="140" height="9" fill="#af8976"/><path d="M-70 92H70M-70 122H70M-70 131H70" stroke="#000" stroke-width="2"/></g></g><circle r="66" fill="none" stroke="#000" stroke-width="2"/></g>
+<g transform="translate(462.5 106)"><use href="#bg"/><g clip-path="url(#k)"><g transform="translate(0 -106)"><rect x="-70" y="92" width="140" height="13" fill="#e4be9d"/><rect x="-70" y="105" width="140" height="12" fill="#af8976"/><path d="M-70 92H70M-70 105H70M-70 117H70" stroke="#000" stroke-width="2"/></g></g><circle r="66" fill="none" stroke="#000" stroke-width="2"/></g>
+<g transform="translate(760.5 106)"><use href="#bg"/><g clip-path="url(#k)"><g transform="translate(0 -106)"><rect x="-70" y="92" width="140" height="8.5" fill="#e4be9d"/><rect x="-70" y="100.5" width="140" height="17" fill="#af8976"/><path d="M-70 92H70M-70 100.3H70M-70 117.5H70" stroke="#000" stroke-width="2"/></g></g><circle r="66" fill="none" stroke="#000" stroke-width="2"/></g>
+<g stroke="#000" stroke-width="2" stroke-linejoin="miter">
+<g transform="translate(163.5 0)"><rect x="-13.5" y="104.4" width="27.4" height="26.1" fill="url(#s)"/><path d="M-26.5 92H26.5L13.9 104.4H-13.5Z" fill="url(#h)"/><rect x="-23.5" y="130.5" width="46.4" height="12.5" fill="url(#s)"/></g>
+<g transform="translate(462.3 0)"><rect x="-13.9" y="104.4" width="27" height="12" fill="url(#s)"/><path d="M-26.7 92H26.7L13.1 104.4H-13.9Z" fill="url(#h)"/><rect x="-19.9" y="116.5" width="38.6" height="9" fill="url(#s)"/></g>
+<g transform="translate(760.2 0)"><rect x="-14" y="104" width="27.2" height="12.5" fill="url(#s)"/><path d="M-26.2 92H26.4L13.2 104H-14Z" fill="url(#h)"/><rect x="-17.2" y="116.5" width="37" height="8.5" fill="url(#s)"/></g>
+</g>
+<g fill="url(#d)"><circle cx="161.7" cy="198.5" r="13.5"/><circle cx="461.7" cy="198.5" r="13.5"/><circle cx="762.7" cy="198.5" r="13.5"/></g>
+<g font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="15.5" fill="#fff" text-anchor="middle"><text x="162" y="203.7">1</text><text x="462" y="203.7">2</text><text x="763" y="203.7">3</text></g>
+<text x="17" y="270.5" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="15" fill="#000" textLength="61" lengthAdjust="spacingAndGlyphs">Figure 2.</text><text x="85.5" y="270.5" font-family="'Times New Roman', Times, serif" font-style="italic" font-size="16.8" fill="#000" textLength="104" lengthAdjust="spacingAndGlyphs">Countersinking.</text></svg>

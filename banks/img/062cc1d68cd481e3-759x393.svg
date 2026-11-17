@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 759 393">
+<defs>
+<linearGradient id="gh1" gradientUnits="userSpaceOnUse" x1="74.0" y1="62.5" x2="246.0" y2="229.9"><stop offset="0" stop-color="#ebeef1"/><stop offset="1" stop-color="#797c7f"/></linearGradient>
+<linearGradient id="gh2" gradientUnits="userSpaceOnUse" x1="300.0" y1="64.2" x2="472.0" y2="231.5"><stop offset="0" stop-color="#ebeff2"/><stop offset="1" stop-color="#797c7f"/></linearGradient>
+<linearGradient id="gh3" gradientUnits="userSpaceOnUse" x1="536.7" y1="62.8" x2="709.3" y2="229.6"><stop offset="0" stop-color="#ebeef0"/><stop offset="1" stop-color="#787b7e"/></linearGradient>
+<radialGradient id="dk" gradientUnits="objectBoundingBox" cx="0.38" cy="0.3" r="0.8" fx="0.36" fy="0.26"><stop offset="0" stop-color="#cf2229"/><stop offset="0.5" stop-color="#b1141b"/><stop offset="0.85" stop-color="#860b0a"/><stop offset="1" stop-color="#6a0403"/></radialGradient>
+</defs>
+<rect width="759" height="393" fill="#fff"/>
+<rect x="13.7" y="15" width="737.6" height="334.75" rx="6.5" fill="#f7fbfe" stroke="#000" stroke-width="1.5"/>
+<polygon points="54.1,146.2 107.0,54.4 213.0,54.4 265.9,146.2 213.0,237.9 107.0,237.9" fill="url(#gh1)" stroke="#000" stroke-width="2.85" stroke-linejoin="miter"/>
+<polygon points="280.6,147.8 333.2,56.3 438.8,56.3 491.4,147.8 438.8,239.3 333.2,239.3" fill="url(#gh2)" stroke="#000" stroke-width="2.85" stroke-linejoin="miter"/>
+<polygon points="517.1,146.2 570.0,54.4 676.0,54.4 728.9,146.2 676.0,237.9 570.0,237.9" fill="url(#gh3)" stroke="#000" stroke-width="2.85" stroke-linejoin="miter"/>
+<g stroke="#000" stroke-width="2.9" fill="none">
+<path d="M160 107V186M124 146.3H197" stroke-width="2.75"/>
+<path d="M384.3 95L336.8 182.6H431.8Z" stroke-linejoin="miter" stroke-width="2.75"/>
+<path d="M366.8 140.4L400.9 174.6M402 139.5L366.2 175.4" stroke-width="3"/>
+<path d="M587 146.5H659"/>
+</g>
+<g>
+<circle cx="160.5" cy="281.3" r="22" fill="url(#dk)" stroke="#4a0000" stroke-width="1.3"/><circle cx="385" cy="281.3" r="22" fill="url(#dk)" stroke="#4a0000" stroke-width="1.3"/><circle cx="624" cy="281.3" r="22" fill="url(#dk)" stroke="#4a0000" stroke-width="1.3"/>
+</g>
+<g font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="25" fill="#fff" text-anchor="middle">
+<text x="159.6" y="289" textLength="12" lengthAdjust="spacingAndGlyphs">1</text><text x="385" y="289" textLength="13" lengthAdjust="spacingAndGlyphs">2</text><text x="624.6" y="289.5" textLength="14.2" lengthAdjust="spacingAndGlyphs">3</text>
+</g>
+<text x="14.6" y="376.3" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="12.8" fill="#000" textLength="55.5" lengthAdjust="spacingAndGlyphs">Figure 42.</text>
+<text x="75" y="376.3" font-family="'Times New Roman', Times, serif" font-style="italic" font-size="14" fill="#000" textLength="102" lengthAdjust="spacingAndGlyphs">Aircraft hardware.</text>
+</svg>

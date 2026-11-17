@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 802 644">
+<rect width="802" height="644" fill="#fff"/>
+<defs><path id="ah" d="M0 0 2.9 9.5H-2.9Z"/></defs>
+<path d="M8.4 7.7 785.4 3.5 788.6 601.9 10.6 606.7Z" fill="none" stroke="#2a2a2a" stroke-width="5.3"/>
+<g fill="none" stroke="#2a2a2a" stroke-width="2.2" stroke-linejoin="miter">
+<path d="M29.7 174.5V19.8H62.7V43.8H89.5V19.8H121.5V172.5H92L80 193.5 73 158.5 64.5 174.5Z"/>
+<path d="M29.7 181H66L71 173.5 78 207.5 96 178.8H121.5V333.2H89.5V310.5H62.7V333.2H29.7Z"/>
+<path d="M30 365.5H123.5V521.5H30ZM62.7 365.5V521.5M90.7 365.5V521.5"/>
+<path d="M30.7 70.8H121M30.7 125.2H121M30.7 233.2H121M30.7 282H121M31 417.6H122M31 466.6H122" stroke-dasharray="6.5 3.5" stroke-width="2.4"/>
+<path d="M262 366V522M531.5 366V521" stroke-dasharray="6.5 3.5" stroke-width="2.4"/>
+<path d="M107 21V44M96 45.8H116M96 309.5H115M107 310V333M31 528V568M62.7 529V548M90.7 530V548M124 530V570M36 541.5H60M94 541.5H118M31 562.5H61M91 562.5H124"/>
+<path d="M235 365.5H391.5V442L407.5 448 376 459.3 392.6 469V521.5H235Z"/>
+<path d="M400.8 364H558.6V521.5H402.7V465L394.5 459.8 422.8 447.6 400.8 435.5Z"/>
+<path d="M207 443.3H296M299 443.3H321M325 443.3H464M470 443.3H490M495 443.3H582" stroke-width="2.4"/>
+<path d="M309.9 357.5V416M309.9 434V454M309.9 459.5V544M479.6 357V417M479.6 433V453M479.6 459V544" stroke-width="2"/>
+<circle cx="309.5" cy="443.8" r="25.4"/><circle cx="480.1" cy="442.7" r="26"/>
+<path d="M235.5 526V571M236 540H257M288 540H308M236 560.7H354M438 560.7H558M559 523V570M481 539H505M538 539H558M561 363.6H606M558.5 441.4H581M591 519.6H606.5M572.5 364V390M572.5 415.6V441.5M597 364V442M599.6 471V519.5"/>
+<path d="M220 310L278 363M194 402L220 443M203 534.5L236 550M508.6 295L535 335M645 388L612.4 445M338 590L293 562M494 590L430 570.5M394.6 337.6L370.6 337.6L324.6 419M571 324L543 324L492.2 419.5M287 399L262 399M424 399L401 399"/>
+<path d="M234.5 196V78L347 44.7 357.5 49.5 374 60.7 369.8 66.6H401L399.5 70.5 437.3 88M234.5 78L258.3 91.7 282 84.5 307.5 98.5 279.5 105M258.3 91.7V213.7M234.5 196L258.3 213.7 279.5 204.5"/>
+<path d="M279.5 231.5V105L307 123.7 437 89.5V124.5L442.5 129 423 152 437 162.5V208.3L307 250.5 279.5 231.5ZM307 123.7V251"/>
+<path d="M445.5 87.2V120.5L457 126 433 152.3 445.8 161V200.5M437.5 195.5L444.5 201.5 567 156V52L527 39.2 499 46.8 466.5 36.4 499.5 27.8 465 17.5 360 42.2 359.5 42.6 387.5 57.2 381 63.3H416.8L408 68.6 445 86.6M445.5 87.5L566 52M499.5 27.8V46.8M358.8 42.3V49"/>
+<ellipse cx="378" cy="170.3" rx="19.6" ry="25.2"/><ellipse cx="509.1" cy="127.3" rx="18.5" ry="23.2"/>
+<path d="M627.5 301V311L652.5 295.5"/>
+<path d="M563 519.8H591" stroke="#9a9a9a" stroke-width="1.6"/>
+</g>
+<g fill="#2a2a2a">
+<use href="#ah" transform="translate(278 363) rotate(132.4)"/>
+<use href="#ah" transform="translate(220 443) rotate(147.6)"/>
+<use href="#ah" transform="translate(236 550) rotate(115.2)"/>
+<use href="#ah" transform="translate(535 335) rotate(146.6)"/>
+<use href="#ah" transform="translate(612.4 445) rotate(-150.2)"/>
+<use href="#ah" transform="translate(293 562) rotate(-58.1)"/>
+<use href="#ah" transform="translate(430 570.5) rotate(-73.1)"/>
+<use href="#ah" transform="translate(324.6 419) rotate(-150.5)"/>
+<use href="#ah" transform="translate(492.2 419.5) rotate(-152)"/>
+<use href="#ah" transform="translate(262 399) rotate(-90)"/>
+<use href="#ah" transform="translate(401 399) rotate(-90)"/>
+<use href="#ah" transform="translate(107 20.5)"/>
+<use href="#ah" transform="translate(107 44.5) rotate(180)"/>
+<use href="#ah" transform="translate(107 310.3)"/>
+<use href="#ah" transform="translate(107 333.3) rotate(180)"/>
+<use href="#ah" transform="translate(61 541.5) rotate(90)"/>
+<use href="#ah" transform="translate(95.5 541.5) rotate(-90)"/>
+<use href="#ah" transform="translate(30.5 562.5) rotate(-90)"/>
+<use href="#ah" transform="translate(123.5 562.5) rotate(90)"/>
+<use href="#ah" transform="translate(572.5 364)"/>
+<use href="#ah" transform="translate(572.5 441.5) rotate(180)"/>
+<use href="#ah" transform="translate(597 364)"/>
+<use href="#ah" transform="translate(599.6 519.5) rotate(180)"/>
+<use href="#ah" transform="translate(237 540) rotate(-90)"/>
+<use href="#ah" transform="translate(309.5 540) rotate(90)"/>
+<use href="#ah" transform="translate(237 560.6) rotate(-90)"/>
+<use href="#ah" transform="translate(558.5 560.5) rotate(90)"/>
+<use href="#ah" transform="translate(480.5 539) rotate(-90)"/>
+<use href="#ah" transform="translate(558.5 539) rotate(90)"/>
+</g>
+<g font-family="Helvetica, Arial, sans-serif" fill="#2a2a2a" stroke="#2a2a2a" stroke-width=".3">
+<text x="564.5" y="181" font-size="15.3" textLength="48.5" lengthAdjust="spacingAndGlyphs">NOTES</text>
+<text x="602" y="198" font-size="15.3" textLength="10.5" lengthAdjust="spacingAndGlyphs">1.</text>
+<text x="618.6" y="198" font-size="15.3" textLength="102.5" lengthAdjust="spacingAndGlyphs">DRILL 31/64 IN.</text>
+<text x="618.6" y="214" font-size="15.3" textLength="87.5" lengthAdjust="spacingAndGlyphs">REAM 1/2 IN.</text>
+<text x="602" y="229.6" font-size="15.3" textLength="10.5" lengthAdjust="spacingAndGlyphs">2.</text>
+<text x="618.6" y="229.6" font-size="15.3" textLength="126.5" lengthAdjust="spacingAndGlyphs">ALL TOLERANCES</text>
+<text x="618.6" y="245.5" font-size="15.3" textLength="148.5" lengthAdjust="spacingAndGlyphs">1/32 UNLESS OTHER-</text>
+<text x="618.6" y="261" font-size="15.3" textLength="117.5" lengthAdjust="spacingAndGlyphs">WISE SPECIFIED</text>
+<text x="602" y="277.6" font-size="15.3" textLength="10.5" lengthAdjust="spacingAndGlyphs">3.</text>
+<text x="618.6" y="277.6" font-size="15.3" textLength="121.5" lengthAdjust="spacingAndGlyphs">FINISH ALL OVER</text>
+<text x="618" y="295" font-size="15.3" textLength="16" lengthAdjust="spacingAndGlyphs">25</text>
+<text x="400.2" y="342.5" font-size="15.3" textLength="56" lengthAdjust="spacingAndGlyphs">NOTE 1.</text>
+<text x="578" y="329" font-size="15.3" textLength="56" lengthAdjust="spacingAndGlyphs">NOTE 1.</text>
+<text x="498" y="594.4" font-size="15.3" textLength="9.5" lengthAdjust="spacingAndGlyphs">A</text>
+<text x="644" y="382.4" font-size="15.3" textLength="9.5" lengthAdjust="spacingAndGlyphs">B</text>
+<text x="494.4" y="294" font-size="15.3" textLength="10" lengthAdjust="spacingAndGlyphs">C</text>
+<text x="291" y="404.8" font-size="15.3" textLength="9.5" lengthAdjust="spacingAndGlyphs">D</text>
+<text x="184" y="399.8" font-size="15.3" textLength="8.5" lengthAdjust="spacingAndGlyphs">E</text>
+<text x="208" y="310" font-size="15.3" textLength="7.5" lengthAdjust="spacingAndGlyphs">F</text>
+<text x="429.6" y="403.8" font-size="15.3" textLength="10" lengthAdjust="spacingAndGlyphs">G</text>
+<text x="342" y="596.5" font-size="15.3" textLength="9.5" lengthAdjust="spacingAndGlyphs">H</text>
+<text x="191" y="538" font-size="15.3" textLength="7.5" lengthAdjust="spacingAndGlyphs">J</text>
+<text x="97" y="60" font-size="14.5" textLength="21" lengthAdjust="spacingAndGlyphs">1/4"</text>
+<text x="97" y="306" font-size="14.5" textLength="21" lengthAdjust="spacingAndGlyphs">1/4"</text>
+<text x="66" y="546" font-size="14.5" textLength="22" lengthAdjust="spacingAndGlyphs">1/4"</text>
+<text x="70.5" y="566.5" font-size="14.5" textLength="12" lengthAdjust="spacingAndGlyphs">1"</text>
+<text x="258" y="545.6" font-size="15.3" textLength="25" lengthAdjust="spacingAndGlyphs">3/4"</text>
+<text x="511" y="544" font-size="15.3" textLength="25" lengthAdjust="spacingAndGlyphs">3/4"</text>
+<text x="565" y="408" font-size="15.3" textLength="25" lengthAdjust="spacingAndGlyphs">3/4"</text>
+<text x="589" y="464" font-size="15.3" textLength="4.5" lengthAdjust="spacingAndGlyphs">1</text>
+<text x="598" y="464" font-size="15.3" textLength="26.5" lengthAdjust="spacingAndGlyphs">1/2"</text>
+<text x="361.5" y="566.6" font-size="15.3" textLength="15.5" lengthAdjust="spacingAndGlyphs">17</text>
+<text x="381" y="560.3" font-size="15.3" textLength="40.5" lengthAdjust="spacingAndGlyphs">+1/64"</text>
+<text x="381" y="573.5" font-size="15.3" textLength="37" lengthAdjust="spacingAndGlyphs">-3/64"</text>
+</g>
+<text x="307" y="635" font-family="'Times New Roman', Times, serif" font-size="17.5" fill="#2a2a2a" textLength="184" lengthAdjust="spacingAndGlyphs">Figure 36. Aircraft Drawing.</text>
+</svg>

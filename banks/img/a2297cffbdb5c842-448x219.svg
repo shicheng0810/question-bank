@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 219">
+<rect width="448" height="219" fill="#fff"/>
+<g fill="none" stroke="#161616" stroke-linejoin="miter">
+<path d="M13.6 8.3L436.2 10.7L436.4 181.4L12.6 178.6Z" stroke-width="1.8"/>
+<g stroke="#1c1c1c" stroke-width="2">
+<path d="M27.4 84.4V43.8L397.5 44.7V75.6"/>
+<path d="M26.5 119.8V166.7L398 167.4V126.4"/>
+<path d="M166.4 44V89L170.2 91.7L162.5 95L170.2 98L162.5 101.6L170.2 104.7L162.5 108.5L170.2 112L162.5 115.7L165.8 118.5V167"/>
+<path d="M207.5 44V89L211 91.8L203.7 95L211 98.2L203.7 101.8L211 105L203.7 108.8L211 112.2L203.7 116L206.8 118.5V167"/>
+<path d="M268.7 44V51.5L272.2 53.7L266 57L272.2 60.2L267.2 62.5L270 65L274.3 67.5L269 70.5L275.8 75L272.5 78.3L271.5 81.5"/>
+<path d="M268 81.6H251.5V98L254.3 100.5L247.2 104.5L254.3 107.5L246.7 112L254.8 115.3L246.7 119.5L250.4 122.3V136.6H291.6V122.5L290.7 122.3L286.8 119.3L294.8 114.8L287.2 111.5L294.2 107.5L287.2 104.3L294.6 100.3L291.6 98V81.6H278.6"/>
+<path d="M270.4 136.6V167.3"/>
+</g>
+<circle cx="26.5" cy="87.7" r="3.3" stroke="#222" stroke-width="1.4"/>
+<circle cx="26.5" cy="116.4" r="3.3" stroke="#222" stroke-width="1.4"/>
+<circle cx="398.4" cy="101" r="25.2" stroke="#1c1c1c" stroke-width="1.7"/>
+<path d="M290 52.8Q281.5 57 279.5 70" stroke="#222" stroke-width="1.5"/>
+</g>
+<polygon points="274.2,80.6 276.2,70 282,72.8" fill="#161616"/>
+<g font-family="Helvetica, Arial, sans-serif" fill="#0a0a14">
+<text transform="translate(152 141) rotate(-90)" font-size="10.5" textLength="17.0" lengthAdjust="spacingAndGlyphs">R1=</text>
+<text transform="translate(152 117) rotate(-90)" font-size="10.5" textLength="11.0" lengthAdjust="spacingAndGlyphs">12</text>
+<text transform="translate(152 99) rotate(-90)" font-size="10.5" textLength="22.0" lengthAdjust="spacingAndGlyphs">ohms</text>
+<text transform="translate(197 139) rotate(-90)" font-size="10.5" textLength="17.0" lengthAdjust="spacingAndGlyphs">R2=</text>
+<text transform="translate(197 115) rotate(-90)" font-size="10.5" textLength="5.5" lengthAdjust="spacingAndGlyphs">6</text>
+<text transform="translate(197 102) rotate(-90)" font-size="10.5" textLength="21.0" lengthAdjust="spacingAndGlyphs">ohms</text>
+<text transform="translate(257 77) rotate(-90)" font-size="10.5" textLength="17.5" lengthAdjust="spacingAndGlyphs">R4=</text>
+<text transform="translate(257 53) rotate(-90)" font-size="10.5" textLength="5.0" lengthAdjust="spacingAndGlyphs">6</text>
+<text transform="translate(257 41) rotate(-90)" font-size="10.5" textLength="22.0" lengthAdjust="spacingAndGlyphs">ohms</text>
+<text transform="translate(241 147) rotate(-90)" font-size="10.5" textLength="17.0" lengthAdjust="spacingAndGlyphs">R3=</text>
+<text transform="translate(241 123) rotate(-90)" font-size="10.5" textLength="5.0" lengthAdjust="spacingAndGlyphs">6</text>
+<text transform="translate(241 111) rotate(-90)" font-size="10.5" textLength="22.0" lengthAdjust="spacingAndGlyphs">ohms</text>
+<text transform="translate(320 142) rotate(-90)" font-size="10.5" textLength="17.0" lengthAdjust="spacingAndGlyphs">R5=</text>
+<text transform="translate(320 118) rotate(-90)" font-size="10.5" textLength="5.0" lengthAdjust="spacingAndGlyphs">6</text>
+<text transform="translate(320 106) rotate(-90)" font-size="10.5" textLength="22.0" lengthAdjust="spacingAndGlyphs">ohms</text>
+<text x="295.5" y="56" font-size="10.5" textLength="68" lengthAdjust="spacingAndGlyphs">DISCONNECTED</text>
+<text x="392" y="108.3" font-size="17" font-weight="bold" textLength="12.5" lengthAdjust="spacingAndGlyphs">Ω</text>
+<text x="13" y="203" font-size="17" font-weight="bold" textLength="72" lengthAdjust="spacingAndGlyphs">Figure 6.</text>
+<text x="89.5" y="203" font-size="17" textLength="103" lengthAdjust="spacingAndGlyphs">Circuit Diagram</text>
+</g>
+</svg>

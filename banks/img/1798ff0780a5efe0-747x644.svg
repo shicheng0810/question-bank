@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 747 644"><rect width="747" height="644" fill="#fff"/>
+<defs><path id="h" d="M0 0L-3.8 11.5L0 9.5L3.8 11.5Z"/></defs>
+<rect x="11" y="10" width="725" height="594.5" fill="none" stroke="#2c2c2c" stroke-width="5.8"/>
+<path d="M80 452.8H178" stroke="#616161" stroke-width="2" fill="none"/>
+<g fill="none" stroke="#969696" stroke-width="2.2"><path d="M173.8 45.7V114.5M368 98H584M97 476.5H128M500 541.8H520"/></g>
+<g fill="none" stroke="#2c2c2c" stroke-width="2.5" stroke-linejoin="miter">
+<path d="M187.5 116.3L174.3 127.5V187L187.5 201.3M187.5 116.3V201.5M187.5 116.3H336Q342 116.3 343 110.5M187.5 201.5H336Q342 201.5 343 207.5M343 217V96.3H354.3V217"/>
+<path d="M355 100Q356 110.5 364 110.5H424M355.5 108Q357 117.5 364 117.5H424M355 214Q356 207 364 207H424M355.5 206Q357 199.2 364 199.2H424"/>
+<path d="M424 110.5H426A48.3 48.3 0 0 1 426 207H424M424 117.5H425A41 41 0 0 1 425 199.2H424"/><circle cx="423.8" cy="159.5" r="20.3"/>
+<path d="M187.5 367.5L174.3 380V440L187.5 453.7M187.5 367.5V453.7M187.5 367.5H336Q342 367.5 343 361M187.5 453.7H336Q342 453.7 343 449M343 469.5V349H354.3V469.5H343"/>
+<path d="M355.5 361Q358 369.4 365 369.4H447Q465 372 473.3 396M378 396H473.3M378 424.5H473.3M473.3 424.5Q467 442 447.5 451.5M355.5 455Q358 450.3 364 450.3H450.5M378 396A13 14.2 0 0 0 378 424.5"/>
+<path d="M81 366.7H179M121 380.5H170M121 439.5H171M96.5 369V476.5M131 318V439.5M107 318H131M173.8 205V360M187.5 282.5H252M303 282.5H421M187.5 327.5H214.5M256 327.5H291M293 311V357.5M354.5 310.5V344M317 327H354M425 326.5V327M440 326.5H467.5M293 241.3H335M341.8 226V266M356.3 226V266M126 67H165M189 68.2H237.5M187.5 45V109"/>
+<path d="M500 349.5H518.75V409M467.4 370.6H600M368 215.3H584M127 67.5H165M480.5 424.3H568M480 395.5H568M500 410.5H531M495.3 380V408M495.3 425V481H553.8M546.3 293H585M546.3 293V382M546.3 425V468M500 424V424M591.3 336.3H617.5M591.3 336.3V448M466.7 450.5H598.8M546.3 395.5M500 395.5H568M500 424H568M558.3 98V142.5M558.3 173.7V213.5M500 51.3H539.5M498 51L436 137M290.8 29.5H274M290.8 29.5L338 104M583 98M500 158.8H524"/>
+</g>
+<g fill="none" stroke="#2c2c2c" stroke-width="2"><path d="M192.5 128H287.5M192.5 188.75H287.5M192.5 379.5H287.5M192.5 441.25H287.5" stroke-dasharray="8.5 7.5"/><path d="M290 128.5V189M290 379V442" stroke-dasharray="7 3"/><path d="M290.5 129L303 146M290.5 189L304 171M290.5 380L303 397M290.5 442L304 424" stroke-dasharray="3 3"/><path d="M303.5 151.5L312.5 159.5L304.5 166.5M303.5 403L312.5 411L304.5 418"/>
+<path d="M404 371V394M443 371V394M404 425V450M443 425V441" stroke-dasharray="7 3"/><path d="M423.8 128.5V468" stroke-dasharray="14 3.5" stroke-width="1.8"/></g>
+<g fill="none" stroke="#2c2c2c" stroke-width="1.8"><path d="M135.5 159.5H153.5M160 159.5H404M411.5 159.5H419M429 159.5H435.5M443 159.5H524M141 410.8H403M406 410.8H531M377 399L466.5 572L470 584.3H503M363 455L470 577.5M450 454.5L496 541.5M428.4 417L447.5 447.5M429.5 461Q440 457 450.5 454"/></g>
+<g fill="#2c2c2c"><use href="#h" transform="translate(172.5 67.5) rotate(90)"/><use href="#h" transform="translate(188 68.3) rotate(-90)"/><use href="#h" transform="translate(339 105) rotate(150)"/><use href="#h" transform="translate(435 138.5) rotate(216)"/>
+<use href="#h" transform="translate(174.5 282.5) rotate(-90)"/><use href="#h" transform="translate(421.3 282.5) rotate(90)"/><use href="#h" transform="translate(174.5 327.5) rotate(-90)"/><use href="#h" transform="translate(291.3 327.3) rotate(90)"/><use href="#h" transform="translate(354.5 327) rotate(90)"/><use href="#h" transform="translate(425 326.5) rotate(-90)"/>
+<use href="#h" transform="translate(339.5 241) rotate(90)"/><use href="#h" transform="translate(358 241) rotate(-90)"/>
+<use href="#h" transform="translate(96.5 369.5)"/><use href="#h" transform="translate(96.5 451) rotate(180)"/><use href="#h" transform="translate(131 384)"/><use href="#h" transform="translate(131 439.5) rotate(180)"/>
+<use href="#h" transform="translate(518.5 371)"/><use href="#h" transform="translate(518.5 409.5) rotate(180)"/><use href="#h" transform="translate(495.3 408) rotate(180)"/><use href="#h" transform="translate(495.3 425.4)"/>
+<use href="#h" transform="translate(546.3 394) rotate(180)"/><use href="#h" transform="translate(546.3 424.5)"/><use href="#h" transform="translate(591.3 371)"/><use href="#h" transform="translate(591.3 449) rotate(180)"/>
+<use href="#h" transform="translate(558.3 98)"/><use href="#h" transform="translate(558.3 213.5) rotate(180)"/>
+<use href="#h" transform="translate(377.5 398.5) rotate(333)"/><use href="#h" transform="translate(363 455) rotate(319)"/><use href="#h" transform="translate(447 447.5) rotate(148)"/></g>
+<g font-family="Helvetica, Arial, sans-serif" font-size="16.8" fill="#2c2c2c">
+<text x="58" y="73.7" textLength="57" lengthAdjust="spacingAndGlyphs">1/16x45</text><text x="222" y="36" textLength="51" lengthAdjust="spacingAndGlyphs">1/16 R.</text>
+<text x="545" y="58.8" textLength="41" lengthAdjust="spacingAndGlyphs">.3125</text><text x="588.5" y="49.5" textLength="40.5" lengthAdjust="spacingAndGlyphs">+.005</text><text x="590.5" y="66" textLength="37" lengthAdjust="spacingAndGlyphs">-.000</text><text x="640.5" y="58" textLength="29.5" lengthAdjust="spacingAndGlyphs">DIA.</text>
+<text x="550" y="162.5" textLength="22.5" lengthAdjust="spacingAndGlyphs">7/8</text><text x="582.5" y="162.5" textLength="28.5" lengthAdjust="spacingAndGlyphs">DIA.</text>
+<text x="258.8" y="247.5" textLength="30.7" lengthAdjust="spacingAndGlyphs">3/32</text><text x="258.8" y="290" textLength="33" lengthAdjust="spacingAndGlyphs">1 3/4</text><text x="367" y="336" textLength="38.5" lengthAdjust="spacingAndGlyphs">15/32</text><text x="448.8" y="356" textLength="37.2" lengthAdjust="spacingAndGlyphs">19/64</text>
+<text x="222.5" y="332" textLength="21.3" lengthAdjust="spacingAndGlyphs">7/8</text><text x="47" y="328" textLength="56.3" lengthAdjust="spacingAndGlyphs">1/2 DIA.</text><text x="135" y="483" textLength="105" lengthAdjust="spacingAndGlyphs">.665 .001 DIA.</text>
+<text x="592" y="298.8" textLength="65" lengthAdjust="spacingAndGlyphs">.221 .003</text><text x="625" y="343.8" textLength="38.8" lengthAdjust="spacingAndGlyphs">19/32</text><text x="561" y="487" textLength="29" lengthAdjust="spacingAndGlyphs">.110</text><text x="600.3" y="487" textLength="27" lengthAdjust="spacingAndGlyphs">.001</text>
+<text x="529.5" y="550.5" textLength="154" lengthAdjust="spacingAndGlyphs">13/32 R. SPHERICAL</text><text x="512" y="592" textLength="51" lengthAdjust="spacingAndGlyphs">1/16 R.</text></g>
+<text x="280" y="637.5" font-family="'Times New Roman', Times, serif" font-size="21" fill="#2c2c2c" textLength="185" lengthAdjust="spacingAndGlyphs">Figure 34. Aircraft Drawing.</text></svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 945 392"><rect width="945" height="392" fill="#fff"/>
+<defs>
+<pattern id="h" patternUnits="userSpaceOnUse" patternTransform="skewX(-26.57)" x="-0.6" y="0" width="12.1" height="10"><rect width="12.1" height="10" fill="#6c5735"/><rect x="3.75" width="4.7" height="10" fill="#af8976"/></pattern>
+<linearGradient id="gs" gradientUnits="userSpaceOnUse" x1="510" y1="0" x2="589" y2="0"><stop offset="0" stop-color="#a0c6d9"/><stop offset=".15" stop-color="#99bed2"/><stop offset=".3" stop-color="#89adc5"/><stop offset=".46" stop-color="#7096b2"/><stop offset=".61" stop-color="#547a99"/><stop offset=".76" stop-color="#355c7d"/><stop offset=".91" stop-color="#0d3d5f"/><stop offset="1" stop-color="#013557"/></linearGradient>
+<linearGradient id="gh" gradientUnits="userSpaceOnUse" x1="500" y1="0" x2="620" y2="0"><stop offset="0" stop-color="#a0c6d9"/><stop offset=".2" stop-color="#95b9cf"/><stop offset=".4" stop-color="#7ba0bb"/><stop offset=".6" stop-color="#597e9d"/><stop offset=".8" stop-color="#31597a"/><stop offset=".9" stop-color="#194363"/><stop offset="1" stop-color="#0a3558"/></linearGradient>
+<radialGradient id="rd" cx=".34" cy=".28" r=".85"><stop offset="0" stop-color="#d9232b"/><stop offset=".5" stop-color="#a21a1e"/><stop offset="1" stop-color="#5c0000"/></radialGradient>
+<g id="ah"><path d="M0 0L3.9 11.5L0 9.2L-3.9 11.5Z"/></g>
+</defs>
+<rect x="13" y="17.7" width="914.7" height="323" rx="8" fill="#f6fafc" stroke="#000" stroke-width="1.7"/>
+<path fill="#e4be9d" d="M245.3 45.5H440L472 62.5V73H243.8L257.8 62.5L247 58.8L246.3 58Z"/>
+<path fill="#e4be9d" d="M624.5 45.5H799.4L805 52L790 61L799.4 64.5V73H590V62.5Z"/>
+<path fill="url(#h)" d="M243.8 73.2L238.8 80L250 87.5L255.6 90.6L248.8 97.5L241.5 108.8L237.5 115L241.3 118.5L246.5 122.5L251.2 125.3L250.6 127.5L248 133L245 137H472V73.2Z"/>
+<path fill="url(#h)" d="M590 73.2H799.4L800.6 78L804.4 86L789 106.4L800 114L802 118L809.6 126.6L799.4 137H590Z"/>
+<path fill="url(#gh)" d="M440 45.5H624.5L590 62.5H472Z"/>
+<rect x="472" y="64" width="118" height="242.3" fill="url(#gs)" stroke="#000" stroke-width="2"/>
+<g fill="none" stroke="#000" stroke-width="1.7" stroke-linejoin="miter">
+<path d="M245.3 45.5L246.3 58L247 58.8L257.8 62.5L243.8 73.2L238.8 80L250 87.5L255.6 90.6L248.8 97.5L241.5 108.8L237.5 115L241.3 118.5L246.5 122.5L251.2 125.3L250.6 127.5L248 133L245 137.2"/>
+<path d="M799.4 45.5L805 52L790 61L799.4 64.5V73.2L800.6 78L804.4 86L789 106.4L800 114L802 118L809.6 126.6L799.4 137.2"/>
+<path d="M245.3 45.5H440L472 62.5M440 45.5H624.5M624.5 45.5H799.4M624.5 45.5L590 62.5M245 137.2H472M590 137.2H799.4"/>
+<path d="M472 62.5V73.5M590 62.5V73.5"/>
+</g>
+<path fill="none" stroke="#9b816b" stroke-width="1" d="M244 72.4H472M590 72.4H799.4"/>
+<path fill="none" stroke="#000" stroke-width="1" stroke-dasharray="4.6 7.1" stroke-dashoffset="3.8" d="M245 73.5H472M590 73.5H799.4"/>
+<g fill="none" stroke="#000" stroke-width="1.7">
+<path d="M93 46.3H241.5M179 73.7H239.8M137 137.5H241.5M87 306.5H465.5"/>
+<path d="M115.4 47V300M152.8 47V132M198.5 74V132"/>
+</g>
+<g fill="#000"><use href="#ah" transform="translate(115.4 47)"/><use href="#ah" transform="translate(115.4 304.6) scale(1 -1)"/>
+<use href="#ah" transform="translate(152.8 47.4)"/><use href="#ah" transform="translate(152.8 136.2) scale(1 -1)"/>
+<use href="#ah" transform="translate(198.5 74.2)"/><use href="#ah" transform="translate(198.5 136.2) scale(1 -1)"/></g>
+<circle cx="115.4" cy="166" r="13.8" fill="url(#rd)"/><circle cx="152.9" cy="90.8" r="13.8" fill="url(#rd)"/><circle cx="198.7" cy="103.3" r="13.8" fill="url(#rd)"/>
+<g fill="#fff" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="16" text-anchor="middle"><text x="115.6" y="171.6">1</text><text x="153.1" y="96.4">3</text><text x="198.9" y="108.9">2</text></g>
+<g fill="#000" font-size="14.5"><text x="15" y="373.7" font-family="Helvetica, Arial, sans-serif" font-weight="bold" textLength="61" lengthAdjust="spacingAndGlyphs">Figure 3.</text>
+<text x="82" y="373.7" font-family="'Times New Roman', Times, serif" font-style="italic" font-size="15.5" textLength="81" lengthAdjust="spacingAndGlyphs">Grip length.</text></g>
+</svg>

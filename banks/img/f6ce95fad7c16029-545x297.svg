@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 545 297">
+<rect width="545" height="297" fill="#fff"/>
+<rect x="0" y="0" width="1" height="297" fill="#4c4c4c"/>
+<rect x="0" y="0" width="545" height="1" fill="#c7c7c7"/>
+<rect x="544" y="0" width="1" height="297" fill="#d4d4d4"/>
+<rect x="0" y="296" width="545" height="1" fill="#b5b5b5"/>
+<g fill="none" stroke="#000" stroke-width="1.18">
+<path d="M46.5 31H257M299 31H513.2V160.3M513.2 167V270.8H308.7M253.8 270.8H46.9V183.1M46.9 117.2V31"/>
+<circle cx="46.9" cy="150.2" r="32.9"/>
+<path d="M18.8 150.6C18.8 143 25 137 33 137C41 137 46.5 143 46.5 150C46.5 158 52 164 59 164C66 164 72.5 158 72.5 150.3"/>
+<path d="M257 31H261.5L265.6 22.3L271.9 39.7L277.5 22.3L283.8 39.7L289.4 22.3L295 39.7L298.8 31" stroke-linejoin="miter"/>
+<path d="M496 160.3H529.4M496 167H529.4"/>
+<path d="M253.8 269.6A6.8 6.7 0 0 0 267.4 269.6A6.8 6.7 0 0 0 281 269.6A6.8 6.7 0 0 0 294.6 269.6A6.8 6.7 0 0 0 308.4 269.6"/>
+</g>
+<g font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#111">
+<text x="92" y="146.8" textLength="64" lengthAdjust="spacingAndGlyphs">117 VAC</text>
+<text x="91" y="169.8" textLength="52" lengthAdjust="spacingAndGlyphs">400 Hz</text>
+<text x="245" y="66.6" textLength="75" lengthAdjust="spacingAndGlyphs">470 ohms</text>
+<text x="425" y="169.8" textLength="55" lengthAdjust="spacingAndGlyphs">680 mF</text>
+<text x="251" y="252.8" textLength="59" lengthAdjust="spacingAndGlyphs">250 mH</text>
+</g>
+</svg>

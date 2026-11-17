@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 429 192"><rect width="429" height="192" fill="#fff"/>
+<g fill="none" stroke="#000" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+<path d="M61 8V68M52.5 30.4H70.5M161 8V68M150.5 35L156.5 30.4H168L173.2 27M230.4 18H246.4L257 33M266 33L276.6 18H291.6M244 33H279M261 33V58M330.4 18H346.4L357 33M366 33L376.6 18H391.6M344 33H379M361 33V58"/>
+<path d="M10 148H26M10 168.4H26M26 138H46C60 138 67.6 148 67.6 158S60 178 46 178H26ZM67.6 158H82"/>
+<path d="M130 148H149M130 168.4H149M146 138C165 138 181 148 188.4 158C181 168 165 178 146 178Q154 158 146 138ZM188.4 158H202"/>
+<path d="M240 148H259M240 168.4H259M256 138C275 138 291 148 297.6 158C291 168 275 178 256 178Q264 158 256 138ZM303.1 158H311.6"/>
+<path d="M350.4 148H366.4M350.4 168.4H366.4M366.4 138H386C400 138 407.6 148 407.6 158S400 178 386 178H366.4ZM413.3 158H421.6"/>
+<circle cx="300.4" cy="158" r="2.7"/><circle cx="410.6" cy="158" r="2.7"/></g>
+<g fill="#000"><path d="M61 31L70 45.6H53Z"/><path d="M161 31L170 45.6H153Z"/><path d="M257 33L249.2 27.6L255 25Z"/><path d="M346.4 18.4L347.3 26.8L353 23.5Z"/></g>
+<g font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="bold" fill="#000"><text x="44" y="44.4">A</text><text x="134.4" y="45">B</text><text x="233" y="69">C</text><text x="384.4" y="68.5">D</text><text x="5.6" y="165">E</text><text x="125.6" y="165">F</text><text x="234" y="165">G</text><text x="345" y="165">H</text></g></svg>

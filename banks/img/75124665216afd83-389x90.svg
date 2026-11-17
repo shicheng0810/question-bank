@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 389 90">
+<defs>
+<linearGradient id="gStud" gradientUnits="userSpaceOnUse" x1="0" y1="26" x2="0" y2="45"><stop offset="0" stop-color="#777"/><stop offset="0.12" stop-color="#c4c4c4"/><stop offset="0.4" stop-color="#e4e4e4"/><stop offset="0.5" stop-color="#c8c8c8"/><stop offset="0.7" stop-color="#b0b0b0"/><stop offset="0.85" stop-color="#8a8a8a"/><stop offset="0.95" stop-color="#383838"/><stop offset="1" stop-color="#2a2a2a"/></linearGradient>
+<linearGradient id="gCollar" gradientUnits="userSpaceOnUse" x1="0" y1="24" x2="0" y2="48"><stop offset="0" stop-color="#555"/><stop offset="0.05" stop-color="#bcbcbc"/><stop offset="0.3" stop-color="#e2e2e2"/><stop offset="0.5" stop-color="#e8e8e8"/><stop offset="0.6" stop-color="#d0d0d0"/><stop offset="0.62" stop-color="#bfbfbf"/><stop offset="0.66" stop-color="#555"/><stop offset="0.72" stop-color="#000"/><stop offset="1" stop-color="#000"/></linearGradient>
+<linearGradient id="gHexTop" gradientUnits="userSpaceOnUse" x1="0" y1="17" x2="0" y2="27"><stop offset="0" stop-color="#4a4a4a"/><stop offset="0.15" stop-color="#868686"/><stop offset="1" stop-color="#bdbdbd"/></linearGradient>
+<linearGradient id="gHexMid" gradientUnits="userSpaceOnUse" x1="0" y1="27" x2="0" y2="41"><stop offset="0" stop-color="#999"/><stop offset="0.25" stop-color="#e6e6e6"/><stop offset="0.65" stop-color="#d2d2d2"/><stop offset="0.9" stop-color="#b0b0b0"/><stop offset="1" stop-color="#555"/></linearGradient>
+<linearGradient id="gBar" gradientUnits="userSpaceOnUse" x1="0" y1="19" x2="0" y2="47"><stop offset="0" stop-color="#555"/><stop offset="0.06" stop-color="#8e8e8e"/><stop offset="0.43" stop-color="#e8e8e8"/><stop offset="0.58" stop-color="#d2d2d2"/><stop offset="0.63" stop-color="#b4b4b4"/><stop offset="0.66" stop-color="#202020"/><stop offset="0.7" stop-color="#000"/><stop offset="0.97" stop-color="#000"/><stop offset="1" stop-color="#555"/></linearGradient>
+<linearGradient id="gCone" gradientUnits="userSpaceOnUse" x1="0" y1="20" x2="0" y2="33"><stop offset="0" stop-color="#8c8c8c"/><stop offset="0.2" stop-color="#a8a8a8"/><stop offset="0.85" stop-color="#e6e6e6"/><stop offset="1" stop-color="#dcdcdc"/></linearGradient>
+<pattern id="ridge" patternUnits="userSpaceOnUse" x="29.2" y="26" width="3.35" height="20"><path d="M0.4 0 V20" stroke="#111" stroke-width="1.4" opacity="0.85"/><path d="M2 0 V20" stroke="#fff" stroke-width="1" opacity="0.6"/></pattern>
+<clipPath id="cc"><rect x="327" y="24" width="52.5" height="14"/></clipPath>
+</defs>
+<rect width="389" height="90" fill="#fff"/>
+<rect x="25" y="26.2" width="121" height="18.6" rx="2.4" fill="url(#gStud)"/>
+<rect x="27" y="26.2" width="119" height="18.6" fill="url(#ridge)"/>
+<path d="M25.6 27 H146 M27 44.4 H146" stroke="#555" stroke-width="1.1" fill="none"/>
+<path d="M143 26.4 L145 24.5 H161 L166.7 18 V50.7 L160 47.6 H146.4 V40 H145 V26.4 Z" fill="url(#gCollar)"/>
+<path d="M143 26.4 L145 24.5 H161 L166.7 18" fill="none" stroke="#111" stroke-width="1.1"/>
+<rect x="166.6" y="17.2" width="31.2" height="10" fill="url(#gHexTop)"/>
+<rect x="166.6" y="27.2" width="31.2" height="13.8" fill="url(#gHexMid)"/>
+<path d="M166.6 40.5 H197.8 V50.5 H166.6 Z" fill="#000"/>
+<path d="M166.4 17.6 H197.8 M166.8 27.2 H197.8" stroke="#1c1c1c" stroke-width="1.1" fill="none"/>
+<path d="M166.9 18 V41 M197.4 17.5 V47" stroke="#222" stroke-width="1.1" fill="none"/>
+<rect x="198" y="19.4" width="108" height="27" fill="url(#gBar)"/>
+<path d="M197.8 29.5 L200 32 L204 35.5 L208 37.3 V46.4 H197.8 Z" fill="#000"/>
+<path d="M305.7 20 L326 22.9 V41.9 L306 46.4 Z" fill="url(#gCone)"/>
+<path d="M306 37.4 L325.8 32.6 V41.9 L306 46.4 Z" fill="#000"/>
+<path d="M305.7 19.6 V37 M305.8 20 L326 22.9" stroke="#111" stroke-width="1" fill="none"/>
+<rect x="326.8" y="23.7" width="52.8" height="14.4" fill="#dedede"/>
+<g clip-path="url(#cc)"><path d="M304.1 22 l12 15 M309.8 22 l12 15 M315.4 22 l12 15 M321.1 22 l12 15 M326.7 22 l12 15 M332.3 22 l12 15 M338.0 22 l12 15 M343.6 22 l12 15 M349.3 22 l12 15 M354.9 22 l12 15 M360.6 22 l12 15 M366.2 22 l12 15 M371.9 22 l12 15 M377.6 22 l12 15 M383.2 22 l12 15 M388.9 22 l12 15 M394.5 22 l12 15 M400.1 22 l12 15" stroke="#222" stroke-width="1.6" fill="none"/></g>
+<rect x="327.2" y="24.1" width="52" height="13.7" fill="none" stroke="#2a2a2a" stroke-width="1.1"/>
+<text x="25.9" y="75" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="22.5" textLength="14.4" lengthAdjust="spacingAndGlyphs" fill="#000">C</text>
+</svg>

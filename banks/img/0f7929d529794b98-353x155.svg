@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 353 155">
+<rect width="353" height="155" fill="#ffffff"/>
+<defs>
+<linearGradient id="gt" gradientUnits="userSpaceOnUse" x1="0" y1="14" x2="0" y2="50"><stop offset="0.000" stop-color="#929292"/><stop offset="0.083" stop-color="#929292"/><stop offset="0.139" stop-color="#9c9c9c"/><stop offset="0.194" stop-color="#ababab"/><stop offset="0.250" stop-color="#a5a5a5"/><stop offset="0.306" stop-color="#c3c3c3"/><stop offset="0.361" stop-color="#cdcdcd"/><stop offset="0.417" stop-color="#d7d7d7"/><stop offset="0.472" stop-color="#e4e4e4"/><stop offset="0.528" stop-color="#e7e7e7"/><stop offset="0.583" stop-color="#dadada"/><stop offset="0.639" stop-color="#cdcdcd"/><stop offset="0.694" stop-color="#c3c3c3"/><stop offset="0.750" stop-color="#b6b6b6"/><stop offset="0.806" stop-color="#b0b0b0"/><stop offset="0.861" stop-color="#9c9c9c"/><stop offset="0.917" stop-color="#8d8d8d"/><stop offset="1.000" stop-color="#808080"/></linearGradient>
+<linearGradient id="ge" gradientUnits="userSpaceOnUse" x1="0" y1="64" x2="0" y2="108"><stop offset="0.000" stop-color="#8c8c8c"/><stop offset="0.136" stop-color="#989898"/><stop offset="0.227" stop-color="#b0b0b0"/><stop offset="0.364" stop-color="#b6b6b6"/><stop offset="0.455" stop-color="#d2d2d2"/><stop offset="0.591" stop-color="#dedede"/><stop offset="0.682" stop-color="#ebebeb"/><stop offset="0.727" stop-color="#dedede"/><stop offset="0.818" stop-color="#cdcdcd"/><stop offset="0.909" stop-color="#b9b9b9"/><stop offset="1.000" stop-color="#aaaaaa"/></linearGradient>
+<linearGradient id="gs" gradientUnits="userSpaceOnUse" x1="0" y1="82" x2="0" y2="97"><stop offset="0.000" stop-color="#7d7d7d"/><stop offset="0.100" stop-color="#909090"/><stop offset="0.200" stop-color="#a0a0a0"/><stop offset="0.333" stop-color="#aeaeae"/><stop offset="0.467" stop-color="#bebebe"/><stop offset="0.600" stop-color="#d0d0d0"/><stop offset="0.700" stop-color="#e8e8e8"/><stop offset="0.800" stop-color="#e7e7e7"/><stop offset="0.900" stop-color="#d9d9d9"/><stop offset="1.000" stop-color="#c8c8c8"/></linearGradient>
+<linearGradient id="gc" gradientUnits="userSpaceOnUse" x1="0" y1="23" x2="0" y2="42"><stop offset="0.000" stop-color="#969696"/><stop offset="0.105" stop-color="#a6a6a6"/><stop offset="0.211" stop-color="#c3c3c3"/><stop offset="0.316" stop-color="#cdcdcd"/><stop offset="0.421" stop-color="#e4e4e4"/><stop offset="0.526" stop-color="#e7e7e7"/><stop offset="0.684" stop-color="#c8c8c8"/><stop offset="0.842" stop-color="#ababab"/><stop offset="1.000" stop-color="#8c8c8c"/></linearGradient>
+<radialGradient id="rb1" gradientUnits="userSpaceOnUse" cx="56.8" cy="92.6" r="10"><stop offset="0" stop-color="#f6f6f6"/><stop offset="0.3" stop-color="#e2e2e2"/><stop offset="0.65" stop-color="#bcbcbc"/><stop offset="0.9" stop-color="#a0a0a0"/><stop offset="1" stop-color="#8e8e8e"/></radialGradient>
+<radialGradient id="rb2" gradientUnits="userSpaceOnUse" cx="124.4" cy="92.3" r="10"><stop offset="0" stop-color="#f6f6f6"/><stop offset="0.3" stop-color="#e2e2e2"/><stop offset="0.65" stop-color="#bcbcbc"/><stop offset="0.9" stop-color="#a0a0a0"/><stop offset="1" stop-color="#8e8e8e"/></radialGradient>
+<clipPath id="cb"><rect x="285.3" y="85" width="52.5" height="15.8"/></clipPath>
+</defs>
+<!-- dimension lines -->
+<path d="M27.4 46.8V77" fill="none" stroke="#949494" stroke-width="1.2"/><path d="M282.1 43.8V78.5" fill="none" stroke="#5a5a5a" stroke-width="1.3"/>
+<!-- top view -->
+<path d="M33.5 14.8H137.5C146 15 150 17.5 157 19.9H264L282 23.7V40.3L264 44.3H157C150 46.5 146 49.2 138.5 49.5H33.5L28.5 40.9H127C139 40.9 145.2 37 145.2 32C145.2 27 139 23.1 127 23.1H28.5Z" fill="url(#gt)" stroke="#3c3c3c" stroke-width="1.5" stroke-linejoin="round"/>
+<path d="M264 19.9L282 23.7V40.3L264 44.3Z" fill="url(#gc)" stroke="#444" stroke-width="1.3" stroke-linejoin="round"/>
+<path d="M46.3 15.5V22.5M67.2 15.5V22.5M46.3 41.5V49M67.2 41.5V49" stroke="#3a3a3a" stroke-width="1.4" fill="none"/>
+<path d="M158.6 25H167M176.9 25H186M195 25H204.3M213 25H222.6M231.4 25H240.9M250 25H259.4" stroke="#686868" stroke-width="1.9" fill="none"/>
+<path d="M152 39.5H161.4M170.3 39.5H179.7M188.6 39.5H197.9M206.9 39.5H216M225 39.5H234.3M243 39.5H252.9" stroke="#505050" stroke-width="1.5" fill="none"/>
+<!-- side view -->
+<path d="M56.6 64.1C90 66 120 72 159.5 81.2H263.5L284.5 83.8V100.8L282.5 101.6L263.5 105.9H158C120 112 90 122 56.6 122.1A29 29 0 0 1 56.6 64.1Z" fill="url(#ge)"/>
+<path d="M159.5 81.2H263.5L284.5 83.8V100.8L263.5 97H159.5Z" fill="url(#gs)"/>
+<path d="M43.3 110.5L52.5 113L61.5 113.3L117.5 102.2L124 96L134.5 93.4L137.5 96.4L142.5 97.6L160.5 96.6H263.5L283.5 93.4L284.8 94.5V100.8L282.5 101.6L263.5 105.9H158C120 112 90 122 56.6 122.1C50 122 45 120 42 117.5L43.3 111Z" fill="#050505"/>
+<path d="M56.6 64.1C90 66 120 72 159.5 81.2H263.5L284.5 83.8V100.8L282.5 101.6L263.5 105.9H158C120 112 90 122 56.6 122.1A29 29 0 0 1 56.6 64.1Z" fill="none" stroke="#303030" stroke-width="1.4" stroke-linejoin="round"/>
+<path d="M44.5 112.2A22 22 0 0 1 56.6 71.3L116.5 83.3" fill="none" stroke="#2a2a2a" stroke-width="1.2"/>
+<path d="M159.5 81.5V96.5M263.5 81.5V96.5M284.6 84V100.5" stroke="#303030" stroke-width="1.2" fill="none"/>
+<circle cx="56.8" cy="92.6" r="9.6" fill="url(#rb1)" stroke="#3a3a3a" stroke-width="1.2"/>
+<circle cx="124.4" cy="92.3" r="9.6" fill="url(#rb2)" stroke="#3a3a3a" stroke-width="1.2"/>
+<!-- cable -->
+<rect x="285.3" y="85" width="52.5" height="15.8" fill="#4a4a4a"/>
+<g clip-path="url(#cb)"><path d="M260.5 85L280.0 101.5 M266.1 85L285.6 101.5 M271.8 85L291.3 101.5 M277.4 85L296.9 101.5 M283.0 85L302.5 101.5 M288.6 85L308.1 101.5 M294.2 85L313.7 101.5 M299.9 85L319.4 101.5 M305.5 85L325.0 101.5 M311.1 85L330.6 101.5 M316.7 85L336.2 101.5 M322.3 85L341.8 101.5 M328.0 85L347.5 101.5 M333.6 85L353.1 101.5 M339.2 85L358.7 101.5 M344.8 85L364.3 101.5 M350.4 85L369.9 101.5 M356.1 85L375.6 101.5 M361.7 85L381.2 101.5 M367.3 85L386.8 101.5 " stroke="#c4c4c4" stroke-width="1.8" fill="none"/></g>
+<path d="M285.3 93.5L291.5 100.7H285.3Z" fill="#a8a8a8"/>
+<rect x="285.3" y="84.9" width="52.5" height="1.3" fill="#444"/>
+<rect x="285.3" y="99.7" width="52.5" height="1.1" fill="#5c5c5c"/>
+<path d="M337.4 85V100.5" stroke="#444" stroke-width="1.3" fill="none"/>
+<!-- label -->
+<text x="28.3" y="151.4" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="21" fill="#000" textLength="14" lengthAdjust="spacingAndGlyphs">D</text>
+</svg>

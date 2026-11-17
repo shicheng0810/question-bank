@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 601 335">
+<rect width="601" height="335" fill="#fff"/>
+<rect x="8.4" y="10" width="580.2" height="315" fill="none" stroke="#111" stroke-width="2.3"/>
+<g fill="none" stroke="#222" stroke-width="1.9" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M56.3 133.5V40.2H500.5V115.5"/>
+<path d="M56.3 202V295.5H500.5V214.5"/>
+<path d="M500.5 115.5H569.5V136.6"/>
+<path d="M500.5 214.5H569.5V193.5"/>
+<path d="M416.5 115.5V162.5M416.5 169.5V214.5"/>
+<path d="M416.5 115.5H500.5M416.5 214.5H500.5"/>
+<circle cx="56" cy="167.6" r="34.8" stroke-width="1.6"/>
+<path d="M26.6 168C27 158 33 153.6 40 153.3C48 153.5 55 160 56 168C58 177 62 181.6 68 181.8C77 182 83 176 83 167" stroke-width="1.5"/>
+<path d="M408.5 162.6H425M408.5 169.6H425" stroke-width="1.9"/>
+<path d="M569.5 136.6C580 138 580 148.5 569.5 150.5C580 152 580 163 569.5 164.5C580 166 580 176.5 569.5 178C580 179.5 580 190 569.5 193.5" stroke-width="1.8"/>
+</g>
+<circle cx="500.5" cy="115.5" r="4.3" fill="#000"/><circle cx="500.5" cy="214.5" r="4.3" fill="#000"/>
+<g font-family="Helvetica, Arial, sans-serif" fill="#1a1a1a">
+<text x="358.3" y="170.5" font-size="17.5" textLength="21.5" lengthAdjust="spacingAndGlyphs">77</text>
+<text x="384.5" y="170.5" font-size="13" fill="#333" textLength="15.5" lengthAdjust="spacingAndGlyphs">uF</text>
+<text x="515" y="166.5" font-size="17.5" textLength="20.5" lengthAdjust="spacingAndGlyphs">33</text>
+<text x="540" y="166.5" font-size="13" fill="#333" textLength="22" lengthAdjust="spacingAndGlyphs">mH</text>
+</g>
+</svg>

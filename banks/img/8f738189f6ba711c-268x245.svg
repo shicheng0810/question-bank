@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268 245"><rect width="268" height="245" fill="#fff"/>
+<defs><g id="m" fill="none" stroke="#000" stroke-width="1.7"><path d="M184 121L176.5 138.5M184 121L191.5 138.5M179.5 132.5H188.5"/></g></defs>
+<g fill="none" stroke="#000" stroke-width="1.8"><path d="M24 122.3V24.3H75M112 24.3H253.8V116L261.3 119.5L248.8 124.5L261.5 131L248.8 137.5L262 143L248.8 149L253.8 153V234.5H24V145.5M184 24.3V115.5M184 152.3V234.5"/>
+<path d="M5.5 122.3H43.5M14.5 130.3H34.5M5.5 139.3H43.5M14.5 145.5H34.5"/>
+<circle cx="93.5" cy="23.5" r="18.3"/><ellipse cx="184" cy="133.8" rx="19.6" ry="18.5"/></g>
+<g fill="#000"><circle cx="184" cy="24.3" r="2.6"/><circle cx="184" cy="234.5" r="2.6"/></g>
+<use href="#m" x="-89.5" y="-110.5"/><use href="#m"/>
+<g font-family="Helvetica, Arial, sans-serif" fill="#000"><text x="90.3" y="37.5" font-size="14" font-weight="bold" textLength="7" lengthAdjust="spacingAndGlyphs">1</text><text x="180" y="146.5" font-size="14" font-weight="bold" textLength="10" lengthAdjust="spacingAndGlyphs">2</text><text x="231" y="115" font-size="12.5" font-weight="bold" textLength="15" lengthAdjust="spacingAndGlyphs">R1</text><text x="5.8" y="119.2" font-size="19" textLength="13" lengthAdjust="spacingAndGlyphs">+</text></g></svg>

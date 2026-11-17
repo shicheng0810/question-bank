@@ -6994,7 +6994,7 @@
   },
   {
     "id": "pquiz_141-33",
-    "question": "Determine the proper tension for a 1/8-inch cable (7x19) if the temperature is 800F.",
+    "question": "Determine the proper tension for a 1/8-inch cable (7x19) if the temperature is 80°F.",
     "choices": [
       "70 pounds",
       "75 pounds",
@@ -7082,7 +7082,7 @@
   },
   {
     "id": "pquiz_141-44",
-    "question": "Determine the proper tension for a 3/16-inch cable (7x19 extra flex) if the temperature is 870F.",
+    "question": "Determine the proper tension for a 3/16-inch cable (7x19 extra flex) if the temperature is 87°F.",
     "choices": [
       "125 pounds",
       "135 pounds",

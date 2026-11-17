@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1267 565"><rect width="1267" height="565" fill="#fff"/>
+<defs><linearGradient id="ga" gradientUnits="userSpaceOnUse" x1="150" y1="270" x2="300" y2="420"><stop offset="0" stop-color="#aeb1aa"/><stop offset=".6" stop-color="#abada7"/><stop offset="1" stop-color="#999b95"/></linearGradient>
+<linearGradient id="gc" gradientUnits="userSpaceOnUse" x1="1090" y1="90" x2="1010" y2="400"><stop offset="0" stop-color="#a6a9a3"/><stop offset=".85" stop-color="#aaada6"/><stop offset="1" stop-color="#9da09a"/></linearGradient>
+<linearGradient id="gd" gradientUnits="userSpaceOnUse" x1="990" y1="405" x2="1037" y2="437"><stop offset="0" stop-color="#7c7e7a"/><stop offset="1" stop-color="#9a9d96"/></linearGradient>
+<linearGradient id="gb" gradientUnits="userSpaceOnUse" x1="0" y1="406" x2="0" y2="438"><stop offset="0" stop-color="#9fbcc4"/><stop offset=".25" stop-color="#aebbb9"/><stop offset="1" stop-color="#acbab7"/></linearGradient></defs>
+<path d="M294 440L1030 443L1038 441L985 406L322 405Z" fill="#66b4d7" opacity=".9"/>
+<path d="M322 406.3L985 408.6L1030 439.8L296 437Z" fill="url(#gb)"/>
+<path d="M316 403L323 407L296 436L290 436Z" fill="#8ab2bf"/>
+<path d="M345 410.5Q460 420 577 421T747 421T915 414L985 411" fill="none" stroke="#d8b99d" stroke-width="2.4" stroke-dasharray="10 8" opacity=".75"/>
+<path d="M392 436.5Q480 433 577 430T745 429.5T860 437.5L935 439" fill="none" stroke="#d8b99d" stroke-width="2.4" stroke-dasharray="10 8" opacity=".75"/>
+<path d="M320 406.3L985 408.6M296 437.5L1030 439.6" stroke="#111" stroke-width="1.7" fill="none"/>
+<path d="M300 441L1033 442.2" stroke="#66b4d7" stroke-width="2.2" fill="none"/>
+<path d="M114.5 264.3L287 432L291 437L112.5 267.5Z" fill="#7b7a74" stroke="#111" stroke-width="1.2"/>
+<path d="M114.5 264.3L163 250.3L316 402L287 432Z" fill="url(#ga)" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M316 402L287 432" stroke="#111" stroke-width="2" fill="none"/>
+<path d="M1141.5 91L1144.5 92.5L1050 427L1046 427Z" fill="#6c6c66" stroke="#111" stroke-width="1.1"/>
+<path d="M1082.7 94L1141.5 91L1047 426Q1044 434 1035 440L1030 440L985 408.6Q990 405 996 400Q997 398 1000 388Z" fill="url(#gc)" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M990 406L996 400L1043 433Q1041 438 1036 440L1027 438L988 410Z" fill="url(#gd)"/>
+<path d="M996 400L1043 433" stroke="#111" stroke-width="2" fill="none"/>
+<path d="M1046 427Q1046 436 1036 440" stroke="#111" stroke-width="1.8" fill="none"/>
+<path d="M323 407L296 436M985 409L1028 439" stroke="#7a5fb0" stroke-width="1.2" fill="none"/>
+<g fill="#c8b0f8" fill-opacity=".35" stroke="#b894f0" stroke-width="2.2"><circle cx="323.2" cy="405.7" r="4.6"/><circle cx="296.3" cy="437" r="4.6"/><circle cx="983.5" cy="408.5" r="4.6"/><circle cx="1028.3" cy="440" r="4.6"/></g>
+<circle cx="275" cy="409" r="3.2" fill="#8a7a8a" fill-opacity=".6" stroke="#8a7f8c" stroke-width="1.4"/>
+<g font-family="Helvetica, Arial, sans-serif" font-size="31" fill="#000"><text x="466.7" y="203.3" textLength="91" lengthAdjust="spacingAndGlyphs">Radius</text><text x="578" y="203.3" textLength="55" lengthAdjust="spacingAndGlyphs">1/8”</text><text x="466.7" y="246.7" textLength="267" lengthAdjust="spacingAndGlyphs">Material Thickness:</text><text x="750" y="246.7" textLength="75" lengthAdjust="spacingAndGlyphs">0.032</text>
+<text x="580.8" y="431.7" textLength="46.5" lengthAdjust="spacingAndGlyphs">Flat</text><text x="640" y="431.7" textLength="13.3" lengthAdjust="spacingAndGlyphs">B</text><text x="242.5" y="473" font-size="32" textLength="80.5" lengthAdjust="spacingAndGlyphs">Angle</text><text x="336" y="473" font-size="32" textLength="9" lengthAdjust="spacingAndGlyphs">1</text><text x="980" y="473" font-size="32" textLength="105" lengthAdjust="spacingAndGlyphs">Angle 2</text>
+<text transform="translate(158 289.5) rotate(48.5)" font-size="29" textLength="81" lengthAdjust="spacingAndGlyphs">Flat A</text><text transform="translate(1065 297.5) rotate(-72)" font-size="29" textLength="79" lengthAdjust="spacingAndGlyphs">Flat C</text></g></svg>

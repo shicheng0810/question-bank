@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 278 181"><rect width="278" height="181" fill="#fff"/>
+<g fill="none" stroke="#000" stroke-width="1.8" stroke-linejoin="round">
+<path d="M24.6 10.6 H264 V82 M264 118.5 V170.6 H24.6 V112.6 M24.6 10.6 V20 M24.6 59.5 V89.6"/>
+<circle cx="24.6" cy="22.3" r="2" stroke-width="1.5"/><circle cx="24.6" cy="57.5" r="2" stroke-width="1.5"/>
+<path d="M26.3 23.6 C33 26 35 30 33 35 C31 38.5 26 39 22 41 C17 43 14 47 14.7 50.5 C15.4 54 18 55.5 22.8 56.4" stroke-width="1.7"/>
+<path d="M174.5 10.6 V82 L181 85 L167.8 91.3 L181.5 97.5 L166.7 103.3 L181.8 109.5 L167 115 L174.5 118.5 V170.6"/>
+<path d="M264 82 L270 85 L257.8 91.3 L271 97.5 L257 103.3 L271.3 109.5 L257.5 115 L264 118.5"/>
+<path d="M6.4 80.5 H18.8 M12.6 74.4 V86.4"/><path stroke-width="2" d="M5.4 89.2 H43 M14.5 96 H34 M5.4 105 H43 M14.5 112.1 H34"/>
+</g>
+<circle cx="174.5" cy="10.6" r="2.9"/><circle cx="174.5" cy="170.6" r="2.9"/>
+<path d="M23 69H24.3V70.3H23zM23 128.5H24.3V129.8H23zM173 68.5H174.4V70H173zM173 128.5H174.4V130H173zM263.3 68.5H264.7V70H263.3zM263.3 128.5H264.7V130H263.3z"/>
+<g font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="12.5">
+<text x="184.6" y="128" textLength="15.5" lengthAdjust="spacingAndGlyphs">R1</text>
+<text x="242" y="81" textLength="14" lengthAdjust="spacingAndGlyphs">R2</text></g>
+<text x="34" y="20.7" font-family="'Times New Roman', Times, serif" font-weight="bold" font-size="12.5" textLength="14" lengthAdjust="spacingAndGlyphs">S1</text>
+</svg>

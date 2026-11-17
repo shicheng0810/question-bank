@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 625 606"><rect width="625" height="606" fill="#fff"/>
+<g fill="none" stroke="#2f2f2f" stroke-width="1.9" stroke-linejoin="round">
+<path stroke-width="5" d="M13.5 11L614.5 12.5L612.5 561.8L11 559.3Z"/>
+<path d="M50.3 24.8L306.5 26L306.5 170.8L48.8 170Z"/>
+<path d="M100.5 25V124.3H260.3V25"/>
+<circle cx="92.6" cy="130" r="19.5"/><circle cx="264.8" cy="130" r="19.5"/>
+<circle cx="179.6" cy="289" r="79.4"/><circle cx="178.2" cy="288.7" r="33.6"/>
+<path d="M100.6 289L98.6 466C98 480 90 490 77 496.5L73 497.8H49.5V546.5H305.5V497.8H290C277 495 262 487 259.6 472L259 289"/>
+<path d="M49.5 497.8H305.5"/>
+<path d="M428.5 496.6H526.8V287.5M478.7 199.6H577.4V546.5H428.5V496.6M478.7 199.6V361.5H526.8"/>
+<g stroke-width="2" stroke-dasharray="5.5 4"><path d="M148.4 24.5V124M208.4 24.5V124M478 248.6H578M477 311.3H578M73.7 496.5V546M110.6 497V546M246.6 497V546M282.6 497V546M454.6 496.5V546M490.6 496.5V546"/></g></g>
+<text x="247" y="591" font-family="'Times New Roman', Times, serif" font-size="18" fill="#2f2f2f" textLength="128" lengthAdjust="spacingAndGlyphs">Figure 32. Sketches.</text></svg>

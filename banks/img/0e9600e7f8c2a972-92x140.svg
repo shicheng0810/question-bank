@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92 140">
+<rect width="92" height="140" fill="#ffffff"/>
+<defs>
+<linearGradient id="bg" gradientUnits="userSpaceOnUse" x1="13" y1="6" x2="76" y2="100"><stop offset="0" stop-color="#bdc8d3"/><stop offset="1" stop-color="#607a93"/></linearGradient>
+<linearGradient id="ra" gradientUnits="userSpaceOnUse" x1="0" y1="24" x2="0" y2="52"><stop offset="0" stop-color="#d27070"/><stop offset="0.3" stop-color="#c01818"/><stop offset="0.5" stop-color="#b00000"/><stop offset="0.7" stop-color="#f00000"/><stop offset="0.9" stop-color="#c84848"/><stop offset="1" stop-color="#d89090"/></linearGradient>
+<linearGradient id="rb" gradientUnits="userSpaceOnUse" x1="0" y1="87" x2="0" y2="114"><stop offset="0" stop-color="#d27070"/><stop offset="0.3" stop-color="#c01818"/><stop offset="0.5" stop-color="#b00000"/><stop offset="0.7" stop-color="#f00000"/><stop offset="0.9" stop-color="#c84848"/><stop offset="1" stop-color="#d89090"/></linearGradient>
+</defs>
+<path d="M32.5 6.5H88.5V69H69V131.5H13.5V69H32.5Z" fill="url(#bg)" stroke="#d5dce4" stroke-width="1"/>
+<path d="M8.5 30.5H17V24.5L31 38L17 51.5V45H8.5Z" fill="url(#ra)" stroke="#c86a6a" stroke-width="0.8" stroke-linejoin="round"/>
+<path d="M92 94V107H82.5V113.5L71 100.5L82.5 87.5V94Z" fill="url(#rb)" stroke="#c86a6a" stroke-width="0.8" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 939 553"><rect width="939" height="553" fill="#fff"/>
+<defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="250" y1="80" x2="521" y2="442"><stop offset="0" stop-color="#8bafc7"/><stop offset=".213" stop-color="#6187a5"/><stop offset=".389" stop-color="#436a8a"/><stop offset=".494" stop-color="#325a7b"/><stop offset=".637" stop-color="#1a4567"/><stop offset=".76" stop-color="#003557"/><stop offset="1" stop-color="#00274a"/></linearGradient>
+<path id="a" d="M0 0L-6.7 20L0 15.5L6.7 20Z"/></defs>
+<rect x="13" y="15" width="915" height="491" rx="12" fill="#f6fafc" stroke="#000" stroke-width="2.2"/>
+<g stroke="#000" fill="none" stroke-width="2.8"><path d="M89 66H232M89 334H232M129.5 302.7H232M241 340V462.7M277.3 340V428.3M685.5 340V462.7M691.7 311.5H741.7M691.7 334.3H741.7"/></g>
+<path d="M241 67V285A48 48 0 0 0 289 333H685V311H289A24 24 0 0 1 265 285V67Z" fill="url(#g)" stroke="#000" stroke-width="3" stroke-linejoin="miter"/>
+<g stroke="#000" fill="none" stroke-width="1.7"><path d="M104 80V181M104 221.7V322M178.3 80V148.3M178.3 230.7V292M290 383.3H423M516.7 383.3H665M252 447.3H450M491.7 447.3H665M722.7 255.7V300M722.7 346V393M329 250H314L284 290"/></g>
+<g fill="#000"><use href="#a" x="104" y="69.3"/><use href="#a" x="104" y="331.7" transform="rotate(180 104 331.7)"/><use href="#a" x="178.3" y="69.3"/><use href="#a" x="178.3" y="300.7" transform="rotate(180 178.3 300.7)"/>
+<use href="#a" x="278" y="383.3" transform="rotate(-90 278 383.3)"/><use href="#a" x="684" y="383.3" transform="rotate(90 684 383.3)"/><use href="#a" x="241.7" y="447.3" transform="rotate(-90 241.7 447.3)"/><use href="#a" x="684" y="447.3" transform="rotate(90 684 447.3)"/>
+<use href="#a" x="722.7" y="310.5" transform="rotate(180 722.7 310.5)"/><use href="#a" x="722.7" y="336.7"/><use href="#a" x="275" y="298.3" transform="rotate(218.9 275 298.3)"/></g>
+<g font-family="Helvetica, Arial, sans-serif" font-size="31" fill="#000"><text transform="translate(114 201) rotate(-90)" text-anchor="middle" font-size="28">3"</text><text transform="translate(189.3 189.5) rotate(-90)" text-anchor="middle" font-size="28">Flat B</text>
+<text x="337" y="259.3">3/16" R.</text><text x="470.5" y="391.7" text-anchor="middle">Flat A</text><text x="471.8" y="455.7" text-anchor="middle">4"</text><text x="752.7" y="330">0.0625</text>
+<text x="444" y="146">Setback = R+T</text><text x="444" y="178">Bend allowance</text><text x="663" y="178">=</text><text x="696" y="178">2<tspan font-style="italic" dx="-2">π</tspan><tspan dx="13">(R + ½T)</tspan></text><text x="778" y="210" text-anchor="middle">4</text></g>
+<path d="M696 188H856" stroke="#000" stroke-width="1.5"/>
+<text x="15" y="537.3" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="15" fill="#000">Figure 4.</text><text x="82.3" y="537.3" font-family="'Times New Roman', Times, serif" font-style="italic" font-size="16.8" fill="#000">Bending sheet metal.</text></svg>

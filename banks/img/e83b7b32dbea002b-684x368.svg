@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 684 368">
+<rect width="684" height="368" fill="#fff"/>
+<path d="M475 58 574 7H678V361H574L475 310Z" fill="#eee"/>
+<g fill="none" stroke="#000">
+<g stroke-opacity=".5" stroke-width="2">
+<path d="M83 88H475M83 97H475M83 106H475M83 115H475M83 124H475M83 133H475M83 142H475M83 151H475M83 160H475M83 169H475"/>
+<path d="M82 209H475"/>
+<path d="M83 209v50M93 209v15M103 209v30M113 209v15M123 209v50M133 209v15M143 209v30M153 209v15M163 209v50M173 209v15M183 209v30M193 209v15M203 209v50M213 209v15M223 209v30M233 209v15M243 209v50M253 209v15M263 209v30M273 209v15M283 209v50M293 209v15M303 209v30M313 209v15M323 209v50M333 209v15M343 209v30M353 209v15M363 209v50M373 209v15M383 209v30M393 209v15M403 209v50M413 209v15M423 209v30M433 209v15M443 209v50M453 209v15M463 209v30M473 209v15"/>
+<path d="M475 62h50M475 72h15M475 82h15M475 92h15M475 102h15M475 112h50M475 122h15M475 132h15M475 142h15M475 152h15M475 172h15M475 182h15M475 192h15M475 202h15M475 212h50M475 222h15M475 232h15M475 242h15M475 252h15M475 262h50M475 272h15M475 282h15M475 292h15M475 302h15M575 7V361"/>
+</g>
+<path d="M475 162h50" stroke-opacity=".76" stroke-width="2"/>
+<g stroke-width="5" stroke-linejoin="miter">
+<path d="M475 59H88M88 309H475"/>
+<path d="M88 59C86.8 59 82.8 59.1 80.5 59.2C78.2 59.3 76.5 59.4 74.5 59.7C72.5 60 70.5 60.5 68.5 61C66.5 61.5 64.5 62.1 62.5 62.9C60.5 63.7 58.5 64.6 56.5 65.7C54.5 66.8 52.5 68.2 50.5 69.6C48.5 71 46.5 72.5 44.5 74.3C42.5 76.1 40.2 78.5 38.5 80.5C36.8 82.5 35.6 84.2 34 86.5C32.4 88.8 30.4 91.8 28.9 94.5C27.4 97.2 26.1 99.8 24.8 102.5C23.5 105.2 22.1 107.8 21 110.5C19.9 113.2 18.9 115.8 18 118.5C17.1 121.2 16.2 123.8 15.5 126.5C14.8 129.2 14.1 131.8 13.5 134.5C12.9 137.2 12.3 139.8 11.8 142.5C11.3 145.2 10.8 147.8 10.4 150.5C10 153.2 9.7 155.8 9.4 158.5C9.1 161.2 8.9 163.8 8.7 166.5C8.5 169.2 8.4 171.6 8.3 174.5C8.2 177.4 8 180.8 8 184C8 187.2 8.2 190.6 8.3 193.5C8.4 196.4 8.5 198.8 8.7 201.5C8.9 204.2 9.1 206.8 9.4 209.5C9.7 212.2 10 214.8 10.4 217.5C10.8 220.2 11.3 222.8 11.8 225.5C12.3 228.2 12.9 230.8 13.5 233.5C14.1 236.2 14.8 238.8 15.5 241.5C16.2 244.2 17.1 246.8 18 249.5C18.9 252.2 19.9 254.8 21 257.5C22.1 260.2 23.5 262.8 24.8 265.5C26.1 268.2 27.4 270.8 28.9 273.5C30.4 276.2 32.4 279.2 34 281.5C35.6 283.8 36.8 285.5 38.5 287.5C40.2 289.5 42.5 291.9 44.5 293.7C46.5 295.5 48.5 297 50.5 298.4C52.5 299.8 54.5 301.2 56.5 302.3C58.5 303.4 60.5 304.3 62.5 305.1C64.5 305.9 66.5 306.5 68.5 307C70.5 307.5 72.5 308 74.5 308.3C76.5 308.6 78.2 308.7 80.5 308.8C82.8 308.9 86.8 309 88 309" stroke-width="5.5"/>
+<path d="M474.4 56.2 573.9 6.75H677.25V361.25H573.9L474.4 311.5" stroke-width="5.55" stroke-miterlimit="10"/>
+</g></g>
+<g font-family="'Times New Roman', Times, serif" fill="#000">
+<text x="80.5" y="288.5" font-size="29.5" text-anchor="middle">0</text>
+<text x="120.5" y="288.5" font-size="29.5" text-anchor="middle">1</text>
+<text x="160.5" y="288.5" font-size="29.5" text-anchor="middle">2</text>
+<text x="200.5" y="288.5" font-size="29.5" text-anchor="middle">3</text>
+<text x="240.5" y="288.5" font-size="29.5" text-anchor="middle">4</text>
+<text x="280.5" y="288.5" font-size="29.5" text-anchor="middle">5</text>
+<text x="320.5" y="288.5" font-size="29.5" text-anchor="middle">6</text>
+<text x="360.5" y="288.5" font-size="29.5" text-anchor="middle">7</text>
+<text x="400.5" y="288.5" font-size="29.5" text-anchor="middle">8</text>
+<text x="440.5" y="288.5" font-size="29.5" text-anchor="middle">9</text>
+<text x="525" y="62" font-size="19.3" text-anchor="start">10</text>
+<text x="525" y="112" font-size="19.3" text-anchor="start">5</text>
+<text x="525" y="162" font-size="19.3" text-anchor="start">0</text>
+<text x="525" y="212" font-size="19.3" text-anchor="start">20</text>
+<text x="525" y="262" font-size="19.3" text-anchor="start">15</text>
+<text x="78.5" y="172.5" font-size="10.5" text-anchor="end">0</text>
+<text x="78.5" y="163.5" font-size="10.5" text-anchor="end">1</text>
+<text x="78.5" y="154.5" font-size="10.5" text-anchor="end">2</text>
+<text x="78.5" y="145.5" font-size="10.5" text-anchor="end">3</text>
+<text x="78.5" y="136.5" font-size="10.5" text-anchor="end">4</text>
+<text x="78.5" y="127.5" font-size="10.5" text-anchor="end">5</text>
+<text x="78.5" y="118.5" font-size="10.5" text-anchor="end">6</text>
+<text x="78.5" y="109.5" font-size="10.5" text-anchor="end">7</text>
+<text x="78.5" y="100.5" font-size="10.5" text-anchor="end">8</text>
+<text x="78.5" y="91.5" font-size="10.5" text-anchor="end">9</text>
+</g></svg>

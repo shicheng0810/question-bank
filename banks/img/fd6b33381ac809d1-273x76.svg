@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 273 76">
+<defs>
+<linearGradient id="sh" gradientUnits="userSpaceOnUse" x1="0" y1="21" x2="0" y2="44"><stop offset="0" stop-color="#6a6a6a"/><stop offset="0.07" stop-color="#e8e8e8"/><stop offset="0.3" stop-color="#d8d8d8"/><stop offset="0.5" stop-color="#c4c4c4"/><stop offset="0.6" stop-color="#bdbdbd"/><stop offset="0.65" stop-color="#555"/><stop offset="0.7" stop-color="#000"/><stop offset="1" stop-color="#000"/></linearGradient>
+<radialGradient id="ball" gradientUnits="userSpaceOnUse" cx="122" cy="23" r="24"><stop offset="0" stop-color="#f6f6f6"/><stop offset="0.45" stop-color="#e2e2e2"/><stop offset="0.8" stop-color="#bcbcbc"/><stop offset="1" stop-color="#9a9a9a"/></radialGradient>
+<clipPath id="cl"><rect x="22" y="26" width="46" height="14"/></clipPath>
+<clipPath id="cr"><rect x="191" y="26" width="63" height="14"/></clipPath>
+</defs>
+<rect width="273" height="76" fill="#fff"/>
+<g stroke="#3a3a3a" stroke-width="1.6">
+<rect x="22" y="25.8" width="46.5" height="14.8" fill="#d0d0d0"/>
+<rect x="190.5" y="25.8" width="64" height="14.8" fill="#d0d0d0"/>
+</g>
+<g clip-path="url(#cl)" stroke="#555" stroke-width="1.5" fill="none"><path d="M10.0 26L18.5 40M14.0 26L22.5 40M18.0 26L26.5 40M22.0 26L30.5 40M26.0 26L34.5 40M30.0 26L38.5 40M34.0 26L42.5 40M38.0 26L46.5 40M42.0 26L50.5 40M46.0 26L54.5 40M50.0 26L58.5 40M54.0 26L62.5 40M58.0 26L66.5 40M62.0 26L70.5 40M66.0 26L74.5 40"/></g>
+<g clip-path="url(#cr)" stroke="#555" stroke-width="1.5" fill="none"><path d="M180.0 26L188.5 40M184.0 26L192.5 40M188.0 26L196.5 40M192.0 26L200.5 40M196.0 26L204.5 40M200.0 26L208.5 40M204.0 26L212.5 40M208.0 26L216.5 40M212.0 26L220.5 40M216.0 26L224.5 40M220.0 26L228.5 40M224.0 26L232.5 40M228.0 26L236.5 40M232.0 26L240.5 40M236.0 26L244.5 40M240.0 26L248.5 40M244.0 26L252.5 40M248.0 26L256.5 40M252.0 26L260.5 40"/></g>
+<rect x="22" y="25.2" width="46" height="1.6" fill="#1c1c1c"/><rect x="191" y="25.2" width="64" height="1.6" fill="#1c1c1c"/><rect x="22" y="39.6" width="46" height="1.2" fill="#444"/><rect x="191" y="39.6" width="64" height="1.2" fill="#444"/>
+<rect x="68.5" y="21.3" width="121.5" height="22.4" fill="url(#sh)" stroke="#444" stroke-width="1.2"/>
+<circle cx="129" cy="32.9" r="19.3" fill="#000" stroke="#333" stroke-width="1"/>
+<ellipse cx="127" cy="29.6" rx="16.6" ry="15.4" fill="url(#ball)"/>
+<text x="23.2" y="73" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="21" textLength="11.5" lengthAdjust="spacingAndGlyphs">B</text>
+</svg>

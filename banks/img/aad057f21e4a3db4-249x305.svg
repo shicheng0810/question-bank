@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 305">
+<rect width="249" height="305" fill="#fff"/>
+<g fill="none" stroke="#000" stroke-width="1">
+<path d="M21 151.5H173"/>
+<path d="M172.5 36.4V259.6M212.6 25.6H184.4L172.6 36.2M172.6 259.8L184.6 272.2H212"/>
+<path d="M25.85 137V165M81.75 137V165M137.5 137V165M53.75 143V165M109.7 143V165M165 143V165" stroke-width="1.25"/>
+<path d="M39.85 151.5V165M67.6 151.5V165M95.5 151.5V165M123.5 151.5V165M151.5 151.5V165" stroke-width="1.15"/>
+<path d="M172.5 80.5H204M172.5 152.5H204M172.5 224.1H204" stroke-width="1.05"/>
+<path d="M172.5 37H188.4M172.5 167H188.4M172.5 180.1H188.4M172.5 195.1H188.4M172.5 94.9H188.4" stroke-width="1.45"/>
+<path d="M172.5 51.5H188.8M172.5 65.8H188.4M172.5 109.3H188.8M172.5 123.8H188.4M172.5 138.2H188.4M172.5 209.5H188.8M172.5 238.5H188.8M172.5 253.5H188.8" stroke-width="1.05"/>
+</g>
+<g font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="10.6" fill="#000">
+<text x="193.1" y="40.9" textLength="10.7" lengthAdjust="spacingAndGlyphs">22</text>
+<text x="193.1" y="53.2" textLength="10.7" lengthAdjust="spacingAndGlyphs">22</text>
+<text x="193.1" y="67.9" textLength="9.4" lengthAdjust="spacingAndGlyphs">21</text>
+<text x="209.1" y="83.5" textLength="10.9" lengthAdjust="spacingAndGlyphs">20</text>
+<text x="194" y="98" textLength="10.4" lengthAdjust="spacingAndGlyphs">19</text>
+<text x="194.2" y="112.3" textLength="10.7" lengthAdjust="spacingAndGlyphs">18</text>
+<text x="194" y="127" textLength="10.4" lengthAdjust="spacingAndGlyphs">17</text>
+<text x="194.3" y="140.7" textLength="10" lengthAdjust="spacingAndGlyphs">16</text>
+<text x="208.2" y="156.2" textLength="10.1" lengthAdjust="spacingAndGlyphs">15</text>
+<text x="194" y="170.9" textLength="10.5" lengthAdjust="spacingAndGlyphs">14</text>
+<text x="194" y="184" textLength="10.3" lengthAdjust="spacingAndGlyphs">13</text>
+<text x="194.2" y="198.4" textLength="10.2" lengthAdjust="spacingAndGlyphs">12</text>
+<text x="198.4" y="211.7" text-anchor="middle">11</text>
+<text x="208.2" y="226.8" textLength="10.2" lengthAdjust="spacingAndGlyphs">10</text>
+<text x="193.4" y="240.9" textLength="5.3" lengthAdjust="spacingAndGlyphs">9</text>
+<text x="193.5" y="255.9" textLength="5.1" lengthAdjust="spacingAndGlyphs">8</text>
+<text x="23" y="132.4" textLength="5.4" lengthAdjust="spacingAndGlyphs">0</text>
+<text x="79.85" y="132.5" text-anchor="middle">1</text>
+<text x="134" y="132.5" textLength="5" lengthAdjust="spacingAndGlyphs">2</text>
+</g>
+</svg>

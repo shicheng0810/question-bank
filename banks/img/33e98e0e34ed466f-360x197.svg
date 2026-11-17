@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 197"><rect width="360" height="197" fill="#fff"/>
+<defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="110" y1="15" x2="345" y2="172"><stop offset="0" stop-color="#f2be8a"/><stop offset=".363" stop-color="#d39e7a"/><stop offset=".471" stop-color="#c99372"/><stop offset=".736" stop-color="#b57b5e"/><stop offset=".942" stop-color="#a7694c"/><stop offset="1" stop-color="#a0644a"/></linearGradient></defs>
+<path d="M104 12L186 175H349Z" fill="url(#g)"/>
+<path d="M104 12L186 175M104 12L349 175" fill="none" stroke="#222" stroke-width="0.9"/>
+<path d="M186 175H349" stroke="#6d6967" stroke-width="1.2" fill="none"/>
+<g fill="none" stroke="#000" stroke-width="1.5"><path d="M104.5 12V175.3H186" stroke-dasharray="4.1 2.15"/><path d="M104.5 145.5H134.5V175.3"/>
+<path d="M213.5 187.5H191M311.5 187.5H346"/></g>
+<path d="M184.5 187.5L192.5 184.5V190.5ZM349 187.5L341.5 184.5V190.5Z" fill="#000"/>
+<g font-family="Helvetica, Arial, sans-serif" font-size="12.6" fill="#000"><text x="4.5" y="94" textLength="93" lengthAdjust="spacingAndGlyphs">Height = 2 ft 6 in</text><text x="221" y="190.5" textLength="85" lengthAdjust="spacingAndGlyphs">Base = 3 ft 2 in</text></g></svg>

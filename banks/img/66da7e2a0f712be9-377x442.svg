@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 377 442"><rect width="377" height="442" fill="#fff"/>
+<g fill="#2a2a2a"><path fill-rule="evenodd" d="M11 8.3L373.5 10L372 398.5L9.5 397.5ZM17 14L368 15L366.3 393L14.5 392Z"/></g>
+<g fill="none" stroke="#2a2a2a" stroke-width="2.2">
+<path stroke-width="2.6" d="M172.8 23H142.7V84H110.7V115H266V85H235V23H204V70A15.6 15.6 0 0 1 172.8 70Z"/>
+<path d="M22.2 162.5H174.8V239.5H22.2ZM53 162.5V239.5M143.6 162.5V239.5"/>
+<path d="M207.2 162.9H359.5V241.5H207.2Z"/>
+<path d="M111.4 278.7H263.9V356.8H111.4ZM171.3 278.7V356.8"/><path stroke-width="1.8" d="M202.3 278.7V356.8"/>
+<g stroke-dasharray="5 3.1"><path stroke-width="2.4" d="M83 164.2V240M237 163.5V241M267.5 163.5V241M141.2 280V356M232.5 280V356"/><path d="M113.2 163.5V240"/><path stroke-width="1.8" d="M298.7 163.5V241M329.3 163.5V241"/></g></g>
+<g font-family="Helvetica, Arial, sans-serif" font-weight="bold" fill="#2a2a2a">
+<text x="129" y="140.7" font-size="19" textLength="119" lengthAdjust="spacingAndGlyphs">FRONT VIEW</text>
+<text x="85.5" y="264.3" font-size="18.5">1</text>
+<text x="281.7" y="265.3" font-size="18.5" textLength="10" lengthAdjust="spacingAndGlyphs">2</text>
+<text x="181.7" y="383.3" font-size="18.5" textLength="10" lengthAdjust="spacingAndGlyphs">3</text></g>
+<text x="110" y="425.7" font-family="'Times New Roman', Times, serif" font-size="15.5" fill="#222" textLength="159.3" lengthAdjust="spacingAndGlyphs">Figure 28. Object Views.</text>
+</svg>

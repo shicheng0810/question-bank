@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 414 173"><rect width="414" height="173" fill="#fff"/>
+<defs><path id="z" d="M136.3 27.5l3 -7.9 6.2 15 6.1-15 6 15 6.1-15 5.7 15 3.6-7.1" stroke-width="1.8"/></defs>
+<g fill="none" stroke="#000" stroke-width="2"><path d="M24 49V27.5H136.3M173 27.5H265.5M302.5 27.5H384.5V109.5M384.5 145.5V166H24V139.5M24 85V116M224.7 27.5V87.3H277M312.5 87.3H384.5"/>
+<use href="#z"/><use href="#z" x="129.2"/><use href="#z" x="140.4" y="59.8"/>
+<path d="M384.5 109.5l7 3-14 6 14 6-14 6 14 6-14 6 7 3" stroke-width="1.8"/>
+<path d="M24 49c14 3 14 15 4 19s-17 9-4 17" stroke-width="1.6"/>
+<path d="M6 116H43M13 123.5H34M6 132H43M13 139.5H34"/><path d="M8 108H17M12.5 103.5V112.5" stroke-width="1.6"/></g>
+<g fill="#fff" stroke="#000" stroke-width="1.5"><circle cx="24" cy="49" r="2.3"/><circle cx="24" cy="85" r="2.3"/></g>
+<g fill="#000"><circle cx="224.7" cy="27.5" r="2.8"/><circle cx="384.5" cy="87.3" r="2.8"/></g>
+<g font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#000"><text x="170" y="15">R1</text><text x="301" y="15">R2</text><text x="310" y="75">R3</text><text x="394" y="155">R4</text><text x="33" y="48">S1</text></g></svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 467 275">
+<rect width="467" height="275" fill="#fff"/>
+<g stroke="#111" stroke-width="1.2" fill="none" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M56 49.4 H196.5 M271 49.4 H412 M56 137.4 H196.5 M271 138.6 H412 M55 221.7 H196.5 M271 223.8 H412"/>
+<path d="M110.5 37 V61.5 M110.5 125 V149.5 M110.5 210 V233.8"/>
+<path d="M326.6 37.2 H330.7 V42 M326.6 37.2 V61.2 H322.5 V56.5"/>
+<path d="M326.6 126.6 H330.7 V122.2 M326.6 126.6 V151"/>
+<path d="M320 208.8 L327 213 V235 L334.5 239.5"/>
+<path d="M120 209.5 Q111.5 221.5 122 234"/>
+<path d="M90.5 29 L104.3 15.2 M110.5 29 L124.3 15.2 M119 103 L105.2 116.8 M138.5 103 L124.7 116.8" stroke-width="1.2"/>
+</g>
+<g fill="#111">
+<path d="M96.5 41.2 L110 49.4 L96.5 57.6 Z M96.5 129.2 L110 137.4 L96.5 145.6 Z M95 213.5 L109.5 221.7 L95 230.3 Z"/>
+<path d="M311 41.2 L325.6 49.4 L311 57.8 Z M311 130.4 L325.6 138.6 L311 146.9 Z M311.5 215.5 L325.8 223.8 L311.5 232.5 Z"/>
+<path d="M105.8 13.8 L102.7 20.6 L99 16.9 Z M125.8 13.8 L122.7 20.6 L119 16.9 Z M103.5 118.5 L110.3 115.4 L106.6 111.7 Z M123 118.5 L129.8 115.4 L126.1 111.7 Z"/>
+</g>
+<g font-family="Helvetica, Arial, sans-serif" font-size="14" fill="#333">
+<text x="114" y="81.7" textLength="22.5" lengthAdjust="spacingAndGlyphs">Led</text>
+<text x="293.8" y="82.5" textLength="95.2" lengthAdjust="spacingAndGlyphs">Schottky diode</text>
+<text x="88" y="170.5" textLength="75" lengthAdjust="spacingAndGlyphs">Photodiode</text>
+<text x="277.5" y="172.5" textLength="129.3" lengthAdjust="spacingAndGlyphs">Step-recovery diode</text>
+<text x="100" y="254.5" textLength="51.8" lengthAdjust="spacingAndGlyphs">Varactor</text>
+<text x="323.8" y="258.8" textLength="36.2" lengthAdjust="spacingAndGlyphs">Zener</text>
+</g>
+</svg>

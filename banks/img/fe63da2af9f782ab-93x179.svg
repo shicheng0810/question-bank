@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 93 179">
+<defs>
+<linearGradient id="bg" gradientUnits="userSpaceOnUse" x1="3" y1="30.6" x2="83.8" y2="168.7"><stop offset="0" stop-color="#bac5d0"/><stop offset="1" stop-color="#4e6b87"/></linearGradient>
+<linearGradient id="lv" gradientUnits="userSpaceOnUse" x1="0" y1="8" x2="0" y2="30"><stop offset="0" stop-color="#b00000"/><stop offset="0.3" stop-color="#bc0000"/><stop offset="0.55" stop-color="#f00808"/><stop offset="0.75" stop-color="#d40000"/><stop offset="1" stop-color="#a80000"/></linearGradient>
+<linearGradient id="ld" gradientUnits="userSpaceOnUse" x1="25" y1="0" x2="41.3" y2="0"><stop offset="0" stop-color="#a00000" stop-opacity="0"/><stop offset="0.55" stop-color="#a00000" stop-opacity="0"/><stop offset="0.95" stop-color="#a00000" stop-opacity="0.8"/><stop offset="1" stop-color="#a00000" stop-opacity="0.9"/></linearGradient>
+<radialGradient id="hot" gradientUnits="userSpaceOnUse" cx="36" cy="19" r="13"><stop offset="0" stop-color="#ff0a0a"/><stop offset="0.5" stop-color="#d80000"/><stop offset="1" stop-color="#a80000"/></radialGradient>
+<linearGradient id="lh" gradientUnits="userSpaceOnUse" x1="35" y1="0" x2="41.5" y2="0"><stop offset="0" stop-color="#c02222"/><stop offset="0.25" stop-color="#b00000"/><stop offset="1" stop-color="#ac0000"/></linearGradient>
+<linearGradient id="rh" gradientUnits="userSpaceOnUse" x1="41.5" y1="0" x2="47" y2="0"><stop offset="0" stop-color="#b53030"/><stop offset="1" stop-color="#c25050"/></linearGradient>
+<clipPath id="inner"><path d="M35 9H47V17.4H51.5L41 28L30.5 17.4H35Z"/></clipPath>
+<clipPath id="lc"><rect x="0" y="0" width="41.3" height="40"/></clipPath>
+<clipPath id="rc"><rect x="41.3" y="0" width="30" height="40"/></clipPath>
+<g id="ar">
+<path d="M33 7.1H49V15.4H55.2V17.4L41 30.3L26.8 17.4V15.4H33Z" fill="#e3b3b3"/>
+<path d="M33.8 8H48.2V16.2H53.7L41 28.8L28.3 16.2H33.8Z" fill="#c45c5c"/>
+<g clip-path="url(#inner)"><g clip-path="url(#lc)"><rect x="25" y="8" width="20" height="25" fill="url(#lv)"/><rect x="25" y="8" width="16.3" height="25" fill="url(#ld)"/></g><g clip-path="url(#rc)"><rect x="41.3" y="8" width="20" height="25" fill="url(#rh)"/></g></g>
+</g>
+</defs>
+<rect width="93" height="179" fill="#fff"/>
+<path d="M18 30.6 L17 34 L15.2 40 L13.3 46 L11.4 52 L9.6 58 L8 64 L6.6 70 L5.5 76 L4.7 82 L4.2 88 L4.1 94 L4.3 100 L4.9 106 L5.8 112 L7 118 L8.5 124 L10.1 130 L11.9 136 L13.7 142 L15.5 148 L17.1 154 L17.8 157 L66.2 157 L66.9 154 L68.2 148 L69.8 142 L71.3 136 L72.8 130 L74.2 124 L75.5 118 L76.5 112 L77.3 106 L77.7 100 L77.9 94 L77.8 88 L77.4 82 L76.7 76 L75.7 70 L74.5 64 L73.2 58 L71.6 52 L70.1 46 L68.5 40 L67 34 L66.2 30.6Z" fill="url(#bg)"/>
+<use href="#ar"/>
+<use href="#ar" transform="rotate(180 41 93.75)"/>
+</svg>

@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 719 278">
+<rect width="719" height="278" fill="#fff"/>
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4ede3"/><stop offset=".1" stop-color="#f0e1d1"/><stop offset=".2" stop-color="#edd8c3"/><stop offset=".3" stop-color="#ead0b7"/><stop offset=".5" stop-color="#e6c5a6"/><stop offset=".7" stop-color="#e4bf9e"/><stop offset=".9" stop-color="#e3bd9b"/><stop offset="1" stop-color="#e3bd9b"/></linearGradient></defs>
+<rect x="3" y="6" width="714" height="19" fill="url(#g)"/>
+<rect x="3" y="25" width="714" height="1" fill="#d9b492"/>
+<rect x="3" y="27" width="714" height="45" fill="#dbcdae"/>
+<rect x="3" y="73" width="714" height="205" fill="#ffe192"/>
+<path d="M2 5.5H717M2 26.5H717M2 72.5H717M2 94.5H717M2 112.5H717M2 131.5H717M2 149.5H717M2 168.5H717M2 186.5H717M2 204.5H717M2 223.5H717M2 241.5H717M2 260.5H717M2.5 5V278M105.5 5V278M208.5 5V278M312.5 5V278M414.5 5V278M517.5 5V278M619.5 5V278" stroke="#000" stroke-width="1" fill="none"/>
+<g font-family="Helvetica, Arial, sans-serif" font-size="12.6" fill="#111">
+<g font-weight="bold">
+<text x="54.0" y="20" text-anchor="middle" textLength="45.4" lengthAdjust="spacingAndGlyphs">Number</text>
+<text x="155.5" y="20" text-anchor="middle" textLength="40.4" lengthAdjust="spacingAndGlyphs">Square</text>
+<text x="258.5" y="20" text-anchor="middle" textLength="30.4" lengthAdjust="spacingAndGlyphs">Cube</text>
+<text x="363.5" y="20" text-anchor="middle" textLength="70.4" lengthAdjust="spacingAndGlyphs">Square Root</text>
+<text x="466.5" y="20" text-anchor="middle" textLength="60.4" lengthAdjust="spacingAndGlyphs">Cube Root</text>
+<text x="569.0" y="20" text-anchor="middle" textLength="83.4" lengthAdjust="spacingAndGlyphs">Circumference</text>
+<text x="671.5" y="20" text-anchor="middle" textLength="26.4" lengthAdjust="spacingAndGlyphs">Area</text>
+<text x="54.0" y="53" text-anchor="middle" textLength="65.4" lengthAdjust="spacingAndGlyphs">Number (N)</text>
+<text x="157.0" y="53" text-anchor="middle" textLength="83.4" lengthAdjust="spacingAndGlyphs">N Squared (N²)</text>
+<text x="260.0" y="53" text-anchor="middle" textLength="73.4" lengthAdjust="spacingAndGlyphs">N Cubed (N³)</text>
+<text x="363.5" y="48" text-anchor="middle" textLength="70.4" lengthAdjust="spacingAndGlyphs">Square Root</text>
+<text x="363.5" y="61.7" text-anchor="middle" textLength="50.4" lengthAdjust="spacingAndGlyphs">of N (√N)</text>
+<text x="466.0" y="48" text-anchor="middle" textLength="59.4" lengthAdjust="spacingAndGlyphs">Cube Root</text>
+<text x="465.5" y="61.7" text-anchor="middle" textLength="50.4" lengthAdjust="spacingAndGlyphs">of N (√N)</text>
+<text x="567.5" y="39" text-anchor="middle" textLength="82.4" lengthAdjust="spacingAndGlyphs">Circumference</text>
+<text x="568.0" y="54" text-anchor="middle" textLength="81.4" lengthAdjust="spacingAndGlyphs">of a circle with</text>
+<text x="567.5" y="68" text-anchor="middle" textLength="74.4" lengthAdjust="spacingAndGlyphs">diameter = N</text>
+<text x="671.0" y="39" text-anchor="middle" textLength="51.4" lengthAdjust="spacingAndGlyphs">Area of a</text>
+<text x="671.0" y="54" text-anchor="middle" textLength="57.4" lengthAdjust="spacingAndGlyphs">circle with</text>
+<text x="671.0" y="68" text-anchor="middle" textLength="73.4" lengthAdjust="spacingAndGlyphs">diameter = N</text>
+</g>
+<g text-anchor="end" font-size="12.8">
+<text x="62.9" y="89">1</text>
+<text x="172.9" y="89">1</text>
+<text x="283.9" y="89">1</text>
+<text x="383.8" y="89" textLength="28.6" lengthAdjust="spacingAndGlyphs">1.000</text>
+<text x="478.8" y="89" textLength="28.6" lengthAdjust="spacingAndGlyphs">1.000</text>
+<text x="587.8" y="89" textLength="30.6" lengthAdjust="spacingAndGlyphs">3.142</text>
+<text x="689.8" y="89" textLength="29.6" lengthAdjust="spacingAndGlyphs">0.785</text>
+<text x="62.9" y="107">2</text>
+<text x="172.9" y="107">4</text>
+<text x="283.9" y="107">8</text>
+<text x="383.8" y="107" textLength="28.6" lengthAdjust="spacingAndGlyphs">1.414</text>
+<text x="478.8" y="107" textLength="28.6" lengthAdjust="spacingAndGlyphs">1.260</text>
+<text x="586.8" y="107" textLength="28.6" lengthAdjust="spacingAndGlyphs">6.283</text>
+<text x="689.8" y="107" textLength="29.6" lengthAdjust="spacingAndGlyphs">3.142</text>
+<text x="61.9" y="126">3</text>
+<text x="172.9" y="126">9</text>
+<text x="283.8" y="126" textLength="14.6" lengthAdjust="spacingAndGlyphs">27</text>
+<text x="383.8" y="126" textLength="28.6" lengthAdjust="spacingAndGlyphs">1.732</text>
+<text x="478.8" y="126" textLength="28.6" lengthAdjust="spacingAndGlyphs">1.442</text>
+<text x="586.8" y="126" textLength="29.6" lengthAdjust="spacingAndGlyphs">9.425</text>
+<text x="689.8" y="126" textLength="29.6" lengthAdjust="spacingAndGlyphs">7.069</text>
+<text x="62.9" y="144">4</text>
+<text x="172.8" y="144" textLength="12.6" lengthAdjust="spacingAndGlyphs">16</text>
+<text x="283.8" y="144" textLength="13.6" lengthAdjust="spacingAndGlyphs">64</text>
+<text x="383.8" y="144" textLength="29.6" lengthAdjust="spacingAndGlyphs">2.000</text>
+<text x="478.8" y="144" textLength="28.6" lengthAdjust="spacingAndGlyphs">1.587</text>
+<text x="587.8" y="144" textLength="35.6" lengthAdjust="spacingAndGlyphs">12.566</text>
+<text x="689.8" y="144" textLength="34.6" lengthAdjust="spacingAndGlyphs">12.566</text>
+<text x="61.9" y="163">5</text>
+<text x="172.8" y="163" textLength="13.6" lengthAdjust="spacingAndGlyphs">25</text>
+<text x="282.8" y="163" textLength="18.6" lengthAdjust="spacingAndGlyphs">125</text>
+<text x="383.8" y="163" textLength="29.6" lengthAdjust="spacingAndGlyphs">2.236</text>
+<text x="478.8" y="163" textLength="28.6" lengthAdjust="spacingAndGlyphs">1.710</text>
+<text x="587.8" y="163" textLength="35.6" lengthAdjust="spacingAndGlyphs">15.708</text>
+<text x="689.8" y="163" textLength="34.6" lengthAdjust="spacingAndGlyphs">19.635</text>
+<text x="62.9" y="181">6</text>
+<text x="172.8" y="181" textLength="13.6" lengthAdjust="spacingAndGlyphs">36</text>
+<text x="283.8" y="181" textLength="20.6" lengthAdjust="spacingAndGlyphs">216</text>
+<text x="383.8" y="181" textLength="29.6" lengthAdjust="spacingAndGlyphs">2.449</text>
+<text x="478.8" y="181" textLength="28.6" lengthAdjust="spacingAndGlyphs">1.817</text>
+<text x="587.8" y="181" textLength="35.6" lengthAdjust="spacingAndGlyphs">18.850</text>
+<text x="689.8" y="181" textLength="35.6" lengthAdjust="spacingAndGlyphs">28.274</text>
+<text x="62.9" y="200">7</text>
+<text x="172.8" y="200" textLength="13.6" lengthAdjust="spacingAndGlyphs">49</text>
+<text x="282.8" y="200" textLength="19.6" lengthAdjust="spacingAndGlyphs">343</text>
+<text x="383.8" y="200" textLength="29.6" lengthAdjust="spacingAndGlyphs">2.646</text>
+<text x="478.8" y="200" textLength="28.6" lengthAdjust="spacingAndGlyphs">1.913</text>
+<text x="585.8" y="200" textLength="34.6" lengthAdjust="spacingAndGlyphs">21.991</text>
+<text x="689.8" y="200" textLength="35.6" lengthAdjust="spacingAndGlyphs">38.484</text>
+<text x="62.9" y="218">8</text>
+<text x="172.8" y="218" textLength="13.6" lengthAdjust="spacingAndGlyphs">64</text>
+<text x="283.8" y="218" textLength="20.6" lengthAdjust="spacingAndGlyphs">512</text>
+<text x="383.8" y="218" textLength="29.6" lengthAdjust="spacingAndGlyphs">2.828</text>
+<text x="478.8" y="218" textLength="29.6" lengthAdjust="spacingAndGlyphs">2.000</text>
+<text x="586.8" y="218" textLength="35.6" lengthAdjust="spacingAndGlyphs">25.133</text>
+<text x="689.8" y="218" textLength="35.6" lengthAdjust="spacingAndGlyphs">50.265</text>
+<text x="62.9" y="237">9</text>
+<text x="170.8" y="237" textLength="11.6" lengthAdjust="spacingAndGlyphs">81</text>
+<text x="283.8" y="237" textLength="20.6" lengthAdjust="spacingAndGlyphs">729</text>
+<text x="383.8" y="237" textLength="29.6" lengthAdjust="spacingAndGlyphs">3.000</text>
+<text x="478.8" y="237" textLength="29.6" lengthAdjust="spacingAndGlyphs">2.080</text>
+<text x="587.8" y="237" textLength="36.6" lengthAdjust="spacingAndGlyphs">28.274</text>
+<text x="689.8" y="237" textLength="35.6" lengthAdjust="spacingAndGlyphs">63.617</text>
+<text x="62.8" y="255" textLength="12.6" lengthAdjust="spacingAndGlyphs">10</text>
+<text x="172.8" y="255" textLength="18.6" lengthAdjust="spacingAndGlyphs">100</text>
+<text x="283.8" y="255" textLength="29.6" lengthAdjust="spacingAndGlyphs">1,000</text>
+<text x="383.8" y="255" textLength="29.6" lengthAdjust="spacingAndGlyphs">3.162</text>
+<text x="478.8" y="255" textLength="29.6" lengthAdjust="spacingAndGlyphs">2.154</text>
+<text x="587.8" y="255" textLength="36.6" lengthAdjust="spacingAndGlyphs">31.416</text>
+<text x="689.8" y="255" textLength="35.6" lengthAdjust="spacingAndGlyphs">78.540</text>
+<text x="60.8" y="274" textLength="10.6" lengthAdjust="spacingAndGlyphs">11</text>
+<text x="170.8" y="274" textLength="16.6" lengthAdjust="spacingAndGlyphs">121</text>
+<text x="281.8" y="274" textLength="27.6" lengthAdjust="spacingAndGlyphs">1,331</text>
+<text x="383.8" y="274" textLength="29.6" lengthAdjust="spacingAndGlyphs">3.317</text>
+<text x="478.8" y="274" textLength="29.6" lengthAdjust="spacingAndGlyphs">2.224</text>
+<text x="587.8" y="273" textLength="36.6" lengthAdjust="spacingAndGlyphs">34.558</text>
+<text x="689.8" y="273" textLength="35.6" lengthAdjust="spacingAndGlyphs">95.033</text>
+</g>
+</g>
+<path d="M374.4 51.7H384.4M478 51.7H487.6" stroke="#111" stroke-width="1"/>
+<text x="473.8" y="53.2" font-family="Helvetica, Arial, sans-serif" font-size="6.5" font-weight="bold" fill="#111">3</text>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 941 332"><rect width="941" height="332" fill="#fff"/>
+<defs>
+<linearGradient id="gs"><stop offset="0" stop-color="#a0c6d9"/><stop offset=".31" stop-color="#a0c6d9"/><stop offset=".565" stop-color="#80a5be"/><stop offset=".66" stop-color="#698eab"/><stop offset=".755" stop-color="#4e7494"/><stop offset=".85" stop-color="#325a7b"/><stop offset=".92" stop-color="#194466"/><stop offset=".97" stop-color="#012e4c"/><stop offset="1" stop-color="#00243f"/></linearGradient>
+<linearGradient id="gh"><stop offset="0" stop-color="#a0c6d9"/><stop offset=".33" stop-color="#a0c6d9"/><stop offset=".443" stop-color="#97bcd1"/><stop offset=".557" stop-color="#82a7c0"/><stop offset=".67" stop-color="#668ba8"/><stop offset=".784" stop-color="#446b8b"/><stop offset=".84" stop-color="#325a7b"/><stop offset="1" stop-color="#173f60"/></linearGradient>
+<radialGradient id="gr" cx=".38" cy=".3" r=".8"><stop offset="0" stop-color="#d82329"/><stop offset=".45" stop-color="#b01a1f"/><stop offset="1" stop-color="#6a0000"/></radialGradient>
+<g id="rv"><path d="M121 89H209L186.7 109H143.45Z" fill="url(#gh)"/><rect x="143.45" y="109" width="43.25" height="75" fill="url(#gs)"/>
+<path d="M121 89H209L186.7 109H143.45ZM143.45 109V184H186.7V109" fill="none" stroke="#000" stroke-width="2" stroke-linejoin="miter"/>
+<path d="M164.6 62.5V222" stroke="#505050" stroke-width="1.2" stroke-dasharray="28 3.7 4 3.7"/></g>
+
+</defs>
+<rect x="15" y="13" width="914.5" height="274.3" rx="9.5" fill="#f6fafc" stroke="#000" stroke-width="2"/>
+<use href="#rv"/><use href="#rv" x="321.5" y="3.65"/><use href="#rv" x="597.5"/>
+<g fill="none" stroke="#000" stroke-width="2"><path d="M213 85.5L253.2 50.5M186.5 186.6V220.2M399.6 55.5L439.3 90.2M573 55.3L533.5 89.8M810.4 85.6L849.6 50.4M812 90H864.6"/></g>
+<g fill="none" stroke="#000" stroke-width="1.1"><path d="M237 73C246 82 252 92 253.1 98.3S258 118 257.5 127.5M256.6 139.5C255 158 245 178 233.4 186C223 196.2 210 204.4 195 209.8"/>
+<path d="M425 74.5C440 62 462 54 484.5 54S532 62 546 74.5M846 62L850 70L853 77L855 86"/></g>
+<g fill="#000"><path d="M235 68.6L237.6 77.6L239.6 73.6L244.6 73.8Z"/><path d="M186.6 211.4L197 205.4L194.6 210.4L198.6 213.2Z"/><path d="M424.3 75L430.5 66.3L431.6 70.4L435.3 71.2Z"/><path d="M548.3 75L542.1 66.3L541 70.4L537.3 71.2Z"/><path d="M843.2 59.3L845 66.2L847 63.3L850.5 62.5Z"/><path d="M855.3 89L852 79L855.3 81.5L858 79Z"/></g>
+<g font-family="Helvetica, Arial, sans-serif" font-size="14.6" fill="#000"><text x="247" y="140.3" textLength="28" lengthAdjust="spacingAndGlyphs">130°</text><text x="473" y="48.3" textLength="21" lengthAdjust="spacingAndGlyphs">80°</text><text x="855" y="73.5" textLength="22" lengthAdjust="spacingAndGlyphs">50°</text></g>
+<g fill="url(#gr)"><circle cx="164.3" cy="242.8" r="13.7"/><circle cx="486.8" cy="242.8" r="13.7"/><circle cx="764.5" cy="242.8" r="13.7"/></g>
+<g font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="15.4" fill="#fff" text-anchor="middle"><text x="164.5" y="248.3">1</text><text x="486.8" y="248.3">2</text><text x="764.5" y="248.3">3</text></g>
+<text x="16" y="317.3" font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="14.5" textLength="62.5" lengthAdjust="spacingAndGlyphs">Figure 1.</text><text x="82.5" y="317.3" font-family="'Times New Roman', Times, serif" font-style="italic" font-size="14.5" textLength="45" lengthAdjust="spacingAndGlyphs">Rivets.</text></svg>

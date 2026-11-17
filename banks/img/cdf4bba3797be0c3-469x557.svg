@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469 557">
+<rect width="469" height="557" fill="#ffffff"/>
+<rect x="0" y="0" width="2" height="557" fill="#7e7e7e"/>
+<rect x="0" y="0" width="469" height="1.2" fill="#000"/>
+<rect x="468" y="0" width="1" height="557" fill="#151515"/>
+<g fill="none" stroke="#000" stroke-width="1.16">
+<path d="M61.9 93V20.5H250.9V50.3L255.8 52.5L243.4 57.5L255.8 62.5L243.4 67.5L255.8 72.5L243.4 77.5L250.9 81.5V217"/>
+<path d="M61.9 146V242.5M65.6 245.6H217.4M217.4 225V266.5M217.4 232L251 218M217.4 257.2L258.6 265.4"/>
+<circle cx="62.5" cy="245.6" r="3.1" stroke-width="1.2"/>
+<circle cx="231" cy="245.8" r="33.9"/>
+<path d="M250.9 148.5H322.8M342 148.5H373.8"/>
+<circle cx="325.7" cy="148.4" r="2.9" stroke-width="1.2"/>
+<path d="M373.8 148.6C374.5 172 384 190.3 400 190.3C416 190.3 425 172 426 148.6H455"/>
+<path d="M66 336H255.8"/>
+<path d="M95.3 336C97 322 103 308.2 113 308.2C123 308.2 129 322 130.2 336C131 352 138 364.2 148 364.3C158 364.2 165 350 166 336"/>
+<circle cx="62.5" cy="336.3" r="3.1" stroke-width="1.2"/>
+<circle cx="259" cy="336.2" r="3.1" stroke-width="1.2"/>
+<path d="M258.9 265.5V333M258.9 339.4V372.3L266 375.5L251.5 380.5L266.3 385.5L251.5 391L266.3 396.5L251.5 401.5L258.9 404.5V450.5M258.9 482V491.5"/>
+<path d="M40.6 93.2H83.5M51.3 103.8H72.9M40.6 114.4H83.5M51.3 124.8H72.9M40.6 135.3H83.5M51.3 146H72.9"/>
+<path d="M247.5 450.5H270M237.5 461H280M247.5 471.5H270M237.5 482H280"/>
+<path d="M91.7 84.5H102.4M97 79.3V90M91.7 151.5H102.4M289 448.2H300.2" stroke-width="1.3"/>
+</g>
+<path d="M238.4 255.6L258.6 265.4L236.5 266.5Z" fill="#000"/>
+<g fill="#84a6c6">
+<rect x="52.3" y="256" width="20.4" height="3"/><rect x="55.3" y="262" width="14.4" height="3"/><rect x="58.3" y="267" width="8.4" height="3"/>
+<rect x="248.3" y="491" width="20.4" height="3"/><rect x="251.3" y="496" width="14.4" height="3"/><rect x="254.3" y="502" width="8.4" height="3"/>
+</g>
+<path d="M62.5 249V256" stroke="#000" stroke-width="1.16" fill="none"/>
+<g fill="#3a3a3a" font-family="Helvetica, Arial, sans-serif" font-size="15.3">
+<text x="13.6" y="117.6" textLength="8.4" lengthAdjust="spacingAndGlyphs">V</text>
+<text x="22.3" y="119.3" font-size="10.5" textLength="13.2" lengthAdjust="spacingAndGlyphs">CC</text>
+<text x="173.6" y="206" textLength="27" lengthAdjust="spacingAndGlyphs">NPN</text>
+<text x="34.8" y="325" textLength="33.4" lengthAdjust="spacingAndGlyphs">Input</text>
+<text x="375.8" y="219.8" textLength="46.2" lengthAdjust="spacingAndGlyphs">Output</text>
+<text x="208" y="453" textLength="8.6" lengthAdjust="spacingAndGlyphs">V</text>
+<text x="216.6" y="456.2" font-size="10.5" textLength="10.8" lengthAdjust="spacingAndGlyphs">EE</text>
+</g>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 585 410"><rect width="585" height="410" fill="#fff"/>
+<g fill="#2a2a2a"><path fill-rule="evenodd" d="M8 7.3H576.5V374.5H8ZM13 13V369H571V13Z"/></g>
+<g fill="none" stroke="#2a2a2a" stroke-linecap="square"><g stroke-width="2.5"><path d="M169 41.3H327.5M326.4 100.3H411.5M169 144.3H411.5M39 313.7H141M167 315.1H412M440 213.7H542M440 314.7H542"/></g>
+<path stroke-width="2.1" d="M169.5 41.3V144.3M326.4 41.3V100.3M411.5 100.3V144.3M140.4 212.5V313.7M38.7 212.5V313.7M168.3 213V315.1M411.5 213V315.1M441 213.7V314.7M541 213.7V314.7M40 268H140M39 212.5H141M168 213H412"/>
+<path stroke-width="2.3" stroke-linecap="butt" stroke-dasharray="5 4.7" d="M330.5 212V315M441 272.2H541"/></g>
+<g font-family="Helvetica, Arial, sans-serif" font-weight="bold" font-size="26" fill="#2a2a2a"><text x="197.5" y="176" textLength="162" lengthAdjust="spacingAndGlyphs">FRONT VIEW</text>
+<text x="75" y="349">1</text><text x="284" y="348">2</text><text x="489" y="349">3</text></g>
+<text x="208" y="402" font-family="'Times New Roman', Times, serif" font-size="16" textLength="160" lengthAdjust="spacingAndGlyphs" fill="#2a2a2a">Figure 29. Object Views.</text></svg>
