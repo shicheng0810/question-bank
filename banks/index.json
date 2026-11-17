@@ -9,6 +9,8 @@
     "has_images": true,
     "category": "airframe",
     "term": 2,
+    "icon": "bolt",
+    "tone": "t2",
     "json": "banks/239-airframe-elec.json",
     "light": "banks/light/239-airframe-elec.json"
   },
@@ -22,6 +24,8 @@
     "has_images": false,
     "category": "airframe",
     "term": 1,
+    "icon": "drop",
+    "tone": "t4",
     "json": "banks/205-finishes.json"
   },
   {
@@ -34,6 +38,8 @@
     "has_images": false,
     "category": "airframe",
     "term": 1,
+    "icon": "rotor",
+    "tone": "t2",
     "json": "banks/215-helicopter.json"
   },
   {
@@ -45,6 +51,8 @@
     "question_count": 1385,
     "has_images": true,
     "category": "general",
+    "icon": "book",
+    "tone": "t6",
     "json": "banks/general.json",
     "light": "banks/light/general.json"
   },
@@ -58,6 +66,8 @@
     "has_images": false,
     "category": "airframe",
     "term": 2,
+    "icon": "hex",
+    "tone": "t3",
     "json": "banks/201-composite.json"
   },
   {
@@ -70,6 +80,8 @@
     "has_images": true,
     "category": "airframe",
     "term": 2,
+    "icon": "rivet",
+    "tone": "t1",
     "json": "banks/211-sheet-metal.json",
     "light": "banks/light/211-sheet-metal.json"
   },
@@ -83,6 +95,8 @@
     "has_images": false,
     "category": "airframe",
     "term": 2,
+    "icon": "snow",
+    "tone": "t4",
     "json": "banks/231-ice-rain.json"
   },
   {
@@ -95,6 +109,8 @@
     "has_images": false,
     "category": "airframe",
     "term": 2,
+    "icon": "flame",
+    "tone": "t5",
     "json": "banks/231-fire-pos-warning.json"
   },
   {
@@ -107,6 +123,8 @@
     "has_images": true,
     "category": "airframe",
     "term": 3,
+    "icon": "drop",
+    "tone": "t3",
     "json": "banks/223-hydraulics-pneumatics.json",
     "light": "banks/light/223-hydraulics-pneumatics.json"
   },
@@ -120,6 +138,8 @@
     "has_images": false,
     "category": "airframe",
     "term": 3,
+    "icon": "gauge",
+    "tone": "t1",
     "json": "banks/241-instrument-systems.json"
   },
   {
@@ -132,6 +152,8 @@
     "has_images": false,
     "category": "airframe",
     "term": 3,
+    "icon": "flame",
+    "tone": "t1",
     "json": "banks/207-welding.json"
   },
   {
@@ -144,6 +166,8 @@
     "has_images": false,
     "category": "airframe",
     "term": 3,
+    "icon": "landing-gear",
+    "tone": "t2",
     "json": "banks/223-landing-gear.json"
   },
   {
@@ -156,6 +180,8 @@
     "has_images": false,
     "category": "airframe",
     "term": 3,
+    "icon": "cabin-air",
+    "tone": "t4",
     "json": "banks/245-cabin-environment.json"
   },
   {
