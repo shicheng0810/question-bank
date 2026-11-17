@@ -4,6 +4,11 @@
 <meta charset="UTF-8" />
 <title>Format Guide · AMT Practice</title>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%232b74f0'/%3E%3Cpath d='M9.5 16.5l4.5 4.5 8.5-9' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAflBMVEUrdO8AAAD9/f4pc/Eqc+8qc+8qc++kxPh7qPUpdPDY5fwvZ/9LifKUufdlmvTl7v0lgP+Er/bH2/sudP8AVf+30PoodO8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABJB2imAAAAIHRSTlP+AP8uh63T//91/wX/////B///CwP/QAAAAAAAAAAAAOFSwqkAAACjSURBVHjapZOLCoMwDEWjSa21dupe//+pS+xgMJpb2C6I4DnSanNpsHAK9JWQ+ESk1y7UjOQq8EROJjbh5nI1dhWEQGQgJhimgIVAExY6+I/MGK/juHQ4FjYVVsCXNj+28uGXxnv6ONr96nAq1TDufGM04+HzamgOf/unUdAPiO+NgiOYfzi37kQJFqQ/tHjsk/Yio+LcrXpPsEAtb+6UF9f/BbPKA1CT6BaNAAAAAElFTkSuQmCC">
+<meta name="theme-color" id="qb-tc-l" media="(prefers-color-scheme: light)" content="#f5f5f3">
+<meta name="theme-color" id="qb-tc-d" media="(prefers-color-scheme: dark)" content="#161617">
+<script>(function(){try{var h=document.documentElement,L=document.getElementById("qb-tc-l"),D=document.getElementById("qb-tc-d"),C={light:"#f5f5f3",dark:"#161617"};function s(){try{var t=h.getAttribute("data-theme");if(t!=="light"&&t!=="dark")t=null;L.setAttribute("content",t?C[t]:C.light);D.setAttribute("content",t?C[t]:C.dark);}catch(e){}}if(window.MutationObserver)new MutationObserver(s).observe(h,{attributes:true,attributeFilter:["data-theme"]});s();document.addEventListener("DOMContentLoaded",s);}catch(e){}})();</script>
 <meta name="color-scheme" content="light dark" />
 <script>(function(){try{var k="qb_theme",s=localStorage.getItem(k),m=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,t=(s==="dark"||s==="light")?s:(m?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}try{var l=localStorage.getItem("qb_ui_lang");document.documentElement.lang=(l==="zh")?"zh-CN":"en";}catch(e){}})();</script>
 <style>
@@ -314,9 +319,10 @@
     @media (max-width:760px){ .cof-bar{flex-wrap:wrap} .cof-bar p{flex:1 1 calc(100% - 36px)} .cof-fab{right:16px; bottom:16px} .cof-bar .btn{flex:1; height:44px} }
 
     /* ---------- 对话框（登录 / 账号 / 粘贴 / 反馈 / 使用说明 / 咖啡）：电脑居中，手机底部抽屉 ---------- */
-    .qb-ov{position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--aux-scrim); -webkit-backdrop-filter:blur(10px) saturate(140%); backdrop-filter:blur(10px) saturate(140%); animation:qbFade .2s var(--ease) both}
+    .qb-ov{position:fixed; inset:0; z-index:50; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--aux-scrim); -webkit-backdrop-filter:blur(10px) saturate(140%); backdrop-filter:blur(10px) saturate(140%);
+      transition:opacity var(--fl-base) var(--ease), display var(--fl-base) allow-discrete}
     .qb-ov[hidden]{display:none}
-    .qb-card, .dlg{position:relative; width:min(480px, 100%); max-height:calc(100vh - 48px); overflow:auto; overscroll-behavior:contain; background:var(--aux-float-bg); border-radius:22px; box-shadow:var(--aux-float-ring); padding:24px; animation:qbRise .26s var(--ease) both}
+    .qb-card, .dlg{position:relative; width:min(480px, 100%); max-height:calc(100vh - 48px); overflow:auto; overscroll-behavior:contain; background:var(--aux-float-bg); border-radius:22px; box-shadow:var(--aux-float-ring); padding:24px; transition:transform var(--fl-slow) var(--ease)}
     .qb-card h2, .dlg h2{font:600 20px/1.25 var(--font-display); letter-spacing:-.02em; margin:0}
     .qb-card .row, .dlg-head{display:flex; align-items:flex-start; gap:14px}
     .qb-card .row h2, .dlg-head h2{flex:1; min-width:0; padding-top:6px}
@@ -349,6 +355,8 @@
     /* 粘贴对话框：放在 <details data-testid="paste-box"> 里，打开 = details[open] */
     .paste-ov{display:none}
     .paste[open] .paste-ov{display:flex}
+    /* R6 F-6: keep the closed details' content rendered so the dialog can animate out (it is display:none until the exit has run; engines without ::details-content just close at once as before) */
+    .paste::details-content{content-visibility:visible}
 
     /* 账号面板（#history-modal）：电脑锚在右上角头像下，手机底部抽屉 */
     .acct-ov{align-items:flex-start; justify-content:flex-end; padding:84px max(16px, calc((100vw - 1120px) / 2 + 8px)) 16px 16px; background:transparent; -webkit-backdrop-filter:none; backdrop-filter:none}
@@ -450,9 +458,7 @@
     .how li{display:flex; align-items:flex-start; gap:12px; font-size:15px; line-height:1.45; color:var(--text-2)}
     .how li svg{width:18px; height:18px; flex:none; margin-top:2px; color:var(--text-2)}
 
-    @keyframes qbFade{from{opacity:0}}
     @keyframes qbRise{from{opacity:0; transform:translateY(10px) scale(.985)}}
-    @keyframes qbSheet{from{transform:translateY(100%)}}
 
     /* ☕ 打赏（方向 D）：SVG 杯子 + 金额档 radiogroup + 谢谢；表单完成面板 .fx-done 共用 .fx-mark */
     .coffee-card{--coffee:color-mix(in srgb, var(--t2) 62%, var(--text)); text-align:center}
@@ -574,7 +580,7 @@
       .foot-bar{gap:12px 18px; margin:48px 0 32px}
       .foot-bar .sp{display:none}
       .qb-ov, .acct-ov{align-items:flex-end; justify-content:stretch; padding:0; background:var(--aux-scrim); -webkit-backdrop-filter:blur(10px) saturate(140%); backdrop-filter:blur(10px) saturate(140%)}
-      .qb-card, .dlg, .acct-card{width:100%; max-height:calc(100vh - 40px); border-radius:22px 22px 0 0; padding:8px 16px max(20px, env(safe-area-inset-bottom)); animation:qbSheet .3s var(--ease) both}
+      .qb-card, .dlg, .acct-card{width:100%; max-height:calc(100vh - 40px); border-radius:22px 22px 0 0; padding:8px 16px max(20px, env(safe-area-inset-bottom))}
       .grabber{display:block; width:36px; height:5px; border-radius:99px; background:var(--hairline-strong); margin:0 auto 14px}
       .qb-acts .qb-btn, .dlg-foot .btn{height:48px; flex:1}
       .qb-acts .spacer, .dlg-foot .sp, .dlg-foot .hide-m{display:none}
@@ -603,6 +609,39 @@
       .banks > .bank{padding:12px; gap:12px}
       .banks > .bank + .bank::before{left:62px}
       .drop{padding:16px}
+    }
+    /* ---------- R6 F-6 包 A：对话框进出 + 按压反馈（时长 / 缓动取第 6 轮规格 3.2；与播放器 F-3 / F-4 同一做法） ---------- */
+    :root{--fl-press:.07s; --fl-fast:.14s; --fl-base:.2s; --fl-slow:.28s; --fl-in:cubic-bezier(.4,0,.9,.6); --fl-spring:linear(0,.012 1.7%,.044 3.3%,.091 5%,.214 8.3%,.565 16.7%,.687 20%,.789 23.3%,.871 26.7%,.933 30%,.994 35%,1.031 41.7%,1)}
+    /* dialogs: "hidden" (or the closed details for the paste dialog) is still the only open / close switch; the opening is a transition from @starting-style, the closing keeps the overlay rendered until the exit has run */
+    :is(.qb-ov[hidden], .paste:not([open]) .paste-ov){opacity:0; pointer-events:none; transition-duration:var(--fl-fast)}
+    :is(.qb-ov[hidden], .paste:not([open]) .paste-ov) > :is(.qb-card, .dlg){transform:translateY(10px) scale(.985); transition-duration:var(--fl-fast); transition-timing-function:var(--fl-in)}
+    @starting-style{
+      .qb-ov:not([hidden]){opacity:0}
+      .qb-ov:not([hidden]) > :is(.qb-card, .dlg){transform:translateY(14px) scale(.975)}
+    }
+    /* phone: the dialogs are bottom sheets, so (as in the player) the sheet slides in opaque and only the scrim and its blur fade; no layer-wide cross-fade */
+    @media (max-width:760px){
+      .qb-ov{opacity:1; transition:background-color var(--fl-base) linear, -webkit-backdrop-filter var(--fl-slow) var(--fl-in), backdrop-filter var(--fl-slow) var(--fl-in), display var(--fl-slow) allow-discrete}
+      :is(.qb-ov[hidden], .paste:not([open]) .paste-ov){opacity:1; background-color:transparent; -webkit-backdrop-filter:none; backdrop-filter:none; transition:background-color var(--fl-base) linear, -webkit-backdrop-filter var(--fl-base) var(--ease), backdrop-filter var(--fl-base) var(--ease), display var(--fl-base) allow-discrete}
+      :is(.qb-ov[hidden], .paste:not([open]) .paste-ov) > :is(.qb-card, .dlg){transform:translateY(105%); transition-duration:var(--fl-base); transition-timing-function:var(--fl-in)}
+      #lgn-guide[hidden]{background-color:transparent}
+      @starting-style{
+        .qb-ov:not([hidden]){opacity:1; background-color:transparent; -webkit-backdrop-filter:none; backdrop-filter:none}
+        .qb-ov:not([hidden]) > :is(.qb-card, .dlg){transform:translateY(105%)}
+        #lgn-guide:not([hidden]){background-color:transparent}
+      }
+    }
+    /* press: .qb-press is set by the catalog script on pointer down (touch waits 55 ms so a scroll does not flash the card; shown at least 90 ms) and stays while a card waits for its text */
+    a.bank{transition:transform var(--fl-slow) var(--fl-spring), box-shadow .25s var(--ease)}
+    .areas a{transition:transform var(--fl-slow) var(--fl-spring), box-shadow .2s var(--ease)}
+    .btn{transition:transform var(--fl-slow) var(--fl-spring), background .2s, opacity .2s}
+    .qb-acct{transition:background .16s var(--ease), transform var(--fl-slow) var(--fl-spring)}
+    :is(a.bank, .areas a, .btn, .qb-acct){-webkit-tap-highlight-color:transparent; touch-action:manipulation}
+    @media (prefers-reduced-motion: no-preference){
+      a.bank:is(:active, .qb-press){transform:scale(.98); transition-duration:var(--fl-press)}
+      .areas a:is(:active, .qb-press){transform:scale(.95); transition-duration:var(--fl-press)}
+      .btn:not(:disabled):is(:active, .qb-press){transform:scale(.96); transition-duration:var(--fl-press)}
+      .qb-acct:is(:active, .qb-press){transform:scale(.96); transition-duration:var(--fl-press)}
     }
     @media (prefers-reduced-motion: reduce){
       *, *::before, *::after{animation:none !important; transition:none !important}
