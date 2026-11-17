@@ -115,7 +115,7 @@
     .brand-mark svg{width:16px; height:16px}
     .nav .spacer{flex:1}
     .lang{position:relative; display:inline-flex; align-items:center; gap:4px; height:36px; padding:0 4px 0 8px; border-radius:999px; color:var(--text-2); font-size:14px; cursor:pointer}
-    .lang:hover{background:var(--surface-2); color:var(--text)}
+    @media (hover:hover){ .lang:hover{background:var(--surface-2); color:var(--text)} }
     .lang svg{width:16px; height:16px; flex:none}
     .lang select{appearance:none; -webkit-appearance:none; border:0; background:transparent; color:inherit; font:inherit; font-size:14px; height:36px; padding:0 6px 0 2px; cursor:pointer; border-radius:999px}
     .lang select:focus-visible{outline:none}
@@ -133,7 +133,7 @@
     .qb-acct.out{padding:0 16px; background:var(--primary); color:var(--on-primary)}
     .qb-acct.out .qb-avatar{display:none}
     .qb-acct.in{padding:0 14px 0 5px; background:transparent; color:var(--text); box-shadow:inset 0 0 0 1px var(--hairline-strong)}
-    .qb-acct.in:hover{background:var(--surface-2)}
+    @media (hover:hover){ .qb-acct.in:hover{background:var(--surface-2)} }
     .qb-acct-l{overflow:hidden; text-overflow:ellipsis}
 
     /* ---------- 首屏 ---------- */
@@ -150,7 +150,7 @@
     .special-mode .hero .sync{display:none}
 
     .resume{display:block; background:var(--surface); border-radius:var(--r-lg); box-shadow:var(--shadow-2); padding:22px 22px 20px; transition:transform .25s var(--ease), box-shadow .25s var(--ease); min-width:0}
-    .resume:hover{transform:translateY(-2px)}
+    @media (hover:hover){ .resume:hover{transform:translateY(-2px)} }
     .resume-top{display:flex; align-items:center; gap:14px}
     .resume-top > div{min-width:0}
     .resume-top .label{font-size:13px; color:var(--text-2); font-weight:500}
@@ -173,7 +173,7 @@
     .sec-head.mix h2{font-size:18px}
     .areas{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 8px}
     .areas a{display:inline-flex; align-items:baseline; gap:8px; height:36px; padding:0 14px; border-radius:999px; background:var(--surface); box-shadow:var(--shadow-1); font-size:14px; font-weight:600; letter-spacing:-.01em; line-height:36px; white-space:nowrap; transition:box-shadow .2s var(--ease), transform .2s var(--ease)}
-    .areas a:hover{box-shadow:var(--shadow-2); transform:translateY(-1px)}
+    @media (hover:hover){ .areas a:hover{box-shadow:var(--shadow-2); transform:translateY(-1px)} }
     .areas a .n{font-weight:500; color:var(--text-2); font-variant-numeric:tabular-nums}
     .areas a.soon{background:transparent; box-shadow:inset 0 0 0 1px var(--hairline); color:var(--text-2)}
     .area{scroll-margin-top:96px}
@@ -183,13 +183,13 @@
     .area-head .sub, .term-head .sub{font-size:14px; color:var(--text-2); font-variant-numeric:tabular-nums}
     .area-head .all{margin-left:auto; display:inline-flex; align-items:center; gap:4px; font-size:14px; font-weight:600; color:var(--sh-accent-ink); padding:6px 2px; border-radius:8px}
     .area-head .all svg{width:16px; height:16px; transition:transform .2s var(--ease)}
-    .area-head .all:hover svg{transform:translateX(2px)}
+    @media (hover:hover){ .area-head .all:hover svg{transform:translateX(2px)} }
     .term-head{display:flex; align-items:baseline; gap:10px; margin:22px 0 12px}
     .area-head + .term-head{margin-top:4px}
     .term-head h4{font:600 15px/1.2 var(--font); letter-spacing:-.01em; margin:0}
     .term-head .sub{font-size:13px}
     .term-head .all{margin-left:auto; font-size:13px; font-weight:500; color:var(--text-2); padding:4px 2px}
-    .term-head .all:hover{color:var(--sh-accent-ink)}
+    @media (hover:hover){ .term-head .all:hover{color:var(--sh-accent-ink)} }
     .term-head .l-short{display:none}
     .term-empty{display:flex; align-items:center; gap:10px; margin:16px 2px 0; font-size:14px; color:var(--text-2)}
     .soon-card{display:flex; align-items:center; gap:16px; padding:20px 22px; border-radius:var(--r-lg); box-shadow:inset 0 0 0 1.5px var(--hairline); color:var(--text-2); font-size:15px}
@@ -203,7 +203,7 @@
     /* ---------- 题库卡片 ---------- */
     .banks{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px}
     .bank{position:relative; background:var(--surface); border-radius:var(--r-lg); box-shadow:var(--shadow-1); padding:20px 20px 18px; display:flex; flex-direction:column; gap:14px; min-height:148px; min-width:0; transition:transform .25s var(--ease), box-shadow .25s var(--ease)}
-    a.bank:hover, .bank:has(.stretch:hover){transform:translateY(-2px); box-shadow:var(--shadow-2)}
+    @media (hover:hover){ a.bank:hover, .bank:has(.stretch:hover){transform:translateY(-2px); box-shadow:var(--shadow-2)} }
     .bank .body{display:flex; flex-direction:column; flex:1; min-width:0}
     .bank h3{font:600 18px/1.25 var(--font-display); letter-spacing:-.02em; margin:0; padding-right:22px; overflow-wrap:anywhere}
     .bank .meta{font-size:14px; color:var(--text-2); margin-top:3px; display:flex; flex-wrap:wrap; align-items:center; gap:4px 0}
@@ -216,7 +216,7 @@
     .bank .foot .tag-wrong{color:var(--sh-bad-ink); font-weight:500; white-space:nowrap}
     .bank .foot .done-l{color:var(--sh-ok-ink); font-weight:500; white-space:nowrap}
     .bank .go{position:absolute; top:20px; right:18px; width:18px; height:18px; color:var(--text-3); transition:transform .25s var(--ease), color .2s}
-    a.bank:hover .go{color:var(--text); transform:translateX(2px)}
+    @media (hover:hover){ a.bank:hover .go{color:var(--text); transform:translateX(2px)} }
     .bank.wide, .bank.feature{grid-column:1 / -1; flex-direction:row; align-items:center; min-height:0; padding:22px 24px; gap:18px}
     .bank.wide .tile{width:48px; height:48px; border-radius:13px}
     .bank.wide .foot{padding-top:10px; max-width:420px}
@@ -239,8 +239,8 @@
     .bank:has(.stretch:focus-visible){outline:2px solid var(--accent); outline-offset:2px}
     .bank .acts{position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:4px 14px; margin-top:12px}
     .bank .acts button{border:0; background:none; padding:4px 0; cursor:pointer; font-size:13px; font-weight:600; color:var(--text-2)}
-    .bank .acts button:hover{color:var(--text)}
-    .bank .acts button.danger:hover{color:var(--sh-bad-ink)}
+    @media (hover:hover){ .bank .acts button:hover{color:var(--text)} }
+    @media (hover:hover){ .bank .acts button.danger:hover{color:var(--sh-bad-ink)} }
     .bank .qb-last{white-space:nowrap}
     .special-mode #bank-list, .special-mode #yours{opacity:.38; filter:grayscale(1); pointer-events:none; user-select:none}
 
@@ -276,7 +276,7 @@
     .drop.over .idle-only{display:none}
     .drop.over .tile{background:var(--accent); color:#fff}
     .drop .fmt{font-size:14px; color:var(--text-2); white-space:nowrap}
-    .drop .fmt:hover{color:var(--text)}
+    @media (hover:hover){ .drop .fmt:hover{color:var(--text)} }
     .drop input[type=file]{position:absolute; width:1px; height:1px; opacity:0; pointer-events:none}
     .drop label.btn:has(+ input:focus-visible){outline:2px solid var(--accent); outline-offset:2px}
     .paste > summary{list-style:none}
@@ -296,7 +296,7 @@
     .foot-bar{margin:72px 0 48px; padding-top:20px; border-top:1px solid var(--hairline); display:flex; align-items:center; flex-wrap:wrap; gap:12px 22px; font-size:14px; color:var(--text-2)}
     .foot-bar .sp{flex:1}
     .foot-bar a, .foot-bar button{border:0; background:none; padding:4px 0; cursor:pointer; color:inherit; font-size:14px}
-    .foot-bar a:hover, .foot-bar button:hover{color:var(--text)}
+    @media (hover:hover){ .foot-bar a:hover, .foot-bar button:hover{color:var(--text)} }
     .foot-bar .coffee-link{display:inline-flex; align-items:center; gap:6px}
     .coffee-link svg{width:16px; height:16px}
     .cof-fab{position:fixed; right:24px; bottom:24px; z-index:40; display:inline-flex; align-items:center; gap:8px; height:52px; min-width:52px; justify-content:center; padding:0 18px; border:0; border-radius:999px; background:var(--surface); color:var(--text); font:600 15px var(--font); box-shadow:0 6px 24px rgba(0,0,0,.16); cursor:pointer}
@@ -329,7 +329,7 @@
     .dlg-head{margin-bottom:20px}
     .dlg-head p{margin:4px 0 0; color:var(--text-2); font-size:15px; line-height:1.5}
     .qb-x{width:36px; height:36px; flex:none; margin:-2px -6px 0 auto; padding:0; border:0; border-radius:999px; background:transparent; display:grid; place-items:center; cursor:pointer; color:var(--text-2)}
-    .qb-x:hover{background:var(--surface-2); color:var(--text)}
+    @media (hover:hover){ .qb-x:hover{background:var(--surface-2); color:var(--text)} }
     .qb-x svg{width:16px; height:16px}
     .qb-hint{color:var(--text-2); font-size:14px; margin:8px 0 0; line-height:1.5}
     .field, .qb-card input[type=text]{display:block; width:100%; height:48px; margin:0; padding:0 14px; border:0; border-radius:12px; font:inherit; font-size:16px; color:var(--text); background:var(--surface); box-shadow:inset 0 0 0 1px var(--hairline-strong); transition:box-shadow .18s var(--ease)}
@@ -373,9 +373,9 @@
     .rsh h3 + .c:not(button){margin-left:auto}
     .rsh button.c{position:relative; margin:-4px -6px -4px auto; padding:4px 6px; border:0; border-radius:6px; background:transparent; color:var(--sh-accent-ink); font:inherit; font-size:13.5px; font-weight:500; cursor:pointer}
     .rsh button.c::after{content:""; position:absolute; inset:-8px -4px}
-    .rsh button.c:hover{background:var(--accent-soft)}
+    @media (hover:hover){ .rsh button.c:hover{background:var(--accent-soft)} }
     .mi{display:flex; align-items:center; gap:12px; width:100%; min-height:40px; padding:8px 10px; border:0; border-radius:10px; background:transparent; cursor:pointer; text-align:left; font-size:15px; color:var(--text)}
-    .mi:hover{background:color-mix(in srgb, var(--text) 5%, transparent)}
+    @media (hover:hover){ .mi:hover{background:color-mix(in srgb, var(--text) 5%, transparent)} }
     .mi svg{width:18px; height:18px; color:var(--text-2); flex:none}
     .mi .n{margin-left:auto; font-size:13px; color:var(--text-2); font-variant-numeric:tabular-nums}
     .mi .n + svg{width:16px; height:16px}
@@ -385,7 +385,7 @@
     .hist-card .row{margin-bottom:16px}
     .hist-card .hh{flex:1; min-width:0}
     .qb-btn.txt{box-shadow:none; background:transparent; padding:0 12px; color:var(--text-2)}
-    .qb-btn.txt:hover{background:transparent; color:var(--text)}
+    @media (hover:hover){ .qb-btn.txt:hover{background:transparent; color:var(--text)} }
     #hist-edit{color:var(--sh-accent-ink); height:36px}
     .hlist{border-radius:var(--r-md); box-shadow:inset 0 0 0 1px var(--hairline); overflow:hidden}
     .hrow{position:relative; display:flex; align-items:stretch; min-height:64px}
@@ -399,7 +399,7 @@
     .hrow .qb-spin{flex:none; color:var(--text-2)}
     .hrow.failed .hit{background:color-mix(in srgb, var(--bad) 5%, transparent)}
     .hrow .del{position:absolute; right:4px; top:50%; width:44px; height:44px; margin:-22px 0 0; color:var(--sh-bad-ink); opacity:0; pointer-events:none; visibility:hidden}
-    .hrow .del:hover{background:transparent}
+    @media (hover:hover){ .hrow .del:hover{background:transparent} }
     .hrow .del svg{width:18px; height:18px}
     .hlist.ed .del{opacity:1; pointer-events:auto; visibility:visible}
     .hlist.ed .chev{opacity:0}
@@ -442,7 +442,7 @@
     #login-modal .qb-hint{font-size:15px; line-height:1.55; margin:8px 0 20px}
     #login-modal input[type=text]{height:52px; margin-top:0; padding:0 16px; font-size:17px; border-radius:var(--r-md)}
     #login-modal .qb-acts{margin-top:8px}
-    .qb-btn.primary.is-off:hover{opacity:1}
+    @media (hover:hover){ .qb-btn.primary.is-off:hover{opacity:1} }
     .qb-btn.primary.danger{background:var(--sh-bad-ink); color:var(--surface)}
     .qb-hint.fine{font-size:13px; margin-top:16px}
     .qb-hint.fine b{font-weight:600}
@@ -451,7 +451,7 @@
     .qb-toast[hidden]{display:none}
     .qb-toast:has(.qb-toast-act){padding:6px 6px 6px 18px}
     .qb-toast-act{height:36px; padding:0 14px; border:0; border-radius:999px; background:transparent; color:var(--sh-accent-ink); font:600 15px/1 var(--font); cursor:pointer}
-    .qb-toast-act:hover{background:var(--accent-soft)}
+    @media (hover:hover){ .qb-toast-act:hover{background:var(--accent-soft)} }
 
     /* 使用说明 */
     .how{list-style:none; display:grid; gap:12px; margin:18px 0 0; padding:0}
@@ -478,7 +478,7 @@
     .coffee-reveal:not(.wait){animation:qbRise .3s var(--ease) both}
     .coffee-tiers{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:20px}
     .coffee-tier{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; min-width:0; min-height:96px; padding:12px 6px; border:0; border-radius:14px; cursor:pointer; background:var(--surface); color:var(--text); font:600 14.5px/1.2 var(--font); letter-spacing:-.01em; box-shadow:inset 0 0 0 1px var(--hairline-strong)}
-    .coffee-tier:hover{background:var(--surface-2)}
+    @media (hover:hover){ .coffee-tier:hover{background:var(--surface-2)} }
     .coffee-tier svg{width:28px; height:28px; margin-bottom:4px; color:var(--coffee)}
     .coffee-tier .ct-amt{font-size:13px; font-weight:400; color:var(--text-2)}
     .coffee-tier[aria-checked="true"]{background:var(--accent-soft); box-shadow:inset 0 0 0 2px var(--accent)}
@@ -537,7 +537,7 @@
       .banks{display:block; background:var(--surface); border-radius:16px; box-shadow:var(--shadow-1); overflow:hidden}
       .banks > .bank{flex-direction:row; align-items:center; gap:14px; min-height:64px; padding:12px 16px; border-radius:0; box-shadow:none; background:transparent}
       .banks > .bank + .bank::before{content:""; position:absolute; top:0; left:68px; right:0; border-top:1px solid var(--hairline)}
-      a.bank:hover{transform:none; box-shadow:none}
+      @media (hover:hover){ a.bank:hover{transform:none; box-shadow:none} }
       .banks > .bank .tile, .banks > .bank.wide .tile, .banks > .bank.feature .tile{width:38px; height:38px; border-radius:11px}
       .banks > .bank .tile svg{width:21px; height:21px}
       .banks > .bank h3{font:600 16px/1.3 var(--font); letter-spacing:-.012em; padding-right:0}
@@ -623,11 +623,13 @@
     @media (max-width:760px){
       .qb-ov{opacity:1; transition:background-color var(--fl-base) linear, -webkit-backdrop-filter var(--fl-slow) var(--fl-in), backdrop-filter var(--fl-slow) var(--fl-in), display var(--fl-slow) allow-discrete}
       :is(.qb-ov[hidden], .paste:not([open]) .paste-ov){opacity:1; background-color:transparent; -webkit-backdrop-filter:none; backdrop-filter:none; transition:background-color var(--fl-base) linear, -webkit-backdrop-filter var(--fl-base) var(--ease), backdrop-filter var(--fl-base) var(--ease), display var(--fl-base) allow-discrete}
-      :is(.qb-ov[hidden], .paste:not([open]) .paste-ov) > :is(.qb-card, .dlg){transform:translateY(105%); transition-duration:var(--fl-base); transition-timing-function:var(--fl-in)}
+      /* the card also fades (opacity with the slide): the scrim lags the sheet, and an opaque sheet over a page that is not yet dimmed overshoots the brightness by 1.8-2.4 % (measured) */
+      .qb-card, .dlg{transition-property:transform, opacity}
+      :is(.qb-ov[hidden], .paste:not([open]) .paste-ov) > :is(.qb-card, .dlg){transform:translateY(105%); opacity:0; transition-duration:var(--fl-base); transition-timing-function:var(--fl-in)}
       #lgn-guide[hidden]{background-color:transparent}
       @starting-style{
         .qb-ov:not([hidden]){opacity:1; background-color:transparent; -webkit-backdrop-filter:none; backdrop-filter:none}
-        .qb-ov:not([hidden]) > :is(.qb-card, .dlg){transform:translateY(105%)}
+        .qb-ov:not([hidden]) > :is(.qb-card, .dlg){transform:translateY(105%); opacity:0}
         #lgn-guide:not([hidden]){background-color:transparent}
       }
     }
@@ -637,15 +639,48 @@
     .btn{transition:transform var(--fl-slow) var(--fl-spring), background .2s, opacity .2s}
     .qb-acct{transition:background .16s var(--ease), transform var(--fl-slow) var(--fl-spring)}
     :is(a.bank, .areas a, .btn, .qb-acct){-webkit-tap-highlight-color:transparent; touch-action:manipulation}
+    /* ---------- R6 F-7: the three motion tiers (html[data-motion] = the choice made in the player, set by the catalog script; same rule as the player, spec 3.5) ----------
+       Full = everything above; Reduced = fades and colour only (no press scale, no lift, no slide, no knob travel); Off = nothing animates or transitions.
+       Without data-motion (script blocked) the system setting decides between Full and Off, as before. */
+    html[data-motion="full"] a.bank:is(:active, .qb-press){transform:scale(.98); transition-duration:var(--fl-press)}
+    html[data-motion="full"] .areas a:is(:active, .qb-press){transform:scale(.95); transition-duration:var(--fl-press)}
+    html[data-motion="full"] .btn:not(:disabled):is(:active, .qb-press){transform:scale(.96); transition-duration:var(--fl-press)}
+    html[data-motion="full"] .qb-acct:is(:active, .qb-press){transform:scale(.96); transition-duration:var(--fl-press)}
     @media (prefers-reduced-motion: no-preference){
-      a.bank:is(:active, .qb-press){transform:scale(.98); transition-duration:var(--fl-press)}
-      .areas a:is(:active, .qb-press){transform:scale(.95); transition-duration:var(--fl-press)}
-      .btn:not(:disabled):is(:active, .qb-press){transform:scale(.96); transition-duration:var(--fl-press)}
-      .qb-acct:is(:active, .qb-press){transform:scale(.96); transition-duration:var(--fl-press)}
+      html:not([data-motion]) a.bank:is(:active, .qb-press){transform:scale(.98); transition-duration:var(--fl-press)}
+      html:not([data-motion]) .areas a:is(:active, .qb-press){transform:scale(.95); transition-duration:var(--fl-press)}
+      html:not([data-motion]) .btn:not(:disabled):is(:active, .qb-press){transform:scale(.96); transition-duration:var(--fl-press)}
+      html:not([data-motion]) .qb-acct:is(:active, .qb-press){transform:scale(.96); transition-duration:var(--fl-press)}
     }
+    html:is([data-motion="reduced"], [data-motion="off"]) :is(a.bank, .bank, .areas a, .btn, .qb-acct, .resume, .bank .go, .area-head .all svg){transform:none !important}
+    @keyframes qbFade{from{opacity:0}}
+    html[data-motion="reduced"] :is(.qb-ov[hidden], .paste:not([open]) .paste-ov) > :is(.qb-card, .dlg){transform:none}
+    html[data-motion="reduced"] .qb-card input.shake, html[data-motion="reduced"] :is(.qb-spin, .barista.brewing .fill, .barista.brewing .steam){animation:none}
+    html[data-motion="reduced"] :is(.coffee-reveal:not(.wait), .coffee-thanks){animation-name:qbFade}
+    html[data-motion="reduced"] .toggle input[type=checkbox]::after{transition:none}
+    html[data-motion="reduced"] :is(.qb-card, .dlg){transition-property:opacity}
+    @starting-style{
+      html[data-motion="reduced"] .qb-ov:not([hidden]) > :is(.qb-card, .dlg){transform:none}
+    }
+    @media (max-width:760px){
+      html[data-motion="reduced"] :is(.qb-ov[hidden], .paste:not([open]) .paste-ov) > :is(.qb-card, .dlg){opacity:0}
+      @starting-style{
+        html[data-motion="reduced"] .qb-ov:not([hidden]) > :is(.qb-card, .dlg){opacity:0}
+      }
+    }
+    :where(html[data-motion="off"]) *, :where(html[data-motion="off"]) *::before, :where(html[data-motion="off"]) *::after{animation:none !important; transition:none !important}
     @media (prefers-reduced-motion: reduce){
-      *, *::before, *::after{animation:none !important; transition:none !important}
+      :where(html:not([data-motion])) *, :where(html:not([data-motion])) *::before, :where(html:not([data-motion])) *::after{animation:none !important; transition:none !important}
     }
+    /* ---------- R6 F-7: 44 px touch targets on touch devices; the hit area grows invisibly (an ::after that is at least 44 x 44 around the control), nothing looks different. Labels are left alone; the language select and the menu rows grow in place (see below) ---------- */
+    @media (pointer:coarse){
+      :where(.brand, .icon-btn, .qb-acct, .btn:not(label), .qb-btn, .qb-x, .areas a, .area-head .all, .term-head .all, .fmt, .coffee-link, .foot-bar a, .foot-bar button, .hero .sync button, .rsh button.c, .bank .acts button){position:relative}
+      :where(.brand, .icon-btn, .qb-acct, .btn:not(label), .qb-btn, .qb-x, .areas a, .area-head .all, .term-head .all, .fmt, .coffee-link, .foot-bar a, .foot-bar button, .hero .sync button, .rsh button.c, .bank .acts button)::after{content:""; position:absolute; inset:calc(50% - max(50%, 22px))}
+      .lang select{min-width:44px; min-height:44px; margin:-4px -2px -4px -6px; padding:0 8px} /* a select takes no pseudo-element: the box grows and the margins and padding give the room and the text position back (2 px less to the right so it stays clear of the theme button) */
+      .rsh button.c::after{inset:-12px 0 -4px} /* the history list starts right below */
+    }
+    @media (pointer:coarse) and (max-width:760px){ .drop .fmt::after{inset:0 0 -17px} .area-head .all::after{inset:-11px 0 0} .term-head .all::after{inset:-12px 0 -5px} .area-head + .term-head .all::after{inset:-8px 0 -5px} /* the line below starts right under it, and the line above is only 8 px away: 41 px here */ }
+    @media (pointer:coarse) and (min-width:761px){ .mi{min-height:44px} }
 
 /* 格式文档页（format.html / format-ielts.html）：方向 D（documents/design-review/directions/D/aux-format.html + d-aux.css §1）。叠在 catalog.css 之后；token 全部来自 catalog.css 的 :root。 */
    ================================================================= */
