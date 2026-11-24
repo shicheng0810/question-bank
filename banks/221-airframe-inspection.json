@@ -1,0 +1,773 @@
+[
+  {
+    "id": "quiz_221_inspection-1",
+    "question": "Mechanics Privileges: A certificated mechanic with at least an airframe rating may perform",
+    "choices": [
+      "inspections and function checks on aircraft instruments.",
+      "major repairs to aircraft instruments.",
+      "minor repairs to aircraft instruments."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 1"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-2",
+    "question": "What is the normal duration a mechanic certificate with airframe and/or powerplant ratings?",
+    "choices": [
+      "Until surrendered, suspended, or revoked.",
+      "Until 24 months after the holder has last exercised the privileges of the certificate.",
+      "Untl the holder is relieved of duties for which the holder was employed and certificated."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 1"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-3",
+    "question": "Which of the following statements is true for a certificated and appropriately rated mechanic regarding repairs and alterations?",
+    "choices": [
+      "He/she may perform an airframe major repair or major alteration, but cannot approve the work for return to service.",
+      "He/she may preform airfrae minor and minor alterations and approve the work for return to service, but cannot perform an airframe major repair or major alteration.",
+      "He/she may perform an airframe major repair or major alteration and approve the work, but not the entire aircraft, for return to service."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 1"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-4",
+    "question": "Which of the following can be found in a Type Certificate Data Sheet?",
+    "choices": [
+      "Useful Load.",
+      "Movement of control surfaces.",
+      "Empty Weight."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 1"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-5",
+    "question": "Which statement about Airworthiness Directives (AD's) is true?",
+    "choices": [
+      "Compliance with an applicable AD is mandatory and must be recorded in the maintenance records.",
+      "AD's are information alert bulletins issued by the airframe, powerplant, or component manufacturer.",
+      "Compliance with an AD is not mandatory unless the aircraft affected is for hire."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 1"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-6",
+    "question": "Which of the following documents are required to be in the aircraft when being operated?",
+    "choices": [
+      "Logbooks, Current Inspection Status document, Proof of AD compliance.",
+      "Airworthiness Certificate, State Aircraft Registration, Weight and Balance Data",
+      "Airworthiness Certificate, Aircraft Registration, Operating Limitations, Weight and Balance Data"
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 1"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-7",
+    "question": "After a routine 100 hour inspection of an aircraft ELT, your maintenance record entry should include",
+    "choices": [
+      "ELT inspected IAW 91.409 and the battery replacement date.",
+      "only that the ELT functions correctly and the battery replacement date.",
+      "ELT inspected IAW 91.207 and the battery replacement date."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 1"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-8",
+    "question": "Who is responsible for determining that materials used in aircraft maintenance and repair are of the proper type and conform to the appropriate standards.",
+    "choices": [
+      "The manufacture of the aircraft.",
+      "The owner or operator of the aircraft.",
+      "The installing person or agency."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 1"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-9",
+    "question": "14 CFR part 65 subpart D contains information for the certification of",
+    "choices": [
+      "pilots.",
+      "repairmen.",
+      "mechanics."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 1",
+      "AMT221 – Assignment – Module 5"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-10",
+    "question": "You have some aircraft components which you know to be unairworthy. Can you offer them for sale to type-certificated aircraft owners without commenting on their airworthiness?",
+    "choices": [
+      "Yes, it's the buyer's responsibility to determine airworthiness.",
+      "No.",
+      "Yes, if you state that no warranty or guarantee is expressed or implied."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 1"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-11",
+    "question": "A 100-hour inspection can be performed by",
+    "choices": [
+      "only an IA.",
+      "an A&P.",
+      "anyone under supervision"
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 2"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-12",
+    "question": "Who can supervise a 100-hour inspection?",
+    "choices": [
+      "No one.",
+      "An IA or an A&P.",
+      "An appropriately rated mechanic."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 2"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-13",
+    "question": "The maximum time a 100 hour inspection may be extended is",
+    "choices": [
+      "10 hours.",
+      "10 hours with a special flight permit.",
+      "12 hours with a special flight permit."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 2",
+      "AMT221 – Quiz"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-14",
+    "question": "A checklist must be used and as a minimum, the inspection must include the scope and detail of items in accordance with what CFR?",
+    "choices": [
+      "part 91, Appendix D.",
+      "part 65, Appendix D.",
+      "part 43, Appendix D."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 2"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-15",
+    "question": "A progressive inspection can be performed at long as your follow part",
+    "choices": [
+      "14 CFR part 65, section 65.409(f)",
+      "14 CFR part 201, section 201.409(d)",
+      "14 CFR part 91, section 91.409 (d)"
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 2"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-16",
+    "question": "A progressive inspection must be approved by the",
+    "choices": [
+      "FAA Oklahoma Main Office.",
+      "FAA Flight Standards District Office (FSDO).",
+      "FAA Manufacturing Inspection District Offices (. MIDOs.)"
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 2"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-17",
+    "question": "A 100-hour inspection must be performed every 100-hours. This is in addition to an annual inspection.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 2"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-18",
+    "question": "A progressive inspection must be done in a housing large enough for the aircraft and equipment to be used and service the aircraft.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 2"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-19",
+    "question": "A certificated A&P mechanic may perform a progressive inspection, as long as he or she is being supervised by a mechanic holding an Inspection Authorization.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 2"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-20",
+    "question": "If the progressive inspection is discontinued, the owner or operator does not need to notify the local FAA FSDO in writing.",
+    "choices": [
+      "True",
+      "False"
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 2"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-21",
+    "question": "According to 14 CFR part 3, section 3.5, an aircraft is considered airworthy if it",
+    "choices": [
+      "has a valid registration certificate and insurance coverage.",
+      "is in a condition for safe operation and conforms to its type design.",
+      "meets all maintenance requirements specified in the aircraft's maintenance manual."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 2"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-22",
+    "question": "Under 14 CFR part 91, section 91.411, pilots operating under IFR in controlled airspace must have had their:",
+    "choices": [
+      "Static pressure systems, altimeter instruments, and automatic pressure altitude reporting systems tested and inspected within the last 12 months.",
+      "Altimeters calibrated and adjusted within the last 24 months.",
+      "Static pressure systems, altimeter instruments, and automatic pressure altitude reporting systems tested and inspected within the last 24 months."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 2"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-23",
+    "question": "Before an annual or 100-hour inspection begins, the mechanic and owner should review:",
+    "choices": [
+      "The aircraft's airworthiness certificate and registration.",
+      "The aircraft's flight logs and maintenance history.",
+      "The aircraft's maintenance records, discuss any issues, and create a work order."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 2"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-24",
+    "question": "The type certificate data sheet (TCDS) includes information about the:",
+    "choices": [
+      "Aircraft's registration number, owner, and maintenance history.",
+      "Pilot's license, medical certificate, and currency.",
+      "Type design, limitations, and approved models."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 2"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-25",
+    "question": "The TCDS contains information about the:",
+    "choices": [
+      "The best place to eat on an airfield, Joe's Garage.",
+      "The aircraft's maintenance history, inspection schedule, and airworthiness certificate.",
+      "Engine performance, airspeed limits, and weight and balance information, including CG range, empty weight CG, and datum location."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 2"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-26",
+    "question": "A(n) ______________ is defined as the number of takeoffs and landings made by an aircraft.",
+    "choices": [
+      "cycle",
+      "ferry flight",
+      "circle"
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 3"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-27",
+    "question": "Who is primarily responsible for maintaining an aircraft in an airworthy condition?",
+    "choices": [
+      "FAA Inspector.",
+      "Owner or Operator.",
+      "A&P Mechanic."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 3"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-28",
+    "question": "Who can supervise an Annual Inspection?",
+    "choices": [
+      "An IA.",
+      "No one.",
+      "An appropriately rated mechanic."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 3",
+      "AMT221 – Quiz"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-29",
+    "question": "Which of the following is considered to be part of the permanent maintenance records of the aircraft?",
+    "choices": [
+      "The record of all Annual Inspections.",
+      "The record of all 100-hour inspections.",
+      "The time in service of the aircraft."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 3"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-30",
+    "question": "What documents are issued by the FAA to correct unsafe conditions that may exist in an aircraft?",
+    "choices": [
+      "Airworthiness Directives.",
+      "Technical Standard Orders.",
+      "Service Bulletins."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 3"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-31",
+    "question": "According to FAR Part 43, what must be used in performing an inspection on an aircraft?",
+    "choices": [
+      "A checklist.",
+      "A mirror.",
+      "A flashlight."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 3",
+      "AMT221 – Assignment – Module 4",
+      "AMT221 – Quiz"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-32",
+    "question": "On aircraft equipped with retractable landing gear, what must be done during the inspection to insure proper operation of the landing gear?",
+    "choices": [
+      "Disassemble and overhaul the strut assembly.",
+      "Perform a retraction and extension check.",
+      "Change the fluid in the strut."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 3"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-33",
+    "question": "A manufacturer of an aircraft may issue information concerning an improvement or change that may be made on an aircraft. These changes are issued as",
+    "choices": [
+      "Airworthiness Directives.",
+      "Service Bulletins.",
+      "Technical Standard Orders."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 3"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-34",
+    "question": "When performing an operational check on an engine, which of the following RPM checks should be done?",
+    "choices": [
+      "Idle and Static RPM.",
+      "Idle and Cruise RPM.",
+      "Static and Cruise RPM."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 3"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-35",
+    "question": "Before approving an aircraft for return to service after a 100-hour inspection, you are required to",
+    "choices": [
+      "operate the engine and perform certain functional checks.",
+      "taxi the aircraft.",
+      "test fly the aircraft."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 3",
+      "AMT221 – Quiz"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-36",
+    "question": "If an Annual Inspection was performed on July 13, 2013, the airplane will not be legally flyable on",
+    "choices": [
+      "August 1st, 2014",
+      "January 1st 2014",
+      "July 14, 2014"
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 3",
+      "AMT221 – Quiz"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-37",
+    "question": "An aircraft that is due an annual inspection may be flown",
+    "choices": [
+      "for the purpose of performing maintenance.",
+      "if a special flight permit has been issued for the aircraft.",
+      "for a period not to exceed 10 hours."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 3"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-38",
+    "question": "During an annual inspection, if a defect is found which makes the aircraft unairworthy, the person disapproving must",
+    "choices": [
+      "submit a Malfunction or Defect Report.",
+      "void the aircraft's Airworthiness Certificate.",
+      "provide a written notice of the defect to the owner."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 4"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-39",
+    "question": "An aircraft owner was provided a list of discrepancies on an aircraft that was not approved for return to service after an annual inspection. Which of the following statements is/are true concerning who may correct the discrepancies\nOnly a mechanic with an inspection authorization.\nAn appropriately rated mechanic.\nAny certificated repair station.",
+    "choices": [
+      "1.",
+      "2.",
+      "2 & 3."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 4"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-40",
+    "question": "An aircraft was not approved for return to service after an annual inspection and the owner wanted to fly the aircraft to another maintenance base. Which statement is correct?",
+    "choices": [
+      "The aircraft may be flown without restriction up to 10 hours to reach another maintenance base.",
+      "The aircraft may be flown without restriction up to 10 hours to reach another maintenance base.",
+      "The owner must obtain a special flight permit."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 4"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-41",
+    "question": "Each person performing an annual or 100-hour inspection shall use a checklist that contains at least those items in the appendix of",
+    "choices": [
+      "14 CFR Part 65.",
+      "AC 43.13-3.",
+      "14 CFR Part 43."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 4",
+      "AMT221 – Assignment – Module 5"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-42",
+    "question": "Radio equipment installations made in accordance with a Supplemental Type Certificate require approval for return to service",
+    "choices": [
+      "by the holder of an Inspection Authorization.",
+      "by and Airframe and Powerplant Mechanic.",
+      "by a field approval from the FAA."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 4"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-43",
+    "question": "When maintaining electrical equipment, all necessary information should be obtained from",
+    "choices": [
+      "maintenance instructions published by the aircraft and/or equipment manufacturer.",
+      "illustrated parts manual for the aircraft.",
+      "the aircraft maintenance manual."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 4"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-44",
+    "question": "A certified mechanic pulls a torque wrench and a TENSIOMETER T5-2002-101-00 from the tool room. He completes his work and discovers that the tensiometer isn't in calibration. What should he do?",
+    "choices": [
+      "Go back and feel the tension on the cables. If they aren't to slack or tight, approve the work for service.",
+      "Pull another tensiometer and redo the job.",
+      "Write up the work and approve it for return to service."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 4"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-45",
+    "question": "During an Annual Inspection, compliance with Airworthiness Directives (ADs) is",
+    "choices": [
+      "mandatory.",
+      "optional.",
+      "indeterminate."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 4"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-46",
+    "question": "An aircraft cannot be returned to service after an inspection until the ______________________ is complete.",
+    "choices": [
+      "logbook entry",
+      "keys are given to the pilot",
+      "panels and fluids are replaced"
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 4"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-47",
+    "question": "Who must approve the type of inspection program used on a large or turbine powered multi-engine aircraft?",
+    "choices": [
+      "Manufacturer",
+      "FAA",
+      "IA"
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 5"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-48",
+    "question": "What document specifies the experience requirements for an airframe mechanic?",
+    "choices": [
+      "FAR 65",
+      "FAR 91",
+      "FAR 43"
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 5"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-49",
+    "question": "With respect to maintenance time records, \"Time in Service\" means,",
+    "choices": [
+      "Time recorded from the movement of the aircraft as it begins to taxi until it returns to the ramp.",
+      "Time from when the Master Switch is turned on until it is turned back off.",
+      "The time the aircraft leaves the surface of the earth until it touches at the next point of landing."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 5"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-50",
+    "question": "What part of the Federal Aviation Regulations prescribes the requirements for issuing mechanic certificates and associated ratings and the general operating rules for the holders of these certificates and ratings?",
+    "choices": [
+      "14 CFR Part 43.",
+      "14 CFR Part 65.",
+      "14 CFR Part 91."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 5"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-51",
+    "question": "How long does the holder of a certificate issued under 14 CFR part 65 have to notify the FAA after any change in permanent mailing address?",
+    "choices": [
+      "30 days.",
+      "45 days.",
+      "15 days."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 5"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-52",
+    "question": "14 CFR part 65 contains information for the certification of",
+    "choices": [
+      "flight crewmembers other than pilots. flight crewmembers other than pilots.",
+      "airmen other than flight crewmembers.",
+      "pilots, flight Instructors, and ground instructors."
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 5"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-53",
+    "question": "14 CFR part 65 subpart E contains information for the certification of",
+    "choices": [
+      "repairmen",
+      "pilots",
+      "mechanics"
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 5"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-54",
+    "question": "The operator of a turbine-powered helicopter can elect to have it inspected under what CFR?",
+    "choices": [
+      "part 125, section 125.247",
+      "part 91, section 91.409",
+      "part 25, section 25.1529"
+    ],
+    "source": [
+      "AMT221 – Assignment – Module 5"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-55",
+    "question": "For an individual to conduct a complete 100 hour inspection on an aircraft and approve it for return to service, he or she must hold a mechanic certificate with",
+    "choices": [
+      "airframe or powerplant ratings.",
+      "airframe and powerplant ratings.",
+      "airframe and powerplant ratings with an IA."
+    ],
+    "source": [
+      "AMT221 – Quiz"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "quiz_221_inspection-56",
+    "question": "What source of information now replaces the old aircraft specification sheets?",
+    "choices": [
+      "Aircraft Inspection and Repair Manual (AC 43:13-1B)",
+      "Aircraft Operating Manual.",
+      "Type Certificate Data Sheets."
+    ],
+    "source": [
+      "AMT221 – Quiz"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-57",
+    "question": "An Annual Inspection can be performed by",
+    "choices": [
+      "an A&P.",
+      "anyone under the proper supervision.",
+      "an IA."
+    ],
+    "source": [
+      "AMT221 – Quiz"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-58",
+    "question": "What type of inspection is required when an aircraft progressive inspection is discontinued?",
+    "choices": [
+      "A special FAA inspection.",
+      "Manufacturer's recommended inspection.",
+      "Annual Inspection."
+    ],
+    "source": [
+      "AMT221 – Quiz"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-59",
+    "question": "Where would you find the operating conditions that make a 100 hour inspection mandatory?",
+    "choices": [
+      "14 CFR Part 91",
+      "AC 43.13-2A",
+      "14 CFR Part 43"
+    ],
+    "source": [
+      "AMT221 – Quiz"
+    ],
+    "answer": 0
+  }
+]

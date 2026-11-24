@@ -185,13 +185,27 @@
     "json": "banks/245-cabin-environment.json"
   },
   {
+    "id": "221-airframe-inspection",
+    "title": "Airframe Inspection",
+    "mode": "public",
+    "description": "AMT&221 — Assignment Module 1–5 + Quiz",
+    "tags": [],
+    "question_count": 59,
+    "has_images": false,
+    "category": "airframe",
+    "term": 3,
+    "icon": "inspection",
+    "tone": "t5",
+    "json": "banks/221-airframe-inspection.json"
+  },
+  {
     "id": "all-banks",
     "title": "All Banks · Merged Practice",
     "mode": "public",
     "virtual": true,
     "description": "Pick any combination of banks and practice them together.",
     "tags": [],
-    "question_count": 2137,
+    "question_count": 2196,
     "has_images": true
   }
 ]
