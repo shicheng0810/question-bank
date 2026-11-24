@@ -769,5 +769,31 @@
       "AMT221 – Quiz"
     ],
     "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-60",
+    "question": "What appendix in FAR Part 43 covers the minimum inspection requirements on an aircraft?",
+    "choices": [
+      "A",
+      "C",
+      "D"
+    ],
+    "source": [
+      "AMT221 – Quiz"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-61",
+    "question": "When performing a 100-hour inspection on an engine you are required to",
+    "choices": [
+      "re-torque all the cylinder hold down nuts.",
+      "change the spark plugs.",
+      "perform a compression check."
+    ],
+    "source": [
+      "AMT221 – Quiz"
+    ],
+    "answer": 2
   }
 ]
