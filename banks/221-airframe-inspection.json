@@ -795,5 +795,44 @@
       "AMT221 – Quiz"
     ],
     "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-62",
+    "question": "Which statement is correct when an aircraft has not been approved for return to service after an annual inspection because of several items requiring minor repair?",
+    "choices": [
+      "An appropriately rated mechanic may repair the defects and approve the aircraft for return to service.",
+      "An appropriately rated mechanic may repair the defects, but an IA must approve the aircraft for return to service.",
+      "Only the person who performed the annual inspection may approve the aircraft for return to service."
+    ],
+    "source": [
+      "AMT221 – Quiz"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "quiz_221_inspection-63",
+    "question": "Where would you find the recommended statement for recording the approval or disapproval for return to service of an aircraft after a 100 hour or annual inspection?",
+    "choices": [
+      "14 CFR Part 91",
+      "14 CFR Part 65",
+      "14 CFR Part 43"
+    ],
+    "source": [
+      "AMT221 – Quiz"
+    ],
+    "answer": 2
+  },
+  {
+    "id": "quiz_221_inspection-64",
+    "question": "What form is used to record and approve for return to service major alterations and repairs?",
+    "choices": [
+      "Form 8083",
+      "Form 8130-3",
+      "Form 337"
+    ],
+    "source": [
+      "AMT221 – Quiz"
+    ],
+    "answer": 2
   }
 ]
